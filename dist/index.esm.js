@@ -1390,10 +1390,12 @@ styleInject(css_248z);
 // --- Components ---
 const AnimatedCheckmark = () => (jsxRuntimeExports.jsx("svg", { className: styles.animatedCheck, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: jsxRuntimeExports.jsx("path", { d: "M5 13l4 4L19 7" }) }));
 const AnimatedX = () => (jsxRuntimeExports.jsxs("svg", { className: styles.animatedX, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: [jsxRuntimeExports.jsx("path", { d: "M6 6L18 18" }), jsxRuntimeExports.jsx("path", { d: "M6 18L18 6" })] }));
-const ZestButton = ({ visualOptions = {}, busyOptions = {}, successOptions = {}, isDefault = false, className = "", disabled, children, onClick, // Destructure onClick here
-theme = 'system', // New prop with default
-buttonStyle = 'solid', // New prop with default
+const ZestButton = ({ className = "", disabled, children, onClick, // Destructure onClick here
+zest, // New parent prop
 ...props }) => {
+    // Destructure custom props from 'zest' with defaults
+    const { visualOptions = {}, busyOptions = {}, successOptions = {}, confirmOptions, // confirmOptions can be undefined
+    isDefault = false, theme = 'system', buttonStyle = 'solid', } = zest || {}; // Provide empty object as default for zest
     const { variant = "standard", size = "md", fullWidth = false, iconLeft, iconRight, } = visualOptions;
     const { handleInternally = true, preventRageClick = true, minBusyDurationMs = 500, } = busyOptions;
     const { showCheckmark = true, showFailIcon = true, autoResetAfterMs = 2000, } = successOptions;
@@ -1484,18 +1486,18 @@ buttonStyle = 'solid', // New prop with default
         }
     };
     const handleConfirmClick = async (e) => {
-        if (!props.confirmOptions) {
+        if (!confirmOptions) { // Use destructured confirmOptions
             return handleClick(e);
         }
         // Edge Case 3: Add warning for missing onClick with confirmOptions
-        if (props.confirmOptions && !onClick) { // Use destructured onClick
+        if (confirmOptions && !onClick) { // Use destructured confirmOptions and onClick
             console.warn("ZestButton: 'confirmOptions' are provided but 'onClick' handler is missing. The button will confirm but perform no action.");
         }
         if (awaitingConfirm) {
             stopWaiting();
             return handleClick(e);
         }
-        const { displayLabel, timeoutSecs } = props.confirmOptions;
+        const { displayLabel, timeoutSecs } = confirmOptions; // Use destructured confirmOptions
         const startTime = Date.now();
         setAwaitingConfirm(true);
         setCurrentChildren(`${displayLabel} (${timeoutSecs}s)`); // Initial display

@@ -33,10 +33,7 @@ interface ConfirmOptions {
     displayLabel: string;
     timeoutSecs: number;
 }
-/**
- * All supported props
- */
-export interface ZestButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ZestCustomProps {
     visualOptions?: VisualOptions;
     busyOptions?: BusyOptions;
     successOptions?: SuccessOptions;
@@ -44,6 +41,12 @@ export interface ZestButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEl
     isDefault?: boolean;
     theme?: ZestTheme;
     buttonStyle?: ZestButtonStyle;
+}
+/**
+ * All supported props
+ */
+export interface ZestButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    zest?: ZestCustomProps;
 }
 declare const ZestButton: React.FC<ZestButtonProps>;
 export default ZestButton;

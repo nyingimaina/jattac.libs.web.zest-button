@@ -43,18 +43,23 @@ interface ConfirmOptions {
   timeoutSecs: number;
 }
 
-/**
- * All supported props
- */
-export interface ZestButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+// New interface to encapsulate all custom ZestButton props
+interface ZestCustomProps {
   visualOptions?: VisualOptions;
   busyOptions?: BusyOptions;
   successOptions?: SuccessOptions;
   confirmOptions?: ConfirmOptions;
   isDefault?: boolean;
-  theme?: ZestTheme; // New prop for theme override
-  buttonStyle?: ZestButtonStyle; // New prop for button style
+  theme?: ZestTheme;
+  buttonStyle?: ZestButtonStyle;
+}
+
+/**
+ * All supported props
+ */
+export interface ZestButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  zest?: ZestCustomProps; // Encapsulate all custom props under 'zest'
 }
 
 // --- Components ---
@@ -89,18 +94,24 @@ const AnimatedX: React.FC = () => (
 );
 
 const ZestButton: React.FC<ZestButtonProps> = ({
-  visualOptions = {},
-  busyOptions = {},
-  successOptions = {},
-  isDefault = false,
   className = "",
   disabled,
   children,
   onClick, // Destructure onClick here
-  theme = 'system', // New prop with default
-  buttonStyle = 'solid', // New prop with default
+  zest, // New parent prop
   ...props
 }) => {
+  // Destructure custom props from 'zest' with defaults
+  const {
+    visualOptions = {},
+    busyOptions = {},
+    successOptions = {},
+    confirmOptions, // confirmOptions can be undefined
+    isDefault = false,
+    theme = 'system',
+    buttonStyle = 'solid',
+  } = zest || {}; // Provide empty object as default for zest
+
   const {
     variant = "standard",
     size = "md",
@@ -224,12 +235,12 @@ const ZestButton: React.FC<ZestButtonProps> = ({
   };
 
   const handleConfirmClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!props.confirmOptions) {
+    if (!confirmOptions) { // Use destructured confirmOptions
       return handleClick(e);
     }
 
     // Edge Case 3: Add warning for missing onClick with confirmOptions
-    if (props.confirmOptions && !onClick) { // Use destructured onClick
+    if (confirmOptions && !onClick) { // Use destructured confirmOptions and onClick
       console.warn("ZestButton: 'confirmOptions' are provided but 'onClick' handler is missing. The button will confirm but perform no action.");
     }
 
@@ -238,7 +249,7 @@ const ZestButton: React.FC<ZestButtonProps> = ({
       return handleClick(e);
     }
 
-    const { displayLabel, timeoutSecs } = props.confirmOptions;
+    const { displayLabel, timeoutSecs } = confirmOptions; // Use destructured confirmOptions
     const startTime = Date.now();
     setAwaitingConfirm(true);
     setCurrentChildren(`${displayLabel} (${timeoutSecs}s)`); // Initial display

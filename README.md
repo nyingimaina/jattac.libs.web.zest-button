@@ -15,8 +15,8 @@ A highly customizable and interactive React button component designed for modern
     -   [Confirmation Dialog](#confirmation-dialog)
     -   [Full Width Button](#full-width-button)
     -   [Default Button (Enter Key)](#default-button-enter-key)
--   [Theme Support](#theme-support)
--   [Button Styles](#button-styles)
+    -   [Theme Support](#theme-support)
+    -   [Button Styles](#button-styles)
 -   [Props](#props)
 -   [Styling](#styling)
 -   [Development](#development)
@@ -35,6 +35,8 @@ A highly customizable and interactive React button component designed for modern
 -   **Confirmation Flow**: Implements a configurable "click to confirm" mechanism with a countdown timer and auto-reset.
 -   **CSS Modules**: Styles are encapsulated using CSS Modules and automatically injected into the component, requiring no separate CSS imports for consumers.
 -   **TypeScript Support**: Fully typed with comprehensive `index.d.ts` declarations.
+-   **Dark/Light Mode Support**: Automatically adapts to system theme with an override prop.
+-   **Multiple Button Styles**: Supports `solid`, `outline`, `text`, and `dashed` button styles.
 
 ## Installation
 
@@ -54,7 +56,7 @@ Import the `ZestButton` component:
 
 ```typescript
 import ZestButton from 'jattac.libs.web.zest-button';
-import { FaSave, FaTrash } from 'react-icons/fa'; // Example icons
+import { FaSave, FaTrash } from 'react-icons/fa6'; // Example icons
 ```
 
 ### Basic Usage
@@ -68,13 +70,13 @@ import { FaSave, FaTrash } from 'react-icons/fa'; // Example icons
 ### Variants and Sizes
 
 ```tsx
-<ZestButton visualOptions={{ variant: 'success' }}>
+<ZestButton zest={{ visualOptions: { variant: 'success' } }}>
   Success Button
 </ZestButton>
-<ZestButton visualOptions={{ variant: 'danger', size: 'sm' }}>
+<ZestButton zest={{ visualOptions: { variant: 'danger', size: 'sm' } }}>
   Small Danger
 </ZestButton>
-<ZestButton visualOptions={{ size: 'lg' }}>
+<ZestButton zest={{ visualOptions: { size: 'lg' } }}>
   Large Button
 </ZestButton>
 ```
@@ -82,13 +84,13 @@ import { FaSave, FaTrash } from 'react-icons/fa'; // Example icons
 ### Icons
 
 ```tsx
-<ZestButton visualOptions={{ iconLeft: <FaSave /> }}>
+<ZestButton zest={{ visualOptions: { iconLeft: <FaSave /> } }}>
   Save
 </ZestButton>
-<ZestButton visualOptions={{ iconRight: <FaTrash /> }}>
+<ZestButton zest={{ visualOptions: { iconRight: <FaTrash /> } }}>
   Delete
 </ZestButton>
-<ZestButton visualOptions={{ iconLeft: <FaSave />, iconRight: <FaTrash /> }}>
+<ZestButton zest={{ visualOptions: { iconLeft: <FaSave />, iconRight: <FaTrash /> } }}>
   Save & Delete
 </ZestButton>
 ```
@@ -136,10 +138,10 @@ const handleFailure = async () => {
   // Simulate failure
 };
 
-<ZestButton onClick={handleSuccess} successOptions={{ showCheckmark: true }}>
+<ZestButton onClick={handleSuccess} zest={{ successOptions: { showCheckmark: true } }}>
   Submit (Success)
 </ZestButton>
-<ZestButton onClick={handleFailure} successOptions={{ showFailIcon: true }}>
+<ZestButton onClick={handleFailure} zest={{ successOptions: { showFailIcon: true } }}>
   Submit (Failure)
 </ZestButton>
 ```
@@ -155,8 +157,10 @@ const handleDelete = () => {
 
 <ZestButton
   onClick={handleDelete}
-  confirmOptions={{ displayLabel: 'Confirm Delete', timeoutSecs: 5 }}
-  visualOptions={{ variant: 'danger' }}
+  zest={{
+    confirmOptions: { displayLabel: 'Confirm Delete', timeoutSecs: 5 },
+    visualOptions: { variant: 'danger' }
+  }}
 >
   Delete Item
 </ZestButton>
@@ -165,7 +169,7 @@ const handleDelete = () => {
 ### Full Width Button
 
 ```tsx
-<ZestButton visualOptions={{ fullWidth: true }}>
+<ZestButton zest={{ visualOptions: { fullWidth: true } }}>
   Full Width Button
 </ZestButton>
 ```
@@ -175,14 +179,14 @@ const handleDelete = () => {
 A button marked as `isDefault` will be triggered when the user presses the `Enter` key, unless another interactive element (like a textarea) has focus.
 
 ```tsx
-<ZestButton isDefault onClick={() => alert('Default action!')}>
+<ZestButton zest={{ isDefault: true }} onClick={() => alert('Default action!')}>
   Submit Form
 </ZestButton>
 ```
 
 ### Theme Support
 
-The `ZestButton` automatically adapts to the user's system theme (light or dark) by default. You can override this behavior using the `theme` prop.
+The `ZestButton` automatically adapts to the user's system theme (light or dark) by default. You can override this behavior using the `zest.theme` prop.
 
 ```tsx
 // Button will follow system theme (default behavior)
@@ -191,12 +195,12 @@ The `ZestButton` automatically adapts to the user's system theme (light or dark)
 </ZestButton>
 
 // Force light theme
-<ZestButton theme="light" onClick={() => alert('Light theme!')}>
+<ZestButton zest={{ theme: "light" }} onClick={() => alert('Light theme!')}>
   Light Theme Button
 </ZestButton>
 
 // Force dark theme
-<ZestButton theme="dark" onClick={() => alert('Dark theme!')}>
+<ZestButton zest={{ theme: "dark" }} onClick={() => alert('Dark theme!')}>
   Dark Theme Button
 </ZestButton>
 ```
@@ -210,30 +214,30 @@ Beyond the default solid button, `ZestButton` supports `outline`, `text`, and `d
 <ZestButton>Solid Button</ZestButton>
 
 // Outline button
-<ZestButton buttonStyle="outline" visualOptions={{ variant: 'standard' }}>
+<ZestButton zest={{ buttonStyle: "outline", visualOptions: { variant: 'standard' } }}>
   Outline Button
 </ZestButton>
 
 // Text button
-<ZestButton buttonStyle="text" visualOptions={{ variant: 'success' }}>
+<ZestButton zest={{ buttonStyle: "text", visualOptions: { variant: 'success' } }}>
   Text Button
 </ZestButton>
 
 // Dashed button
-<ZestButton buttonStyle="dashed" visualOptions={{ variant: 'danger' }}>
+<ZestButton zest={{ buttonStyle: "dashed", visualOptions: { variant: 'danger' } }}>
   Dashed Button
 </ZestButton>
 ```
 
 ## Props
 
-The `ZestButton` component extends standard HTML `button` attributes and introduces several custom props for enhanced functionality.
+The `ZestButton` component extends standard HTML `button` attributes and introduces a single `zest` prop to encapsulate all custom functionality.
 
 ```typescript
 export type ZestVariant = "standard" | "success" | "danger";
 export type ZestSize = "sm" | "md" | "lg";
-export type ZestTheme = 'light' | 'dark' | 'system'; // New type for theme
-export type ZestButtonStyle = 'solid' | 'outline' | 'text' | 'dashed'; // New type for button style
+export type ZestTheme = 'light' | 'dark' | 'system';
+export type ZestButtonStyle = 'solid' | 'outline' | 'text' | 'dashed';
 
 interface VisualOptions {
   variant?: ZestVariant; // Visual style of the button (default: "standard")
@@ -260,8 +264,8 @@ interface ConfirmOptions {
   timeoutSecs: number;  // The number of seconds to wait for a second click to confirm
 }
 
-export interface ZestButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+// New interface to encapsulate all custom ZestButton props
+interface ZestCustomProps {
   visualOptions?: VisualOptions;
   busyOptions?: BusyOptions;
   successOptions?: SuccessOptions;
@@ -269,6 +273,11 @@ export interface ZestButtonProps
   isDefault?: boolean; // If true, button is triggered by Enter key (default: false)
   theme?: ZestTheme; // Theme override for the button (default: "system")
   buttonStyle?: ZestButtonStyle; // Style of the button (default: "solid")
+}
+
+export interface ZestButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  zest?: ZestCustomProps; // Encapsulate all custom props under 'zest'
   // All standard HTML button attributes are also supported (e.g., disabled, type, etc.)
 }
 ```

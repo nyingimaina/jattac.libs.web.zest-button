@@ -3,10 +3,9 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import postcss from 'rollup-plugin-postcss';
 import dts from 'rollup-plugin-dts';
-import autoprefixer from 'autoprefixer';
-import cssnano from 'cssnano';
+import { readFileSync } from 'fs';
 
-import packageJson from './package.json' assert { type: 'json' };
+const packageJson = JSON.parse(readFileSync('./package.json', 'utf8'));
 
 export default [
   {
@@ -29,17 +28,21 @@ export default [
       typescript({ tsconfig: './tsconfig.json' }),
       postcss({
         modules: true,
-        plugins: [autoprefixer(), cssnano({ preset: 'default' })],
-        extract: 'zestbutton.css', // Extract CSS to a separate file
-        minimize: true,
+        extract: false, // Inject CSS into the JS bundle
+        inject: true, // Ensure styles are injected
+        use: [],
       }),
     ],
-    external: ['react', 'react-dom', 'react-icons/fa'],
+    external: ['react', 'react-dom', 'react-icons/fa', 'react-icons/fa6'],
   },
   {
-    input: 'UI/ZestButton.tsx',
+    input: 'UI/ZestButton.tsx', // Use the main TypeScript entry file
     output: [{ file: 'dist/index.d.ts', format: 'esm' }],
-    plugins: [dts()],
-    external: [/^react/, /^react-icons/],
+    plugins: [dts({
+      // This is important to ensure all types are bundled correctly
+      // and external modules are resolved.
+      respectExternal: true,
+    })],
+    external: [/\.css$/], // Exclude CSS files from the DTS bundle
   },
 ];

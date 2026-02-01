@@ -1,15 +1,18 @@
 {
   "compilerOptions": {
-    "target": "es2019",
-    "module": "esnext",
-    "jsx": "react-jsx",
     "outDir": "./dist",
-    "strict": true,
+    "module": "ESNext",
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "declaration": true,
+    "jsx": "react-jsx",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node"
+    "strict": true,
+    "skipLibCheck": true
   },
-  "include": ["UI/**/*.tsx", "UI/**/*.ts", "global.d.ts"],
+  "include": ["UI/**/*.ts", "UI/**/*.tsx", "Styles/**/*.css", "global.d.ts"],
   "exclude": ["node_modules", "dist"]
 }

@@ -1,12 +1,5 @@
-import React from "react";
-import { FaSpinner } from "react-icons/fa"; // Using react-icons/fa as per original ZestButton.tsx
+import { FaSpinner } from "react-icons/fa6";
 
-interface SpinnerIconProps {
-  className?: string;
-}
-
-const SpinnerIcon: React.FC<SpinnerIconProps> = ({ className }) => (
-  <FaSpinner className={className} />
-);
+const SpinnerIcon = () => <FaSpinner className="animate-spin" size={18} />;
 
 export default SpinnerIcon;

@@ -217,7 +217,7 @@ const ZestButton: React.FC<ZestButtonProps> = ({
     setAwaitingConfirm(false);
   };
 
-  const handleConfirmClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleConfirmClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!props.confirmOptions) {
       return handleClick(e);
     }
@@ -230,17 +230,23 @@ const ZestButton: React.FC<ZestButtonProps> = ({
     const { displayLabel, timeoutSecs } = props.confirmOptions;
     const startTime = Date.now();
     setAwaitingConfirm(true);
+    setCurrentChildren(`${displayLabel} (${timeoutSecs}s)`); // Initial display
 
     confirmIntervalRef.current = setInterval(() => {
       const elapsed = Date.now() - startTime;
-      if (elapsed >= timeoutSecs * 1000) {
+      const timeRemaining = timeoutSecs - Math.floor(elapsed / 1000);
+
+      if (timeRemaining <= 0) {
         stopWaiting();
+        setWasFailed(true); // Indicate failure for shake animation
+        const timeout = setTimeout(() => {
+          setWasFailed(false);
+        }, 400); // Shake animation duration
+        // No need to return clearTimeout, as this timeout is for visual feedback only
       } else {
-        const elapsedSecs = Math.floor(elapsed / 1000);
-        const timeRemaining = timeoutSecs - elapsedSecs;
         setCurrentChildren(`${displayLabel} (${timeRemaining}s)`);
       }
-    }, 100); // ✅ update once per second
+    }, 1000); // Update once per second
   };
 
   // cleanup on unmount
@@ -267,7 +273,7 @@ const ZestButton: React.FC<ZestButtonProps> = ({
       );
     } else if (wasFailed && showFailIcon) {
       return (
-        <span className={`${styles.icon} ${styles.fadeIn} ${styles.failShake}`}>
+        <span className={`${styles.icon} ${styles.fadeIn} ${styles.shake}`}>
           <AnimatedX />
         </span>
       );
@@ -286,7 +292,7 @@ const ZestButton: React.FC<ZestButtonProps> = ({
         styles[size],
         fullWidth ? styles.fullWidth : "",
         isDisabled ? styles.disabled : "",
-        wasFailed ? styles.failGlow : "",
+        wasFailed ? styles.shake : "",
         className,
       ].join(" ")}
       disabled={isDisabled}

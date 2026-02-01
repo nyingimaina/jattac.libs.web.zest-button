@@ -1,0 +1,45 @@
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import typescript from '@rollup/plugin-typescript';
+import postcss from 'rollup-plugin-postcss';
+import dts from 'rollup-plugin-dts';
+import autoprefixer from 'autoprefixer';
+import cssnano from 'cssnano';
+
+import packageJson from './package.json' assert { type: 'json' };
+
+export default [
+  {
+    input: 'UI/ZestButton.tsx',
+    output: [
+      {
+        file: packageJson.main,
+        format: 'cjs',
+        sourcemap: true,
+      },
+      {
+        file: packageJson.module,
+        format: 'esm',
+        sourcemap: true,
+      },
+    ],
+    plugins: [
+      resolve(),
+      commonjs(),
+      typescript({ tsconfig: './tsconfig.json' }),
+      postcss({
+        modules: true,
+        plugins: [autoprefixer(), cssnano({ preset: 'default' })],
+        extract: false, // Inject CSS into the head
+        minimize: true,
+      }),
+    ],
+    external: ['react', 'react-dom', 'react-icons/fa', 'react-icons/fa6'],
+  },
+  {
+    input: 'UI/ZestButton.tsx',
+    output: [{ file: 'dist/index.d.ts', format: 'esm' }],
+    plugins: [dts()],
+    external: [/^react/, /^react-icons/],
+  },
+];

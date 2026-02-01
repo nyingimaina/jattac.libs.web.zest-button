@@ -1,7 +1,7 @@
 'use strict';
 
 var require$$0 = require('react');
-var fa = require('react-icons/fa');
+var fa6 = require('react-icons/fa6');
 
 var jsxRuntime = {exports: {}};
 
@@ -1396,10 +1396,22 @@ const ZestButton = ({ visualOptions = {}, busyOptions = {}, successOptions = {},
     const { variant = "standard", size = "md", fullWidth = false, iconLeft, iconRight, } = visualOptions;
     const { handleInternally = true, preventRageClick = true, minBusyDurationMs = 500, } = busyOptions;
     const { showCheckmark = true, showFailIcon = true, autoResetAfterMs = 2000, } = successOptions;
+    // Edge Case 4: Add warnings for very short durations in development
+    require$$0.useEffect(() => {
+        if (process.env.NODE_ENV === 'development') {
+            if (minBusyDurationMs > 0 && minBusyDurationMs < 100) {
+                console.warn(`ZestButton: 'minBusyDurationMs' is set to ${minBusyDurationMs}ms. Very short durations can lead to visual flickering and a poor user experience. Consider a value of 100ms or more.`);
+            }
+            if (autoResetAfterMs > 0 && autoResetAfterMs < 100) {
+                console.warn(`ZestButton: 'autoResetAfterMs' is set to ${autoResetAfterMs}ms. Very short durations can make success/fail feedback hard to perceive. Consider a value of 100ms or more.`);
+            }
+        }
+    }, [minBusyDurationMs, autoResetAfterMs]);
     const [internalBusy, setInternalBusy] = require$$0.useState(false);
     const [wasSuccessful, setWasSuccessful] = require$$0.useState(false);
     const [wasFailed, setWasFailed] = require$$0.useState(false);
     const buttonRef = require$$0.useRef(null);
+    const failTimeoutRef = require$$0.useRef(null); // Bug 1: Add useRef for failTimeout
     const [currentChildren, setCurrentChildren] = require$$0.useState(children);
     const [awaitingConfirm, setAwaitingConfirm] = require$$0.useState(false);
     // ✅ interval ref for confirm countdown
@@ -1418,6 +1430,15 @@ const ZestButton = ({ visualOptions = {}, busyOptions = {}, successOptions = {},
     const isDisabled = disabled ||
         effectiveBusy ||
         (preventRageClick && (wasSuccessful || wasFailed));
+    // Move handleClick, stopWaiting, and handleConfirmClick declarations here
+    const stopWaiting = () => {
+        if (confirmIntervalRef.current) {
+            clearInterval(confirmIntervalRef.current);
+            confirmIntervalRef.current = null;
+        }
+        setCurrentChildren(children);
+        setAwaitingConfirm(false);
+    };
     const handleClick = async (e) => {
         if (preventRageClick && internalBusy)
             return;
@@ -1449,6 +1470,42 @@ const ZestButton = ({ visualOptions = {}, busyOptions = {}, successOptions = {},
             onClick(e);
         }
     };
+    const handleConfirmClick = async (e) => {
+        if (!props.confirmOptions) {
+            return handleClick(e);
+        }
+        // Edge Case 3: Add warning for missing onClick with confirmOptions
+        if (props.confirmOptions && !onClick) { // Use destructured onClick
+            console.warn("ZestButton: 'confirmOptions' are provided but 'onClick' handler is missing. The button will confirm but perform no action.");
+        }
+        if (awaitingConfirm) {
+            stopWaiting();
+            return handleClick(e);
+        }
+        const { displayLabel, timeoutSecs } = props.confirmOptions;
+        const startTime = Date.now();
+        setAwaitingConfirm(true);
+        setCurrentChildren(`${displayLabel} (${timeoutSecs}s)`); // Initial display
+        confirmIntervalRef.current = setInterval(() => {
+            const elapsed = Date.now() - startTime;
+            const timeRemaining = timeoutSecs - Math.floor(elapsed / 1000);
+            if (timeRemaining <= 0) {
+                stopWaiting();
+                setWasFailed(true); // Indicate failure for shake animation
+                // Bug 1: Clear any existing timeout before setting a new one
+                if (failTimeoutRef.current) {
+                    clearTimeout(failTimeoutRef.current);
+                }
+                failTimeoutRef.current = setTimeout(() => {
+                    setWasFailed(false);
+                    failTimeoutRef.current = null; // Clear ref after timeout fires
+                }, 400); // Shake animation duration
+            }
+            else {
+                setCurrentChildren(`${displayLabel} (${timeRemaining}s)`);
+            }
+        }, 1000); // Update once per second
+    };
     // auto-reset success/failure state
     require$$0.useEffect(() => {
         if ((wasSuccessful || wasFailed) && autoResetAfterMs) {
@@ -1470,65 +1527,34 @@ const ZestButton = ({ visualOptions = {}, busyOptions = {}, successOptions = {},
                 !e.defaultPrevented &&
                 !(target instanceof HTMLTextAreaElement)) {
                 e.preventDefault();
-                buttonRef.current?.click();
+                // Bug 2: Directly call handleConfirmClick to respect confirmation logic
+                handleConfirmClick(e);
             }
         };
         document.addEventListener("keydown", listener);
         return () => document.removeEventListener("keydown", listener);
-    }, [isDefault, isDisabled]);
-    const stopWaiting = () => {
-        if (confirmIntervalRef.current) {
-            clearInterval(confirmIntervalRef.current);
-            confirmIntervalRef.current = null;
-        }
-        setCurrentChildren(children);
-        setAwaitingConfirm(false);
-    };
-    const handleConfirmClick = async (e) => {
-        if (!props.confirmOptions) {
-            return handleClick(e);
-        }
-        if (awaitingConfirm) {
-            stopWaiting();
-            return handleClick(e);
-        }
-        const { displayLabel, timeoutSecs } = props.confirmOptions;
-        const startTime = Date.now();
-        setAwaitingConfirm(true);
-        setCurrentChildren(`${displayLabel} (${timeoutSecs}s)`); // Initial display
-        confirmIntervalRef.current = setInterval(() => {
-            const elapsed = Date.now() - startTime;
-            const timeRemaining = timeoutSecs - Math.floor(elapsed / 1000);
-            if (timeRemaining <= 0) {
-                stopWaiting();
-                setWasFailed(true); // Indicate failure for shake animation
-                setTimeout(() => {
-                    setWasFailed(false);
-                }, 400); // Shake animation duration
-                // No need to return clearTimeout, as this timeout is for visual feedback only
-            }
-            else {
-                setCurrentChildren(`${displayLabel} (${timeRemaining}s)`);
-            }
-        }, 1000); // Update once per second
-    };
+    }, [isDefault, isDisabled, handleConfirmClick]); // Bug 2: Add handleConfirmClick to dependencies
     // cleanup on unmount
     require$$0.useEffect(() => {
         return () => {
             if (confirmIntervalRef.current) {
                 clearInterval(confirmIntervalRef.current);
             }
+            // Bug 1: Add cleanup for failTimeoutRef
+            if (failTimeoutRef.current) {
+                clearTimeout(failTimeoutRef.current);
+            }
         };
     }, []);
     const renderLeftIcon = () => {
         if (effectiveBusy) {
-            return (jsxRuntimeExports.jsx("span", { className: `${styles.icon} ${styles.fadeIn}`, children: jsxRuntimeExports.jsx(fa.FaSpinner, { className: styles.spinner }) }));
+            return (jsxRuntimeExports.jsx("span", { className: `${styles.icon} ${styles.fadeIn}`, children: jsxRuntimeExports.jsx(fa6.FaSpinner, { className: styles.spinner }) }));
         }
         else if (wasSuccessful && showCheckmark) {
             return (jsxRuntimeExports.jsx("span", { className: `${styles.icon} ${styles.fadeIn}`, children: jsxRuntimeExports.jsx(AnimatedCheckmark, {}) }));
         }
         else if (wasFailed && showFailIcon) {
-            return (jsxRuntimeExports.jsx("span", { className: `${styles.icon} ${styles.fadeIn} ${styles.shake}`, children: jsxRuntimeExports.jsx(AnimatedX, {}) }));
+            return (jsxRuntimeExports.jsx("span", { className: `${styles.icon} ${styles.fadeIn}`, children: jsxRuntimeExports.jsx(AnimatedX, {}) }));
         }
         else if (iconLeft) {
             return jsxRuntimeExports.jsx("span", { className: styles.icon, children: iconLeft });

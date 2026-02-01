@@ -1,6 +1,8 @@
 import React from "react";
 export type ZestVariant = "standard" | "success" | "danger";
 export type ZestSize = "sm" | "md" | "lg";
+export type ZestTheme = 'light' | 'dark' | 'system';
+export type ZestButtonStyle = 'solid' | 'outline' | 'text' | 'dashed';
 /**
  * Visual appearance of the button
  */
@@ -40,6 +42,8 @@ export interface ZestButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEl
     successOptions?: SuccessOptions;
     confirmOptions?: ConfirmOptions;
     isDefault?: boolean;
+    theme?: ZestTheme;
+    buttonStyle?: ZestButtonStyle;
 }
 declare const ZestButton: React.FC<ZestButtonProps>;
 export default ZestButton;

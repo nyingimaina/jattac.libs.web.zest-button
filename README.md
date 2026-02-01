@@ -15,6 +15,8 @@ A highly customizable and interactive React button component designed for modern
     -   [Confirmation Dialog](#confirmation-dialog)
     -   [Full Width Button](#full-width-button)
     -   [Default Button (Enter Key)](#default-button-enter-key)
+-   [Theme Support](#theme-support)
+-   [Button Styles](#button-styles)
 -   [Props](#props)
 -   [Styling](#styling)
 -   [Development](#development)
@@ -178,6 +180,51 @@ A button marked as `isDefault` will be triggered when the user presses the `Ente
 </ZestButton>
 ```
 
+### Theme Support
+
+The `ZestButton` automatically adapts to the user's system theme (light or dark) by default. You can override this behavior using the `theme` prop.
+
+```tsx
+// Button will follow system theme (default behavior)
+<ZestButton onClick={() => alert('System theme!')}>
+  System Theme Button
+</ZestButton>
+
+// Force light theme
+<ZestButton theme="light" onClick={() => alert('Light theme!')}>
+  Light Theme Button
+</ZestButton>
+
+// Force dark theme
+<ZestButton theme="dark" onClick={() => alert('Dark theme!')}>
+  Dark Theme Button
+</ZestButton>
+```
+
+### Button Styles
+
+Beyond the default solid button, `ZestButton` supports `outline`, `text`, and `dashed` styles.
+
+```tsx
+// Solid (default)
+<ZestButton>Solid Button</ZestButton>
+
+// Outline button
+<ZestButton buttonStyle="outline" visualOptions={{ variant: 'standard' }}>
+  Outline Button
+</ZestButton>
+
+// Text button
+<ZestButton buttonStyle="text" visualOptions={{ variant: 'success' }}>
+  Text Button
+</ZestButton>
+
+// Dashed button
+<ZestButton buttonStyle="dashed" visualOptions={{ variant: 'danger' }}>
+  Dashed Button
+</ZestButton>
+```
+
 ## Props
 
 The `ZestButton` component extends standard HTML `button` attributes and introduces several custom props for enhanced functionality.
@@ -185,6 +232,8 @@ The `ZestButton` component extends standard HTML `button` attributes and introdu
 ```typescript
 export type ZestVariant = "standard" | "success" | "danger";
 export type ZestSize = "sm" | "md" | "lg";
+export type ZestTheme = 'light' | 'dark' | 'system'; // New type for theme
+export type ZestButtonStyle = 'solid' | 'outline' | 'text' | 'dashed'; // New type for button style
 
 interface VisualOptions {
   variant?: ZestVariant; // Visual style of the button (default: "standard")
@@ -218,6 +267,8 @@ export interface ZestButtonProps
   successOptions?: SuccessOptions;
   confirmOptions?: ConfirmOptions;
   isDefault?: boolean; // If true, button is triggered by Enter key (default: false)
+  theme?: ZestTheme; // Theme override for the button (default: "system")
+  buttonStyle?: ZestButtonStyle; // Style of the button (default: "solid")
   // All standard HTML button attributes are also supported (e.g., disabled, type, etc.)
 }
 ```

@@ -16568,6 +16568,8 @@ interface GlobalJSXIntrinsicElements extends JSX.IntrinsicElements {}
 
 type ZestVariant = "standard" | "success" | "danger";
 type ZestSize = "sm" | "md" | "lg";
+type ZestTheme = 'light' | 'dark' | 'system';
+type ZestButtonStyle = 'solid' | 'outline' | 'text' | 'dashed';
 /**
  * Visual appearance of the button
  */
@@ -16607,8 +16609,10 @@ interface ZestButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> 
     successOptions?: SuccessOptions;
     confirmOptions?: ConfirmOptions;
     isDefault?: boolean;
+    theme?: ZestTheme;
+    buttonStyle?: ZestButtonStyle;
 }
 declare const ZestButton: React.FC<ZestButtonProps>;
 
 export { ZestButton as default };
-export type { ZestButtonProps, ZestSize, ZestVariant };
+export type { ZestButtonProps, ZestButtonStyle, ZestSize, ZestTheme, ZestVariant };

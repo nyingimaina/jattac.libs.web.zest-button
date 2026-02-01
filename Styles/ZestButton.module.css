@@ -1,31 +1,256 @@
+/* Styles/ZestButton.module.css */
+
+/* Define base variables for light mode */
+:root {
+  --zest-color-standard-bg: #1e40af;
+  --zest-color-standard-bg-hover: #1a35a0;
+  --zest-color-standard-text: white;
+  --zest-color-standard-border: #1e40af;
+
+  --zest-color-success-bg: #059669;
+  --zest-color-success-bg-hover: #047857;
+  --zest-color-success-text: white;
+  --zest-color-success-border: #059669;
+
+  --zest-color-danger-bg: #dc2626;
+  --zest-color-danger-bg-hover: #b91c1c;
+  --zest-color-danger-text: white;
+  --zest-color-danger-border: #dc2626;
+
+  --zest-color-disabled-bg: #cbd5e1;
+  --zest-color-disabled-bg-hover: #aeb9c4;
+  --zest-color-disabled-text: #6b7280;
+  --zest-color-disabled-border: #cbd5e1;
+
+  --zest-color-icon-success: #10b981;
+  --zest-color-icon-fail: #ef4444;
+}
+
+/* Dark mode adjustments via system preference */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --zest-color-standard-bg: #3b82f6;
+    --zest-color-standard-bg-hover: #2563eb;
+    --zest-color-standard-text: white;
+    --zest-color-standard-border: #3b82f6;
+
+    --zest-color-success-bg: #34d399;
+    --zest-color-success-bg-hover: #10b981;
+    --zest-color-success-text: white;
+    --zest-color-success-border: #34d399;
+
+    --zest-color-danger-bg: #ef4444;
+    --zest-color-danger-bg-hover: #dc2626;
+    --zest-color-danger-text: white;
+    --zest-color-danger-border: #ef4444;
+
+    --zest-color-disabled-bg: #4b5563;
+    --zest-color-disabled-bg-hover: #6b7280;
+    --zest-color-disabled-text: #9ca3af;
+    --zest-color-disabled-border: #4b5563;
+
+    --zest-color-icon-success: #34d399;
+    --zest-color-icon-fail: #ef4444;
+  }
+}
+
+/* Theme override classes */
+.force-light {
+  --zest-color-standard-bg: #1e40af;
+  --zest-color-standard-bg-hover: #1a35a0;
+  --zest-color-standard-text: white;
+  --zest-color-standard-border: #1e40af;
+
+  --zest-color-success-bg: #059669;
+  --zest-color-success-bg-hover: #047857;
+  --zest-color-success-text: white;
+  --zest-color-success-border: #059669;
+
+  --zest-color-danger-bg: #dc2626;
+  --zest-color-danger-bg-hover: #b91c1c;
+  --zest-color-danger-text: white;
+  --zest-color-danger-border: #dc2626;
+
+  --zest-color-disabled-bg: #cbd5e1;
+  --zest-color-disabled-bg-hover: #aeb9c4;
+  --zest-color-disabled-text: #6b7280;
+  --zest-color-disabled-border: #cbd5e1;
+
+  --zest-color-icon-success: #10b981;
+  --zest-color-icon-fail: #ef4444;
+}
+
+.force-dark {
+  --zest-color-standard-bg: #3b82f6;
+  --zest-color-standard-bg-hover: #2563eb;
+  --zest-color-standard-text: white;
+  --zest-color-standard-border: #3b82f6;
+
+  --zest-color-success-bg: #34d399;
+  --zest-color-success-bg-hover: #10b981;
+  --zest-color-success-text: white;
+  --zest-color-success-border: #34d399;
+
+  --zest-color-danger-bg: #ef4444;
+  --zest-color-danger-bg-hover: #dc2626;
+  --zest-color-danger-text: white;
+  --zest-color-danger-border: #ef4444;
+
+  --zest-color-disabled-bg: #4b5563;
+  --zest-color-disabled-bg-hover: #6b7280;
+  --zest-color-disabled-text: #9ca3af;
+  --zest-color-disabled-border: #4b5563;
+
+  --zest-color-icon-success: #34d399;
+  --zest-color-icon-fail: #ef4444;
+}
+
+
 .button {
   font-family: "Segoe UI", Roboto, sans-serif;
   font-weight: 600;
-  border: none;
   border-radius: 8px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   position: relative;
   padding: 0.6em 1.2em;
-  color: white;
-  background-color: #1e40af;
   overflow: hidden;
+  border: none; /* Default to no border, overridden by outline/dashed */
 }
 
-.button:hover:not(:disabled) {
-  background-color: #1a35a0;
+/* Base styles for different button styles */
+.solid {
+  background-color: var(--zest-color-standard-bg);
+  color: var(--zest-color-standard-text);
+}
+.solid:hover:not(:disabled) {
+  background-color: var(--zest-color-standard-bg-hover);
 }
 
-.button:disabled,
-.disabled {
-  background-color: #cbd5e1;
-  color: #6b7280;
-  cursor: not-allowed;
+.outline {
+  background-color: transparent;
+  border: 2px solid var(--zest-color-standard-border);
+  color: var(--zest-color-standard-border);
+}
+.outline:hover:not(:disabled) {
+  background-color: var(--zest-color-standard-bg);
+  color: var(--zest-color-standard-text);
 }
 
+.text {
+  background-color: transparent;
+  border: none;
+  color: var(--zest-color-standard-bg);
+}
+.text:hover:not(:disabled) {
+  background-color: rgba(var(--zest-color-standard-bg-rgb, 30, 64, 175), 0.1); /* Fallback RGB for text hover */
+}
+
+.dashed {
+  background-color: transparent;
+  border: 2px dashed var(--zest-color-standard-border);
+  color: var(--zest-color-standard-border);
+}
+.dashed:hover:not(:disabled) {
+  background-color: rgba(var(--zest-color-standard-bg-rgb, 30, 64, 175), 0.1); /* Fallback RGB for dashed hover */
+}
+
+
+/* Variant overrides for solid style */
+.solid.standard { /* Already handled by .solid base */ }
+.solid.success {
+  background-color: var(--zest-color-success-bg);
+  color: var(--zest-color-success-text);
+}
+.solid.success:hover:not(:disabled) {
+  background-color: var(--zest-color-success-bg-hover);
+}
+.solid.danger {
+  background-color: var(--zest-color-danger-bg);
+  color: var(--zest-color-danger-text);
+}
+.solid.danger:hover:not(:disabled) {
+  background-color: var(--zest-color-danger-bg-hover);
+}
+
+/* Variant overrides for outline style */
+.outline.standard { /* Already handled by .outline base */ }
+.outline.success {
+  border-color: var(--zest-color-success-border);
+  color: var(--zest-color-success-border);
+}
+.outline.success:hover:not(:disabled) {
+  background-color: var(--zest-color-success-bg);
+  color: var(--zest-color-success-text);
+}
+.outline.danger {
+  border-color: var(--zest-color-danger-border);
+  color: var(--zest-color-danger-border);
+}
+.outline.danger:hover:not(:disabled) {
+  background-color: var(--zest-color-danger-bg);
+  color: var(--zest-color-danger-text);
+}
+
+/* Variant overrides for text style */
+.text.standard { /* Already handled by .text base */ }
+.text.success {
+  color: var(--zest-color-success-bg);
+}
+.text.success:hover:not(:disabled) {
+  background-color: rgba(var(--zest-color-success-bg-rgb, 5, 150, 105), 0.1);
+}
+.text.danger {
+  color: var(--zest-color-danger-bg);
+}
+.text.danger:hover:not(:disabled) {
+  background-color: rgba(var(--zest-color-danger-bg-rgb, 220, 38, 38), 0.1);
+}
+
+/* Variant overrides for dashed style */
+.dashed.standard { /* Already handled by .dashed base */ }
+.dashed.success {
+  border-color: var(--zest-color-success-border);
+  color: var(--zest-color-success-border);
+}
+.dashed.success:hover:not(:disabled) {
+  background-color: rgba(var(--zest-color-success-bg-rgb, 5, 150, 105), 0.1);
+}
+.dashed.danger {
+  border-color: var(--zest-color-danger-border);
+  color: var(--zest-color-danger-border);
+}
+.dashed.danger:hover:not(:disabled) {
+  background-color: rgba(var(--zest-color-danger-bg-rgb, 220, 38, 38), 0.1);
+}
+
+
+/* Disabled state overrides for different button styles */
+.solid:disabled, .solid.disabled {
+  background-color: var(--zest-color-disabled-bg);
+  color: var(--zest-color-disabled-text);
+  border-color: var(--zest-color-disabled-border);
+}
+.outline:disabled, .outline.disabled {
+  background-color: transparent;
+  border-color: var(--zest-color-disabled-border);
+  color: var(--zest-color-disabled-text);
+}
+.text:disabled, .text.disabled {
+  background-color: transparent;
+  color: var(--zest-color-disabled-text);
+}
+.dashed:disabled, .dashed.disabled {
+  background-color: transparent;
+  border-color: var(--zest-color-disabled-border);
+  color: var(--zest-color-disabled-text);
+}
+
+
+/* Layout */
 .fullWidth {
   width: 100%;
 }
@@ -45,28 +270,6 @@
   padding: 0.8em 1.6em;
 }
 
-.standard {
-  background-color: #1e40af;
-}
-.standard:hover:not(:disabled) {
-  background-color: #1a35a0;
-}
-
-.success {
-  background-color: #059669;
-}
-.success:hover:not(:disabled) {
-  background-color: #047857;
-}
-
-.danger {
-  background-color: #dc2626;
-}
-.danger:hover:not(:disabled) {
-  background-color: #b91c1c;
-}
-
-/* Layout */
 .inner {
   display: inline-flex;
   align-items: center;
@@ -79,7 +282,7 @@
   width: 1em;
   height: 1em;
   animation: spin 0.75s linear infinite;
-  color: white;
+  color: currentColor; /* Inherit color from button text */
 }
 
 .content {
@@ -100,16 +303,18 @@
 }
 
 /* Success + Fail Icons */
-.animatedCheck,
-.animatedX {
+.animatedCheck {
   width: 1.25em;
   height: 1.25em;
-  color: #10b981;
+  color: var(--zest-color-icon-success);
   animation: fadeIn 0.25s ease-out;
 }
 
 .animatedX {
-  color: #ef4444;
+  width: 1.25em;
+  height: 1.25em;
+  color: var(--zest-color-icon-fail);
+  animation: fadeIn 0.25s ease-out;
 }
 
 /* Stroke animations */

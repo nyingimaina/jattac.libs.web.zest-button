@@ -6,6 +6,8 @@ import styles from "../Styles/ZestButton.module.css";
 
 export type ZestVariant = "standard" | "success" | "danger";
 export type ZestSize = "sm" | "md" | "lg";
+export type ZestTheme = 'light' | 'dark' | 'system'; // New type for theme
+export type ZestButtonStyle = 'solid' | 'outline' | 'text' | 'dashed'; // New type for button style
 
 /**
  * Visual appearance of the button
@@ -51,6 +53,8 @@ export interface ZestButtonProps
   successOptions?: SuccessOptions;
   confirmOptions?: ConfirmOptions;
   isDefault?: boolean;
+  theme?: ZestTheme; // New prop for theme override
+  buttonStyle?: ZestButtonStyle; // New prop for button style
 }
 
 // --- Components ---
@@ -92,7 +96,9 @@ const ZestButton: React.FC<ZestButtonProps> = ({
   className = "",
   disabled,
   children,
-  onClick,
+  onClick, // Destructure onClick here
+  theme = 'system', // New prop with default
+  buttonStyle = 'solid', // New prop with default
   ...props
 }) => {
   const {
@@ -141,6 +147,22 @@ const ZestButton: React.FC<ZestButtonProps> = ({
   const confirmIntervalRef = useRef<ReturnType<typeof setInterval> | null>(
     null
   );
+
+  // Theme state and detection
+  const [systemTheme, setSystemTheme] = useState<'light' | 'dark'>('light');
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = () => {
+      setSystemTheme(mediaQuery.matches ? 'dark' : 'light');
+    };
+
+    handleChange(); // Set initial theme
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  const effectiveTheme = theme === 'system' ? systemTheme : theme;
 
   // keep children in sync when not in confirm mode
   useEffect(() => {
@@ -316,11 +338,13 @@ const ZestButton: React.FC<ZestButtonProps> = ({
       ref={buttonRef}
       className={[
         styles.button,
+        styles[buttonStyle], // Apply buttonStyle class
         styles[variant],
         styles[size],
         fullWidth ? styles.fullWidth : "",
         isDisabled ? styles.disabled : "",
         wasFailed ? styles.shake : "",
+        effectiveTheme === 'light' ? styles['force-light'] : styles['force-dark'], // Apply theme override class
         className,
       ].join(" ")}
       disabled={isDisabled}

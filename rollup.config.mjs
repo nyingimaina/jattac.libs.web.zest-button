@@ -30,11 +30,11 @@ export default [
       postcss({
         modules: true,
         plugins: [autoprefixer(), cssnano({ preset: 'default' })],
-        extract: false, // Inject CSS into the head
+        extract: 'zestbutton.css', // Extract CSS to a separate file
         minimize: true,
       }),
     ],
-    external: ['react', 'react-dom', 'react-icons/fa', 'react-icons/fa6'],
+    external: ['react', 'react-dom', 'react-icons/fa'],
   },
   {
     input: 'UI/ZestButton.tsx',

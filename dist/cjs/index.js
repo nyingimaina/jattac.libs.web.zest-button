@@ -1,7 +1,7 @@
 'use strict';
 
 var require$$0 = require('react');
-var fa6 = require('react-icons/fa6');
+var fa = require('react-icons/fa');
 
 var jsxRuntime = {exports: {}};
 
@@ -425,46 +425,15 @@ function requireJsxRuntime () {
 
 var jsxRuntimeExports = requireJsxRuntime();
 
-const SpinnerIcon = ({ className, ...props }) => (jsxRuntimeExports.jsx(fa6.FaSpinner, { className: className, ...props }));
-
-function styleInject(css, ref) {
-  if ( ref === void 0 ) ref = {};
-  var insertAt = ref.insertAt;
-
-  if (typeof document === 'undefined') { return; }
-
-  var head = document.head || document.getElementsByTagName('head')[0];
-  var style = document.createElement('style');
-  style.type = 'text/css';
-
-  if (insertAt === 'top') {
-    if (head.firstChild) {
-      head.insertBefore(style, head.firstChild);
-    } else {
-      head.appendChild(style);
-    }
-  } else {
-    head.appendChild(style);
-  }
-
-  if (style.styleSheet) {
-    style.styleSheet.cssText = css;
-  } else {
-    style.appendChild(document.createTextNode(css));
-  }
-}
-
-var css_248z = ".ZestButton-module_button__KDafc{--zest-color-text-primary:#fff;--zest-color-text-disabled:#6b7280;--zest-color-bg-disabled:#cbd5e1;--zest-color-standard-bg:#1e40af;--zest-color-standard-bg-hover:#1a35a0;--zest-color-success-bg:#059669;--zest-color-success-bg-hover:#047857;--zest-color-danger-bg:#dc2626;--zest-color-danger-bg-hover:#b91c1c;--zest-color-danger-glow:rgba(239,68,68,.6)}@media (prefers-color-scheme:dark){.ZestButton-module_button__KDafc{--zest-color-text-disabled:#94a3b8;--zest-color-bg-disabled:#334155;--zest-color-standard-bg:#3b82f6;--zest-color-standard-bg-hover:#2563eb;--zest-color-success-bg:#10b981;--zest-color-success-bg-hover:#059669;--zest-color-danger-bg:#ef4444;--zest-color-danger-bg-hover:#dc2626;--zest-color-danger-glow:rgba(239,68,68,.7)}}[data-theme=dark] .ZestButton-module_button__KDafc{--zest-color-text-disabled:#94a3b8;--zest-color-bg-disabled:#334155;--zest-color-standard-bg:#3b82f6;--zest-color-standard-bg-hover:#2563eb;--zest-color-success-bg:#10b981;--zest-color-success-bg-hover:#059669;--zest-color-danger-bg:#ef4444;--zest-color-danger-bg-hover:#dc2626;--zest-color-danger-glow:rgba(239,68,68,.7)}[data-theme=light] .ZestButton-module_button__KDafc{--zest-color-text-primary:#fff;--zest-color-text-disabled:#6b7280;--zest-color-bg-disabled:#cbd5e1;--zest-color-standard-bg:#1e40af;--zest-color-standard-bg-hover:#1a35a0;--zest-color-success-bg:#059669;--zest-color-success-bg-hover:#047857;--zest-color-danger-bg:#dc2626;--zest-color-danger-bg-hover:#b91c1c;--zest-color-danger-glow:rgba(239,68,68,.6)}.ZestButton-module_button__KDafc{align-items:center;background-color:var(--zest-color-standard-bg);border:none;border-radius:8px;color:var(--zest-color-text-primary);cursor:pointer;display:inline-flex;font-family:Segoe UI,Roboto,sans-serif;font-weight:600;justify-content:center;overflow:hidden;padding:.6em 1.2em;position:relative;transition:background-color .2s ease,box-shadow .2s ease}.ZestButton-module_button__KDafc:hover:not(:disabled){background-color:var(--zest-color-standard-bg-hover)}.ZestButton-module_button__KDafc:disabled,.ZestButton-module_disabled__gw6y3{background-color:var(--zest-color-bg-disabled);color:var(--zest-color-text-disabled);cursor:not-allowed}.ZestButton-module_fullWidth__2ziwk{width:100%}.ZestButton-module_sm__G1vAP{font-size:.85rem;padding:.4em .8em}.ZestButton-module_md__Y-PMO{font-size:1rem;padding:.6em 1.2em}.ZestButton-module_lg__AQgdf{font-size:1.125rem;padding:.8em 1.6em}.ZestButton-module_standard__T3EGM{background-color:var(--zest-color-standard-bg)}.ZestButton-module_standard__T3EGM:hover:not(:disabled){background-color:var(--zest-color-standard-bg-hover)}.ZestButton-module_success__XEptA{background-color:var(--zest-color-success-bg)}.ZestButton-module_success__XEptA:hover:not(:disabled){background-color:var(--zest-color-success-bg-hover)}.ZestButton-module_danger__nJpJ-{background-color:var(--zest-color-danger-bg)}.ZestButton-module_danger__nJpJ-:hover:not(:disabled){background-color:var(--zest-color-danger-bg-hover)}.ZestButton-module_inner__1j2Fr{align-items:center;display:inline-flex;justify-content:center;position:relative}.ZestButton-module_spinner__l2hLe{animation:ZestButton-module_spin__4asdw .75s linear infinite;color:var(--zest-color-text-primary);height:1em;position:absolute;width:1em}.ZestButton-module_content__hlea3{align-items:center;display:inline-flex;gap:.5em;justify-content:center}.ZestButton-module_label__8x263{display:inline-block}.ZestButton-module_icon__B3DFi{align-items:center;display:inline-flex;justify-content:center}.ZestButton-module_animatedCheck__8K4K-,.ZestButton-module_animatedX__KQnt7{animation:ZestButton-module_fadeIn__iEave .25s ease-out;color:#10b981;height:1.25em;width:1.25em}.ZestButton-module_animatedX__KQnt7{color:#ef4444}.ZestButton-module_animatedCheck__8K4K- path,.ZestButton-module_animatedX__KQnt7 line{stroke-dasharray:24;stroke-dashoffset:24;animation:ZestButton-module_drawCheck__3DyjT .4s ease-out forwards}.ZestButton-module_icon__B3DFi:first-child{margin-right:.7em}.ZestButton-module_icon__B3DFi:last-child{margin-left:.7em}@keyframes ZestButton-module_spin__4asdw{to{transform:rotate(1turn)}}@keyframes ZestButton-module_drawCheck__3DyjT{to{stroke-dashoffset:0}}@keyframes ZestButton-module_fadeIn__iEave{0%{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}@keyframes ZestButton-module_shakeIt__ox-R3{0%,to{transform:translateX(0)}20%,60%{transform:translateX(-4px)}40%,80%{transform:translateX(4px)}}.ZestButton-module_shake__NtIjf{animation:ZestButton-module_shakeIt__ox-R3 .4s ease;box-shadow:0 0 0 2px var(--zest-color-danger-glow)}";
 var styles = {"button":"ZestButton-module_button__KDafc","disabled":"ZestButton-module_disabled__gw6y3","fullWidth":"ZestButton-module_fullWidth__2ziwk","sm":"ZestButton-module_sm__G1vAP","md":"ZestButton-module_md__Y-PMO","lg":"ZestButton-module_lg__AQgdf","standard":"ZestButton-module_standard__T3EGM","success":"ZestButton-module_success__XEptA","danger":"ZestButton-module_danger__nJpJ-","inner":"ZestButton-module_inner__1j2Fr","spinner":"ZestButton-module_spinner__l2hLe","spin":"ZestButton-module_spin__4asdw","content":"ZestButton-module_content__hlea3","label":"ZestButton-module_label__8x263","icon":"ZestButton-module_icon__B3DFi","animatedCheck":"ZestButton-module_animatedCheck__8K4K-","animatedX":"ZestButton-module_animatedX__KQnt7","fadeIn":"ZestButton-module_fadeIn__iEave","drawCheck":"ZestButton-module_drawCheck__3DyjT","shake":"ZestButton-module_shake__NtIjf","shakeIt":"ZestButton-module_shakeIt__ox-R3"};
-styleInject(css_248z);
 
 // --- Components ---
 const AnimatedCheckmark = () => (jsxRuntimeExports.jsx("svg", { className: styles.animatedCheck, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: jsxRuntimeExports.jsx("path", { d: "M5 13l4 4L19 7" }) }));
-const AnimatedX = () => (jsxRuntimeExports.jsxs("svg", { className: styles.animatedX, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: [jsxRuntimeExports.jsx("path", { d: "M6 6L18 18" }), jsxRuntimeExports.jsx("path", { d: "M18 6L6 18" })] }));
-const ZestButton = ({ visualOptions, busyOptions, successOptions, confirmOptions, isDefault = false, className = "", disabled, children, onClick, ...rest }) => {
-    const { variant = "standard", size = "md", fullWidth = false, iconLeft, iconRight, } = visualOptions || {};
-    const { handleInternally = true, preventRageClick = true, minBusyDurationMs = 500, } = busyOptions || {};
-    const { showCheckmark = true, showFailIcon = true, autoResetAfterMs = 2000, } = successOptions || {};
+const AnimatedX = () => (jsxRuntimeExports.jsxs("svg", { className: styles.animatedX, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "3", strokeLinecap: "round", strokeLinejoin: "round", children: [jsxRuntimeExports.jsx("path", { d: "M6 6L18 18" }), jsxRuntimeExports.jsx("path", { d: "M6 18L18 6" })] }));
+const ZestButton = ({ visualOptions = {}, busyOptions = {}, successOptions = {}, isDefault = false, className = "", disabled, children, onClick, ...props }) => {
+    const { variant = "standard", size = "md", fullWidth = false, iconLeft, iconRight, } = visualOptions;
+    const { handleInternally = true, preventRageClick = true, minBusyDurationMs = 500, } = busyOptions;
+    const { showCheckmark = true, showFailIcon = true, autoResetAfterMs = 2000, } = successOptions;
     const [internalBusy, setInternalBusy] = require$$0.useState(false);
     const [wasSuccessful, setWasSuccessful] = require$$0.useState(false);
     const [wasFailed, setWasFailed] = require$$0.useState(false);
@@ -479,8 +448,8 @@ const ZestButton = ({ visualOptions, busyOptions, successOptions, confirmOptions
             setCurrentChildren(children);
         }
     }, [children, awaitingConfirm]);
-    const effectiveBusy = typeof rest["aria-busy"] === "boolean"
-        ? Boolean(rest["aria-busy"])
+    const effectiveBusy = typeof props["aria-busy"] === "boolean"
+        ? Boolean(props["aria-busy"])
         : handleInternally
             ? internalBusy
             : false;
@@ -488,6 +457,8 @@ const ZestButton = ({ visualOptions, busyOptions, successOptions, confirmOptions
         effectiveBusy ||
         (preventRageClick && (wasSuccessful || wasFailed));
     const handleClick = async (e) => {
+        if (preventRageClick && internalBusy)
+            return;
         if (handleInternally && typeof onClick === "function") {
             try {
                 setWasSuccessful(false);
@@ -528,14 +499,10 @@ const ZestButton = ({ visualOptions, busyOptions, successOptions, confirmOptions
     }, [wasSuccessful, wasFailed, autoResetAfterMs]);
     // Enter key handler if isDefault
     require$$0.useEffect(() => {
-        if (!isDefault)
+        if (!isDefault || isDisabled)
             return;
         const listener = (e) => {
             var _a;
-            // Don't trigger if the button is disabled
-            if (isDisabled) {
-                return;
-            }
             const target = e.target;
             if (e.key === "Enter" &&
                 !e.repeat &&
@@ -557,14 +524,14 @@ const ZestButton = ({ visualOptions, busyOptions, successOptions, confirmOptions
         setAwaitingConfirm(false);
     };
     const handleConfirmClick = (e) => {
-        if (!confirmOptions) {
+        if (!props.confirmOptions) {
             return handleClick(e);
         }
         if (awaitingConfirm) {
             stopWaiting();
             return handleClick(e);
         }
-        const { displayLabel, timeoutSecs } = confirmOptions;
+        const { displayLabel, timeoutSecs } = props.confirmOptions;
         const startTime = Date.now();
         setAwaitingConfirm(true);
         confirmIntervalRef.current = setInterval(() => {
@@ -577,7 +544,7 @@ const ZestButton = ({ visualOptions, busyOptions, successOptions, confirmOptions
                 const timeRemaining = timeoutSecs - elapsedSecs;
                 setCurrentChildren(`${displayLabel} (${timeRemaining}s)`);
             }
-        }, 1000); // ✅ update once per second
+        }, 100); // ✅ update once per second
     };
     // cleanup on unmount
     require$$0.useEffect(() => {
@@ -589,34 +556,28 @@ const ZestButton = ({ visualOptions, busyOptions, successOptions, confirmOptions
     }, []);
     const renderLeftIcon = () => {
         if (effectiveBusy) {
-            return (jsxRuntimeExports.jsx("span", { className: `${styles.icon} ${styles.fadeIn}`, children: jsxRuntimeExports.jsx(SpinnerIcon, { className: styles.spinner, size: 18 }) }));
+            return (jsxRuntimeExports.jsx("span", { className: `${styles.icon} ${styles.fadeIn}`, children: jsxRuntimeExports.jsx(fa.FaSpinner, { className: styles.spinner }) }));
         }
         else if (wasSuccessful && showCheckmark) {
             return (jsxRuntimeExports.jsx("span", { className: `${styles.icon} ${styles.fadeIn}`, children: jsxRuntimeExports.jsx(AnimatedCheckmark, {}) }));
         }
         else if (wasFailed && showFailIcon) {
-            return (jsxRuntimeExports.jsx("span", { className: `${styles.icon} ${styles.fadeIn} ${styles.shake}`, children: jsxRuntimeExports.jsx(AnimatedX, {}) }));
+            return (jsxRuntimeExports.jsx("span", { className: `${styles.icon} ${styles.fadeIn} ${styles.failShake}`, children: jsxRuntimeExports.jsx(AnimatedX, {}) }));
         }
         else if (iconLeft) {
             return jsxRuntimeExports.jsx("span", { className: styles.icon, children: iconLeft });
         }
         return null;
     };
-    // Sanitize props to prevent passing non-standard attributes to the DOM
-    delete rest.visualOptions;
-    delete rest.busyOptions;
-    delete rest.successOptions;
-    delete rest.confirmOptions;
-    delete rest.isDefault;
     return (jsxRuntimeExports.jsx("button", { ref: buttonRef, className: [
             styles.button,
             styles[variant],
             styles[size],
             fullWidth ? styles.fullWidth : "",
             isDisabled ? styles.disabled : "",
-            wasFailed ? styles.shake : "",
+            wasFailed ? styles.failGlow : "",
             className,
-        ].join(" "), disabled: isDisabled, "aria-busy": effectiveBusy, onClick: handleConfirmClick, ...rest, children: jsxRuntimeExports.jsxs("span", { className: styles.inner, children: [renderLeftIcon(), jsxRuntimeExports.jsxs("span", { className: styles.content, children: [currentChildren, iconRight && jsxRuntimeExports.jsx("span", { className: styles.icon, children: iconRight })] })] }) }));
+        ].join(" "), disabled: isDisabled, "aria-busy": effectiveBusy, onClick: handleConfirmClick, ...props, children: jsxRuntimeExports.jsxs("span", { className: styles.inner, children: [renderLeftIcon(), jsxRuntimeExports.jsxs("span", { className: styles.content, children: [currentChildren, iconRight && jsxRuntimeExports.jsx("span", { className: styles.icon, children: iconRight })] })] }) }));
 };
 
 module.exports = ZestButton;

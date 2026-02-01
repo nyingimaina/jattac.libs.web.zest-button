@@ -31,11 +31,12 @@ npm install jattac.libs.web.zest-button
 
 ## Basic Usage
 
-Import the `ZestButton` to get started. The component's styles will be injected automatically.
+Import the `ZestButton` and its styles to get started.
 
 ```jsx
 import React from 'react';
 import ZestButton from 'jattac.libs.web.zest-button';
+import 'jattac.libs.web.zest-button/dist/zestbutton.css';
 
 const App = () => (
   <ZestButton onClick={() => alert('Zest!')}>
@@ -210,35 +211,6 @@ Use the `isDefault` prop to make the button clickable via the 'Enter' key anywhe
 <ZestButton isDefault onClick={() => alert('Submitted!')}>
   Submit
 </ZestButton>
-```
-
----
-
-## Theming (Dark/Light Mode)
-
-`ZestButton` has full support for light and dark themes.
-
-### Automatic Theming
-
-By default, the button will automatically detect and apply the user's operating system theme preference (`light` or `dark`). No configuration is needed for this behavior.
-
-### Manual Override
-
-For applications with their own theme-switching logic, you can take explicit control. To force a theme, add the `data-theme` attribute to an ancestor element (like `<html>` or `<body>`).
-
-The supported values are `light` and `dark`.
-
-```jsx
-// To force dark mode for your entire application
-<body data-theme="dark">
-  {/* The ZestButton will now be dark, regardless of OS settings */}
-  <App />
-</body>
-
-// To force light mode
-<html data-theme="light">
-  {/* ... */}
-</html>
 ```
 
 ---

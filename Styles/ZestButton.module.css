@@ -1,61 +1,3 @@
-/* --- Theme Variables --- */
-.button {
-  /* Light Theme (Default) */
-  --zest-color-text-primary: #ffffff;
-  --zest-color-text-disabled: #6b7280;
-  --zest-color-bg-disabled: #cbd5e1;
-  --zest-color-standard-bg: #1e40af;
-  --zest-color-standard-bg-hover: #1a35a0;
-  --zest-color-success-bg: #059669;
-  --zest-color-success-bg-hover: #047857;
-  --zest-color-danger-bg: #dc2626;
-  --zest-color-danger-bg-hover: #b91c1c;
-  --zest-color-danger-glow: rgba(239, 68, 68, 0.6);
-}
-
-/* Automatic Dark Theme via OS preference */
-@media (prefers-color-scheme: dark) {
-  .button {
-    --zest-color-text-disabled: #94a3b8;
-    --zest-color-bg-disabled: #334155;
-    --zest-color-standard-bg: #3b82f6;
-    --zest-color-standard-bg-hover: #2563eb;
-    --zest-color-success-bg: #10b981;
-    --zest-color-success-bg-hover: #059669;
-    --zest-color-danger-bg: #ef4444;
-    --zest-color-danger-bg-hover: #dc2626;
-    --zest-color-danger-glow: rgba(239, 68, 68, 0.7);
-  }
-}
-
-/* Explicit overrides via data-theme attribute on an ancestor */
-[data-theme='dark'] .button {
-  --zest-color-text-disabled: #94a3b8;
-  --zest-color-bg-disabled: #334155;
-  --zest-color-standard-bg: #3b82f6;
-  --zest-color-standard-bg-hover: #2563eb;
-  --zest-color-success-bg: #10b981;
-  --zest-color-success-bg-hover: #059669;
-  --zest-color-danger-bg: #ef4444;
-  --zest-color-danger-bg-hover: #dc2626;
-  --zest-color-danger-glow: rgba(239, 68, 68, 0.7);
-}
-
-[data-theme='light'] .button {
-  --zest-color-text-primary: #ffffff;
-  --zest-color-text-disabled: #6b7280;
-  --zest-color-bg-disabled: #cbd5e1;
-  --zest-color-standard-bg: #1e40af;
-  --zest-color-standard-bg-hover: #1a35a0;
-  --zest-color-success-bg: #059669;
-  --zest-color-success-bg-hover: #047857;
-  --zest-color-danger-bg: #dc2626;
-  --zest-color-danger-bg-hover: #b91c1c;
-  --zest-color-danger-glow: rgba(239, 68, 68, 0.6);
-}
-
-
-/* --- Base Styles --- */
 .button {
   font-family: "Segoe UI", Roboto, sans-serif;
   font-weight: 600;
@@ -68,19 +10,19 @@
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
   position: relative;
   padding: 0.6em 1.2em;
-  color: var(--zest-color-text-primary);
-  background-color: var(--zest-color-standard-bg);
+  color: white;
+  background-color: #1e40af;
   overflow: hidden;
 }
 
 .button:hover:not(:disabled) {
-  background-color: var(--zest-color-standard-bg-hover);
+  background-color: #1a35a0;
 }
 
 .button:disabled,
 .disabled {
-  background-color: var(--zest-color-bg-disabled);
-  color: var(--zest-color-text-disabled);
+  background-color: #cbd5e1;
+  color: #6b7280;
   cursor: not-allowed;
 }
 
@@ -104,24 +46,24 @@
 }
 
 .standard {
-  background-color: var(--zest-color-standard-bg);
+  background-color: #1e40af;
 }
 .standard:hover:not(:disabled) {
-  background-color: var(--zest-color-standard-bg-hover);
+  background-color: #1a35a0;
 }
 
 .success {
-  background-color: var(--zest-color-success-bg);
+  background-color: #059669;
 }
 .success:hover:not(:disabled) {
-  background-color: var(--zest-color-success-bg-hover);
+  background-color: #047857;
 }
 
 .danger {
-  background-color: var(--zest-color-danger-bg);
+  background-color: #dc2626;
 }
 .danger:hover:not(:disabled) {
-  background-color: var(--zest-color-danger-bg-hover);
+  background-color: #b91c1c;
 }
 
 /* Layout */
@@ -137,7 +79,7 @@
   width: 1em;
   height: 1em;
   animation: spin 0.75s linear infinite;
-  color: var(--zest-color-text-primary);
+  color: white;
 }
 
 .content {
@@ -234,5 +176,5 @@
 
 .shake {
   animation: shakeIt 0.4s ease;
-  box-shadow: 0 0 0 2px var(--zest-color-danger-glow);
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.6);
 }

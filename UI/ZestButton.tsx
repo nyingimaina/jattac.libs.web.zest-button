@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import SpinnerIcon from "./SpinnerIcon";
+import { FaSpinner } from "react-icons/fa";
 import styles from "../Styles/ZestButton.module.css";
 
 // --- Types ---
@@ -80,21 +80,20 @@ const AnimatedX: React.FC = () => (
     strokeLinejoin="round"
   >
     <path d="M6 6L18 18" />
-    <path d="M18 6L6 18" />
+    <path d="M6 18L18 6" />
   </svg>
 );
 
 const ZestButton: React.FC<ZestButtonProps> = ({
-  visualOptions,
-  busyOptions,
-  successOptions,
-  confirmOptions,
+  visualOptions = {},
+  busyOptions = {},
+  successOptions = {},
   isDefault = false,
   className = "",
   disabled,
   children,
   onClick,
-  ...rest
+  ...props
 }) => {
   const {
     variant = "standard",
@@ -102,19 +101,19 @@ const ZestButton: React.FC<ZestButtonProps> = ({
     fullWidth = false,
     iconLeft,
     iconRight,
-  } = visualOptions || {};
+  } = visualOptions;
 
   const {
     handleInternally = true,
     preventRageClick = true,
     minBusyDurationMs = 500,
-  } = busyOptions || {};
+  } = busyOptions;
 
   const {
     showCheckmark = true,
     showFailIcon = true,
     autoResetAfterMs = 2000,
-  } = successOptions || {};
+  } = successOptions;
 
   const [internalBusy, setInternalBusy] = useState(false);
   const [wasSuccessful, setWasSuccessful] = useState(false);
@@ -138,8 +137,8 @@ const ZestButton: React.FC<ZestButtonProps> = ({
   }, [children, awaitingConfirm]);
 
   const effectiveBusy =
-    typeof rest["aria-busy"] === "boolean"
-      ? Boolean(rest["aria-busy"])
+    typeof props["aria-busy"] === "boolean"
+      ? Boolean(props["aria-busy"])
       : handleInternally
       ? internalBusy
       : false;
@@ -150,6 +149,8 @@ const ZestButton: React.FC<ZestButtonProps> = ({
     (preventRageClick && (wasSuccessful || wasFailed));
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (preventRageClick && internalBusy) return;
+
     if (handleInternally && typeof onClick === "function") {
       try {
         setWasSuccessful(false);
@@ -190,14 +191,8 @@ const ZestButton: React.FC<ZestButtonProps> = ({
 
   // Enter key handler if isDefault
   useEffect(() => {
-    if (!isDefault) return;
-
+    if (!isDefault || isDisabled) return;
     const listener = (e: KeyboardEvent) => {
-      // Don't trigger if the button is disabled
-      if (isDisabled) {
-        return;
-      }
-
       const target = e.target as HTMLElement;
       if (
         e.key === "Enter" &&
@@ -209,7 +204,6 @@ const ZestButton: React.FC<ZestButtonProps> = ({
         buttonRef.current?.click();
       }
     };
-
     document.addEventListener("keydown", listener);
     return () => document.removeEventListener("keydown", listener);
   }, [isDefault, isDisabled]);
@@ -224,7 +218,7 @@ const ZestButton: React.FC<ZestButtonProps> = ({
   };
 
   const handleConfirmClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!confirmOptions) {
+    if (!props.confirmOptions) {
       return handleClick(e);
     }
 
@@ -233,7 +227,7 @@ const ZestButton: React.FC<ZestButtonProps> = ({
       return handleClick(e);
     }
 
-    const { displayLabel, timeoutSecs } = confirmOptions;
+    const { displayLabel, timeoutSecs } = props.confirmOptions;
     const startTime = Date.now();
     setAwaitingConfirm(true);
 
@@ -246,7 +240,7 @@ const ZestButton: React.FC<ZestButtonProps> = ({
         const timeRemaining = timeoutSecs - elapsedSecs;
         setCurrentChildren(`${displayLabel} (${timeRemaining}s)`);
       }
-    }, 1000); // ✅ update once per second
+    }, 100); // ✅ update once per second
   };
 
   // cleanup on unmount
@@ -262,7 +256,7 @@ const ZestButton: React.FC<ZestButtonProps> = ({
     if (effectiveBusy) {
       return (
         <span className={`${styles.icon} ${styles.fadeIn}`}>
-          <SpinnerIcon className={styles.spinner} size={18} />
+          <FaSpinner className={styles.spinner} />
         </span>
       );
     } else if (wasSuccessful && showCheckmark) {
@@ -273,7 +267,7 @@ const ZestButton: React.FC<ZestButtonProps> = ({
       );
     } else if (wasFailed && showFailIcon) {
       return (
-        <span className={`${styles.icon} ${styles.fadeIn} ${styles.shake}`}>
+        <span className={`${styles.icon} ${styles.fadeIn} ${styles.failShake}`}>
           <AnimatedX />
         </span>
       );
@@ -282,13 +276,6 @@ const ZestButton: React.FC<ZestButtonProps> = ({
     }
     return null;
   };
-
-  // Sanitize props to prevent passing non-standard attributes to the DOM
-  delete (rest as any).visualOptions;
-  delete (rest as any).busyOptions;
-  delete (rest as any).successOptions;
-  delete (rest as any).confirmOptions;
-  delete (rest as any).isDefault;
 
   return (
     <button
@@ -299,13 +286,13 @@ const ZestButton: React.FC<ZestButtonProps> = ({
         styles[size],
         fullWidth ? styles.fullWidth : "",
         isDisabled ? styles.disabled : "",
-        wasFailed ? styles.shake : "",
+        wasFailed ? styles.failGlow : "",
         className,
       ].join(" ")}
       disabled={isDisabled}
       aria-busy={effectiveBusy}
       onClick={handleConfirmClick}
-      {...rest}
+      {...props}
     >
       <span className={styles.inner}>
         {renderLeftIcon()}

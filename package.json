@@ -1,7 +1,15 @@
 {
   "name": "jattac.libs.web.zest-button",
   "version": "1.2.2",
-  "description": "A highly customizable and interactive React button component with built-in features for handling asynchronous operations, visual feedback, and confirmation flows.",
+  "description": "A highly customizable and production-ready React button component featuring robust asynchronous handling, rich visual feedback, and built-in confirmation flows for enhanced user experience",
+  "homepage": "https://github.com/jattac/jattac.libs.web.zest-button#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jattac/jattac.libs.web.zest-button.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jattac/jattac.libs.web.zest-button/issues"
+  },
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
@@ -11,25 +19,34 @@
   ],
   "scripts": {
     "build": "rollup -c rollup.config.mjs",
-    "dev": "rollup -c rollup.config.mjs -w"
+    "dev": "rollup -c rollup.config.mjs -w",
+    "test": "echo \"No tests specified. See WORKPLAN.md for future plans.\" && exit 0"
   },
   "keywords": [
     "react",
     "button",
     "ui",
     "component",
-    "zest",
+    "interactive",
+    "react-button",
+    "form",
+    "web",
     "async",
     "loading",
     "confirmation",
     "feedback",
+    "animation",
+    "transitions",
+    "ux",
+    "zest",
     "jattac"
   ],
   "author": "Jattac",
   "license": "MIT",
   "peerDependencies": {
     "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react-dom": ">=16.8.0",
+    "react-icons": "^5.0.1"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",
@@ -42,7 +59,7 @@
     "postcss-modules": "6.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-icons": "^5.0.1",
+
     "rollup": "^4.13.0",
     "rollup-plugin-dts": "^6.1.0",
     "rollup-plugin-postcss": "^4.0.2",

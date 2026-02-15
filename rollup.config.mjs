@@ -43,6 +43,6 @@ export default [
       // and external modules are resolved.
       respectExternal: true,
     })],
-    external: [/\.css$/], // Exclude CSS files from the DTS bundle
+    external: ['react', 'react-dom', /^react-icons/, /\.css$/], // Exclude React, ReactDOM, react-icons and CSS files from the DTS bundle
   },
 ];

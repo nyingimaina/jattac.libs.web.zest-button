@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { FaSpinner } from "react-icons/fa6";
 import styles from "../Styles/ZestButton.module.css";
 import { useZest, ZestGlobalConfig } from './ZestContext'; // New import for ZestContext
+import { semanticTypeDefaults } from './semanticTypeDefaults'; // New import
 
 // --- Types ---
 
@@ -129,11 +130,21 @@ const ZestButton: React.FC<ZestButtonProps> = ({
   const globalConfig = useZest();
   const globalDefaultProps = globalConfig?.defaultProps;
 
-  // Merge global default props with local props passed to ZestButton
-  // Local props take precedence over global defaults
-  const mergedZest = deepMerge(globalDefaultProps || {}, localZestProps || {}) as ZestCustomProps;
+  // 1. Start with an empty base config
+  let effectiveZestConfig: ZestCustomProps = {};
 
-  // Destructure custom props from 'mergedZest' with defaults
+  // 2. Apply global defaults (lowest precedence)
+  effectiveZestConfig = deepMerge(effectiveZestConfig, globalDefaultProps || {});
+
+  // 3. Apply semantic defaults if semanticType is provided (medium precedence)
+  if (localZestProps?.semanticType && semanticTypeDefaults[localZestProps.semanticType]) {
+    effectiveZestConfig = deepMerge(effectiveZestConfig, semanticTypeDefaults[localZestProps.semanticType]);
+  }
+
+  // 4. Apply local props (highest precedence)
+  effectiveZestConfig = deepMerge(effectiveZestConfig, localZestProps || {});
+
+  // Destructure custom props from 'effectiveZestConfig' with defaults
   const {
     visualOptions = {},
     busyOptions = {},
@@ -142,7 +153,7 @@ const ZestButton: React.FC<ZestButtonProps> = ({
     isDefault = false,
     theme = 'system',
     buttonStyle = 'solid',
-  } = mergedZest; // Use mergedZest here
+  } = effectiveZestConfig; // Use effectiveZestConfig here
 
   const {
     variant = "standard",

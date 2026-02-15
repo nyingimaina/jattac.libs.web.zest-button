@@ -163,3 +163,71 @@ const ModalFooter = () => {
   );
 };
 ```
+
+---
+
+### Example 4: Simplified Semantic Buttons
+
+Leverage the `semanticType` prop to declare button intent, allowing `ZestButton` to automatically apply default visuals and behaviors. This dramatically reduces boilerplate and improves consistency.
+
+```tsx
+import React from 'react';
+import ZestButton from 'jattac.libs.web.zest-button';
+
+const SemanticActions = () => {
+  const handleGenericAction = (type: string) => {
+    alert(`Action for '${type}' triggered!`);
+    // In a real app, this would dispatch different logic based on 'type'
+  };
+
+  const handleSave = async () => {
+    console.log('Saving...');
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    console.log('Saved!');
+  };
+
+  const handleDelete = () => {
+    console.log('Deleting...');
+    // Simulated delete logic
+    alert('Item permanently deleted!');
+  };
+
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', padding: '1rem' }}>
+      {/* Save button with default save semantics */}
+      <ZestButton zest={{ semanticType: 'save' }} onClick={handleSave}>
+        Save Changes
+      </ZestButton>
+
+      {/* Delete button with default delete semantics (includes confirmation) */}
+      <ZestButton zest={{ semanticType: 'delete' }} onClick={handleDelete}>
+        Delete Record
+      </ZestButton>
+
+      {/* Add button with default add semantics */}
+      <ZestButton zest={{ semanticType: 'add' }} onClick={() => handleGenericAction('add')}>
+        Add New Item
+      </ZestButton>
+
+      {/* Download button */}
+      <ZestButton zest={{ semanticType: 'download' }} onClick={() => handleGenericAction('download')}>
+        Get Report
+      </ZestButton>
+
+      {/* Override semantic defaults with local props */}
+      <ZestButton
+        zest={{
+          semanticType: 'save',
+          visualOptions: {
+            variant: 'standard', // Overrides semantic 'success'
+            iconLeft: undefined, // Removes semantic icon
+          },
+        }}
+        onClick={handleSave}
+      >
+        Save (Custom Style)
+      </ZestButton>
+    </div>
+  );
+};
+```

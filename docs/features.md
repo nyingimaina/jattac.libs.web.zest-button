@@ -187,3 +187,64 @@ const MyComponent = () => (
   </div>
 );
 ```
+
+---
+
+### Semantic Types
+
+The `semanticType` prop allows `ZestButton` to automatically apply predefined visuals and behaviors based on the button's intended action. This streamlines development for common patterns, ensuring consistency across your application.
+
+```tsx
+import ZestButton from 'jattac.libs.web.zest-button';
+import { FaPlay } from 'react-icons/fa6'; // Example for a custom semantic type, if augmented
+
+const MyComponent = () => {
+  const handleAction = async (type: string) => {
+    console.log(`Performing ${type} action...`);
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    console.log(`${type} action finished!`);
+  };
+
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', padding: '1rem' }}>
+      {/* Built-in Semantic Types */}
+      <ZestButton zest={{ semanticType: 'save' }} onClick={() => handleAction('save')}>
+        Save Data
+      </ZestButton>
+      <ZestButton zest={{ semanticType: 'delete' }} onClick={() => handleAction('delete')}>
+        Delete Item
+      </ZestButton>
+      <ZestButton zest={{ semanticType: 'add' }} onClick={() => handleAction('add')}>
+        Add New
+      </ZestButton>
+      <ZestButton zest={{ semanticType: 'download' }} onClick={() => handleAction('download')}>
+        Download Report
+      </ZestButton>
+      <ZestButton zest={{ semanticType: 'view' }} onClick={() => handleAction('view')}>
+        View Details
+      </ZestButton>
+
+      {/* Overriding Semantic Defaults */}
+      <ZestButton
+        zest={{
+          semanticType: 'save',
+          visualOptions: {
+            variant: 'danger', // Local prop overrides semantic default 'success'
+          },
+        }}
+        onClick={() => handleAction('save with override')}
+      >
+        Save (Danger Override)
+      </ZestButton>
+
+      {/* Example for a custom semantic type (requires module augmentation) */}
+      {/* Assuming 'play' is added via CustomZestSemanticTypes augmentation */}
+      {/*
+      <ZestButton zest={{ semanticType: 'play' }} onClick={() => handleAction('play')}>
+        Play Media
+      </ZestButton>
+      */}
+    </div>
+  );
+};
+```

@@ -48,4 +48,30 @@ The `package.json` includes several scripts to help with development and buildin
     *   **Output**: Similar to `build`, but also keeps the process running to watch for changes.
     *   **Command**: `rollup -c rollup.config.mjs -w`
 
+---
+
+### Extending Semantic Types
+
+The `ZestButton` provides a mechanism for developers to extend the built-in `SemanticType` union with their own custom semantic types. This is achieved through TypeScript's [module augmentation](https://www.typescriptlang.org/docs/handbook/declaration-merging.html#module-augmentation) feature.
+
+To add your own custom semantic types:
+
+1.  Create a TypeScript declaration file in your project (e.g., `your-project/src/typings/zest-button-extensions.d.ts`).
+2.  Augment the `jattac.libs.web.zest-button` module and define your custom semantic types within the `CustomZestSemanticTypes` interface. The keys of this interface will become available as new `SemanticType` values.
+
+```typescript
+// your-project/src/typings/zest-button-extensions.d.ts
+import 'jattac.libs.web.zest-button'; // Important: Extend the module
+
+declare module 'jattac.libs.web.zest-button' {
+  export interface CustomZestSemanticTypes {
+    archive: 'archive';
+    publish: 'publish';
+    // Add any other custom semantic types here
+  }
+}
+```
+
+Once augmented, these new semantic types (`'archive'`, `'publish'`) will be available for autocompletion and type-checking when using the `semanticType` prop on your `ZestButton` instances.
+
 *(Note: Currently, there are no dedicated test scripts defined in `package.json`. Testing is typically done manually in a consuming project during development, or through dedicated test runners that would be added in the future.)*

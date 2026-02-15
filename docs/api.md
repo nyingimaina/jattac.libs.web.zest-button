@@ -32,6 +32,7 @@ This is the main configuration object passed to the `zest` prop.
 | `isDefault` | `boolean` | `false` | If true, the button can be triggered by the `Enter` key. |
 | `theme` | `'light' \| 'dark' \| 'system'` | `'system'` | Overrides the automatic theme detection. |
 | `buttonStyle` | `'solid' \| 'outline' \| 'text' \| 'dashed'`| `'solid'` | Defines the visual style of the button. |
+| `semanticType` | `SemanticType` | `undefined` | Defines the semantic type of the button, providing default visuals and behaviors. Extensible via module augmentation. |
 
 ---
 
@@ -81,3 +82,27 @@ If this object is provided, the button will require two clicks to fire the `onCl
 | :--- | :--- | :--- | :--- |
 | `displayLabel` | `string` | **(Required)**| The text to show during the confirmation phase (e.g., "Confirm?"). The countdown timer is appended automatically. |
 | `timeoutSecs` | `number` | **(Required)**| The number of seconds the user has to click the button a second time to confirm the action. |
+
+---
+
+#### `SemanticType`
+
+The `SemanticType` defines common button actions, allowing `ZestButton` to automatically apply default visuals (e.g., icons, variants) and behaviors (e.g., confirmation prompts). This type is extensible through TypeScript module augmentation.
+
+**Built-in Semantic Types:**
+`'add'`, `'save'`, `'submit'`, `'edit'`, `'update'`, `'delete'`, `'remove'`, `'cancel'`, `'close'`, `'view'`, `'details'`, `'download'`, `'upload'`, `'refresh'`, `'reload'`, `'print'`, `'share'`, `'confirm'`.
+
+**Extensibility:** Developers can extend this list to include custom semantic types by augmenting the `CustomZestSemanticTypes` interface in their project. For example:
+
+```typescript
+// your-project/src/typings/zest-button.d.ts
+import 'jattac.libs.web.zest-button';
+
+declare module 'jattac.libs.web.zest-button' {
+  export interface CustomZestSemanticTypes {
+    archive: 'archive';
+    publish: 'publish';
+  }
+}
+```
+After augmentation, `'archive'` and `'publish'` would be valid `SemanticType` values, available for autocompletion and type-checking.

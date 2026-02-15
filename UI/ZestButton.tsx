@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FaSpinner } from "react-icons/fa6";
 import styles from "../Styles/ZestButton.module.css";
+import { useZest, ZestGlobalConfig } from './ZestContext'; // New import for ZestContext
 
 // --- Types ---
 
@@ -44,7 +45,7 @@ interface ConfirmOptions {
 }
 
 // New interface to encapsulate all custom ZestButton props
-interface ZestCustomProps {
+export interface ZestCustomProps {
   visualOptions?: VisualOptions;
   busyOptions?: BusyOptions;
   successOptions?: SuccessOptions;
@@ -61,6 +62,25 @@ export interface ZestButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   zest?: ZestCustomProps; // Encapsulate all custom props under 'zest'
 }
+
+// Define a deep merge utility function
+const deepMerge = (target: any, source: any): any => {
+  const output = { ...target };
+
+  if (target && typeof target === 'object' && source && typeof source === 'object') {
+    Object.keys(source).forEach(key => {
+      if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+        if (!(key in target))
+          Object.assign(output, { [key]: source[key] });
+        else
+          output[key] = deepMerge(target[key], source[key]);
+      } else {
+        Object.assign(output, { [key]: source[key] });
+      }
+    });
+  }
+  return output;
+};
 
 // --- Components ---
 
@@ -98,10 +118,17 @@ const ZestButton: React.FC<ZestButtonProps> = ({
   disabled,
   children,
   onClick, // Destructure onClick here
-  zest, // New parent prop
+  zest: localZestProps, // Rename local 'zest' prop to 'localZestProps'
   ...props
 }) => {
-  // Destructure custom props from 'zest' with defaults
+  const globalConfig = useZest();
+  const globalDefaultProps = globalConfig?.defaultProps;
+
+  // Merge global default props with local props passed to ZestButton
+  // Local props take precedence over global defaults
+  const mergedZest = deepMerge(globalDefaultProps || {}, localZestProps || {}) as ZestCustomProps;
+
+  // Destructure custom props from 'mergedZest' with defaults
   const {
     visualOptions = {},
     busyOptions = {},
@@ -110,7 +137,7 @@ const ZestButton: React.FC<ZestButtonProps> = ({
     isDefault = false,
     theme = 'system',
     buttonStyle = 'solid',
-  } = zest || {}; // Provide empty object as default for zest
+  } = mergedZest; // Use mergedZest here
 
   const {
     variant = "standard",

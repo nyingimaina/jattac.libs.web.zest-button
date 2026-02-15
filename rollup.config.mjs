@@ -9,7 +9,7 @@ const packageJson = JSON.parse(readFileSync('./package.json', 'utf8'));
 
 export default [
   {
-    input: 'UI/ZestButton.tsx',
+    input: 'UI/index.ts',
     output: [
       {
         file: packageJson.main,
@@ -36,7 +36,7 @@ export default [
     external: ['react', 'react-dom', 'react-icons/fa', 'react-icons/fa6'],
   },
   {
-    input: 'UI/ZestButton.tsx', // Use the main TypeScript entry file
+    input: 'UI/index.ts', // Use the main TypeScript entry file
     output: [{ file: 'dist/index.d.ts', format: 'esm' }],
     plugins: [dts({
       // This is important to ensure all types are bundled correctly

@@ -48,13 +48,13 @@ const PinnedFooter = () => (
 
 ---
 
-### Future Vision: Global Configuration with `ZestProvider`
+### Global Configuration with `ZestProvider`
 
-While not yet implemented, the long-term vision for `ZestButton` includes a global provider to streamline configuration across your entire application. This would allow you to define a "default" `zest` configuration for all buttons.
+The `ZestProvider` component is now implemented, allowing you to streamline `ZestButton` configuration across your entire application. You can define a set of default `zest` properties that all `ZestButton` instances within its scope will inherit.
 
-#### Hypothetical Usage
+#### Usage
 
-You would wrap your application with a `ZestProvider` and pass a default configuration object.
+Wrap your application (or specific sections) with the `ZestProvider` and pass a configuration object to its `config` prop. The `config` prop expects an object of type `ZestGlobalConfig`, which contains a `defaultProps` field of type `ZestCustomProps`.
 
 ```tsx
 // In your main App.tsx file
@@ -62,34 +62,46 @@ You would wrap your application with a `ZestProvider` and pass a default configu
 import { ZestProvider } from 'jattac.libs.web.zest-button';
 import MyRoutes from './MyRoutes';
 
-const defaultZestConfig = {
-  visualOptions: {
-    size: 'sm', // Make all buttons small by default
+const appZestConfig = {
+  defaultProps: {
+    visualOptions: {
+      size: 'sm', // Make all buttons small by default
+    },
+    busyOptions: {
+      minBusyDurationMs: 300, // Shorten the busy duration app-wide
+    },
   },
-  busyOptions: {
-    minBusyDurationMs: 300, // Shorten the busy duration app-wide
-  }
 };
 
 const App = () => (
-  <ZestProvider value={defaultZestConfig}>
+  <ZestProvider config={appZestConfig}>
     <MyRoutes />
   </ZestProvider>
 );
 ```
 
-#### Precedence with a Global Provider
+#### Precedence with the `ZestProvider`
 
-Local props on a specific `ZestButton` would always override the global defaults provided by `ZestProvider`. This would give you the perfect balance of consistency and flexibility.
+Local `zest` props passed directly to a `ZestButton` component instance will always override the global defaults provided by the `ZestProvider`. This gives you the perfect balance of consistency and granular control.
 
 ```tsx
-// This button would be small (from the provider) and have a success variant.
+// This button will inherit 'sm' size from the provider, but use the success variant.
 <ZestButton zest={{ visualOptions: { variant: 'success' } }}>
   Default Size, Success Variant
 </ZestButton>
 
-// This button would be large, overriding the global 'sm' default.
+// This button will be large, overriding the global 'sm' default from the provider.
 <ZestButton zest={{ visualOptions: { size: 'lg' } }}>
   Large Button
+</ZestButton>
+
+// This button will ignore any global defaults and use its own explicitly defined props.
+<ZestButton
+  zest={{
+    visualOptions: { variant: 'danger', size: 'md' },
+    busyOptions: { preventRageClick: false }
+  }}
+>
+  Explicitly Configured Button
 </ZestButton>
 ```

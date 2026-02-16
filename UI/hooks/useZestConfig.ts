@@ -1,5 +1,5 @@
-import { useZest } from '../ZestContext';
-import { semanticTypeDefaults as builtInSemanticDefaults } from '../semanticTypeDefaults';
+import { useZestButtonConfig } from '../ZestButtonConfigContext';
+import { semanticTypeButtonConfigDefaults as builtInSemanticDefaults } from '../semanticTypeButtonConfigDefaults';
 import { ZestCustomProps } from '../ZestButton';
 
 // Define a deep merge utility function
@@ -22,7 +22,7 @@ const deepMerge = (target: any, source: any): any => {
 };
 
 export const useZestConfig = (localZestProps?: ZestCustomProps) => {
-  const globalConfig = useZest();
+  const globalConfig = useZestButtonConfig();
   const globalDefaultProps = globalConfig?.defaultProps;
   const customSemanticDefaults = globalConfig?.semanticTypeDefaults;
 
@@ -49,4 +49,3 @@ export const useZestConfig = (localZestProps?: ZestCustomProps) => {
 
   return effectiveZestConfig;
 };
-

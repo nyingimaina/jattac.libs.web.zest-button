@@ -81,9 +81,9 @@ const appZestConfig = {
 };
 
 const App = () => (
-  <ZestProvider config={appZestConfig}>
+  <ZestButtonConfigProvider config={appZestConfig}>
     {/* All buttons inside will be small and outline by default */}
-  </ZestProvider>
+  </ZestButtonConfigProvider>
 );
 ```
 *__Learn more in the [Standardizing Your Buttons recipe](./examples.md#recipe-3-standardizing-your-buttons-with-a-global-config).__*

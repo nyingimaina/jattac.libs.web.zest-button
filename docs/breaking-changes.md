@@ -4,6 +4,46 @@ This document lists significant changes between versions that might require modi
 
 ---
 
+## Version 1.2.7
+
+### Renamed `ZestProvider` to `ZestButtonConfigProvider`
+
+To provide more explicit naming and better context within the API, the `ZestProvider` component has been renamed to `ZestButtonConfigProvider`. Additionally, its associated context is now `ZestButtonConfigContext`, and the consumption hook is `useZestButtonConfig`.
+
+This is a breaking change that requires updating all imports and usages of the provider, context, and hook in your application.
+
+**Before:**
+
+```tsx
+import { ZestProvider, useZest } from 'jattac.libs.web.zest-button';
+
+const App = () => (
+  <ZestProvider config={myConfig}>...</ZestProvider>
+);
+
+const MyComponent = () => {
+  const config = useZest();
+  // ...
+}
+```
+
+**After:**
+
+```tsx
+import { ZestButtonConfigProvider, useZestButtonConfig } from 'jattac.libs.web.zest-button';
+
+const App = () => (
+  <ZestButtonConfigProvider config={myConfig}>...</ZestButtonConfigProvider>
+);
+
+const MyComponent = () => {
+  const config = useZestButtonConfig();
+  // ...
+}
+```
+
+---
+
 ## Version 1.2.6
 
 ### Renamed `fullWidth` prop to `stretch`

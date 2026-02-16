@@ -6,7 +6,7 @@ import { SemanticType } from './ZestButton'; // Import SemanticType
 // Define a type for the semantic defaults map
 type SemanticTypeDefaultsMap = Partial<Record<string, Partial<ZestCustomProps>>>;
 
-export const semanticTypeDefaults: SemanticTypeDefaultsMap = {
+export const semanticTypeButtonConfigDefaults: SemanticTypeDefaultsMap = {
   // Creation / Add
   'add': {
     visualOptions: {

@@ -38,7 +38,7 @@ This is the main configuration object passed to the `zest` prop.
 
 #### `ZestGlobalConfig`
 
-This is the configuration object passed to the `config` prop of the `ZestProvider`.
+This is the configuration object passed to the `config` prop of the `ZestButtonConfigProvider`.
 
 | Prop Name | Type | Default | Description |
 | :--- | :--- | :--- | :--- |

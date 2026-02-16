@@ -108,7 +108,7 @@ const DeleteButton = () => {
 ```tsx
 // In your main App.tsx
 import React from 'react';
-import { ZestProvider, ZestButton } from 'jattac.libs.web.zest-button';
+import { ZestButtonConfigProvider, ZestButton } from 'jattac.libs.web.zest-button';
 
 const appZestConfig = {
   defaultProps: {
@@ -120,7 +120,7 @@ const appZestConfig = {
 };
 
 const App = () => (
-  <ZestProvider config={appZestConfig}>
+  <ZestButtonConfigProvider config={appZestConfig}>
     <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
       <ZestButton>I'm a small outline button</ZestButton>
       <ZestButton>So am I</ZestButton>
@@ -128,7 +128,7 @@ const App = () => (
         I'm a large solid button! (Local override)
       </ZestButton>
     </div>
-  </ZestProvider>
+  </ZestButtonConfigProvider>
 );
 ```
 *For a full list of provider settings, see the [`ZestGlobalConfig`](./api.md#zestglobalconfig) documentation. To understand the precedence rules, see the [Configuration Guide](./configuration.md).*
@@ -141,7 +141,7 @@ const App = () => (
 
 **Problem:** You have a common action in your app, like "Archive," that should always look and feel the same. You want to avoid configuring it manually each time and just be able to write `zest={{ semanticType: 'archive' }}`.
 
-**Solution:** This is a two-step process that combines **TypeScript Module Augmentation** with the **`ZestProvider`**.
+**Solution:** This is a two-step process that combines **TypeScript Module Augmentation** with the **`ZestButtonConfigProvider`**.
 
 **Step 1: Define the new type**
 In your project's type declarations file (e.g., `src/zest.d.ts`), augment the `CustomZestSemanticTypes` interface.
@@ -161,12 +161,12 @@ declare module 'jattac.libs.web.zest-button' {
 *(For more on this, see the [Contributor's Guide](./development.md#extending-semantic-types).)*
 
 **Step 2: Provide the default configuration**
-In your `App.tsx`, use the `semanticTypeDefaults` property in the `ZestProvider` to define the default props for your new `'archive'` type.
+In your `App.tsx`, use the `semanticTypeDefaults` property in the `ZestButtonConfigProvider` to define the default props for your new `'archive'` type.
 
 ```tsx
 // In your main App.tsx
 import React from 'react';
-import { ZestProvider, ZestButton } from 'jattac.libs.web.zest-button';
+import { ZestButtonConfigProvider, ZestButton } from 'jattac.libs.web.zest-button';
 import { FaArchive } from 'react-icons/fa';
 
 const appZestConfig = {
@@ -191,7 +191,7 @@ const appZestConfig = {
 };
 
 const App = () => (
-  <ZestProvider config={appZestConfig}>
+  <ZestButtonConfigProvider config={appZestConfig}>
     <div style={{ display: 'flex', gap: '1rem' }}>
         {/* 3. Now just use it! */}
         <ZestButton 
@@ -208,7 +208,7 @@ const App = () => (
           Delete
         </ZestButton>
     </div>
-  </ZestProvider>
+  </ZestButtonConfigProvider>
 );
 ```
 This powerful pattern allows you to build a complete, consistent design system for all button actions in your application. For more details on configuration, see the [Configuration Guide](./configuration.md).

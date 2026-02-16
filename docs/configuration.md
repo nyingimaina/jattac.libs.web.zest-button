@@ -48,18 +48,18 @@ const PinnedFooter = () => (
 
 ---
 
-### Global Configuration with `ZestProvider`
+### Global Configuration with `ZestButtonConfigProvider`
 
-The `ZestProvider` component is now implemented, allowing you to streamline `ZestButton` configuration across your entire application. You can define a set of default `zest` properties that all `ZestButton` instances within its scope will inherit.
+The `ZestButtonConfigProvider` component is now implemented, allowing you to streamline `ZestButton` configuration across your entire application. You can define a set of default `zest` properties that all `ZestButton` instances within its scope will inherit.
 
 #### Usage
 
-Wrap your application (or specific sections) with the `ZestProvider` and pass a configuration object to its `config` prop. The `config` prop expects an object of type `ZestGlobalConfig`, which contains a `defaultProps` field of type `ZestCustomProps`.
+Wrap your application (or specific sections) with the `ZestButtonConfigProvider` and pass a configuration object to its `config` prop. The `config` prop expects an object of type `ZestGlobalConfig`, which contains a `defaultProps` field of type `ZestCustomProps`.
 
 ```tsx
 // In your main App.tsx file
 
-import { ZestProvider } from 'jattac.libs.web.zest-button';
+import { ZestButtonConfigProvider } from 'jattac.libs.web.zest-button';
 import MyRoutes from './MyRoutes';
 
 const appZestConfig = {
@@ -74,28 +74,28 @@ const appZestConfig = {
 };
 
 const App = () => (
-  <ZestProvider config={appZestConfig}>
+  <ZestButtonConfigProvider config={appZestConfig}>
     <MyRoutes />
-  </ZestProvider>
+  </ZestButtonConfigProvider>
 );
 ```
 
-#### Precedence with the `ZestProvider`
+#### Precedence with the `ZestButtonConfigProvider`
 
 Property configurations are merged in a "deep merge" fashion with the following order of precedence (where the last one wins):
 
-1.  **Global `defaultProps`**: Props defined in the `ZestProvider`'s `config.defaultProps` object. This is the base layer of styling.
+1.  **Global `defaultProps`**: Props defined in the `ZestButtonConfigProvider`'s `config.defaultProps` object. This is the base layer of styling.
 2.  **Built-in Semantic Defaults**: The library's own defaults for a given `semanticType` (e.g., the `success` variant for `save`).
-3.  **Custom Semantic Defaults**: **(New!)** Defaults for a `semanticType` that you provide in the `ZestProvider`'s `config.semanticTypeDefaults` object. This allows you to override the library's defaults or create new ones.
+3.  **Custom Semantic Defaults**: **(New!)** Defaults for a `semanticType` that you provide in the `ZestButtonConfigProvider`'s `config.semanticTypeDefaults` object. This allows you to override the library's defaults or create new ones.
 4.  **Local `zest` Props**: The props passed directly to a specific `<ZestButton>` instance. This gives you the ultimate granular control.
 
 ---
 
 ### Advanced: Customizing Semantic Defaults
 
-This is one of the most powerful features of the `ZestProvider`. You can define application-wide styles and behaviors for any `semanticType`. This is perfect for creating a consistent design system.
+This is one of the most powerful features of the `ZestButtonConfigProvider`. You can define application-wide styles and behaviors for any `semanticType`. This is perfect for creating a consistent design system.
 
-The `ZestProvider`'s `config` prop accepts a `semanticTypeDefaults` object. You can use this to **override** built-in defaults or **define** defaults for your own custom types.
+The `ZestButtonConfigProvider`'s `config` prop accepts a `semanticTypeDefaults` object. You can use this to **override** built-in defaults or **define** defaults for your own custom types.
 
 #### Example: Defining a Custom 'archive' Type
 
@@ -112,11 +112,11 @@ declare module 'jattac.libs.web.zest-button' {
 }
 ```
 
-Now, configure the defaults in your `ZestProvider`:
+Now, configure the defaults in your `ZestButtonConfigProvider`:
 
 ```tsx
 // In your main App.tsx file
-import { ZestProvider } from 'jattac.libs.web.zest-button';
+import { ZestButtonConfigProvider } from 'jattac.libs.web.zest-button';
 import { FaArchive } from 'react-icons/fa';
 import MyRoutes from './MyRoutes';
 
@@ -138,9 +138,9 @@ const appZestConfig = {
 };
 
 const App = () => (
-  <ZestProvider config={appZestConfig}>
+  <ZestButtonConfigProvider config={appZestConfig}>
     <MyRoutes />
-  </ZestProvider>
+  </ZestButtonConfigProvider>
 );
 
 // --- Later, in some other component ---
@@ -157,7 +157,7 @@ Let's say you like the built-in `delete` type, but for your application, you wan
 
 ```tsx
 // In your main App.tsx file
-import { ZestProvider } from 'jattac.libs.web.zest-button';
+import { ZestButtonConfigProvider } from 'jattac.libs.web.zest-button';
 import MyRoutes from './MyRoutes';
 
 const appZestConfig = {
@@ -177,9 +177,9 @@ const appZestConfig = {
 };
 
 const App = () => (
-  <ZestProvider config={appZestConfig}>
+  <ZestButtonConfigProvider config={appZestConfig}>
     <MyRoutes />
-  </ZestProvider>
+  </ZestButtonConfigProvider>
 );
 
 // --- Later, in some other component ---

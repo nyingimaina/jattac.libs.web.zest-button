@@ -37,13 +37,15 @@ export default App;
 
 ### Documentation
 
+To get started, check out our **Cookbook** of practical recipes.
+
 | Topic | Description |
 | :--- | :--- |
-| **[Features](./docs/features.md)** | A guided tour of all component features with live examples. |
-| **[API Reference](./docs/api.md)** | An exhaustive technical reference for all props and type definitions. |
-| **[Examples](./docs/examples.md)** | A cookbook of practical, real-world examples for common use cases. |
-| **[Configuration](./docs/configuration.md)**| A guide to configuring themes and other component-wide settings. |
-| **[Development](./docs/development.md)** | Information for contributors on the project's architecture and setup. |
+| **[The Cookbook](./docs/examples.md)** | **(Start Here)** A collection of practical, real-world recipes to master `ZestButton`. |
+| **[Features Showcase](./docs/features.md)** | A high-level visual tour of what's possible. |
+| **[API Reference](./docs/api.md)** | An exhaustive technical reference for all props and types. |
+| **[Configuration Guide](./docs/configuration.md)**| A deep dive into global configuration using the `ZestProvider`. |
+| **[Development Guide](./docs/development.md)** | Information for contributors on the project's architecture and setup. |
 | **[Breaking Changes](./docs/breaking-changes.md)** | A log of breaking changes to assist with version upgrades. |
 
 ### License

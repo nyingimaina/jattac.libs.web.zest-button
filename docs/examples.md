@@ -1,95 +1,76 @@
-# Examples: The Practical Cookbook
+# The Cookbook: From First Button to Design System
 
-This document provides practical, real-world examples to solve common problems by combining multiple `ZestButton` features.
+Welcome to the ZestButton Cookbook! This is the core learning path for mastering `ZestButton`. Each recipe solves a real-world problem and builds on the concepts from the previous one. Start here to go from zero to expert.
 
 ---
 
-### Example 1: Robust Form Submission Button
+### Recipe 1: Your First Async Button
 
-Forms are the backbone of web applications. This example shows a `ZestButton` configured for a typical "Save" action on a settings page. It provides clear feedback to the user about the status of their action.
+**Goal:** Create a button that automatically shows a loading spinner during an operation and gives feedback when it's done.
 
-**Features Combined:**
-- Asynchronous busy state (`onClick` returns a Promise)
-- Success and failure feedback (`showCheckmark`, `showFailIcon`)
-- Icons for context (`iconLeft`)
-- `isDefault` prop to make it the primary action for the form
+**Problem:** You have an API call that takes time. You need to prevent the user from clicking the button multiple times and clearly show when the action is complete.
+
+**Solution:** Simply have your `onClick` handler return a `Promise`. `ZestButton` handles the rest. This example also shows success and failure states.
 
 ```tsx
 import React, { useState } from 'react';
 import ZestButton from 'jattac.libs.web.zest-button';
-import { FaSave } from 'react-icons/fa6';
+import { FaSave } from 'react-icons/fa';
 
-const SettingsForm = () => {
+const SaveButton = () => {
   const [shouldSucceed, setShouldSucceed] = useState(true);
 
-  const handleSave = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault(); // Prevent default form submission
-    console.log('Saving settings...');
-
+  const handleSave = async () => {
+    console.log('Saving...');
     // Simulate an API call
     await new Promise((resolve, reject) => {
       setTimeout(() => {
-        if (shouldSucceed) {
-          console.log('Settings saved successfully!');
-          resolve('Success');
-        } else {
-          console.error('Failed to save settings.');
-          reject('Error');
-        }
+        shouldSucceed ? resolve('Success!') : reject('Error!');
       }, 1500);
     });
   };
 
   return (
-    <form style={{ border: '1px solid #ccc', padding: '1rem', borderRadius: '8px', maxWidth: '400px' }}>
-      <p>Edit your settings below.</p>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '300px' }}>
       <label>
         <input
           type="checkbox"
           checked={shouldSucceed}
-          onChange={() => setShouldSucceed(!shouldSucceed)}
+          onChange={() => setShouldSucceed(e => !e)}
         />
         Simulate Success
       </label>
-      <hr style={{ margin: '1rem 0' }} />
       <ZestButton
-        type="submit"
         onClick={handleSave}
         zest={{
-          isDefault: true,
-          visualOptions: {
-            iconLeft: <FaSave />,
-            variant: 'success',
-            fullWidth: true,
-          },
+          visualOptions: { iconLeft: <FaSave />, fullWidth: true },
         }}
       >
         Save Settings
       </ZestButton>
-    </form>
+    </div>
   );
 };
 ```
+*For more details on all available options, see the [`BusyOptions`](./api.md#busyoptions) and [`SuccessOptions`](./api.md#successoptions) in our API reference.*
 
 ---
 
-### Example 2: Safe Destructive Action Button
+### Recipe 2: The Safe "Delete" Button
 
-When building an interface for a destructive action like deleting data, it's crucial to prevent accidental clicks. This example combines the `danger` variant with the confirmation flow.
+**Goal:** Create a button for a destructive action that requires a second click to confirm.
 
-**Features Combined:**
-- Confirmation flow (`confirmOptions`)
-- `danger` variant for visual warning
-- An icon to reinforce the action's purpose
+**Problem:** Destructive actions like deleting data are dangerous. A user might click the button by accident.
+
+**Solution:** Use the `confirmOptions` prop. This forces the user to click once to start a countdown, and a second time to execute the action. Combining this with a `danger` variant provides a clear visual warning.
 
 ```tsx
 import React from 'react';
 import ZestButton from 'jattac.libs.web.zest-button';
-import { FaTrash } from 'react-icons/fa6';
+import { FaTrash } from 'react-icons/fa';
 
-const DeleteAction = () => {
+const DeleteButton = () => {
   const handleDelete = () => {
-    // In a real app, you would make an API call here
     alert('Item has been permanently deleted.');
   };
 
@@ -112,122 +93,123 @@ const DeleteAction = () => {
   );
 };
 ```
+*For more details, see the [`ConfirmOptions`](./api.md#confirmoptions) in our API reference.*
 
 ---
 
-### Example 3: Secondary Action or Styled Link
+### Recipe 3: Standardizing Your Buttons with a Global Config
 
-Sometimes you need a button that looks less prominent, like a secondary action or something that acts like a link. The `outline` and `text` button styles are perfect for this.
+**Goal:** Define a consistent look and feel for all buttons in your application without repeating props.
 
-**Features Combined:**
-- `outline` and `text` button styles
-- An icon for visual flair
-- Can be used for navigation (e.g., with React Router) or secondary actions
+**Problem:** Your app has dozens of buttons. Specifying `size: 'sm'` or `buttonStyle: 'outline'` on every single one is tedious and error-prone.
+
+**Solution:** Wrap your application in the `ZestProvider` and pass a `config` object. Any props in `defaultProps` will be applied to every `ZestButton` within the provider. Local props on a button will always override the global default.
 
 ```tsx
+// In your main App.tsx
 import React from 'react';
-import ZestButton from 'jattac.libs.web.zest-button';
-import { FaExternalLinkAlt, FaTimes } from 'react-icons/fa';
+import { ZestProvider, ZestButton } from 'jattac.libs.web.zest-button';
 
-const ModalFooter = () => {
-  const handleClose = () => {
-    alert('Closing modal...');
-  };
+const appZestConfig = {
+  defaultProps: {
+    visualOptions: {
+      size: 'sm', // Make all buttons small by default
+    },
+    buttonStyle: 'outline', // Make all buttons outline by default
+  },
+};
 
-  const handleLearnMore = () => {
-    // In a real app with React Router, you might do: navigate('/learn-more');
-    alert('Navigating to learn more page...');
-  };
-
-  return (
-    <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end', padding: '1rem' }}>
-      <ZestButton
-        onClick={handleClose}
-        zest={{
-          buttonStyle: 'text',
-          visualOptions: { iconLeft: <FaTimes /> },
-        }}
-      >
-        Cancel
-      </ZestButton>
-      <ZestButton
-        onClick={handleLearnMore}
-        zest={{
-          buttonStyle: 'outline',
-          visualOptions: { iconRight: <FaExternalLinkAlt /> },
-        }}
-      >
-        Learn More
+const App = () => (
+  <ZestProvider config={appZestConfig}>
+    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+      <ZestButton>I'm a small outline button</ZestButton>
+      <ZestButton>So am I</ZestButton>
+      <ZestButton zest={{ visualOptions: { size: 'lg' }, buttonStyle: 'solid' }}>
+        I'm a large solid button! (Local override)
       </ZestButton>
     </div>
-  );
-};
+  </ZestProvider>
+);
 ```
+*For a full list of provider settings, see the [`ZestGlobalConfig`](./api.md#zestglobalconfig) documentation. To understand the precedence rules, see the [Configuration Guide](./configuration.md).*
 
 ---
 
-### Example 4: Simplified Semantic Buttons
+### Recipe 4: Creating a Custom "Archive" Button
 
-Leverage the `semanticType` prop to declare button intent, allowing `ZestButton` to automatically apply default visuals and behaviors. This dramatically reduces boilerplate and improves consistency.
+**Goal:** Create a new, reusable button "type" with its own specific icon, style, and behavior that can be used anywhere in the app.
+
+**Problem:** You have a common action in your app, like "Archive," that should always look and feel the same. You want to avoid configuring it manually each time and just be able to write `zest={{ semanticType: 'archive' }}`.
+
+**Solution:** This is a two-step process that combines **TypeScript Module Augmentation** with the **`ZestProvider`**.
+
+**Step 1: Define the new type**
+In your project's type declarations file (e.g., `src/zest.d.ts`), augment the `CustomZestSemanticTypes` interface.
+
+```typescript
+// src/zest.d.ts
+import 'jattac.libs.web.zest-button';
+import { FaArchive } from 'react-icons/fa';
+
+// 1. Tell ZestButton that 'archive' is a valid semantic type
+declare module 'jattac.libs.web.zest-button' {
+  export interface CustomZestSemanticTypes {
+    archive: 'archive';
+  }
+}
+```
+*(For more on this, see the [Contributor's Guide](./development.md#extending-semantic-types).)*
+
+**Step 2: Provide the default configuration**
+In your `App.tsx`, use the `semanticTypeDefaults` property in the `ZestProvider` to define the default props for your new `'archive'` type.
 
 ```tsx
+// In your main App.tsx
 import React from 'react';
-import ZestButton from 'jattac.libs.web.zest-button';
+import { ZestProvider, ZestButton } from 'jattac.libs.web.zest-button';
+import { FaArchive } from 'react-icons/fa';
 
-const SemanticActions = () => {
-  const handleGenericAction = (type: string) => {
-    alert(`Action for '${type}' triggered!`);
-    // In a real app, this would dispatch different logic based on 'type'
-  };
-
-  const handleSave = async () => {
-    console.log('Saving...');
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    console.log('Saved!');
-  };
-
-  const handleDelete = () => {
-    console.log('Deleting...');
-    // Simulated delete logic
-    alert('Item permanently deleted!');
-  };
-
-  return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', padding: '1rem' }}>
-      {/* Save button with default save semantics */}
-      <ZestButton zest={{ semanticType: 'save' }} onClick={handleSave}>
-        Save Changes
-      </ZestButton>
-
-      {/* Delete button with default delete semantics (includes confirmation) */}
-      <ZestButton zest={{ semanticType: 'delete' }} onClick={handleDelete}>
-        Delete Record
-      </ZestButton>
-
-      {/* Add button with default add semantics */}
-      <ZestButton zest={{ semanticType: 'add' }} onClick={() => handleGenericAction('add')}>
-        Add New Item
-      </ZestButton>
-
-      {/* Download button */}
-      <ZestButton zest={{ semanticType: 'download' }} onClick={() => handleGenericAction('download')}>
-        Get Report
-      </ZestButton>
-
-      {/* Override semantic defaults with local props */}
-      <ZestButton
-        zest={{
-          semanticType: 'save',
-          visualOptions: {
-            variant: 'standard', // Overrides semantic 'success'
-            iconLeft: undefined, // Removes semantic icon
-          },
-        }}
-        onClick={handleSave}
-      >
-        Save (Custom Style)
-      </ZestButton>
-    </div>
-  );
+const appZestConfig = {
+  semanticTypeDefaults: {
+    // 2. Define the default props for the 'archive' type
+    archive: {
+      buttonStyle: 'outline',
+      visualOptions: {
+        iconLeft: <FaArchive />,
+        variant: 'standard',
+      },
+      confirmOptions: {
+        displayLabel: 'Confirm Archive?',
+        timeoutSecs: 10,
+      },
+    },
+    // You can also override built-in types here!
+    delete: {
+      buttonStyle: 'outline', // Make all delete buttons 'outline'
+    }
+  },
 };
+
+const App = () => (
+  <ZestProvider config={appZestConfig}>
+    <div style={{ display: 'flex', gap: '1rem' }}>
+        {/* 3. Now just use it! */}
+        <ZestButton 
+          zest={{ semanticType: 'archive' }} 
+          onClick={() => alert('Archived!')}
+        >
+          Archive
+        </ZestButton>
+
+        <ZestButton 
+          zest={{ semanticType: 'delete' }}
+          onClick={() => alert('Deleted!')}
+        >
+          Delete
+        </ZestButton>
+    </div>
+  </ZestProvider>
+);
 ```
+This powerful pattern allows you to build a complete, consistent design system for all button actions in your application. For more details on configuration, see the [Configuration Guide](./configuration.md).
+

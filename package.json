@@ -1,6 +1,6 @@
 {
   "name": "jattac.libs.web.zest-button",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "A highly customizable and production-ready React button component featuring robust asynchronous handling, rich visual feedback, and built-in confirmation flows for enhanced user experience",
   "homepage": "https://github.com/nyingimaina/jattac.libs.web.zest-button#readme",
   "repository": {

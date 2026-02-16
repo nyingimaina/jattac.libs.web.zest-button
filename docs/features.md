@@ -4,6 +4,16 @@ This document provides a high-level showcase of what's possible with `ZestButton
 
 ---
 
+## Table of Contents
+
+- [Asynchronous Operations & Feedback](#asynchronous-operations--feedback)
+- [Confirmation Flow](#confirmation-flow)
+- [Semantic Types](#semantic-types)
+- [Global Configuration](#global-configuration)
+- [Rich Styling](#rich-styling)
+
+---
+
 ### Asynchronous Operations & Feedback
 
 **What it does:** Automatically handles loading states and provides clear success/failure feedback for any action that returns a Promise.
@@ -100,7 +110,7 @@ const MyComponent = () => (
     <ZestButton zest={{ visualOptions: { variant: 'success', size: 'sm' } }}>
       Small Success
     </ZestButton>
-    <ZestButton zest={{ buttonStyle: 'outline', size: 'md' } }}>
+    <ZestButton zest={{ buttonStyle: 'outline', size: 'md' }}>
       Medium Outline
     </ZestButton>
     <ZestButton zest={{ visualOptions: { variant: 'danger', size: 'lg' } }}>
@@ -111,3 +121,6 @@ const MyComponent = () => (
 ```
 *Explore all the recipes in the **[Cookbook](./examples.md)** to see these options in action.*
 
+---
+
+[⬅️ Previous: The Cookbook (Examples)](./examples.md) | [Next: API Reference ➡️](./api.md)

@@ -4,6 +4,15 @@ Welcome to the ZestButton Cookbook! This is the core learning path for mastering
 
 ---
 
+## Table of Contents
+
+- [Recipe 1: Your First Async Button](#recipe-1-your-first-async-button)
+- [Recipe 2: The Safe "Delete" Button](#recipe-2-the-safe-delete-button)
+- [Recipe 3: Standardizing Your Buttons with a Global Config](#recipe-3-standardizing-your-buttons-with-a-global-config)
+- [Recipe 4: Creating a Custom "Archive" Button](#recipe-4-creating-a-custom-archive-button)
+
+---
+
 ### Recipe 1: Your First Async Button
 
 **Goal:** Create a button that automatically shows a loading spinner during an operation and gives feedback when it's done.
@@ -211,5 +220,8 @@ const App = () => (
   </ZestButtonConfigProvider>
 );
 ```
-This powerful pattern allows you to build a complete, consistent design system for all button actions in your application. For more details on configuration, see the [Configuration Guide](./configuration.md).
+This powerful pattern allows you to build a complete, consistent design system for all button actions in your application. For more details on configuration, see the [Configuration Guide](./configuration.md).*
 
+---
+
+[⬅️ Previous: README](../README.md) | [Next: Features Showcase ➡️](./features.md)

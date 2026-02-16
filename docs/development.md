@@ -1,6 +1,18 @@
+---
+[⬅️ Previous: Configuration Guide](./configuration.md)
+
 # Development: The Contributor's Guide
 
 This guide provides an overview of the project's internal structure and instructions for setting up your development environment.
+
+---
+
+## Table of Contents
+
+- [Internal Architecture](#internal-architecture)
+- [Setup Instructions](#setup-instructions)
+- [Scripts](#scripts)
+- [Extending Semantic Types](#extending-semantic-types)
 
 ---
 
@@ -75,3 +87,7 @@ declare module 'jattac.libs.web.zest-button' {
 Once augmented, these new semantic types (`'archive'`, `'publish'`) will be available for autocompletion and type-checking when using the `semanticType` prop on your `ZestButton` instances.
 
 *(Note: Currently, there are no dedicated test scripts defined in `package.json`. Testing is typically done manually in a consuming project during development, or through dedicated test runners that would be added in the future.)*
+
+---
+
+[⬅️ Previous: Configuration Guide](./configuration.md) | [Next: Breaking Changes ➡️](./breaking-changes.md)

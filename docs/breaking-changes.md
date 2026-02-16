@@ -1,6 +1,17 @@
+---
+[⬅️ Previous: Development Guide](./development.md)
+
 # Breaking Changes: The Upgrade Path
 
 This document lists significant changes between versions that might require modifications to your existing codebase.
+
+---
+
+## Table of Contents
+
+- [Version 1.2.7](#version-127)
+- [Version 1.2.6](#version-126)
+- [Version 1.2.0](#version-120)
 
 ---
 
@@ -126,3 +137,7 @@ This change allows for better organization of configuration options (e.g., `visu
   My Button
 </ZestButton>
 ```
+
+---
+
+[⬅️ Previous: Development Guide](./development.md) | [Next: README ➡️](../README.md)

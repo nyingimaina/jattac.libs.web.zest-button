@@ -1,6 +1,23 @@
+---
+[⬅️ Previous: Features Showcase](./features.md)
+
 # API Reference: The Technical Blueprint
 
 This document provides an exhaustive reference for all `ZestButton` props and type definitions.
+
+---
+
+## Table of Contents
+
+- [ZestButtonProps](#zestbuttonprops)
+- [Type Definitions](#type-definitions)
+  - [ZestCustomProps](#zestcustomprops)
+  - [ZestGlobalConfig](#zestglobalconfig)
+  - [VisualOptions](#visualoptions)
+  - [BusyOptions](#busyoptions)
+  - [SuccessOptions](#successoptions)
+  - [ConfirmOptions](#confirmoptions)
+  - [SemanticType](#semantictype)
 
 ---
 
@@ -117,3 +134,7 @@ declare module 'jattac.libs.web.zest-button' {
 }
 ```
 After augmentation, `'archive'` and `'publish'` would be valid `SemanticType` values, available for autocompletion and type-checking.
+
+---
+
+[⬅️ Previous: Features Showcase](./features.md) | [Next: Configuration Guide ➡️](./configuration.md)

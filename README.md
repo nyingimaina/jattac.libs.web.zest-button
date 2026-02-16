@@ -51,3 +51,7 @@ To get started, check out our **Cookbook** of practical recipes.
 ### License
 
 Licensed under [MIT](./LICENSE).
+
+---
+
+[Next: The Cookbook (Examples) ➡️](./docs/examples.md)

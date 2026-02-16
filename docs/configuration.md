@@ -1,6 +1,24 @@
+---
+[⬅️ Previous: API Reference](./api.md)
+
 # Configuration: The Control Panel
 
 This document explains how to configure `ZestButton` on a component and global level.
+
+---
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Theme Configuration](#theme-configuration)
+  - [Order of Precedence](#order-of-precedence)
+  - [Example: Forcing a Theme](#example-forcing-a-theme)
+- [Global Configuration with ZestButtonConfigProvider](#global-configuration-with-zestbuttonconfigprovider)
+  - [Usage](#usage)
+  - [Precedence with the ZestButtonConfigProvider](#precedence-with-the-zestbuttonconfigprovider)
+- [Advanced: Customizing Semantic Defaults](#advanced-customizing-semantic-defaults)
+  - [Example: Defining a Custom 'archive' Type](#example-defining-a-custom-archive-type)
+  - [Example: Overriding a Built-in 'delete' Default](#example-overriding-a-built-in-delete-default)
 
 ---
 
@@ -189,4 +207,8 @@ const App = () => (
   Delete Record
 </ZestButton>
 ```
+
+---
+
+[⬅️ Previous: API Reference](./api.md) | [Next: Development Guide ➡️](./development.md)
 

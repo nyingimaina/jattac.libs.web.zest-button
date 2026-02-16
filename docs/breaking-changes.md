@@ -4,6 +4,42 @@ This document lists significant changes between versions that might require modi
 
 ---
 
+## Version 1.2.6
+
+### Renamed `fullWidth` prop to `stretch`
+
+To better reflect its behavior and avoid potential confusion with other layout properties, the `fullWidth` prop within `visualOptions` has been renamed to `stretch`. This means any usage of `fullWidth` in your `ZestButton` configurations must be updated.
+
+**Before:**
+
+```tsx
+<ZestButton
+  zest={{
+    visualOptions: {
+      fullWidth: true,
+    },
+  }}
+>
+  Stretched Button
+</ZestButton>
+```
+
+**After:**
+
+```tsx
+<ZestButton
+  zest={{
+    visualOptions: {
+      stretch: true,
+    },
+  }}
+>
+  Stretched Button
+</ZestButton>
+```
+
+---
+
 ## Version 1.2.0
 
 ### Encapsulated Custom Props under `zest` Object

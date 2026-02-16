@@ -43,7 +43,7 @@ const SaveButton = () => {
       <ZestButton
         onClick={handleSave}
         zest={{
-          visualOptions: { iconLeft: <FaSave />, fullWidth: true },
+          visualOptions: { iconLeft: <FaSave />, stretch: true },
         }}
       >
         Save Settings

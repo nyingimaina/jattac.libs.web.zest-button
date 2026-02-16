@@ -55,7 +55,7 @@ Controls the button's appearance.
 | :--- | :--- | :--- | :--- |
 | `variant` | `'standard' \| 'success' \| 'danger'` | `'standard'`| The color scheme of the button. |
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | The size of the button, affecting padding and font size. |
-| `fullWidth` | `boolean` | `false` | If true, the button expands to the full width of its parent. |
+| `stretch` | `boolean` | `false` | If true, the button expands to the full width of its parent. |
 | `iconLeft` | `React.ReactNode` | `undefined` | A React node (e.g., an icon component) to display on the left. |
 | `iconRight` | `React.ReactNode` | `undefined` | A React node to display on the right. |
 

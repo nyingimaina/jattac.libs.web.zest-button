@@ -23,7 +23,7 @@ export type SemanticType = 'add' | 'save' | 'submit' | 'edit' | 'update' | 'dele
 interface VisualOptions {
   variant?: ZestVariant;
   size?: ZestSize;
-  fullWidth?: boolean;
+  stretch?: boolean;
   iconLeft?: React.ReactNode;
   iconRight?: React.ReactNode;
 }
@@ -125,7 +125,7 @@ const ZestButton: React.FC<ZestButtonProps> = ({
   const {
     variant = "standard",
     size = "md",
-    fullWidth = false,
+    stretch = false,
     iconLeft,
     iconRight,
   } = visualOptions;
@@ -266,7 +266,7 @@ const ZestButton: React.FC<ZestButtonProps> = ({
         styles[buttonStyle],
         styles[variant],
         styles[size],
-        fullWidth ? styles.fullWidth : "",
+        stretch ? styles.stretch : "",
         isDisabled ? styles.disabled : "",
         wasFailed ? styles.shake : "",
         effectiveTheme === 'light' ? styles['force-light'] : styles['force-dark'],

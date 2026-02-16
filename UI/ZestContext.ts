@@ -4,6 +4,7 @@ import { ZestCustomProps } from './ZestButton'; // Assuming ZestCustomProps is e
 // Define the shape of the global Zest configuration
 export interface ZestGlobalConfig {
   defaultProps?: ZestCustomProps;
+  semanticTypeDefaults?: Partial<Record<string, Partial<ZestCustomProps>>>;
   // Add other global settings here in the future if needed
 }
 

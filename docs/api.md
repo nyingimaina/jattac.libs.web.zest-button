@@ -36,6 +36,17 @@ This is the main configuration object passed to the `zest` prop.
 
 ---
 
+#### `ZestGlobalConfig`
+
+This is the configuration object passed to the `config` prop of the `ZestProvider`.
+
+| Prop Name | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `defaultProps` | `ZestCustomProps` | `{}` | A set of `ZestCustomProps` that will be applied to all `ZestButton` instances within the provider's scope. |
+| `semanticTypeDefaults` | `Partial<Record<string, Partial<ZestCustomProps>>>` | `{}` | A map of semantic types to `ZestCustomProps`. This allows you to define defaults for custom semantic types or override the library's built-in defaults. |
+
+---
+
 #### `VisualOptions`
 
 Controls the button's appearance.

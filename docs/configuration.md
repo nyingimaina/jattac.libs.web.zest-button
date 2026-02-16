@@ -82,61 +82,59 @@ const App = () => (
 
 #### Precedence with the `ZestProvider`
 
-Local `zest` props passed directly to a `ZestButton` component instance will always override the global defaults provided by the `ZestProvider`. This gives you the perfect balance of consistency and granular control.
+Property configurations are merged in a "deep merge" fashion with the following order of precedence (where the last one wins):
+
+1.  **Global `defaultProps`**: Props defined in the `ZestProvider`'s `config.defaultProps` object. This is the base layer of styling.
+2.  **Built-in Semantic Defaults**: The library's own defaults for a given `semanticType` (e.g., the `success` variant for `save`).
+3.  **Custom Semantic Defaults**: **(New!)** Defaults for a `semanticType` that you provide in the `ZestProvider`'s `config.semanticTypeDefaults` object. This allows you to override the library's defaults or create new ones.
+4.  **Local `zest` Props**: The props passed directly to a specific `<ZestButton>` instance. This gives you the ultimate granular control.
+
+---
+
+### Advanced: Customizing Semantic Defaults
+
+This is one of the most powerful features of the `ZestProvider`. You can define application-wide styles and behaviors for any `semanticType`. This is perfect for creating a consistent design system.
+
+The `ZestProvider`'s `config` prop accepts a `semanticTypeDefaults` object. You can use this to **override** built-in defaults or **define** defaults for your own custom types.
+
+#### Example: Defining a Custom 'archive' Type
+
+First, let's imagine you've used module augmentation to create a new `semanticType` called `'archive'`, as explained in the [Development Guide](./development.md). Now, you want all `'archive'` buttons to have a specific look and feel across your app.
 
 ```tsx
-// This button will inherit 'sm' size from the provider, but use the success variant.
-<ZestButton zest={{ visualOptions: { variant: 'success' } }}>
-  Default Size, Success Variant
-</ZestButton>
+// your-project/src/typings/zest-button-extensions.d.ts
+import 'jattac.libs.web.zest-button';
 
-// This button will be large, overriding the global 'sm' default from the provider.
-<ZestButton zest={{ visualOptions: { size: 'lg' } }}>
-  Large Button
-</ZestButton>
+declare module 'jattac.libs.web.zest-button' {
+  export interface CustomZestSemanticTypes {
+    archive: 'archive';
+  }
+}
+```
 
-// This button will ignore any global defaults and use its own explicitly defined props.
-<ZestButton
-  zest={{
-    visualOptions: { variant: 'danger', size: 'md' },
-    busyOptions: { preventRageClick: false }
-  }}
->
-  Explicitly Configured Button
-</ZestButton>
-
-#### Semantic Defaults in Global Configuration
-
-You can also leverage the `ZestProvider` to influence semantic button behavior globally. This is particularly useful if your application has a consistent look for certain actions that differs from the built-in `ZestButton` semantic defaults.
-
-Remember the order of precedence: global defaults (from `ZestProvider`) are applied first, then semantic defaults (from `semanticTypeDefaults.tsx`), and finally local `zest` props. This means you can use the `ZestProvider` to either set a *default* semantic type for buttons that don't specify one, or to *override specific properties* of a semantic type across your application.
-
-##### Example: Overriding Semantic Defaults Globally
-
-Let's say you want all "delete" buttons in your application to be `'outline'` style instead of the default `'solid'`, and use a custom icon, while still retaining the confirmation behavior defined for `'delete'`.
+Now, configure the defaults in your `ZestProvider`:
 
 ```tsx
 // In your main App.tsx file
-
 import { ZestProvider } from 'jattac.libs.web.zest-button';
-import { FaRegTrashAlt } from 'react-icons/fa'; // A different trash icon
+import { FaArchive } from 'react-icons/fa';
 import MyRoutes from './MyRoutes';
 
 const appZestConfig = {
-  defaultProps: {
-    // This will apply to any button that uses semanticType="delete"
-    // and also to any button that doesn't explicitly set a buttonStyle.
-    buttonStyle: 'outline',
-    // We can also override the default icon for a semantic type
-    // This will affect ALL buttons that don't specify their own iconLeft,
-    // including those using semanticType="delete" if they rely on the default.
-    visualOptions: {
-      iconLeft: <FaRegTrashAlt />, // Custom default icon for all buttons
-    },
-    // If you wanted to apply a default semantic type to all buttons that
-    // don't specify one, you could do:
-    // semanticType: 'view',
-  },
+  // Define defaults for our new custom semantic type
+  semanticTypeDefaults: {
+    archive: {
+      buttonStyle: 'outline',
+      visualOptions: {
+        iconLeft: <FaArchive />,
+        variant: 'standard',
+      },
+      confirmOptions: {
+        displayLabel: 'Confirm Archive?',
+        timeoutSecs: 10,
+      }
+    }
+  }
 };
 
 const App = () => (
@@ -145,13 +143,50 @@ const App = () => (
   </ZestProvider>
 );
 
-// Somewhere in your application
-<ZestButton zest={{ semanticType: 'delete' }}>
-  Delete Item
-</ZestButton>
+// --- Later, in some other component ---
 
-// The "Delete Item" button will now be 'outline' style
-// and use FaRegTrashAlt as its left icon, but will still
-// trigger the 'Confirm Delete' prompt due to the semanticType='delete' behavior.
+// This button will automatically get the icon, style, and confirmation behavior!
+<ZestButton zest={{ semanticType: 'archive' }} onClick={handleArchiveAction}>
+  Archive Record
+</ZestButton>
 ```
+
+#### Example: Overriding a Built-in 'delete' Default
+
+Let's say you like the built-in `delete` type, but for your application, you want the button style to be `outline` instead of `solid`, and you want a shorter confirmation time.
+
+```tsx
+// In your main App.tsx file
+import { ZestProvider } from 'jattac.libs.web.zest-button';
+import MyRoutes from './MyRoutes';
+
+const appZestConfig = {
+  // Override specific props for a built-in semantic type
+  semanticTypeDefaults: {
+    delete: {
+      // We only specify what we want to change.
+      // The icon and 'danger' variant will still be inherited from the built-in default.
+      buttonStyle: 'outline',
+      confirmOptions: {
+        // We must provide the full object to override, not just one property.
+        displayLabel: 'Confirm Deletion',
+        timeoutSecs: 3, // Shorter timeout
+      }
+    }
+  }
+};
+
+const App = () => (
+  <ZestProvider config={appZestConfig}>
+    <MyRoutes />
+  </ZestProvider>
+);
+
+// --- Later, in some other component ---
+
+// This button will now be an 'outline' button with a 3-second confirmation.
+<ZestButton zest={{ semanticType: 'delete' }} onClick={handleDeleteAction}>
+  Delete Record
+</ZestButton>
 ```
+

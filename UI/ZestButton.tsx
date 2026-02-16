@@ -1,15 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { FaSpinner } from "react-icons/fa6";
 import styles from "../Styles/ZestButton.module.css";
-import { useZest, ZestGlobalConfig } from './ZestContext'; // New import for ZestContext
-import { semanticTypeDefaults } from './semanticTypeDefaults'; // New import
+import { useZestConfig } from './hooks/useZestConfig';
+import { useBusyState } from './hooks/useBusyState';
+import { useConfirmation } from './hooks/useConfirmation';
+import { useThemeDetection } from './hooks/useThemeDetection';
 
 // --- Types ---
 
 export type ZestVariant = "standard" | "success" | "danger";
 export type ZestSize = "sm" | "md" | "lg";
-export type ZestTheme = 'light' | 'dark' | 'system'; // New type for theme
-export type ZestButtonStyle = 'solid' | 'outline' | 'text' | 'dashed'; // New type for button style
+export type ZestTheme = 'light' | 'dark' | 'system';
+export type ZestButtonStyle = 'solid' | 'outline' | 'text' | 'dashed';
 
 // Allows developers to extend the semantic types via module augmentation
 export interface CustomZestSemanticTypes {}
@@ -44,7 +46,7 @@ interface SuccessOptions {
   autoResetAfterMs?: number;
 }
 
-interface ConfirmOptions {
+export interface ConfirmOptions {
   displayLabel: string;
   timeoutSecs: number;
 }
@@ -58,7 +60,7 @@ export interface ZestCustomProps {
   isDefault?: boolean;
   theme?: ZestTheme;
   buttonStyle?: ZestButtonStyle;
-  semanticType?: SemanticType; // New property for semantic typing
+  semanticType?: SemanticType;
 }
 
 /**
@@ -68,25 +70,6 @@ export interface ZestButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   zest?: ZestCustomProps; // Encapsulate all custom props under 'zest'
 }
-
-// Define a deep merge utility function
-const deepMerge = (target: any, source: any): any => {
-  const output = { ...target };
-
-  if (target && typeof target === 'object' && source && typeof source === 'object') {
-    Object.keys(source).forEach(key => {
-      if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
-        if (!(key in target))
-          Object.assign(output, { [key]: source[key] });
-        else
-          output[key] = deepMerge(target[key], source[key]);
-      } else {
-        Object.assign(output, { [key]: source[key] });
-      }
-    });
-  }
-  return output;
-};
 
 // --- Components ---
 
@@ -123,37 +106,21 @@ const ZestButton: React.FC<ZestButtonProps> = ({
   className = "",
   disabled,
   children,
-  onClick, // Destructure onClick here
-  zest: localZestProps, // Rename local 'zest' prop to 'localZestProps'
+  onClick,
+  zest: localZestProps,
   ...props
 }) => {
-  const globalConfig = useZest();
-  const globalDefaultProps = globalConfig?.defaultProps;
+  const effectiveZestConfig = useZestConfig(localZestProps);
 
-  // 1. Start with an empty base config
-  let effectiveZestConfig: ZestCustomProps = {};
-
-  // 2. Apply global defaults (lowest precedence)
-  effectiveZestConfig = deepMerge(effectiveZestConfig, globalDefaultProps || {});
-
-  // 3. Apply semantic defaults if semanticType is provided (medium precedence)
-  if (localZestProps?.semanticType && semanticTypeDefaults[localZestProps.semanticType]) {
-    effectiveZestConfig = deepMerge(effectiveZestConfig, semanticTypeDefaults[localZestProps.semanticType]);
-  }
-
-  // 4. Apply local props (highest precedence)
-  effectiveZestConfig = deepMerge(effectiveZestConfig, localZestProps || {});
-
-  // Destructure custom props from 'effectiveZestConfig' with defaults
   const {
     visualOptions = {},
     busyOptions = {},
     successOptions = {},
-    confirmOptions, // confirmOptions can be undefined
+    confirmOptions,
     isDefault = false,
     theme = 'system',
     buttonStyle = 'solid',
-  } = effectiveZestConfig; // Use effectiveZestConfig here
+  } = effectiveZestConfig;
 
   const {
     variant = "standard",
@@ -164,66 +131,32 @@ const ZestButton: React.FC<ZestButtonProps> = ({
   } = visualOptions;
 
   const {
-    handleInternally = true,
-    preventRageClick = true,
-    minBusyDurationMs = 500,
-  } = busyOptions;
+    handleInternally,
+    minBusyDurationMs,
+    preventRageClick,
+    showCheckmark,
+    showFailIcon,
+    internalBusy,
+    wasSuccessful,
+    wasFailed,
+    startBusy,
+    endBusy,
+  } = useBusyState({ busyOptions, successOptions });
 
   const {
-    showCheckmark = true,
-    showFailIcon = true,
-    autoResetAfterMs = 2000,
-  } = successOptions;
+    awaitingConfirm,
+    currentChildren,
+    startConfirmation,
+    stopConfirmation,
+  } = useConfirmation({
+    confirmOptions,
+    originalChildren: children,
+    onConfirmFail: () => endBusy(false),
+  });
 
-  // Edge Case 4: Add warnings for very short durations in development
-  useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      if (minBusyDurationMs > 0 && minBusyDurationMs < 100) {
-        console.warn(`ZestButton: 'minBusyDurationMs' is set to ${minBusyDurationMs}ms. Very short durations can lead to visual flickering and a poor user experience. Consider a value of 100ms or more.`);
-      }
-      if (autoResetAfterMs > 0 && autoResetAfterMs < 100) {
-        console.warn(`ZestButton: 'autoResetAfterMs' is set to ${autoResetAfterMs}ms. Very short durations can make success/fail feedback hard to perceive. Consider a value of 100ms or more.`);
-      }
-    }
-  }, [minBusyDurationMs, autoResetAfterMs]);
-
-  const [internalBusy, setInternalBusy] = useState(false);
-  const [wasSuccessful, setWasSuccessful] = useState(false);
-  const [wasFailed, setWasFailed] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const failTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null); // Bug 1: Add useRef for failTimeout
-
-  const [currentChildren, setCurrentChildren] =
-    useState<React.ReactNode>(children);
-  const [awaitingConfirm, setAwaitingConfirm] = useState(false);
-
-  // ✅ interval ref for confirm countdown
-  const confirmIntervalRef = useRef<ReturnType<typeof setInterval> | null>(
-    null
-  );
-
-  // Theme state and detection
-  const [systemTheme, setSystemTheme] = useState<'light' | 'dark'>('light');
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleChange = () => {
-      setSystemTheme(mediaQuery.matches ? 'dark' : 'light');
-    };
-
-    handleChange(); // Set initial theme
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
-  }, []);
-
+  const systemTheme = useThemeDetection();
   const effectiveTheme = theme === 'system' ? systemTheme : theme;
-
-  // keep children in sync when not in confirm mode
-  useEffect(() => {
-    if (!awaitingConfirm) {
-      setCurrentChildren(children);
-    }
-  }, [children, awaitingConfirm]);
 
   const effectiveBusy =
     typeof props["aria-busy"] === "boolean"
@@ -237,99 +170,46 @@ const ZestButton: React.FC<ZestButtonProps> = ({
     effectiveBusy ||
     (preventRageClick && (wasSuccessful || wasFailed));
 
-  // Move handleClick, stopWaiting, and handleConfirmClick declarations here
-  const stopWaiting = () => {
-    if (confirmIntervalRef.current) {
-      clearInterval(confirmIntervalRef.current);
-      confirmIntervalRef.current = null;
-    }
-    setCurrentChildren(children);
-    setAwaitingConfirm(false);
-  };
-
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (preventRageClick && internalBusy) return;
 
     if (handleInternally && typeof onClick === "function") {
       try {
-        setWasSuccessful(false);
-        setWasFailed(false);
-        setInternalBusy(true);
+        startBusy();
         const startTime = Date.now();
-
         await onClick(e);
-
         const elapsed = Date.now() - startTime;
         const remaining = Math.max(minBusyDurationMs - elapsed, 0);
         if (remaining > 0) {
           await new Promise((resolve) => setTimeout(resolve, remaining));
         }
-
-        if (showCheckmark) setWasSuccessful(true);
+        endBusy(true);
       } catch (err) {
         console.error(err);
-        if (showFailIcon) setWasFailed(true);
-      } finally {
-        setInternalBusy(false);
+        endBusy(false);
       }
     } else if (onClick) {
       onClick(e);
     }
   };
 
-  const handleConfirmClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!confirmOptions) { // Use destructured confirmOptions
-      return handleClick(e);
-    }
-
-    // Edge Case 3: Add warning for missing onClick with confirmOptions
-    if (confirmOptions && !onClick) { // Use destructured confirmOptions and onClick
-      console.warn("ZestButton: 'confirmOptions' are provided but 'onClick' handler is missing. The button will confirm but perform no action.");
-    }
-
+  const handleConfirmClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (awaitingConfirm) {
-      stopWaiting();
-      return handleClick(e);
+      stopConfirmation();
+      handleClick(e);
+      return;
     }
-
-    const { displayLabel, timeoutSecs } = confirmOptions; // Use destructured confirmOptions
-    const startTime = Date.now();
-    setAwaitingConfirm(true);
-    setCurrentChildren(`${displayLabel} (${timeoutSecs}s)`); // Initial display
-
-    confirmIntervalRef.current = setInterval(() => {
-      const elapsed = Date.now() - startTime;
-      const timeRemaining = timeoutSecs - Math.floor(elapsed / 1000);
-
-      if (timeRemaining <= 0) {
-        stopWaiting();
-        setWasFailed(true); // Indicate failure for shake animation
-        // Bug 1: Clear any existing timeout before setting a new one
-        if (failTimeoutRef.current) {
-          clearTimeout(failTimeoutRef.current);
-        }
-        failTimeoutRef.current = setTimeout(() => {
-          setWasFailed(false);
-          failTimeoutRef.current = null; // Clear ref after timeout fires
-        }, 400); // Shake animation duration
-      } else {
-        setCurrentChildren(`${displayLabel} (${timeRemaining}s)`);
+    
+    if (confirmOptions) {
+      if (!onClick) {
+        console.warn("ZestButton: 'confirmOptions' are provided but 'onClick' handler is missing.");
       }
-    }, 1000); // Update once per second
+      startConfirmation();
+    } else {
+      handleClick(e);
+    }
   };
 
-  // auto-reset success/failure state
-  useEffect(() => {
-    if ((wasSuccessful || wasFailed) && autoResetAfterMs) {
-      const timeout = setTimeout(() => {
-        setWasSuccessful(false);
-        setWasFailed(false);
-      }, autoResetAfterMs);
-      return () => clearTimeout(timeout);
-    }
-  }, [wasSuccessful, wasFailed, autoResetAfterMs]);
-
-  // Enter key handler if isDefault
   useEffect(() => {
     if (!isDefault || isDisabled) return;
     const listener = (e: KeyboardEvent) => {
@@ -338,29 +218,17 @@ const ZestButton: React.FC<ZestButtonProps> = ({
         e.key === "Enter" &&
         !e.repeat &&
         !e.defaultPrevented &&
-        !(target instanceof HTMLTextAreaElement)
+        !(target instanceof HTMLTextAreaElement) &&
+        buttonRef.current &&
+        document.activeElement !== buttonRef.current // Optional: prevent double-action if button is focused
       ) {
         e.preventDefault();
-        // Bug 2: Directly call handleConfirmClick to respect confirmation logic
-        handleConfirmClick(e as any);
+        buttonRef.current.click();
       }
     };
     document.addEventListener("keydown", listener);
     return () => document.removeEventListener("keydown", listener);
-  }, [isDefault, isDisabled, handleConfirmClick]); // Bug 2: Add handleConfirmClick to dependencies
-
-  // cleanup on unmount
-  useEffect(() => {
-    return () => {
-      if (confirmIntervalRef.current) {
-        clearInterval(confirmIntervalRef.current);
-      }
-      // Bug 1: Add cleanup for failTimeoutRef
-      if (failTimeoutRef.current) {
-        clearTimeout(failTimeoutRef.current);
-      }
-    };
-  }, []);
+  }, [isDefault, isDisabled]);
 
   const renderLeftIcon = () => {
     if (effectiveBusy) {
@@ -369,19 +237,22 @@ const ZestButton: React.FC<ZestButtonProps> = ({
           <FaSpinner className={styles.spinner} />
         </span>
       );
-    } else if (wasSuccessful && showCheckmark) {
+    }
+    if (wasSuccessful && showCheckmark) {
       return (
         <span className={`${styles.icon} ${styles.fadeIn}`}>
           <AnimatedCheckmark />
         </span>
       );
-    } else if (wasFailed && showFailIcon) {
+    }
+    if (wasFailed && showFailIcon) {
       return (
         <span className={`${styles.icon} ${styles.fadeIn}`}>
           <AnimatedX />
         </span>
       );
-    } else if (iconLeft) {
+    }
+    if (iconLeft) {
       return <span className={styles.icon}>{iconLeft}</span>;
     }
     return null;
@@ -392,13 +263,13 @@ const ZestButton: React.FC<ZestButtonProps> = ({
       ref={buttonRef}
       className={[
         styles.button,
-        styles[buttonStyle], // Apply buttonStyle class
+        styles[buttonStyle],
         styles[variant],
         styles[size],
         fullWidth ? styles.fullWidth : "",
         isDisabled ? styles.disabled : "",
         wasFailed ? styles.shake : "",
-        effectiveTheme === 'light' ? styles['force-light'] : styles['force-dark'], // Apply theme override class
+        effectiveTheme === 'light' ? styles['force-light'] : styles['force-dark'],
         className,
       ].join(" ")}
       disabled={isDisabled}

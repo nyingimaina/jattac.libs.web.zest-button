@@ -85,104 +85,17 @@ Each deviation from the original BRS draft was discovered empirically (by actual
 
 Yes — every changed/added file is listed in `test-reports/CHANGE_MANIFEST_jest-wiring.md`. No file under `UI/`/`Styles/` (production source) was touched. Revert by removing the new devDependencies, `jest.config.js`, `jest.setup.js`, `tsconfig.jest.json`, `__tests__/`, `BRS.md`, and the `coverage/` line in `.gitignore`, and restoring `package.json`'s `test` script.
 
-## [2026-07-26] Revenue report: new columns + polish animations
+## [2026-07-28] ZestButton dropdown options (split button), via @radix-ui/react-dropdown-menu
 
 ### Requested
 
-Add a few columns to the Revenue report and give it "delight, polish, dopamine, playful but corporate grade" animations.
+"make the button support dropdown options so that in instances where a button may be used for a default action and optional others, then we show in ui that this is possible and provide a hit area to bring up option." Clicking the main segment always fires the default action directly; each dropdown item independent but DRY as possible; mobile-first, desktop-aware; full a11y; leverage a headless menu library if one fits, to avoid hand-rolling popup positioning. Full scope: `docs/features/zest-button-dropdown-options/BRS.md`.
 
 ### Options Considered
 
-1. Build new animation components from scratch — full creative control, but duplicates `AmountDisplay`/`AnimatedMount`-style patterns already in the codebase; violates "never introduce a second pattern when one already exists" (AI_STYLE_GUIDE.md).
-2. Reuse existing `AmountDisplay` (count-up + pulse) and `ResponsiveTable`'s built-in `animationProps`/plugin system — matches existing patterns, minimal new code.
-3. Add a confetti/celebration effect (codebase has `TaskComplete` with `canvas-confetti`) — rejected as out of scope; appropriate for one-off task completion, not a report checked daily.
-
-### Chosen
-
-Option 2. "Paid At" was descoped mid-implementation: `IReportDataPoint` has no field distinct from `dated`, and the user will supply the correct data source in a follow-up feature — the existing Date column was left untouched rather than guessing.
-
-### Rationale
-
-Reusing `AmountDisplay` and `ResponsiveTable`'s native `animationProps`/`getRowProps` plugin hook keeps the change small, consistent with existing UI conventions, and avoids fighting a third-party table component's internals.
-
-### Trade-offs
-
-Row-hover styling depends on `ResponsiveTable`'s `IResponsiveTablePlugin.getRowProps` hook rather than a first-class prop — slightly more coupled to that library's plugin API surface than a simple className prop would be.
-
-### Reversible
-
-Yes — fully contained to `Revenue.tsx`, its new `getCustomerDisplayValue.ts` helper, and one new CSS module. Revert by reverting the commit(s) on this feature branch.
-
-## [2026-07-27] Revenue report: fix pagination undercount + add store filter
-
-### Requested
-
-Mobile's "income" report and the web Revenue report were showing different totals for identical date-range filters. Investigation (see `BRS.md` Round 2 in this folder) traced this to four causes; the user approved fixing all of them, plus explicitly asked for a new store filter on the web report ("by default select all stores but allow owner to cherry pick"). This entry covers the two causes that live in `lattice-web-light`: the pagination undercount, and the missing store filter (the other two causes — a request-flag mismatch and a client-side filter divergence — are `Fua-Mobile`-side changes, tracked in that repo's own commit history since it has no BRS-gate).
-
-### Options Considered
-
-1. Raise `pageSize` to a very large bounded number in a single request, instead of looping pages — fewer round-trips, but silently caps out again if a vendor ever exceeds that bound, reintroducing the same class of bug at a higher threshold rather than actually fixing it.
-2. Loop `page`/`pageSize:40` until a short page comes back, accumulating every row — matches how the existing pagination mechanism was clearly intended to be used (the backend already supports arbitrarily many pages), no arbitrary cap reintroduced.
-3. For the store filter: build a new bespoke multi-select component — rejected, `ExpenseListLogic`/`ExpenseList.tsx` already has the exact same shape of filter (`selectedStoreIds: string[]`, `SelectWrapper isMulti`, empty selection = no filter = all stores) shipped and tested.
-4. For "default all stores selected": explicitly populate `selectedStoreIds` with every store id up front, so each store visibly shows as selected — rejected in favor of option 5, since it diverges from the one existing precedent in this codebase for the exact same filter shape.
-5. For "default all stores selected": leave `selectedStoreIds` empty by default (this codebase's established meaning of "no filter"), which produces the same practical outcome (every store's revenue shown) without inventing a second convention for what "no filter selected" means.
-
-### Chosen
-
-Option 2 for pagination. Options 3 and 5 for the store filter — mirrors `ExpenseListLogic`'s pattern exactly, including the "empty selection = all stores" convention, per `AI_STYLE_GUIDE.md`'s "never introduce a second pattern when one already exists."
-
-### Rationale
-
-The pagination bug is a correctness defect in a financial report — this repo's own stated priority order (`AI_WORKFLOW.md`) puts correctness above performance, so looping every page is preferred over any bounded-`pageSize` shortcut that could recreate the same bug at a larger scale. The store filter reuses an existing, tested, shipped pattern rather than inventing a new one, keeping the change small and consistent.
-
-### Trade-offs
-
-Fetching many pages sequentially for a very large date range is slower than a single large request would be — accepted, since correctness outranks performance here and the existing `pageSize:40` mechanism was left as-is rather than also being redesigned in the same change (that would have been a second, unrelated change bundled into a bug fix). The "empty selection = all stores" convention means the store filter UI does not visually show every store pre-checked on load (it shows the "All Stores" placeholder instead) — functionally equivalent, but a literal reading of "select all stores by default" would expect visible pre-checked chips; flagged to the user as an explicit, deliberate interpretation rather than an oversight.
-
-### Reversible
-
-Yes. The pagination fix and store-filter data-layer wiring landed in one commit (`fix: Revenue report fetches every page instead of only page 1 (40 rows)`) since they share the same method; the store-filter UI (SelectWrapper control + CSS) is a separate, independently revertible commit on top — reverting it alone leaves the pagination fix and the "no filter = all stores" default behavior intact, just without the UI to narrow the selection.
-
-## [2026-07-27] Revenue report: correct the pagination "last page" heuristic (found via live DB verification)
-
-### Requested
-
-User ran the real API request by hand (`curl .../get-revenues-by-arbitrary-dates?page=1&pageSize=40&collapseOrderWithMultipleLineItemsIntoSingleRecord=true`) against a vendor with substantial order history and got only 6 rows back, and asked for it to be verified against the actual database using Rowster rather than assumed correct.
-
-### Options Considered
-
-1. Trust the earlier fix (Option 2 above: stop when a page is shorter than `pageSize`) and assume 6 rows was simply the correct total for that vendor/range — rejected once Rowster confirmed 10,703 non-cancelled orders / 14,563 line items exist for that exact vendor and date range in `dailies_expenses`.
-2. Investigate the discrepancy by reconstructing the backend's actual join/order/paging logic directly against the live dev database — chosen; revealed that the first 40 raw line items (SQL-level page 1) collapse to 28 distinct orders, and the next 40 (page 2) collapse to another 28, proving the "short page = done" heuristic was wrong from the start, not just wrong in this one instance.
-3. Fix by having the backend paginate post-collapse instead (page by distinct `OrderHeaderId`) — correct long-term fix, but a `dailies-backend` change outside the scope the user approved for this task (only lattice-web-light/Fua-Mobile client changes), and outside this repo's own BRS anyway (that repo has its own BRS-gated workflow).
-4. Fix client-side by changing the loop's stopping condition to "stop only on a fully empty page" — chosen; doesn't require any backend change, works correctly regardless of how unevenly a collapsed page's size varies, at the cost of one extra trailing request per report run.
-
-### Chosen
-
-Option 2 to diagnose, Option 4 to fix.
-
-### Rationale
-
-The backend collapses multiple line items of one order into a single row *after* SQL-level paging (`OrderDataPointReader.cs`'s `LIMIT`/`OFFSET` on the raw `OrderHeader`+`OrderLineItem` join, then `RevenueReader.cs`'s C#-side `GroupBy(OrderHeaderId)`). A page's post-collapse row count is therefore not a proxy for "is there more data" — only a genuinely empty page reliably means so, since 0 raw rows can only collapse to 0.
-
-### Trade-offs
-
-Every report run now always makes one extra trailing request that returns nothing, to confirm exhaustion — a small, fixed cost accepted in exchange for actual correctness (the alternative, the previous "short page" heuristic, was silently wrong on what is apparently the common case for any vendor with realistic order volume, not an edge case).
-
-### Reversible
-
-Yes — confined to `RevenueReportLogic.fetchDataAsync`'s loop condition and its test file.
-
-## [2026-07-27] Revenue report: remove pagination entirely instead of patching it again
-
-### Requested
-
-After the previous fix (stop only on an empty page), user asked why the report paginates at all, given the fetch-everything-before-rendering usage pattern and mobile's own precedent of not paginating this endpoint.
-
-### Options Considered
-
-1. Keep the empty-page-terminated loop from the prior fix — technically correct now, but still makes many sequential round-trips (potentially hundreds for a high-volume vendor) for zero benefit, since nothing consumes individual pages incrementally.
-2. Raise `pageSize` to a very large bounded number — still an arbitrary cap, still leaves a "what if a vendor exceeds this" question open, still requires the loop/collapse reasoning to exist at all.
-3. Remove pagination entirely — send no `page`/`pageSize`, let the backend return everything in one response (already a supported, existing code path: `OrderDataPointReader.cs`'s `shouldPage` check skips `LIMIT`/`OFFSET` when both are omitted; `ApiAccessor.ts` already omits paging query params cleanly when both are `undefined`). Matches how `Fua-Mobile`'s `revenue_api_caller.dart` has always called this identical endpoint.
+1. Reuse the sibling repo `jattac.Libs.Web.OverflowMenu` (`D:\work\nyingi\code\systems\jattac-web-libs\jattac.Libs.Web.OverflowMenu`) directly — rejected. Its trigger is a fixed 48×48 circular "kebab" icon-button with hover styling hardcoded via Framer Motion **inline styles** (`whileHover={{ color: '#016a80', ... }}`), which cannot be overridden by external CSS — no way to theme it into ZestButton's variant/dark-mode system without forking. It's also architecturally a standalone floating "more actions" button, not a chevron segment meant to fuse onto another button, and its `src/index.tsx` doesn't export the internals (`MenuRow`, the Radix wiring) separately, so there's no seam to reuse just the mechanics.
+2. `@floating-ui/react` (generic positioning + a-la-carte interaction hooks) — viable, but a lower-level primitive than needed; would mean hand-assembling menu semantics (roles, type-ahead, keyboard nav) that a menu-specific library already provides.
+3. `@radix-ui/react-dropdown-menu`, used directly (not via `OverflowMenu`'s wrapper) — chosen. Same package `OverflowMenu` already depends on in production (proven in this org already), but consumed via its `asChild` composition model so ZestButton drives its own trigger element and full styling, inheriting only positioning/dismiss/a11y/keyboard-nav mechanics. No Framer Motion needed — CSS-only transitions match this repo's existing animation approach.
 
 ### Chosen
 
@@ -190,48 +103,47 @@ Option 3.
 
 ### Rationale
 
-`Revenue.tsx` already needs the complete result set before it renders anything — there is no incremental/lazy-loading UI on this screen that pagination could actually serve. Given that, pagination was pure overhead: many round-trips, plus the entire page/collapse mismatch bug class from the previous two decision-log entries. Removing it converges web onto the exact same request shape mobile already uses against this endpoint, which is both simpler and more consistent across clients.
+`asChild` composition is the deciding factor: it gets the exact same battle-tested Radix positioning/a11y engine `OverflowMenu` already uses in this org, without inheriting that component's fixed skin, Framer Motion dependency, or lack of theme/variant props.
 
-### Trade-offs
+### Trade-offs (each found empirically while implementing, not guessed — see `test-reports/CHANGE_MANIFEST_dropdown-options.md` and `docs/guidelines/ai-knowledge.md`'s "ZestButton dropdown options" entry for detail)
 
-A vendor with a very large date range and high order volume now pays for one large query/response instead of many small ones. Not treated as a new risk: it's already the status quo for mobile hitting this same endpoint, and the user separately declined to address mobile's equivalent unbounded-fetch behavior as out of scope earlier in this investigation — extending web to match that same accepted trade-off, not introducing a new one.
+- Radix's `DropdownMenu.Root` defaults to `modal: true`, which `aria-hide`s the trigger itself while its own menu is open — wrong for a split button; explicitly set `modal={false}`.
+- Radix portals `DropdownMenu.Content` outside the trigger's DOM subtree, so a theme-override class scoped only to the trigger doesn't reach it — applied the theme class to both.
+- jsdom has no `PointerEvent` constructor at all, and Radix's trigger opens on `pointerdown` not `click` — required three jsdom polyfills in `jest.setup.js` (`PointerEvent`, pointer-capture methods, `scrollIntoView`).
+- First full test run showed a real aggregate coverage regression (95.38% → 95.12%) even though all new code was well-tested — a large, decently-but-not-perfectly-covered addition dilutes a weighted-average baseline. Fixed by adding 8 more targeted tests (3 of them for **pre-existing, untouched** `ZestButton.tsx` branches that happened to be uncovered already) rather than treating the dip as acceptable noise, since `AI_TESTING.md` has zero tolerance for any regression.
 
 ### Reversible
 
-Yes — confined to `RevenueReportLogic.fetchDataAsync`/`RevenueReportRepository` (removed the now-meaningless `latestPage` field) and their test file.
+Yes — no file under `UI/`/`Styles/` had an *existing* line rewritten, only 3 small, explicitly BRS-mandated additions to existing conditions (see `ai-knowledge.md`'s "Known Pitfall" entry for exactly which 3 lines and why). Full file list in `test-reports/CHANGE_MANIFEST_dropdown-options.md`.
 
-## [2026-07-27] Revenue report: client-side store-filter cache instead of re-fetching per toggle
+## [2026-07-28] Fix verify-post.ps1 silently skipping BRS compliance; align verify-pre.ps1's approval regex
 
 ### Requested
 
-User: "It fetches data from backend even when data is available client side... unfiltering via the one store also means doing another server side fetch, which is a painful wait. If data is available client side for a store, then do client side filter, and cache full dataset so restore once filter turned off or if additional stores added to filter can be almost instantaneous." Also asked how to handle the date-range filter in this scheme ("do we disable it so cache remains truthful?").
+User noticed `verify-post.ps1`'s report looked "ok with there not being a BRS" and asked why that wasn't flagged as an issue.
 
 ### Options Considered
 
-1. Keep re-fetching per store-filter change, just make it faster (bigger cache on the backend, etc.) — doesn't address the actual ask (zero network calls for filter toggles) and adds backend complexity for no real gain.
-2. Cache the full dataset once fetched; filter client-side; **disable** the date range control while a filtered view is showing, to keep the cache's date-range scope unambiguous — rejected: unnecessarily restrictive, and unnecessary once the cache invariant is chosen correctly (option 3 achieves the same safety without disabling anything).
-3. Decouple cache validity from store selection entirely: the cache (`fullData`) is always the complete, unfiltered set for the *current date range*; a date-range change always invalidates and refetches it (ignoring whatever store filter is active when the request is made); a store-filter change only ever re-derives the displayed view from the existing cache, never touches the network. The date picker/Run Report stays fully enabled throughout.
+1. Leave it — the caller is expected to always pass `-BRSPath` — rejected, since nothing enforces that, and the whole point of this phase is to catch exactly this kind of omission.
+2. Auto-discover the most-recently-modified `BRS.md` when `-BRSPath` isn't passed (mirroring `verify-pre.ps1`'s existing Phase 1 logic exactly), and make "no BRS found" or "found but not approved" a `FAIL`, never a silent `SKIPPED` — chosen.
 
 ### Chosen
 
-Option 3.
+Option 2, applied to `verify-post.ps1`'s Phase 3.
 
 ### Rationale
 
-Directly answers the user's own question: nothing needs to be disabled, because the cache's validity is scoped to the date range alone, and store selection is a pure display-layer concern that never invalidates it. This is also the minimal change — no new UI state, no disabled controls to explain to the user.
+A script whose entire purpose is enforcing this repo's BRS-gated policy must never be able to report `RESULT: COMPLETE` while staying silent about BRS compliance just because an optional parameter was omitted. `verify-pre.ps1` already had the correct auto-discovery pattern; `verify-post.ps1` just never reused it.
 
-### Also decided (raised during design, confirmed with user)
+### Also found and fixed while testing this change
 
-- **Filter join key**: client-side filtering needs to match rows to selected stores. `ReportDataPoint` only exposed `vendorLocationDisplayLabel` (text), not an ID. Considered matching by label (ships immediately, small risk if two locations ever share a label) vs. adding a real `vendorLocationId` to the backend DTO (fully correct, matches how the server itself already filters, but is a `dailies-backend` change under that repo's own BRS gate). **User chose the backend change** — tracked in `dailies-backend`'s own decision-log for the same date.
-- **Busy flag**: while designing this, found `RevenueReportLogic` never actually set `repository.busy` anywhere (`fetchDataAsync`/`initializeAsync` never wrapped work in `this.runner(...)`), so `Revenue.tsx`'s loading overlay never showed during any fetch — including the one remaining network call in this new design (the date-range refetch). **User confirmed bundling this fix in**, since it directly closes a race (toggle the store filter while a date-range refetch is still in flight) that the new design would otherwise leave open.
+Both scripts' approval-detection regex only recognized `Status: Approved` (or the equivalent markdown-table row), not `Status: Complete` — even though `AI_BRS.md`'s own template defines `Complete` as a later, valid lifecycle stage that can only be reached *after* approval. Running the fixed `verify-post.ps1` against this session's own (by-then-`Complete`) BRS immediately exposed this as a false negative. Fixed both scripts' regexes to accept either value.
 
 ### Trade-offs
 
-Every date-range change now fetches the complete unfiltered dataset regardless of any active store filter — previously, a narrow store filter meant a narrower *server* query. More data over the wire/in memory in exchange for instant filter toggling after that one fetch. Consistent with (and compounds) the earlier decision to remove pagination entirely and always fetch everything in one request.
-
-Depends on the `dailies-backend` `VendorLocationId` change shipping first — sequencing risk noted in this feature's `BRS.md`.
+None identified — this only makes both scripts stricter/more accurate, never looser.
 
 ### Reversible
 
-Yes — confined to `RevenueReportRepository` (new `fullData` field), `RevenueReportLogic` (`fetchDataAsync`/`applyStoreFilter`/`updateReportArgs`/new `#filterByStores`), `IReportDataPoint.ts` (new `vendorLocationId` field), and their tests.
+Yes — confined to `scripts/verify-pre.ps1`'s Phase 1 and `scripts/verify-post.ps1`'s Phase 3 regex/discovery logic.
 

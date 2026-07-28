@@ -342,15 +342,18 @@ if ($brsFound) {
     if ($brsContent -notmatch "Out of Scope|out of scope") { $issues += "Missing out of scope section" }
     if ($brsContent -notmatch "Definition of Done|definition of done") { $issues += "Missing definition of done" }
 
-    # Check approval status
+    # Check approval status. "Complete" is also treated as approved: per the
+    # AI_BRS.md template's own Status enum (Draft / Approved / Implementing /
+    # Complete), a BRS cannot legitimately reach Complete without having been
+    # Approved first — rejecting "Complete" here would be a false negative.
     $approved = $false
-    if ($brsContent -match "(?i)Status:\s*Approved") { $approved = $true }
+    if ($brsContent -match "(?i)Status:\s*(Approved|Complete)") { $approved = $true }
     elseif ($brsContent -match "(?i)Approved:\s*Yes") { $approved = $true }
     elseif ($brsContent -match "(?i)Approval:\s*Granted") { $approved = $true }
     elseif ($brsContent -match "(?i)User\s*Approved:") { $approved = $true }
     # The BRS.md template (AI_BRS.md) renders Status as a markdown table row
     # ("| Status | Approved |"), not colon-separated plain text — match that too.
-    elseif ($brsContent -match "(?i)\|\s*Status\s*\|\s*Approved\s*\|") { $approved = $true }
+    elseif ($brsContent -match "(?i)\|\s*Status\s*\|\s*(Approved|Complete)\s*\|") { $approved = $true }
 
     if (-not $approved) {
         $issues += "BRS not approved by user (look for 'Status: Approved' or 'Approved: Yes')"

@@ -399,3 +399,123 @@
   }
 }
 
+/* ------------------------------------------------------------------ */
+/* Split button (zest.dropdownOptions)                                */
+/* ------------------------------------------------------------------ */
+
+.splitButtonContainer {
+  display: inline-flex;
+  align-items: stretch;
+}
+
+.splitButtonMain {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: none;
+}
+
+.dropdownTrigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding: 0 0.7em;
+  min-width: 2.4em;
+}
+
+/* .solid/.text have no border of their own — add an explicit divider so the
+   two segments still read as one control. .outline/.dashed already carry a
+   full border via their own base rule, which already serves as the divider. */
+.dropdownTrigger.solid {
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+}
+.dropdownTrigger.text {
+  border-left: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.dropdownChevron {
+  width: 0.85em;
+  height: 0.85em;
+  transition: transform 0.2s ease;
+}
+
+.dropdownChevronOpen {
+  transform: rotate(180deg);
+}
+
+.dropdownMenuContent {
+  min-width: 180px;
+  width: max-content;
+  max-width: 320px;
+  padding: 0.4rem;
+  border-radius: 8px;
+  background: var(--zest-color-menu-bg, #ffffff);
+  color: var(--zest-color-menu-text, #1f2937);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  z-index: 1000;
+}
+
+.force-dark.dropdownMenuContent,
+.dropdownMenuContent.force-dark {
+  background: #1f2937;
+  color: #f3f4f6;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.dropdownMenuItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.55em 0.75em;
+  border-radius: 6px;
+  cursor: pointer;
+  outline: none;
+  font-family: "Segoe UI", Roboto, sans-serif;
+  font-size: 0.9rem;
+}
+
+.dropdownMenuItem:hover,
+.dropdownMenuItem[data-highlighted] {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.force-dark .dropdownMenuItem:hover,
+.force-dark .dropdownMenuItem[data-highlighted] {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.dropdownMenuItem.disabled,
+.dropdownMenuItem[data-disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.dropdownMenuItemLabel {
+  flex: 1;
+}
+
+/* Mobile-first: chevron segment always meets the 44px touch-target minimum,
+   independent of `size`, since it's a narrow tap target next to another one. */
+.dropdownTrigger {
+  min-height: 44px;
+}
+
+@media (min-width: 769px) {
+  /* Desktop-aware: once mis-tapping a neighbouring segment isn't a concern,
+     let the chevron shrink to match the main button's own sizing. */
+  .dropdownTrigger.sm {
+    min-height: 0;
+    padding: 0.4em 0.6em;
+  }
+  .dropdownTrigger.md {
+    min-height: 0;
+    padding: 0.6em 0.7em;
+  }
+  .dropdownTrigger.lg {
+    min-height: 0;
+    padding: 0.8em 0.9em;
+  }
+}
+

@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaSpinner } from "react-icons/fa6";
 import styles from "../Styles/ZestButton.module.css";
 import { useZestConfig } from './hooks/useZestConfig';
 import { useBusyState } from './hooks/useBusyState';
 import { useConfirmation } from './hooks/useConfirmation';
 import { useThemeDetection } from './hooks/useThemeDetection';
+import ZestDropdownMenu from './ZestDropdownMenu';
 
 // --- Types ---
 
@@ -31,7 +32,7 @@ interface VisualOptions {
 /**
  * Behavior during async operations
  */
-interface BusyOptions {
+export interface BusyOptions {
   handleInternally?: boolean;
   preventRageClick?: boolean;
   minBusyDurationMs?: number;
@@ -40,7 +41,7 @@ interface BusyOptions {
 /**
  * Behavior after a successful or failed click
  */
-interface SuccessOptions {
+export interface SuccessOptions {
   showCheckmark?: boolean;
   showFailIcon?: boolean;
   autoResetAfterMs?: number;
@@ -49,6 +50,22 @@ interface SuccessOptions {
 export interface ConfirmOptions {
   displayLabel: string;
   timeoutSecs: number;
+}
+
+/**
+ * A single secondary action in a ZestButton's dropdown menu. Runs through the
+ * same busy/confirm machinery as the main button, independently per item.
+ */
+export interface ZestDropdownOption {
+  key?: string;
+  label: React.ReactNode;
+  icon?: React.ReactNode;
+  disabled?: boolean;
+  semanticType?: SemanticType;
+  onClick?: (e: Event) => void | Promise<void>;
+  busyOptions?: BusyOptions;
+  successOptions?: SuccessOptions;
+  confirmOptions?: ConfirmOptions;
 }
 
 // New interface to encapsulate all custom ZestButton props
@@ -61,6 +78,8 @@ export interface ZestCustomProps {
   theme?: ZestTheme;
   buttonStyle?: ZestButtonStyle;
   semanticType?: SemanticType;
+  dropdownOptions?: ZestDropdownOption[];
+  dropdownAriaLabel?: string;
 }
 
 /**
@@ -120,6 +139,8 @@ const ZestButton: React.FC<ZestButtonProps> = ({
     isDefault = false,
     theme = 'system',
     buttonStyle = 'solid',
+    dropdownOptions,
+    dropdownAriaLabel = "More options",
   } = effectiveZestConfig;
 
   const {
@@ -158,6 +179,10 @@ const ZestButton: React.FC<ZestButtonProps> = ({
   const systemTheme = useThemeDetection();
   const effectiveTheme = theme === 'system' ? systemTheme : theme;
 
+  const hasDropdown = Boolean(dropdownOptions && dropdownOptions.length > 0);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [anyDropdownItemBusy, setAnyDropdownItemBusy] = useState(false);
+
   const effectiveBusy =
     typeof props["aria-busy"] === "boolean"
       ? Boolean(props["aria-busy"])
@@ -168,7 +193,8 @@ const ZestButton: React.FC<ZestButtonProps> = ({
   const isDisabled =
     disabled ||
     effectiveBusy ||
-    (preventRageClick && (wasSuccessful || wasFailed));
+    (preventRageClick && (wasSuccessful || wasFailed)) ||
+    anyDropdownItemBusy;
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (preventRageClick && internalBusy) return;
@@ -211,7 +237,7 @@ const ZestButton: React.FC<ZestButtonProps> = ({
   };
 
   useEffect(() => {
-    if (!isDefault || isDisabled) return;
+    if (!isDefault || isDisabled || dropdownOpen) return;
     const listener = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
       if (
@@ -228,7 +254,7 @@ const ZestButton: React.FC<ZestButtonProps> = ({
     };
     document.addEventListener("keydown", listener);
     return () => document.removeEventListener("keydown", listener);
-  }, [isDefault, isDisabled]);
+  }, [isDefault, isDisabled, dropdownOpen]);
 
   const renderLeftIcon = () => {
     if (effectiveBusy) {
@@ -258,7 +284,7 @@ const ZestButton: React.FC<ZestButtonProps> = ({
     return null;
   };
 
-  return (
+  const buttonElement = (
     <button
       ref={buttonRef}
       className={[
@@ -270,6 +296,7 @@ const ZestButton: React.FC<ZestButtonProps> = ({
         isDisabled ? styles.disabled : "",
         wasFailed ? styles.shake : "",
         effectiveTheme === 'light' ? styles['force-light'] : styles['force-dark'],
+        hasDropdown ? styles.splitButtonMain : "",
         className,
       ].join(" ")}
       disabled={isDisabled}
@@ -285,6 +312,28 @@ const ZestButton: React.FC<ZestButtonProps> = ({
         </span>
       </span>
     </button>
+  );
+
+  if (!hasDropdown) {
+    return buttonElement;
+  }
+
+  return (
+    <div className={styles.splitButtonContainer}>
+      {buttonElement}
+      <ZestDropdownMenu
+        options={dropdownOptions as NonNullable<typeof dropdownOptions>}
+        ariaLabel={dropdownAriaLabel}
+        open={dropdownOpen}
+        onOpenChange={setDropdownOpen}
+        disabled={isDisabled}
+        onAnyItemBusyChange={setAnyDropdownItemBusy}
+        variant={variant}
+        size={size}
+        buttonStyle={buttonStyle}
+        effectiveTheme={effectiveTheme}
+      />
+    </div>
   );
 };
 

@@ -1,0 +1,14 @@
+#!/bin/sh
+# pre-merge-commit hook — validate merge before completion
+
+# Ensure no merge conflicts exist
+CONFLICTS=$(git diff --name-only --diff-filter=U 2>/dev/null)
+if [ -n "$CONFLICTS" ]; then
+  echo "ERROR: Merge conflicts detected in:"
+  echo "$CONFLICTS"
+  echo ""
+  echo "Resolve conflicts before completing merge."
+  exit 1
+fi
+
+exit 0

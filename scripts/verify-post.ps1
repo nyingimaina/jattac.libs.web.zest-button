@@ -9,7 +9,11 @@
     Exits with code 0 if all checks pass, 1 otherwise.
 
 .PARAMETER BRSPath
-    Path to the BRS.md file for this feature.
+    Path to the BRS.md file for this feature. Optional — if omitted, the
+    most-recently-modified BRS.md anywhere in the project is auto-discovered
+    (same logic as verify-pre.ps1's Phase 1). BRS Compliance is mandatory and
+    always FAILs (never silently skips) if no BRS.md exists or it isn't
+    approved.
 
 .PARAMETER ManifestPath
     Path to the change manifest file.
@@ -426,8 +430,23 @@ Write-Host "========================================`n" -ForegroundColor Cyan
 $phaseStart = Get-Date
 $brsCompliant = $true
 
-if ($BRSPath -and (Test-Path $BRSPath)) {
-    $brsContent = Get-Content $BRSPath -Raw
+$resolvedBrsPath = $BRSPath
+if (-not $resolvedBrsPath) {
+    # Auto-discover the same way verify-pre.ps1's Phase 1 does, so this
+    # phase can never be silently SKIPPED just because a caller forgot to
+    # pass -BRSPath. A BRS is mandatory per AI_WORKFLOW.md Step 1 — its
+    # absence (or non-approval) here MUST be a FAIL, not a neutral skip.
+    $autoDiscovered = Get-ChildItem $projectRoot -Filter "BRS.md" -Recurse -ErrorAction SilentlyContinue |
+        Where-Object { $_.FullName -notmatch "\\node_modules\\" } |
+        Sort-Object LastWriteTime -Descending |
+        Select-Object -First 1
+    if ($autoDiscovered) {
+        $resolvedBrsPath = $autoDiscovered.FullName
+    }
+}
+
+if ($resolvedBrsPath -and (Test-Path $resolvedBrsPath)) {
+    $brsContent = Get-Content $resolvedBrsPath -Raw
     $issues = @()
 
     if ($brsContent -notmatch "Acceptance Criteria|acceptance criteria") { $issues += "Missing acceptance criteria" }
@@ -436,12 +455,16 @@ if ($BRSPath -and (Test-Path $BRSPath)) {
     if ($brsContent -notmatch "Test Verification|test verification|tests pass") { $issues += "Missing test verification in DoD" }
     if ($brsContent -notmatch "Coverage Regression|coverage regression|no regression") { $issues += "Missing coverage regression clause" }
 
-    # Check approval status
+    # Check approval status. "Complete" is also treated as approved: per the
+    # AI_BRS.md template's own Status enum (Draft / Approved / Implementing /
+    # Complete), a BRS cannot legitimately reach Complete without having been
+    # Approved first — rejecting "Complete" here would be a false negative.
     $approved = $false
-    if ($brsContent -match "(?i)Status:\s*Approved") { $approved = $true }
+    if ($brsContent -match "(?i)Status:\s*(Approved|Complete)") { $approved = $true }
     elseif ($brsContent -match "(?i)Approved:\s*Yes") { $approved = $true }
     elseif ($brsContent -match "(?i)Approval:\s*Granted") { $approved = $true }
     elseif ($brsContent -match "(?i)User\s*Approved:") { $approved = $true }
+    elseif ($brsContent -match "(?i)\|\s*Status\s*\|\s*(Approved|Complete)\s*\|") { $approved = $true }
 
     if (-not $approved) {
         $issues += "BRS not approved by user"
@@ -449,21 +472,22 @@ if ($BRSPath -and (Test-Path $BRSPath)) {
 
     if ($issues.Count -gt 0) {
         $brsCompliant = $false
-        $brsDetail = "BRS at $BRSPath is incomplete: $($issues -join ', ')"
+        $brsDetail = "BRS at ${resolvedBrsPath}: $($issues -join ', ')"
         Write-Host "  FAILED ($($issues.Count) issues)" -ForegroundColor Red
         Add-Phase "BRS Compliance" "FAIL" $brsDetail -DurationSec ((Get-Date) - $phaseStart).TotalSeconds -Output ($issues -join "`n")
         $script:ExitCode = 1
     } else {
-        Write-Host "  PASSED (BRS fully compliant)" -ForegroundColor Green
-        Add-Phase "BRS Compliance" "PASS" "BRS at $BRSPath has all required sections" -DurationSec ((Get-Date) - $phaseStart).TotalSeconds
+        Write-Host "  PASSED (BRS fully compliant at $resolvedBrsPath)" -ForegroundColor Green
+        Add-Phase "BRS Compliance" "PASS" "BRS at $resolvedBrsPath has all required sections" -DurationSec ((Get-Date) - $phaseStart).TotalSeconds
     }
 } elseif ($BRSPath) {
     Write-Host "  FAILED (BRS not found at: $BRSPath)" -ForegroundColor Red
     Add-Phase "BRS Compliance" "FAIL" "BRS not found at: $BRSPath" -DurationSec ((Get-Date) - $phaseStart).TotalSeconds
     $script:ExitCode = 1
 } else {
-    Write-Host "  SKIPPED (no BRS path provided)" -ForegroundColor Yellow
-    Add-Phase "BRS Compliance" "SKIPPED" "No BRS path provided. Use -BRSPath to specify."
+    Write-Host "  FAILED (no BRS.md found anywhere in the project)" -ForegroundColor Red
+    Add-Phase "BRS Compliance" "FAIL" "No BRS.md found anywhere in the project. A BRS is mandatory per AI_WORKFLOW.md Step 1." -DurationSec ((Get-Date) - $phaseStart).TotalSeconds
+    $script:ExitCode = 1
 }
 
 # ═══════════════════════════════════════════════════════════════════

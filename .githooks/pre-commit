@@ -1,0 +1,34 @@
+#!/bin/sh
+# pre-commit hook — fast checks only, must complete in <5 seconds
+
+# Block large files (prevent accidental binary commits)
+MAX_SIZE=1048576  # 1MB
+for file in $(git diff --cached --name-only); do
+  if [ -f "$file" ]; then
+    size=$(wc -c < "$file" 2>/dev/null || echo 0)
+    if [ "$size" -gt "$MAX_SIZE" ]; then
+      echo "ERROR: $file exceeds 1MB limit. Did you mean to commit this?"
+      exit 1
+    fi
+  fi
+done
+
+# Block secrets (basic pattern match)
+if git diff --cached --diff-filter=A -p | grep -qiE "(password|secret|api_key|private_key)\s*=\s*['\"]"; then
+  echo "ERROR: Possible secret detected in staged changes."
+  exit 1
+fi
+
+# Block common mistake: committing .env files
+if git diff --cached --name-only | grep -qE "\.env$|\.env\."; then
+  echo "ERROR: .env file detected in staged changes. Did you mean to commit this?"
+  exit 1
+fi
+
+# Block common mistake: committing secrets files
+if git diff --cached --name-only | grep -qiE "credentials|secret|\.pem$|\.key$"; then
+  echo "ERROR: Possible secrets file detected in staged changes."
+  exit 1
+fi
+
+exit 0

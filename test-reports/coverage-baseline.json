@@ -1,0 +1,10 @@
+{
+  "timestamp": "2026-07-28T08:04:59.7184924+03:00",
+  "coverage_percent": 95.38,
+  "branch": "master",
+  "commit": "ac10481",
+  "skipped_tests": 0,
+  "passed_tests": 52,
+  "failed_tests": 0,
+  "total_tests": 52
+}

@@ -1,0 +1,52 @@
+#!/bin/sh
+# pre-push hook — branch protection + e2e merge gate
+
+PROTECTED_BRANCHES="master main trunk production release"
+CURRENT_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null)
+
+# The E2E gate only applies once an actual E2E suite exists in the repo.
+# Otherwise it would permanently block every push to a protected branch on
+# a project that hasn't built E2E tests yet.
+E2E_SUITE_EXISTS=0
+for dir in $(find . -maxdepth 4 -type d \( -iname "e2e" -o -iname "e2e-tests" \) -not -path "*/node_modules/*" -not -path "*/docs/*" 2>/dev/null); do
+  if [ -n "$(find "$dir" -type f 2>/dev/null)" ]; then
+    E2E_SUITE_EXISTS=1
+    break
+  fi
+done
+
+for branch in $PROTECTED_BRANCHES; do
+  if [ "$CURRENT_BRANCH" = "$branch" ]; then
+
+    # E2E marker check (hard block, no override — but only once an E2E suite exists)
+    if [ "$E2E_SUITE_EXISTS" = "1" ] && [ ! -f ".e2e-passed" ]; then
+      echo "ERROR: E2E tests have not passed."
+      echo ""
+      echo "Run this project's E2E test suite (see docs/guidelines/AI_E2E_TESTING.md)."
+      echo "Then: touch .e2e-passed"
+      echo ""
+      echo "The marker .e2e-passed must exist before pushing to $branch."
+      exit 1
+    fi
+
+    # Branch protection (overrideable)
+    if [ "$ALLOW_PROTECTED_BRANCH_PUSH" != "1" ]; then
+      echo "ERROR: Push to protected branch '$branch' is blocked."
+      echo ""
+      echo "Use: git push-master"
+      echo ""
+      echo "Or set: ALLOW_PROTECTED_BRANCH_PUSH=1 git push"
+      exit 1
+    else
+      echo "==================================="
+      echo "Protected Branch Override Enabled"
+      echo "==================================="
+      echo ""
+      echo "Pushing to protected branch: $branch"
+      echo "This override was explicitly requested."
+      echo ""
+    fi
+  fi
+done
+
+exit 0

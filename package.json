@@ -21,7 +21,7 @@
   "scripts": {
     "build": "rollup -c rollup.config.mjs",
     "dev": "rollup -c rollup.config.mjs -w",
-    "test": "echo \"No tests specified. See WORKPLAN.md for future plans.\" && exit 0"
+    "test": "jest --coverage"
   },
   "keywords": [
     "react",
@@ -53,9 +53,15 @@
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-typescript": "^11.1.6",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/jest": "^30.0.0",
     "@types/node": "^25.1.0",
     "@types/react": "^18.2.67",
     "@types/react-dom": "^18.2.22",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1",
     "postcss": "^8.4.38",
     "postcss-modules": "6.0.1",
     "react": "^18.2.0",
@@ -63,6 +69,7 @@
     "rollup": "^4.13.0",
     "rollup-plugin-dts": "^6.1.0",
     "rollup-plugin-postcss": "^4.0.2",
+    "ts-jest": "^29.4.12",
     "tslib": "^2.6.2",
     "typescript": "^5.4.2"
   }

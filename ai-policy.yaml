@@ -1,0 +1,261 @@
+version: 1
+
+workflow:
+
+  stop_before_editing: true
+
+  mandatory_read:
+
+    - docs/guidelines/AI_WORKFLOW.md
+    - docs/guidelines/AI_TESTING.md
+    - docs/guidelines/AI_ARCHITECTURE.md
+    - docs/guidelines/AI_KNOWLEDGE.md
+    - docs/guidelines/AI_PITFALLS.md
+    - docs/guidelines/AI_GIT_WORKFLOW.md
+    - docs/guidelines/AI_STYLE_GUIDE.md
+    - docs/guidelines/AI_CODE_REVIEW.md
+    - docs/guidelines/AI_BRS.md
+
+  read_before_write: true
+
+  uncertainty_stop: true
+
+  decomposition_threshold: 4
+
+  diff_size_limit: 50
+
+  file_manifest_required: true
+
+  test_output_verification: true
+
+  pattern_discovery: true
+
+brs:
+
+  required: true
+
+  applies_to: all_tasks
+
+  template: docs/guidelines/AI_BRS.md
+
+  approval_required: true
+
+  approval_type: explicit
+
+  location: co_located_with_code
+
+  separate_per_layer: true
+
+  sections_required:
+
+    - metadata
+
+    - problem_statement
+
+    - business_value
+
+    - acceptance_criteria
+
+    - out_of_scope
+
+    - definition_of_done
+
+knowledge:
+
+  update_before_changes: true
+
+  update_after_changes: true
+
+  file: docs/guidelines/ai-knowledge.md
+
+testing:
+
+  tdd: mandatory
+
+  bug_fix_requires_failing_test: true
+
+  preserve_existing_behaviour: true
+
+  write_missing_regression_tests: true
+
+  output_verification: required
+
+  test_isolation: required
+
+  assertion_specificity: required
+
+  required_execution_order:
+
+    - unit
+
+    - service
+
+    - api_integration
+
+    - api_contract
+
+    - ui_e2e
+
+architecture:
+
+  prefer_composition: true
+
+  modify_existing_code_only_when:
+
+    - composition_unreasonable
+
+    - business_logic_incorrect
+
+  no_unsolicited_additions: true
+
+  no_unsolicited_modifications: true
+
+  change_justification: required
+
+  rollback_isolation: required
+
+prohibitions:
+
+  no_dependency_changes: true
+
+  no_configuration_changes: true
+
+  no_ci_cd_changes: true
+
+  no_database_changes: true
+
+  no_unsolicited_comments: true
+
+  no_unsolicited_logging: true
+
+  no_unsolicited_error_handling: true
+
+  no_unsolicited_todos: true
+
+  no_signature_changes: true
+
+  no_access_modifier_changes: true
+
+  no_async_conversion: true
+
+  no_formatting_changes: true
+
+  no_rename_symbols: true
+
+  no_reorder_members: true
+
+completion:
+
+  build: required
+
+  full_test_suite: required
+
+  update_knowledge_graph: required
+
+  update_decision_log: required
+
+  change_manifest: required
+
+  self_review: required
+
+  self_review_pass_all: required
+
+e2e_testing:
+
+  required: true
+
+  trigger: pre_merge_to_master
+
+  critical_paths: required
+
+  config_file: docs/e2e/critical-paths.md
+
+  environment_variables:
+
+    - E2E_API_BASE_URL
+
+    - E2E_DB_CONNECTION
+
+    - E2E_DB_TYPE
+
+  database_setup_teardown: required
+
+  cleanup_required: true
+
+  idempotent: true
+
+  marker_file: .e2e-passed
+
+  hard_block: true
+
+test_configuration:
+
+  verification_required: true
+
+  verification_step: session_startup
+
+  guide: docs/guidelines/AI_TEST_CONFIGURATION.md
+
+  auto_configure_packages: true
+
+  auto_create_config: true
+
+  manual_install_tools: true
+
+  verification_test: single
+
+  coverage_regression: true
+
+  baseline_file: test-reports/coverage-baseline.json
+
+  purpose: functionality_not_coverage
+
+workflow_triggers:
+
+  living_document: true
+
+  file: docs/guidelines/AI_WORKFLOW_TRIGGERS.md
+
+  load_at_session_start: true
+
+  update_at_session_end: true
+
+  strong_inference: true
+
+  classification_types:
+
+    - new_work_cycle
+
+    - continuation
+
+    - no_code_change
+
+    - ambiguous
+
+  new_work_cycle_action: full_workflow
+
+  continuation_action: amend_existing_brs
+
+  no_code_change_action: skip_workflow
+
+  ambiguous_action: ask_for_clarification
+
+  learning_rules:
+
+    remove_on_user_correction: true
+
+    add_on_observation: true
+
+    promote_after_uses: 3
+
+    retire_after_sessions: 10
+
+  interruption_handling:
+
+    pause_current_work: true
+
+    ask_before_switching: true
+
+    mark_brs_as_paused: true
+
+    never_silently_abandon: true

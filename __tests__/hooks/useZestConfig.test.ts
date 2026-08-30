@@ -25,12 +25,19 @@ describe("useZestConfig", () => {
 
   it("applies global default props (lowest precedence)", () => {
     const wrapper = withGlobalConfig({
-      defaultProps: { theme: "dark", visualOptions: { size: "lg" } },
+      defaultProps: {
+        theme: "dark",
+        dropdownTheme: "light",
+        dropdownWidth: 240,
+        visualOptions: { size: "lg" },
+      },
     });
 
     const { result } = renderHook(() => useZestConfig(undefined), { wrapper });
 
     expect(result.current.theme).toBe("dark");
+    expect(result.current.dropdownTheme).toBe("light");
+    expect(result.current.dropdownWidth).toBe(240);
     expect(result.current.visualOptions?.size).toBe("lg");
   });
 
@@ -49,7 +56,7 @@ describe("useZestConfig", () => {
 
   it("local props override everything else", () => {
     const wrapper = withGlobalConfig({
-      defaultProps: { theme: "dark" },
+      defaultProps: { theme: "dark", dropdownTheme: "dark", dropdownWidth: 240 },
       semanticTypeDefaults: {
         save: { visualOptions: { variant: "standard" } },
       },
@@ -60,12 +67,16 @@ describe("useZestConfig", () => {
         useZestConfig({
           semanticType: "save",
           theme: "light",
+          dropdownTheme: "light",
+          dropdownWidth: 320,
           visualOptions: { variant: "danger" },
         }),
       { wrapper }
     );
 
     expect(result.current.theme).toBe("light");
+    expect(result.current.dropdownTheme).toBe("light");
+    expect(result.current.dropdownWidth).toBe(320);
     expect(result.current.visualOptions?.variant).toBe("danger");
   });
 

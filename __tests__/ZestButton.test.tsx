@@ -417,6 +417,102 @@ describe("ZestButton", () => {
       expect(screen.getByRole("button", { name: "Export options" })).toBeInTheDocument();
     });
 
+    it("keeps the chevron's dropdownTrigger class off the main segment", () => {
+      render(
+        <ZestButton zest={{ dropdownOptions: [{ label: "Export as CSV" }] }}>Export</ZestButton>
+      );
+
+      const main = screen.getByRole("button", { name: "Export" });
+      const trigger = screen.getByRole("button", { name: "More options" });
+
+      expect(trigger).toHaveClass("dropdownTrigger");
+      expect(main).not.toHaveClass("dropdownTrigger");
+    });
+
+    it("defaults the menu content to light theme regardless of the button's own theme when dropdownTheme is not set", async () => {
+      render(
+        <ZestButton zest={{ theme: "dark", dropdownOptions: [{ label: "Export as CSV" }] }}>
+          Export
+        </ZestButton>
+      );
+
+      const trigger = screen.getByRole("button", { name: "More options" });
+      expect(trigger).toHaveClass("force-dark");
+
+      openTrigger(trigger);
+      const item = await screen.findByRole("menuitem", { name: "Export as CSV" });
+
+      expect(item.closest('[role="menu"]')).toHaveClass("force-light");
+    });
+
+    it("themes the menu content independently via dropdownTheme, overriding the light default", async () => {
+      render(
+        <ZestButton
+          zest={{
+            theme: "dark",
+            dropdownTheme: "dark",
+            dropdownOptions: [{ label: "Export as CSV" }],
+          }}
+        >
+          Export
+        </ZestButton>
+      );
+
+      const trigger = screen.getByRole("button", { name: "More options" });
+      expect(trigger).toHaveClass("force-dark");
+
+      openTrigger(trigger);
+      const item = await screen.findByRole("menuitem", { name: "Export as CSV" });
+
+      expect(item.closest('[role="menu"]')).toHaveClass("force-dark");
+    });
+
+    it("applies dropdownWidth as the menu's minimum width when configured as a number", async () => {
+      render(
+        <ZestButton zest={{ dropdownWidth: 260, dropdownOptions: [{ label: "Export as CSV" }] }}>
+          Export
+        </ZestButton>
+      );
+
+      openTrigger(screen.getByRole("button", { name: "More options" }));
+      const item = await screen.findByRole("menuitem", { name: "Export as CSV" });
+      const content = item.closest('[role="menu"]') as HTMLElement;
+
+      expect(content.style.minWidth).toBe("260px");
+    });
+
+    it("applies dropdownWidth as-is when configured as a CSS length string", async () => {
+      render(
+        <ZestButton
+          zest={{ dropdownWidth: "18rem", dropdownOptions: [{ label: "Export as CSV" }] }}
+        >
+          Export
+        </ZestButton>
+      );
+
+      openTrigger(screen.getByRole("button", { name: "More options" }));
+      const item = await screen.findByRole("menuitem", { name: "Export as CSV" });
+      const content = item.closest('[role="menu"]') as HTMLElement;
+
+      expect(content.style.minWidth).toBe("18rem");
+    });
+
+    it("falls back to the stylesheet's default min-width when dropdownWidth is not set and no layout is available", async () => {
+      render(
+        <ZestButton zest={{ dropdownOptions: [{ label: "Export as CSV" }] }}>Export</ZestButton>
+      );
+
+      openTrigger(screen.getByRole("button", { name: "More options" }));
+      const item = await screen.findByRole("menuitem", { name: "Export as CSV" });
+      const content = item.closest('[role="menu"]') as HTMLElement;
+
+      // jsdom never lays elements out (getBoundingClientRect is always
+      // zero), so the measured width must be treated as "unavailable"
+      // rather than a real zero — no inline style should be forced, letting
+      // the stylesheet's own 180px default apply.
+      expect(content.style.minWidth).toBe("");
+    });
+
     it("disables the whole control (main segment + chevron) while a menu item is busy", async () => {
       let resolveClick: () => void = () => {};
       const onClick = jest.fn(

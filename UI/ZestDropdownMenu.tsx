@@ -16,6 +16,10 @@ export interface ZestDropdownMenuProps {
   size: ZestSize;
   buttonStyle: ZestButtonStyle;
   effectiveTheme: "light" | "dark";
+  /** Theme for the menu panel; falls back to `effectiveTheme` when unset. */
+  effectiveMenuTheme?: "light" | "dark";
+  /** Minimum width for the menu panel (px number or CSS length string). */
+  menuMinWidth?: number | string;
 }
 
 const ZestDropdownMenu: React.FC<ZestDropdownMenuProps> = ({
@@ -29,7 +33,10 @@ const ZestDropdownMenu: React.FC<ZestDropdownMenuProps> = ({
   size,
   buttonStyle,
   effectiveTheme,
+  effectiveMenuTheme,
+  menuMinWidth,
 }) => {
+  const resolvedMenuTheme = effectiveMenuTheme ?? effectiveTheme;
   const busyKeysRef = useRef<Set<string | number>>(new Set());
 
   const handleItemBusyChange = useCallback(
@@ -78,8 +85,13 @@ const ZestDropdownMenu: React.FC<ZestDropdownMenuProps> = ({
         <DropdownMenu.Content
           className={[
             styles.dropdownMenuContent,
-            effectiveTheme === "light" ? styles["force-light"] : styles["force-dark"],
+            resolvedMenuTheme === "light" ? styles["force-light"] : styles["force-dark"],
           ].join(" ")}
+          style={
+            menuMinWidth !== undefined
+              ? { minWidth: typeof menuMinWidth === "number" ? `${menuMinWidth}px` : menuMinWidth }
+              : undefined
+          }
           sideOffset={4}
           align="end"
           collisionPadding={8}

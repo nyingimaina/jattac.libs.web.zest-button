@@ -87,6 +87,56 @@ describe("ZestDropdownMenu", () => {
     expect(content).toHaveClass("force-dark");
   });
 
+  it("exposes data-state on the menu content for CSS-driven open/close animation", async () => {
+    renderMenu([{ label: "Export as CSV" }], { open: true });
+
+    const content = (await screen.findByRole("menuitem", { name: "Export as CSV" })).closest(
+      '[role="menu"]'
+    );
+    expect(content).toHaveAttribute("data-state", "open");
+  });
+
+  it("exposes data-side on the menu content for transform-origin CSS", async () => {
+    renderMenu([{ label: "Export as CSV" }], { open: true });
+
+    const content = (await screen.findByRole("menuitem", { name: "Export as CSV" })).closest(
+      '[role="menu"]'
+    );
+    expect(content).toHaveAttribute("data-side");
+  });
+
+  it("themes the menu content via effectiveMenuTheme independently from the trigger's effectiveTheme", async () => {
+    renderMenu([{ label: "Export as CSV" }], {
+      open: true,
+      effectiveTheme: "dark",
+      effectiveMenuTheme: "light",
+    });
+
+    expect(screen.getByRole("button", { name: "More options" })).toHaveClass("force-dark");
+    const content = (await screen.findByRole("menuitem", { name: "Export as CSV" })).closest(
+      '[role="menu"]'
+    );
+    expect(content).toHaveClass("force-light");
+  });
+
+  it("applies menuMinWidth as an inline min-width style on the menu content", async () => {
+    renderMenu([{ label: "Export as CSV" }], { open: true, menuMinWidth: 260 });
+
+    const content = (await screen.findByRole("menuitem", { name: "Export as CSV" })).closest(
+      '[role="menu"]'
+    ) as HTMLElement;
+    expect(content.style.minWidth).toBe("260px");
+  });
+
+  it("passes a string menuMinWidth through as-is", async () => {
+    renderMenu([{ label: "Export as CSV" }], { open: true, menuMinWidth: "18rem" });
+
+    const content = (await screen.findByRole("menuitem", { name: "Export as CSV" })).closest(
+      '[role="menu"]'
+    ) as HTMLElement;
+    expect(content.style.minWidth).toBe("18rem");
+  });
+
   it("disables the trigger when disabled is true", () => {
     renderMenu([{ label: "Export as CSV" }], { disabled: true });
 

@@ -26,6 +26,21 @@
   --zest-color-icon-fail: #ef4444;
 }
 
+/* Shape/elevation/motion tokens (additive; no existing --zest-color-* renamed) */
+:root {
+  --zest-radius-sm: 6px;    /* menu items */
+  --zest-radius-md: 8px;    /* buttons, menu panel */
+  --zest-shadow-resting: 0 1px 2px rgba(0, 0, 0, 0.08), 0 1px 1px rgba(0, 0, 0, 0.04);
+  --zest-shadow-hover: 0 4px 10px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --zest-shadow-menu: 0 8px 24px rgba(0, 0, 0, 0.16);
+  --zest-focus-ring-color: #2563eb;
+  --zest-focus-ring: 0 0 0 3px rgba(37, 99, 235, 0.45);
+  --zest-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --zest-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --zest-motion-fast: 0.15s;
+  --zest-motion-base: 0.2s;
+}
+
 /* Dark mode adjustments via system preference */
 @media (prefers-color-scheme: dark) {
   :root {
@@ -51,6 +66,11 @@
 
     --zest-color-icon-success: #34d399;
     --zest-color-icon-fail: #ef4444;
+
+    --zest-shadow-resting: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.2);
+    --zest-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.25);
+    --zest-focus-ring-color: #60a5fa;
+    --zest-focus-ring: 0 0 0 3px rgba(96, 165, 250, 0.5);
   }
 }
 
@@ -103,22 +123,62 @@
 
   --zest-color-icon-success: #34d399;
   --zest-color-icon-fail: #ef4444;
+
+  --zest-shadow-resting: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.2);
+  --zest-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.25);
+  --zest-focus-ring-color: #60a5fa;
+  --zest-focus-ring: 0 0 0 3px rgba(96, 165, 250, 0.5);
 }
 
 
 .button {
   font-family: "Segoe UI", Roboto, sans-serif;
   font-weight: 600;
-  border-radius: 8px;
+  border-radius: var(--zest-radius-md);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  transition:
+    background-color var(--zest-motion-base) ease,
+    box-shadow var(--zest-motion-base) ease,
+    color var(--zest-motion-base) ease,
+    border-color var(--zest-motion-base) ease,
+    transform var(--zest-motion-fast) var(--zest-ease-standard);
   position: relative;
   padding: 0.6em 1.2em;
   overflow: hidden;
   border: none; /* Default to no border, overridden by outline/dashed */
+  box-shadow: var(--zest-shadow-resting);
+}
+
+.button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+.button:hover:not(:disabled) {
+  box-shadow: var(--zest-shadow-hover);
+  transform: translateY(-1px);
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(0) scale(0.97);
+  transition-duration: 0.08s;
+}
+
+.button:disabled {
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.button:focus-visible {
+  outline: none;
+  box-shadow: var(--zest-shadow-resting), var(--zest-focus-ring);
 }
 
 /* Base styles for different button styles */
@@ -144,9 +204,11 @@
   background-color: transparent;
   border: none;
   color: var(--zest-color-standard-bg);
+  box-shadow: none; /* transparent background has nothing for a shadow to sit under */
 }
 .text:hover:not(:disabled) {
   background-color: rgba(var(--zest-color-standard-bg-rgb, 30, 64, 175), 0.1); /* Fallback RGB for text hover */
+  box-shadow: none;
 }
 
 .dashed {
@@ -424,20 +486,52 @@
   min-width: 2.4em;
 }
 
-/* .solid/.text have no border of their own — add an explicit divider so the
-   two segments still read as one control. .outline/.dashed already carry a
-   full border via their own base rule, which already serves as the divider. */
+/* Divider between the two split-button segments, defined for all four
+   buttonStyles (not just solid/text) so the seam is always visible at rest.
+   Each dropdownTrigger also gets a persistent (not just on-hover) background
+   tint so the chevron reads as its own distinct, separately-clickable
+   region — this is the primary fix for the two segments blending together. */
 .dropdownTrigger.solid {
-  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  border-left: 1px solid rgba(255, 255, 255, 0.35);
+  background-color: rgba(0, 0, 0, 0.06);
+}
+.dropdownTrigger.solid:hover:not(:disabled) {
+  background-color: rgba(0, 0, 0, 0.12);
 }
 .dropdownTrigger.text {
-  border-left: 1px solid rgba(0, 0, 0, 0.15);
+  border-left: 1px solid rgba(0, 0, 0, 0.18);
+  background-color: rgba(0, 0, 0, 0.035);
+}
+.dropdownTrigger.outline,
+.dropdownTrigger.dashed {
+  /* outline/dashed already draw their own full border; splitButtonMain
+     removes its own right border below so only this left border remains
+     as the seam, keeping its weight consistent with solid/text. */
+  border-left-width: 2px;
+  background-color: rgba(0, 0, 0, 0.035);
+}
+
+.splitButtonMain.outline,
+.splitButtonMain.dashed {
+  border-right: none;
+}
+
+.force-dark .dropdownTrigger.solid {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.force-dark .dropdownTrigger.solid:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.18);
+}
+.force-dark .dropdownTrigger.text,
+.force-dark .dropdownTrigger.outline,
+.force-dark .dropdownTrigger.dashed {
+  background-color: rgba(255, 255, 255, 0.06);
 }
 
 .dropdownChevron {
   width: 0.85em;
   height: 0.85em;
-  transition: transform 0.2s ease;
+  transition: transform var(--zest-motion-base) var(--zest-ease-spring);
 }
 
 .dropdownChevronOpen {
@@ -449,12 +543,52 @@
   width: max-content;
   max-width: 320px;
   padding: 0.4rem;
-  border-radius: 8px;
+  border-radius: var(--zest-radius-md);
   background: var(--zest-color-menu-bg, #ffffff);
   color: var(--zest-color-menu-text, #1f2937);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+  box-shadow: var(--zest-shadow-menu);
   border: 1px solid rgba(0, 0, 0, 0.08);
   z-index: 1000;
+  transform-origin: var(--radix-dropdown-menu-content-transform-origin);
+}
+
+.dropdownMenuContent[data-state="open"] {
+  animation: dropdownMenuIn var(--zest-motion-base) var(--zest-ease-standard);
+}
+/* Radix unmounts Content immediately on close (no forceMount is used here),
+   so this closing keyframe may not get a chance to visibly play in every
+   browser — treat it as a graceful enhancement, not a guarantee. */
+.dropdownMenuContent[data-state="closed"] {
+  animation: dropdownMenuOut var(--zest-motion-fast) var(--zest-ease-standard);
+}
+
+@keyframes dropdownMenuIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes dropdownMenuOut {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.96); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dropdownMenuContent[data-state="open"],
+  .dropdownMenuContent[data-state="closed"] {
+    animation: none;
+  }
+  .dropdownChevron {
+    transition: none;
+  }
+  .button {
+    transition: background-color var(--zest-motion-base) ease,
+      box-shadow var(--zest-motion-base) ease,
+      color var(--zest-motion-base) ease,
+      border-color var(--zest-motion-base) ease;
+  }
+  .button:hover:not(:disabled),
+  .button:active:not(:disabled) {
+    transform: none;
+  }
 }
 
 .force-dark.dropdownMenuContent,
@@ -469,7 +603,7 @@
   align-items: center;
   gap: 0.5em;
   padding: 0.55em 0.75em;
-  border-radius: 6px;
+  border-radius: var(--zest-radius-sm);
   cursor: pointer;
   outline: none;
   font-family: "Segoe UI", Roboto, sans-serif;

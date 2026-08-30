@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { FaSpinner } from "react-icons/fa6";
 import styles from "../Styles/ZestButton.module.css";
 import { useZestConfig } from './hooks/useZestConfig';
@@ -80,6 +80,10 @@ export interface ZestCustomProps {
   semanticType?: SemanticType;
   dropdownOptions?: ZestDropdownOption[];
   dropdownAriaLabel?: string;
+  /** Theme for the dropdown menu panel; inherits the button's own `theme` when unset. */
+  dropdownTheme?: ZestTheme;
+  /** Minimum width for the dropdown menu panel (px number or CSS length string); defaults to the split control's own rendered width. */
+  dropdownWidth?: number | string;
 }
 
 /**
@@ -141,6 +145,8 @@ const ZestButton: React.FC<ZestButtonProps> = ({
     buttonStyle = 'solid',
     dropdownOptions,
     dropdownAriaLabel = "More options",
+    dropdownTheme,
+    dropdownWidth,
   } = effectiveZestConfig;
 
   const {
@@ -178,10 +184,41 @@ const ZestButton: React.FC<ZestButtonProps> = ({
   const buttonRef = useRef<HTMLButtonElement>(null);
   const systemTheme = useThemeDetection();
   const effectiveTheme = theme === 'system' ? systemTheme : theme;
+  // Dropdown menus default to light regardless of the button's own theme
+  // (product preference) — dropdownTheme only kicks in once set explicitly.
+  const effectiveDropdownTheme: 'light' | 'dark' = dropdownTheme
+    ? dropdownTheme === 'system'
+      ? systemTheme
+      : dropdownTheme
+    : 'light';
 
   const hasDropdown = Boolean(dropdownOptions && dropdownOptions.length > 0);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [anyDropdownItemBusy, setAnyDropdownItemBusy] = useState(false);
+
+  const splitContainerRef = useRef<HTMLDivElement>(null);
+  const [measuredControlWidth, setMeasuredControlWidth] = useState<number | undefined>(undefined);
+
+  useLayoutEffect(() => {
+    if (!hasDropdown || !splitContainerRef.current) return;
+    const el = splitContainerRef.current;
+
+    // A width of 0 means "not actually laid out yet" (e.g. jsdom, or a
+    // display:none ancestor) rather than a real zero-width control — treat
+    // it as unavailable so the menu falls back to its own CSS default
+    // instead of being forced to a bogus 0px minimum.
+    const initialWidth = el.getBoundingClientRect().width;
+    if (initialWidth > 0) setMeasuredControlWidth(initialWidth);
+
+    const observer = new ResizeObserver((entries) => {
+      const width = entries[0]?.contentRect.width ?? 0;
+      if (width > 0) setMeasuredControlWidth(width);
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [hasDropdown]);
+
+  const resolvedMenuMinWidth = dropdownWidth ?? measuredControlWidth;
 
   const effectiveBusy =
     typeof props["aria-busy"] === "boolean"
@@ -319,7 +356,7 @@ const ZestButton: React.FC<ZestButtonProps> = ({
   }
 
   return (
-    <div className={styles.splitButtonContainer}>
+    <div className={styles.splitButtonContainer} ref={splitContainerRef}>
       {buttonElement}
       <ZestDropdownMenu
         options={dropdownOptions as NonNullable<typeof dropdownOptions>}
@@ -332,6 +369,8 @@ const ZestButton: React.FC<ZestButtonProps> = ({
         size={size}
         buttonStyle={buttonStyle}
         effectiveTheme={effectiveTheme}
+        effectiveMenuTheme={effectiveDropdownTheme}
+        menuMinWidth={resolvedMenuMinWidth}
       />
     </div>
   );

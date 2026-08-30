@@ -11,6 +11,7 @@ This document provides a high-level showcase of what's possible with `ZestButton
 - [Semantic Types](#semantic-types)
 - [Global Configuration](#global-configuration)
 - [Rich Styling](#rich-styling)
+- [Split Buttons & Overflow Menus](#split-buttons--overflow-menus)
 
 ---
 
@@ -120,6 +121,29 @@ const MyComponent = () => (
 );
 ```
 *Explore all the recipes in the **[Cookbook](./examples.md)** to see these options in action.*
+
+---
+
+### Split Buttons & Overflow Menus
+
+**What it does:** Attaches a set of secondary actions to a button that already has one obvious default action, via a chevron segment that opens a menu — a discoverable place for "there's more here" without cluttering the UI with extra buttons. Each menu item gets its own independent busy/success/fail/confirm feedback, and the menu can be themed and sized independently of the main button.
+
+```tsx
+const MyComponent = () => (
+  <ZestButton
+    onClick={() => alert('Exported as CSV!')}
+    zest={{
+      dropdownOptions: [
+        { label: 'Export as PDF', onClick: () => alert('Exported as PDF!') },
+        { label: 'Export as JSON', onClick: () => alert('Exported as JSON!') },
+      ],
+    }}
+  >
+    Export as CSV
+  </ZestButton>
+);
+```
+*__Learn more in the [Split Button with Overflow Actions recipe](./examples.md#recipe-5-a-split-button-with-overflow-actions).__*
 
 ---
 

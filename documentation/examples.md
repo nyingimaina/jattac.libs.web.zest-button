@@ -10,6 +10,7 @@ Welcome to the ZestButton Cookbook! This is the core learning path for mastering
 - [Recipe 2: The Safe "Delete" Button](#recipe-2-the-safe-delete-button)
 - [Recipe 3: Standardizing Your Buttons with a Global Config](#recipe-3-standardizing-your-buttons-with-a-global-config)
 - [Recipe 4: Creating a Custom "Archive" Button](#recipe-4-creating-a-custom-archive-button)
+- [Recipe 5: A Split Button with Overflow Actions](#recipe-5-a-split-button-with-overflow-actions)
 
 ---
 
@@ -221,6 +222,67 @@ const App = () => (
 );
 ```
 This powerful pattern allows you to build a complete, consistent design system for all button actions in your application. For more details on configuration, see the [Configuration Guide](./configuration.md).*
+
+---
+
+### Recipe 5: A Split Button with Overflow Actions
+
+**Goal:** Create a button with one obvious default action ("Export as CSV") plus a few situational alternatives ("Export as PDF", "Export as JSON"), without cluttering the UI with three separate buttons.
+
+**Problem:** You have a primary action and a handful of related, less-common actions. Placing them all as top-level buttons crowds the UI; hiding all of them behind a menu makes the primary action less discoverable and adds an extra click for the common case.
+
+**Solution:** Pass `dropdownOptions` in `zest`. `ZestButton` renders as two visually-fused segments: the main action (left) fires immediately on click, exactly like a normal `ZestButton`, while the chevron (right) opens a menu of the extra options. Each option is independent — it can have its own icon, `busyOptions`, `successOptions`, or `confirmOptions`, running through the same machinery as the main button.
+
+```tsx
+import React from 'react';
+import ZestButton from 'jattac.libs.web.zest-button';
+import { FaFileCsv, FaFilePdf, FaFileCode, FaTrash } from 'react-icons/fa6';
+
+const ExportButton = () => {
+  const exportAs = (format: string) => async () => {
+    await new Promise((resolve) => setTimeout(resolve, 800));
+    alert(`Exported as ${format}!`);
+  };
+
+  return (
+    <ZestButton
+      onClick={exportAs('CSV')}
+      zest={{
+        visualOptions: { iconLeft: <FaFileCsv /> },
+        dropdownOptions: [
+          { label: 'Export as PDF', icon: <FaFilePdf />, onClick: exportAs('PDF') },
+          { label: 'Export as JSON', icon: <FaFileCode />, onClick: exportAs('JSON') },
+          {
+            label: 'Delete export history',
+            icon: <FaTrash />,
+            onClick: async () => alert('History cleared.'),
+            confirmOptions: { displayLabel: 'Confirm Delete', timeoutSecs: 5 },
+          },
+        ],
+      }}
+    >
+      Export as CSV
+    </ZestButton>
+  );
+};
+```
+
+**Theming and sizing the menu independently:** the dropdown menu panel defaults to a light theme and a minimum width matching the whole split button, regardless of the main button's own `theme`. Both are configurable, either per-button or app-wide via `ZestButtonConfigProvider`'s `defaultProps`:
+
+```tsx
+<ZestButton
+  zest={{
+    theme: 'dark',
+    dropdownTheme: 'dark',   // theme the menu to match, instead of the light default
+    dropdownWidth: '16rem',  // force a specific minimum width instead of matching the button
+    dropdownOptions: [{ label: 'Export as PDF', onClick: exportAs('PDF') }],
+  }}
+>
+  Export as CSV
+</ZestButton>
+```
+
+*For the full prop reference, see [`dropdownOptions`](./api.md#zestcustomprops) and [`ZestDropdownOption`](./api.md#zestdropdownoption) in our API reference.*
 
 ---
 

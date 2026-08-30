@@ -8,13 +8,14 @@ A highly customizable and interactive React button component designed for modern
 *   **Success & Failure Feedback**: Provide instant visual feedback with animated checkmarks for success or an animated 'X' with a shake for failures and timeouts.
 *   **Built-in Confirmation Flow**: Protect critical actions with a configurable "click-to-confirm" mechanism, complete with a countdown timer.
 *   **Richly Styleable**: Comes with `solid`, `outline`, `text`, and `dashed` styles, multiple color variants, and automatic light/dark mode support.
+*   **Split Buttons & Overflow Menus**: Attach a set of secondary actions to a button's default action via `dropdownOptions` — a discoverable chevron opens a themeable, independently-sized menu, with each item running through the same busy/confirm feedback as the main button.
 
 ### Installation
 
 ```bash
-npm install jattac.libs.web.zest-button react-icons
+npm install jattac.libs.web.zest-button react-icons @radix-ui/react-dropdown-menu
 ```
-*Note: `react`, `react-dom`, and `react-icons` are peer dependencies and must be installed in your project.*
+*Note: `react`, `react-dom`, `react-icons`, and `@radix-ui/react-dropdown-menu` are peer dependencies and must be installed in your project.*
 
 ### Basic Usage (The "Hello World")
 
@@ -41,12 +42,12 @@ To get started, check out our **Cookbook** of practical recipes.
 
 | Topic | Description |
 | :--- | :--- |
-| **[The Cookbook](./docs/examples.md)** | **(Start Here)** A collection of practical, real-world recipes to master `ZestButton`. |
-| **[Features Showcase](./docs/features.md)** | A high-level visual tour of what's possible. |
-| **[API Reference](./docs/api.md)** | An exhaustive technical reference for all props and types. |
-| **[Configuration Guide](./docs/configuration.md)**| A deep dive into global configuration using the `ZestProvider`. |
-| **[Development Guide](./docs/development.md)** | Information for contributors on the project's architecture and setup. |
-| **[Breaking Changes](./docs/breaking-changes.md)** | A log of breaking changes to assist with version upgrades. |
+| **[The Cookbook](./documentation/examples.md)** | **(Start Here)** A collection of practical, real-world recipes to master `ZestButton`. |
+| **[Features Showcase](./documentation/features.md)** | A high-level visual tour of what's possible. |
+| **[API Reference](./documentation/api.md)** | An exhaustive technical reference for all props and types. |
+| **[Configuration Guide](./documentation/configuration.md)**| A deep dive into global configuration using the `ZestProvider`. |
+| **[Development Guide](./documentation/development.md)** | Information for contributors on the project's architecture and setup. |
+| **[Breaking Changes](./documentation/breaking-changes.md)** | A log of breaking changes to assist with version upgrades. |
 
 ### License
 
@@ -54,4 +55,4 @@ Licensed under [MIT](./LICENSE).
 
 ---
 
-[Next: The Cookbook (Examples) ➡️](./docs/examples.md)
+[Next: The Cookbook (Examples) ➡️](./documentation/examples.md)

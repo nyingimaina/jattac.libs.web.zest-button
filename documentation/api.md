@@ -18,6 +18,7 @@ This document provides an exhaustive reference for all `ZestButton` props and ty
   - [SuccessOptions](#successoptions)
   - [ConfirmOptions](#confirmoptions)
   - [SemanticType](#semantictype)
+  - [ZestDropdownOption](#zestdropdownoption)
 
 ---
 
@@ -50,6 +51,10 @@ This is the main configuration object passed to the `zest` prop.
 | `theme` | `'light' \| 'dark' \| 'system'` | `'system'` | Overrides the automatic theme detection. |
 | `buttonStyle` | `'solid' \| 'outline' \| 'text' \| 'dashed'`| `'solid'` | Defines the visual style of the button. |
 | `semanticType` | `SemanticType` | `undefined` | Defines the semantic type of the button, providing default visuals and behaviors. Extensible via module augmentation. |
+| `dropdownOptions` | `ZestDropdownOption[]` | `undefined` | If provided (non-empty), renders the button as a split button: the main action on the left, and a chevron on the right that opens a menu of these options. See [`ZestDropdownOption`](#zestdropdownoption). |
+| `dropdownAriaLabel` | `string` | `'More options'` | Accessible name for the chevron trigger button (it has no visible text). |
+| `dropdownTheme` | `'light' \| 'dark' \| 'system'` | `'light'` | Theme for the dropdown menu panel, independent of the button's own `theme`. Menus default to light regardless of the button's theme; set this to theme the menu to match. |
+| `dropdownWidth` | `number \| string` | `undefined` | Minimum width for the dropdown menu panel — a number is treated as pixels, a string is used as a raw CSS length (e.g. `'18rem'`). When unset, the menu's minimum width tracks the rendered width of the whole split button control. |
 
 ---
 
@@ -134,6 +139,26 @@ declare module 'jattac.libs.web.zest-button' {
 }
 ```
 After augmentation, `'archive'` and `'publish'` would be valid `SemanticType` values, available for autocompletion and type-checking.
+
+---
+
+#### `ZestDropdownOption`
+
+Describes a single secondary action in a split button's dropdown menu (see [`dropdownOptions`](#zestcustomprops)). Each option runs through the same busy/confirm machinery as the main button, independently per item.
+
+| Prop Name | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `key` | `string` | index | Stable React key. Defaults to the option's index in the array if omitted. |
+| `label` | `React.ReactNode` | **(Required)** | The menu item's visible content. |
+| `icon` | `React.ReactNode` | `undefined` | An icon to display to the left of the label. |
+| `disabled` | `boolean` | `false` | If true, the item cannot be selected. |
+| `semanticType` | `SemanticType` | `undefined` | Same as the main button's `semanticType` — provides default icon/behavior for this item. |
+| `onClick` | `(e: Event) => void \| Promise<void>` | `undefined` | Handler invoked when the item is selected. |
+| `busyOptions` | `BusyOptions` | `{}` | Same shape as the main button's `busyOptions`, scoped to this item. |
+| `successOptions` | `SuccessOptions` | `{}` | Same shape as the main button's `successOptions`, scoped to this item. |
+| `confirmOptions` | `ConfirmOptions` | `undefined` | Same shape as the main button's `confirmOptions`, scoped to this item. |
+
+*See the [Split Button with Overflow Actions recipe](./examples.md#recipe-5-a-split-button-with-overflow-actions) for a full example.*
 
 ---
 

@@ -16,7 +16,8 @@
   "files": [
     "dist",
     "README.md",
-    "docs"
+    "LICENSE",
+    "documentation"
   ],
   "scripts": {
     "build": "rollup -c rollup.config.mjs",

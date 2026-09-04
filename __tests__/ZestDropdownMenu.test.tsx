@@ -137,6 +137,12 @@ describe("ZestDropdownMenu", () => {
     expect(content.style.minWidth).toBe("18rem");
   });
 
+  it("shares the base button class with the main segment so it gets appearance reset, radius, shadow and focus-visible styling", () => {
+    renderMenu([{ label: "Export as CSV" }]);
+
+    expect(screen.getByRole("button", { name: "More options" })).toHaveClass("button");
+  });
+
   it("disables the trigger when disabled is true", () => {
     renderMenu([{ label: "Export as CSV" }], { disabled: true });
 

@@ -490,13 +490,20 @@
    buttonStyles (not just solid/text) so the seam is always visible at rest.
    Each dropdownTrigger also gets a persistent (not just on-hover) background
    tint so the chevron reads as its own distinct, separately-clickable
-   region — this is the primary fix for the two segments blending together. */
+   region — this is the primary fix for the two segments blending together.
+   `.solid` uses `background-image` (not `background-color`) for its tint:
+   a two-class selector like `.dropdownTrigger.solid` always beats the
+   one-class `.solid`/`.solid.success`/`.solid.danger` rules regardless of
+   source order, so setting `background-color` here would fully replace
+   the variant's colour instead of darkening it — collapsing e.g. a blue
+   button's chevron segment to near-invisible on a light page. An image
+   layer composites on top of whatever colour is already set instead. */
 .dropdownTrigger.solid {
   border-left: 1px solid rgba(255, 255, 255, 0.35);
-  background-color: rgba(0, 0, 0, 0.06);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.16));
 }
 .dropdownTrigger.solid:hover:not(:disabled) {
-  background-color: rgba(0, 0, 0, 0.12);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.26));
 }
 .dropdownTrigger.text {
   border-left: 1px solid rgba(0, 0, 0, 0.18);
@@ -517,15 +524,52 @@
 }
 
 .force-dark .dropdownTrigger.solid {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-image: linear-gradient(rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.14));
 }
 .force-dark .dropdownTrigger.solid:hover:not(:disabled) {
-  background-color: rgba(255, 255, 255, 0.18);
+  background-image: linear-gradient(rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.24));
 }
 .force-dark .dropdownTrigger.text,
 .force-dark .dropdownTrigger.outline,
 .force-dark .dropdownTrigger.dashed {
   background-color: rgba(255, 255, 255, 0.06);
+}
+
+/* One-time discoverability cue: a diagonal light streak sweeps across the
+   chevron segment when it first mounts, so the "there's more here"
+   affordance can't be missed on first paint. Relies on `.button`'s own
+   `position: relative` + `overflow: hidden` (now shared via the `button`
+   class added to this trigger) to anchor and clip the streak. Runs once —
+   a plain CSS animation on an element plays automatically when that
+   element is inserted into the DOM, so no JS/state is needed to trigger it. */
+.dropdownTrigger::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.65) 48%,
+    transparent 66%
+  );
+  background-size: 250% 250%;
+  background-position: -120% -120%;
+  pointer-events: none;
+  animation: dropdownTriggerDiscoverySheen 1.3s var(--zest-ease-standard) 0.4s 1 both;
+}
+
+@keyframes dropdownTriggerDiscoverySheen {
+  0% {
+    background-position: -120% -120%;
+    opacity: 1;
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    background-position: 120% 120%;
+    opacity: 0;
+  }
 }
 
 .dropdownChevron {
@@ -578,6 +622,10 @@
   }
   .dropdownChevron {
     transition: none;
+  }
+  .dropdownTrigger::before {
+    animation: none;
+    content: none;
   }
   .button {
     transition: background-color var(--zest-motion-base) ease,

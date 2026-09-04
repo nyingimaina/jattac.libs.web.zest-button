@@ -64,6 +64,7 @@ const ZestDropdownMenu: React.FC<ZestDropdownMenuProps> = ({
           aria-label={ariaLabel}
           disabled={disabled}
           className={[
+            styles.button,
             styles.dropdownTrigger,
             styles[buttonStyle],
             styles[variant],

@@ -273,7 +273,7 @@ const ExportButton = () => {
 <ZestButton
   zest={{
     theme: 'dark',
-    dropdownTheme: 'dark',   // theme the menu to match, instead of the light default
+    dropdownTheme: 'dark',   // pin the menu's theme, instead of following the OS/browser preference
     dropdownWidth: '16rem',  // force a specific minimum width instead of matching the button
     dropdownOptions: [{ label: 'Export as PDF', onClick: exportAs('PDF') }],
   }}

@@ -80,7 +80,7 @@ export interface ZestCustomProps {
   semanticType?: SemanticType;
   dropdownOptions?: ZestDropdownOption[];
   dropdownAriaLabel?: string;
-  /** Theme for the dropdown menu panel; inherits the button's own `theme` when unset. */
+  /** Theme for the dropdown menu panel, independent of the button's own `theme`; defaults to `'system'` (follows the OS/browser `prefers-color-scheme`) when unset. */
   dropdownTheme?: ZestTheme;
   /** Minimum width for the dropdown menu panel (px number or CSS length string); defaults to the split control's own rendered width. */
   dropdownWidth?: number | string;
@@ -184,13 +184,13 @@ const ZestButton: React.FC<ZestButtonProps> = ({
   const buttonRef = useRef<HTMLButtonElement>(null);
   const systemTheme = useThemeDetection();
   const effectiveTheme = theme === 'system' ? systemTheme : theme;
-  // Dropdown menus default to light regardless of the button's own theme
-  // (product preference) — dropdownTheme only kicks in once set explicitly.
-  const effectiveDropdownTheme: 'light' | 'dark' = dropdownTheme
-    ? dropdownTheme === 'system'
-      ? systemTheme
-      : dropdownTheme
-    : 'light';
+  // Dropdown menus follow the OS/browser theme by default, independently of
+  // the button's own `theme` — mirrors effectiveTheme's own 'system' handling
+  // above. dropdownTheme has no destructure-time default because unset must
+  // behave identically to 'system', not to a static literal.
+  const resolvedDropdownTheme: ZestTheme = dropdownTheme ?? 'system';
+  const effectiveDropdownTheme: 'light' | 'dark' =
+    resolvedDropdownTheme === 'system' ? systemTheme : resolvedDropdownTheme;
 
   const hasDropdown = Boolean(dropdownOptions && dropdownOptions.length > 0);
   const [dropdownOpen, setDropdownOpen] = useState(false);

@@ -429,28 +429,41 @@ describe("ZestButton", () => {
       expect(main).not.toHaveClass("dropdownTrigger");
     });
 
-    it("defaults the menu content to light theme regardless of the button's own theme when dropdownTheme is not set", async () => {
+    it("defaults the menu content to the system theme, independently of the button's own theme, when dropdownTheme is not set", async () => {
+      jest.spyOn(window, "matchMedia").mockReturnValue({
+        matches: true, // simulate an OS/browser dark-mode preference
+        media: "(prefers-color-scheme: dark)",
+        onchange: null,
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      } as unknown as MediaQueryList);
+
       render(
-        <ZestButton zest={{ theme: "dark", dropdownOptions: [{ label: "Export as CSV" }] }}>
+        <ZestButton zest={{ theme: "light", dropdownOptions: [{ label: "Export as CSV" }] }}>
           Export
         </ZestButton>
       );
 
+      // The button itself was explicitly forced to light...
       const trigger = screen.getByRole("button", { name: "More options" });
-      expect(trigger).toHaveClass("force-dark");
+      expect(trigger).toHaveClass("force-light");
 
+      // ...but the menu, with no dropdownTheme set, follows the (mocked dark) system preference.
       openTrigger(trigger);
       const item = await screen.findByRole("menuitem", { name: "Export as CSV" });
 
-      expect(item.closest('[role="menu"]')).toHaveClass("force-light");
+      expect(item.closest('[role="menu"]')).toHaveClass("force-dark");
     });
 
-    it("themes the menu content independently via dropdownTheme, overriding the light default", async () => {
+    it("themes the menu content independently via dropdownTheme, overriding the system default", async () => {
       render(
         <ZestButton
           zest={{
             theme: "dark",
-            dropdownTheme: "dark",
+            dropdownTheme: "light",
             dropdownOptions: [{ label: "Export as CSV" }],
           }}
         >
@@ -464,7 +477,7 @@ describe("ZestButton", () => {
       openTrigger(trigger);
       const item = await screen.findByRole("menuitem", { name: "Export as CSV" });
 
-      expect(item.closest('[role="menu"]')).toHaveClass("force-dark");
+      expect(item.closest('[role="menu"]')).toHaveClass("force-light");
     });
 
     it("applies dropdownWidth as the menu's minimum width when configured as a number", async () => {

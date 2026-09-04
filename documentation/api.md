@@ -53,7 +53,7 @@ This is the main configuration object passed to the `zest` prop.
 | `semanticType` | `SemanticType` | `undefined` | Defines the semantic type of the button, providing default visuals and behaviors. Extensible via module augmentation. |
 | `dropdownOptions` | `ZestDropdownOption[]` | `undefined` | If provided (non-empty), renders the button as a split button: the main action on the left, and a chevron on the right that opens a menu of these options. See [`ZestDropdownOption`](#zestdropdownoption). |
 | `dropdownAriaLabel` | `string` | `'More options'` | Accessible name for the chevron trigger button (it has no visible text). |
-| `dropdownTheme` | `'light' \| 'dark' \| 'system'` | `'light'` | Theme for the dropdown menu panel, independent of the button's own `theme`. Menus default to light regardless of the button's theme; set this to theme the menu to match. |
+| `dropdownTheme` | `'light' \| 'dark' \| 'system'` | `'system'` | Theme for the dropdown menu panel, independent of the button's own `theme`. Defaults to following the OS/browser `prefers-color-scheme`; set this to pin the menu to a specific theme or to match the button. |
 | `dropdownWidth` | `number \| string` | `undefined` | Minimum width for the dropdown menu panel — a number is treated as pixels, a string is used as a raw CSS length (e.g. `'18rem'`). When unset, the menu's minimum width tracks the rendered width of the whole split button control. |
 
 ---

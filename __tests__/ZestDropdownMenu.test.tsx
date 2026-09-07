@@ -181,4 +181,37 @@ describe("ZestDropdownMenu", () => {
     await waitFor(() => expect(onAnyItemBusyChange).toHaveBeenCalledWith(true));
     await waitFor(() => expect(onAnyItemBusyChange).toHaveBeenLastCalledWith(false));
   });
+
+  it("clears the aggregate busy state when the menu closes (unmounting the busy item) before its own async onClick has resolved", async () => {
+    const onAnyItemBusyChange = jest.fn();
+    const onClick = jest.fn(() => new Promise<void>(() => {})); // never resolves in this test
+    const options: ZestDropdownOption[] = [{ label: "Common Expenses", onClick, busyOptions: { minBusyDurationMs: 0 } }];
+    const { rerender } = renderMenu(options, { open: true, onAnyItemBusyChange });
+
+    const item = await screen.findByRole("menuitem", { name: "Common Expenses" });
+    act(() => {
+      item.click();
+    });
+
+    await waitFor(() => expect(onAnyItemBusyChange).toHaveBeenCalledWith(true));
+    onAnyItemBusyChange.mockClear();
+
+    // Simulates Radix dismissing the dropdown out from under the still-pending item - e.g. a
+    // pointerdown inside a side pane the item's own onClick just opened.
+    rerender(
+      <ZestDropdownMenu
+        options={options}
+        ariaLabel="More options"
+        open={false}
+        onOpenChange={() => {}}
+        variant="standard"
+        size="md"
+        buttonStyle="solid"
+        effectiveTheme="light"
+        onAnyItemBusyChange={onAnyItemBusyChange}
+      />
+    );
+
+    await waitFor(() => expect(onAnyItemBusyChange).toHaveBeenCalledWith(false));
+  });
 });

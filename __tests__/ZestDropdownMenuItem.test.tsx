@@ -179,4 +179,25 @@ describe("ZestDropdownMenuItem", () => {
 
     expect(screen.getByRole("menuitem")).toHaveAttribute("aria-disabled", "true");
   });
+
+  it("reports busy:false on unmount when unmounted while still busy - e.g. a Radix outside-click dismissing the dropdown mid-flight, before the item's own async onClick has resolved", async () => {
+    const onClick = jest.fn(() => new Promise<void>(() => {})); // never resolves within this test
+    const onBusyChange = jest.fn();
+    const { unmount } = renderInMenu(
+      { label: "Common Expenses", onClick, busyOptions: { minBusyDurationMs: 0 } },
+      { onBusyChange }
+    );
+
+    const item = screen.getByRole("menuitem");
+    act(() => {
+      item.click();
+    });
+
+    await waitFor(() => expect(onBusyChange).toHaveBeenCalledWith(true));
+    onBusyChange.mockClear();
+
+    unmount();
+
+    expect(onBusyChange).toHaveBeenCalledWith(false);
+  });
 });

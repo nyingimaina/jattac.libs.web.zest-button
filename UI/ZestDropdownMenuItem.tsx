@@ -77,6 +77,12 @@ const ZestDropdownMenuItem: React.FC<ZestDropdownMenuItemProps> = ({
 
   useEffect(() => {
     onBusyChange?.(internalBusy);
+    // Radix can unmount this item mid-flight (e.g. an outside pointerdown dismissing the
+    // dropdown while this item's own async onClick is still pending) - without this cleanup, the
+    // parent never hears the matching busy:false and keeps this item's key marked busy forever.
+    return () => {
+      if (internalBusy) onBusyChange?.(false);
+    };
   }, [internalBusy, onBusyChange]);
 
   const isDisabled = externallyDisabled || optionDisabled || internalBusy;

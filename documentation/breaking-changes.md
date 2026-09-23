@@ -9,9 +9,28 @@ This document lists significant changes between versions that might require modi
 
 ## Table of Contents
 
+- [Version 2.0.0 (unreleased)](#version-200-unreleased)
 - [Version 1.2.7](#version-127)
 - [Version 1.2.6](#version-126)
 - [Version 1.2.0](#version-120)
+
+---
+
+## Version 2.0.0 (unreleased)
+
+### Minimum React version raised to 18
+
+React 16.8 and 17 are end-of-life and were never tested against this package. The `react` / `react-dom` peer range is now `>=18.0.0` (previously `>=16.8.0`), which explicitly includes React 18 and React 19 and remains open-ended for future majors.
+
+If your project is still on React 16.8 or 17, npm will now report an unmet peer dependency. Upgrade to React 18 or later.
+
+### Published bundles no longer inline React's JSX runtime
+
+Previously the build externalized `react` but not `react/jsx-runtime`, so a copy of React 18's JSX runtime was bundled into `dist/`. Under React 19 this produced elements branded `Symbol.for('react.element')` — which React 19 rejects with *"A React Element from an older version of React was rendered"* — and referenced an internal removed in React 19. `react/jsx-runtime` and `react/jsx-dev-runtime` are now external, so the consumer's React runtime is always used. This is what makes the package genuinely work under React 19 and with bundlers such as Vite.
+
+### `"exports"` map added
+
+`package.json` now declares an `"exports"` map (`types` / `import` / `require`, plus `./dist/*` and `./package.json` passthroughs). Existing deep imports under `dist/` continue to resolve.
 
 ---
 

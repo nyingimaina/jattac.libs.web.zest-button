@@ -147,3 +147,42 @@ None identified — this only makes both scripts stricter/more accurate, never l
 
 Yes — confined to `scripts/verify-pre.ps1`'s Phase 1 and `scripts/verify-post.ps1`'s Phase 3 regex/discovery logic.
 
+## [2026-09-23] React 19 + onwards + Vite support (explicit peer range; externalize JSX runtime)
+
+### Requested
+
+"ensure this supports react 19 and onwards" — then, when offered scopes, the user chose Option C (an explicit tested-version peer range rather than the open `>=16.8.0`), instructed "do it", and added "and of course support vite" (later clarified: **Vite**, not Vitest). Full scope: `docs/features/react-19-support/BRS.md`.
+
+### Options Considered
+
+1. **Peer range:** `>=16.8.0` (unchanged) / `^18.0.0 || ^19.0.0` / `>=18.0.0` / `>=19.0.0`. Chose `>=18.0.0`: keeps the current tested baseline (18), explicitly includes 19, and — unlike a caret-union — does not block future majors ("onwards"). `>=19.0.0` was rejected because it would break existing React 18 consumers; leaving `>=16.8.0` was rejected because it silently claims untested, EOL 16.8/17.
+2. **Verification:** temporary React 19 install + full-suite/build run, versus pinning dev deps to 19 or adding CI/matrix. Chose the temporary install (point-in-time evidence) plus permanent guard tests, because the repo has no CI and pinning dev deps to 19 would drop React 18 coverage. Whether to add CI is deferred as out of scope.
+3. **"Vite support":** interpreted as "the published package must be consumable in a Vite app", not "add Vitest as a repo runner". (User confirmed the word was a typo for Vite.)
+
+### Chosen
+
+- `peerDependencies.react` / `react-dom`: `">=18.0.0"`.
+- Add a `"exports"` map (`types`/`import`/`require`, plus `./dist/*` and `./package.json` passthroughs).
+- Add `react/jsx-runtime` and `react/jsx-dev-runtime` to `rollup.config.mjs`'s `external` arrays.
+- Two guard tests; React 19 + Vite smoke verification; docs updated.
+
+### Rationale
+
+While investigating "support Vite", discovered the published ESM bundle was **inlining React 18's JSX runtime** (`rollup.config.mjs` externalized `react` but not `react/jsx-runtime`). That inlined runtime emits `Symbol.for('react.element')` — React 19 renamed the element brand to `react.transitional.element` and throws on the old one (React error #525) — and reads `ReactCurrentOwner`, removed in React 19. So the package was genuinely broken under React 19 (and therefore for React 19 Vite consumers), independent of the declared peer range. React's own guidance is to externalize the JSX-runtime subpaths. This single fix serves both the React 19 goal and the Vite goal (Vite consumes the ESM entry).
+
+### Trade-offs
+
+- Narrowing the peer floor to 18 is technically breaking for 16.8/17 consumers; documented as a planned major in `breaking-changes.md`. The `version` field is intentionally left at 1.5.2 (this repo bumps versions in separate release commits).
+- React 19 verification is point-in-time (no CI); mitigated by the permanent guard tests and documented tested majors.
+- Adding `"exports"` can change resolution for some consumers; mitigated by the `./dist/*` and `./package.json` passthroughs, with `main`/`module` retained for legacy resolvers.
+
+### Evidence
+
+- Full suite passes under React 19.3.0 (111/111) and React 18.3.1 (111/111); `tsc --noEmit` and `npm run build` clean under `@types/react@19`.
+- `dist/index.esm.js` now emits `import { jsx, jsxs } from 'react/jsx-runtime'`; zero occurrences of `reactJsxRuntime_production_min`, `ReactCurrentOwner`, or `Symbol.for('react.element')` in either bundle.
+- A scratch Vite 5 + React 19 SSR build consuming the `npm pack`ed tarball rendered both the plain and split (`dropdownOptions`) buttons: `SMOKE_OK`.
+
+### Reversible
+
+Yes — `package.json` (peer range + `exports`), `rollup.config.mjs` (external arrays), two new `__tests__/` guard files, and docs. No `UI/**` runtime code changed. Revert by restoring the two peer ranges, removing the `exports` map, removing the two subpaths from both `external` arrays, and deleting the two guard tests + `docs/features/react-19-support/`.
+

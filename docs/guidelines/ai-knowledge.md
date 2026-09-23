@@ -152,3 +152,36 @@ All added as devDependencies only: `jest`, `@types/jest`, `ts-jest`, `jest-envir
 ### Test Coverage
 As of 2026-07-28: 52 tests across 9 suites, covering every file currently in `UI/`'s public surface (`ZestButton.tsx` incl. busy/confirm/keyboard flows, all 4 hooks, `ZestButtonConfigContext.ts`, `ZestButtonConfigProvider.tsx`, `SpinnerIcon.tsx`, `semanticTypeButtonConfigDefaults.tsx`). 95.38% lines / 94.76% statements / 97.36% functions / 85.23% branches. Baseline recorded in `test-reports/coverage-baseline.json`. Superseded by the dropdown-options feature's test additions above (81 tests, 97.21% lines as of the same date).
 
+## React 19 / Vite packaging support
+
+### Purpose
+Makes the published package work under React 19 and with bundlers (Vite, Next.js, webpack, Rollup), and makes the declared React support explicit.
+
+### Location
+`package.json` (`peerDependencies.react`/`react-dom`, new `"exports"` map), `rollup.config.mjs` (both `external` arrays), `__tests__/packagePeerDependencies.test.ts`, `__tests__/buildExternalization.test.ts`, `docs/features/react-19-support/BRS.md`.
+
+### Callers
+Every consumer of the published package — in particular React 19 apps built with Vite.
+
+### Callees
+None (build/packaging only; no `UI/**` runtime code changed).
+
+### Dependencies
+None added.
+
+### Configuration
+`peerDependencies.react` and `peerDependencies.react-dom` are `">=18.0.0"` (were `">=16.8.0"`). `"exports"` maps `.` → `types`/`import`/`require`, with `./dist/*` and `./package.json` passthroughs. `rollup.config.mjs` JS-bundle `external` now includes `react/jsx-runtime` and `react/jsx-dev-runtime` (the `.d.ts` bundle external was updated to match).
+
+### Known Invariants
+- **`react/jsx-runtime` and `react/jsx-dev-runtime` MUST stay in `rollup.config.mjs`'s JS-bundle `external` array.** If they are removed, `@rollup/plugin-node-resolve`/`commonjs` inline React's JSX runtime into `dist/`. The inlined runtime emits `Symbol.for('react.element')` (React 19 expects `Symbol.for('react.transitional.element')` → throws *"A React Element from an older version of React was rendered"*, React error #525) and reads `React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner` (removed in React 19). This was a real, shipped bug until 2026-09-23. Guarded by `__tests__/buildExternalization.test.ts`.
+- `peerDependencies.react` and `react-dom` MUST remain in lockstep and MUST satisfy `19.0.0` and future majors (`>=18.0.0` chosen deliberately over a caret-union so React 20 is not blocked). Guarded by `__tests__/packagePeerDependencies.test.ts`.
+- The `"exports"` map MUST keep the `"./dist/*"` passthrough so existing deep imports don't break.
+
+### Known Pitfall
+- `dist/` is gitignored but is what `npm pack` publishes; a stale `dist/` will ship an inlined JSX runtime. Always `npm run build` before packing/publishing.
+- The `styleInject` helper in the bundle guards `typeof document === 'undefined'`, so importing the package during SSR does not throw — but it also means no styles are injected server-side (unchanged, out of scope).
+- jest/`@types/react` are pinned to 18 in `devDependencies`; React 19 verification is a temporary `npm install --no-save react@19 react-dom@19 @types/react@19 @types/react-dom@19` run, then restore with `npm install`.
+
+### Test Coverage
+`__tests__/packagePeerDependencies.test.ts` (range + `exports` map assertions, hand-rolled `>=`/`^`/`||` matcher — no `semver` dependency) and `__tests__/buildExternalization.test.ts` (asserts the rollup `external` array covers the JSX-runtime subpaths). As of 2026-09-23: 111 tests / 13 suites, 98.68% lines (two tests were also added to `__tests__/hooks/useBusyState.test.ts` to close a pre-existing coverage gap below the 97.21% baseline). Verified empirically: full suite passes under React 19.3.0 and React 18.3.1; a Vite 5 + React 19 SSR build consuming the packed tarball renders both the plain and split buttons (`SMOKE_OK`).
+

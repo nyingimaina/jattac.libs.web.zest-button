@@ -1,0 +1,10 @@
+{
+  "findings": [],
+  "verifications": [
+    {
+      "id": "QA-1",
+      "status": "fixed",
+      "evidence": "__tests__/ZestButtonToggle.test.tsx lines 303-354 now has a 'system theme' describe that mocks matchMedia. It renders the default theme with an OS set to light and to dark and checks toggleOn, force-light or force-dark, and aria-pressed='true' (lines 328-337). It also renders theme 'system' with the toggle on and flips the OS setting dark then light, asserting the matching force-* class, toggleOn and aria-pressed='true' after each change (lines 339-353)."
+    }
+  ]
+}

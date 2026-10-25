@@ -1,0 +1,53 @@
+{
+  "findings": [
+    {
+      "cites": "R6",
+      "severity": "blocking",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "line": 289,
+      "evidence": "R6 acceptance says 'In light, dark and system themes, on is visibly distinct from off'. The R6 tests only use theme 'light' and 'dark' (it.each at line 290, rerender at line 295). Nothing renders the default/system theme with a toggle on, and nothing mocks matchMedia to check that an OS change is followed while on (R6 edge case). grep for matchMedia, prefers-color-scheme and 'system' in the file returns nothing.",
+      "description": "System theme has no test for toggle mode. Add a test that renders the toggle on without a theme (or with theme 'system') and checks the on state under both a light and a dark matchMedia result. Include a change of the OS setting while on, and assert the button stays aria-pressed='true' with toggleOn and gets the matching theme class."
+    },
+    {
+      "cites": "R4",
+      "severity": "advisory",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "line": 171,
+      "evidence": "R4 edge case 'In a right-to-left page, start and end follow the page direction' has no test. grep for rtl and dir= in the test file finds nothing. The existing 'start'/'end' tests only check DOM order.",
+      "description": "Add a test that the toggle CSS uses logical properties and no physical left/right margins for the check mark, or that DOM order is unchanged inside a dir='rtl' container. Advisory because DOM order already follows the page direction."
+    },
+    {
+      "cites": "R1",
+      "severity": "advisory",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "line": 19,
+      "evidence": "R1 acceptance 'The toggleOptions type is exported from UI/index.ts'. UI/index.ts does `export * from \"./ZestButton\"`, and the only type import test goes through ../UI/ZestButton (line 456), not the entry point.",
+      "description": "Import ToggleOptions and ToggleCheckPosition from ../UI (the barrel) in one test, as a consumer would. The `export *` makes a break unlikely, so this is advisory."
+    },
+    {
+      "cites": "R8",
+      "severity": "advisory",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "line": 441,
+      "evidence": "The R8 tests check that api.md contains the prop names, that README mentions toggleOptions, and that breaking-changes mentions 'Version 1.6.0'. They do not check the examples.md recipes (controlled, uncontrolled, check at end with an icon, with confirmation), the features.md or configuration.md mentions, or the previous/next links on each page. The 'documented examples type-check' test uses one hand-written object, not the actual doc snippets.",
+      "description": "Docs coverage is thin against the R8 acceptance lines. Assert the recipe headings in examples.md and the toggle sections in features.md and configuration.md, and check that each page links to the previous and next page. Advisory because documentation is checked by review."
+    },
+    {
+      "cites": "R3",
+      "severity": "advisory",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "line": 164,
+      "evidence": "The R3 reduced-motion test has a no-op assertion: `block.length > 0` always holds because lastIndexOf returns -1 and slice(-1) is non-empty. The real check is the regex on toggleCss. The 'dashed and outline show on clearly' edge case is only checked by class presence (line 149), not by any style rule. The long-label test checks only text and check presence, not wrapping or truncation.",
+      "description": "Remove the dead assertion. Optionally assert that a `.toggleOn.dashed` / `.toggleOn.outline` rule exists in the CSS and that the label wrapping rule is unchanged. Advisory: the main regex does fail if the rule is removed."
+    },
+    {
+      "cites": "R2",
+      "severity": "advisory",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "line": 100,
+      "evidence": "The R2 'two rapid clicks flip twice' test and the R5 'holding the key down' test are covered, but the R6 edge case 'hover and active on an on toggle are distinguishable from plain on' is only checked by selector presence (line 303), not by differing declarations.",
+      "description": "Advisory: the check is weak but would fail if the selectors were deleted."
+    }
+  ],
+  "verifications": []
+}

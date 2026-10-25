@@ -1,3 +1,9 @@
+---
+title: AI Workflow
+covers: AGENTS.md, docs/guidelines/AI_WORKFLOW.md
+covers-hash: c3b32b65f52e29361af6
+---
+
 # AI Workflow
 
 ## Terminology

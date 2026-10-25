@@ -210,5 +210,19 @@ const App = () => (
 
 ---
 
+### Toggle Defaults
+
+`toggleOptions` merges like the other `zest` options, so a provider can set shared defaults such as the check mark position. Note that putting `toggleOptions` in `defaultProps` turns **every** button in scope into a toggle; prefer setting it on `semanticTypeDefaults` or on individual buttons.
+
+```tsx
+<ZestButtonConfigProvider
+  config={{ semanticTypeDefaults: { confirm: { toggleOptions: { checkPosition: 'end' } } } }}
+>
+  <ZestButton zest={{ semanticType: 'confirm' }}>Agree</ZestButton>
+</ZestButtonConfigProvider>
+```
+
+---
+
 [⬅️ Previous: API Reference](./api.md) | [Next: Development Guide ➡️](./development.md)
 

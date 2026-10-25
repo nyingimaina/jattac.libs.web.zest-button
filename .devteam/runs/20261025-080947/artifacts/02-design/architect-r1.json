@@ -1,0 +1,115 @@
+{
+  "summary": "Toggle mode is added to the existing ZestButton as an optional `zest.toggleOptions` object (pressed, defaultPressed, onPressedChange, checkPosition). Nothing is restructured. The project is flat (UI/, Styles/, __tests__/, documentation/), so this design follows that layout rather than the generic components/<Component>/ layout. A new hook, UI/hooks/useToggleState.ts, owns the on/off value: controlled when `pressed` is given, otherwise self-managed from `defaultPressed`. ZestButton gets new additive code only: the destructured toggleOptions, a new `handleToggleClick` that sits beside handleClick/handleConfirmClick, a small ToggleCheck svg component placed next to AnimatedCheckmark, and a conditional render of the check at the chosen end. The existing handlers keep their bodies; the new handler is wired into the button's onClick only when toggleOptions is present. Without toggleOptions, no aria-pressed attribute, no extra class and no extra element is rendered, so non-toggle markup is byte-identical (risk 1). The toggle check is a distinct element (its own class and a pop/draw animation, in the start/end slot and tied to the pressed state), separate from the busy/success checkmark that only appears in the left icon slot after an async action (risk 2). Confirmation: the flip happens inside the post-confirm path, so it happens only after the user confirms. Disabled or busy: the button element is already disabled, so clicks never reach the handler and the state is only displayed. Dropdown: only the main button gets aria-pressed and the toggle handler; ZestDropdownMenu is untouched. Styles: CSS Modules additions only, using the existing theme variables and the .force-dark/.force-light classes. A `.toggleOn` pressed look (tinted/filled background plus inset shadow) is defined per buttonStyle (solid/outline/text/dashed) and variant, and the focus ring is visible in both states. Check animations are inside a new prefers-reduced-motion block. Sizes are in rem, mobile first. The public surface changes by types only, since UI/index.ts already does `export * from './ZestButton'`: new exported types `ToggleOptions` and `ToggleCheckPosition` ('start' | 'end'), and a new optional `toggleOptions?: ToggleOptions` on ZestCustomProps. No export is removed or changed, so this is not a breaking change; the version is bumped as a minor (1.6.0) and breaking-changes.md records an 'additive, no breaking changes' note. Cost: no new dependency, peer dependency or asset (the check is an inline svg like AnimatedCheckmark). One useState for the self-managed value and no timers or listeners, so nothing is left running after unmount. Toggling re-renders only this button. Work per render is O(1), independent of data size. Bundle growth is small (about 1 KB with CSS); the project has no .size-limit.json, so no budget is touched. The package.json build setup, rollup config, exports map and peer dependencies are not changed, so the build-externalization and peer-dependency tests stay valid. Tests: first, characterization tests pin current non-toggle behaviour (markup has no aria-pressed, class list, click, disabled, confirm and dropdown flows). Then new toggle tests are written failing-first, ending with the full suite run.",
+  "impact": {
+    "touches": [
+      "UI/ZestButton.tsx (add ToggleOptions/ToggleCheckPosition types, toggleOptions on ZestCustomProps, ToggleCheck component, handleToggleClick, aria-pressed and toggle classes, check render at start/end; existing handler bodies unchanged)",
+      "Styles/ZestButton.module.css (append toggle on-state, check mark, focus and reduced-motion rules)",
+      "__tests__/ZestButton.test.tsx (add characterization tests for existing behaviour only if a gap is found; toggle tests go in a new file)",
+      "README.md (first working toggle example)",
+      "documentation/api.md, configuration.md, features.md, examples.md, development.md, breaking-changes.md (new props, recipes, additive note, prev/next links)",
+      "package.json (version bump to 1.6.0 only; no dependency changes)"
+    ],
+    "reuses": [
+      "useZestConfig deep-merge (toggleOptions merges like the other zest options, including from the provider's defaultProps)",
+      "useThemeDetection and the .force-light/.force-dark theme classes and CSS variables",
+      "Existing disabled/busy gating (isDisabled), useConfirmation flow and handleClick busy machinery",
+      "AnimatedCheckmark svg pattern (inline svg, currentColor) and styles.icon/.fadeIn conventions",
+      "Existing .button:focus-visible ring",
+      "UI/index.ts `export *` barrel (no edit needed)",
+      "Jest + React Testing Library setup in __tests__/"
+    ],
+    "adds": [
+      "UI/hooks/useToggleState.ts (controlled/uncontrolled pressed value; pressed wins over defaultPressed; returns [pressed, setPressed that calls onPressedChange])",
+      "__tests__/hooks/useToggleState.test.ts",
+      "__tests__/ZestButtonToggle.test.tsx (R1-R7 behaviour and accessibility, reduced-motion rule present, non-toggle markup unchanged)",
+      "Exported types ToggleOptions and ToggleCheckPosition",
+      "CSS classes toggleOn, toggleCheck, toggleCheckEnter/Exit and a reduced-motion override (CSS Modules)",
+      "docs/features/zest-button-toggle/ feature notes, following the existing docs/features/<feature> pattern"
+    ]
+  },
+  "scope": [
+    "UI/ZestButton.tsx",
+    "UI/hooks/useToggleState.ts",
+    "Styles/ZestButton.module.css",
+    "__tests__/ZestButton.test.tsx",
+    "__tests__/ZestButtonToggle.test.tsx",
+    "__tests__/hooks/useToggleState.test.ts",
+    "README.md",
+    "documentation/api.md",
+    "documentation/configuration.md",
+    "documentation/features.md",
+    "documentation/examples.md",
+    "documentation/development.md",
+    "documentation/breaking-changes.md",
+    "docs/features/zest-button-toggle/**",
+    "package.json",
+    "package-lock.json"
+  ],
+  "components": [
+    {
+      "name": "ToggleOptions types and ZestCustomProps.toggleOptions",
+      "path": "UI/ZestButton.tsx",
+      "requirements": ["R1", "R2", "R4"]
+    },
+    {
+      "name": "useToggleState",
+      "path": "UI/hooks/useToggleState.ts",
+      "requirements": ["R1", "R2"]
+    },
+    {
+      "name": "ZestButton toggle wiring (handleToggleClick, aria-pressed, confirm/disabled/busy/dropdown interplay)",
+      "path": "UI/ZestButton.tsx",
+      "requirements": ["R1", "R2", "R5", "R7"]
+    },
+    {
+      "name": "ToggleCheck mark and start/end placement",
+      "path": "UI/ZestButton.tsx",
+      "requirements": ["R3", "R4"]
+    },
+    {
+      "name": "Toggle styles (pressed look, check animation, focus ring, themes, reduced motion)",
+      "path": "Styles/ZestButton.module.css",
+      "requirements": ["R3", "R5", "R6"]
+    },
+    {
+      "name": "useToggleState tests",
+      "path": "__tests__/hooks/useToggleState.test.ts",
+      "requirements": ["R2", "R9"]
+    },
+    {
+      "name": "Toggle behaviour and regression tests",
+      "path": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R9"]
+    },
+    {
+      "name": "Characterization tests for existing behaviour",
+      "path": "__tests__/ZestButton.test.tsx",
+      "requirements": ["R1", "R9"]
+    },
+    {
+      "name": "README toggle example",
+      "path": "README.md",
+      "requirements": ["R8"]
+    },
+    {
+      "name": "Documentation pages and feature notes",
+      "path": "documentation/api.md",
+      "requirements": ["R8"]
+    },
+    {
+      "name": "Configuration, features, examples, development and breaking-changes pages",
+      "path": "documentation/features.md",
+      "requirements": ["R8"]
+    },
+    {
+      "name": "Toggle feature notes",
+      "path": "docs/features/zest-button-toggle/",
+      "requirements": ["R8"]
+    },
+    {
+      "name": "Version bump",
+      "path": "package.json",
+      "requirements": ["R8"]
+    }
+  ]
+}

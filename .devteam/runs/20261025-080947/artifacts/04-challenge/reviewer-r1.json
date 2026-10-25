@@ -1,0 +1,21 @@
+{
+  "findings": [
+    {
+      "cites": "UI-001",
+      "severity": "advisory",
+      "file": "Styles/ZestButton.module.css",
+      "line": 740,
+      "evidence": "Toggle-on tints use literal rgba(30, 64, 175, ...) and rgba(0,0,0,...) as fallback/overlay values; the color-mix variants follow currentColor.",
+      "description": "Fallback colours are literals rather than theme variables. They only apply where color-mix is unsupported, and the overlays match existing shadow use, so this is not blocking."
+    },
+    {
+      "cites": "R1",
+      "severity": "advisory",
+      "file": "UI/ZestButton.tsx",
+      "line": 323,
+      "evidence": "handleToggleClick calls toggle() before handleConfirmClick/onClick, so an async onClick that throws leaves the toggle flipped.",
+      "description": "Documented behaviour (flip on accepted click). Consider noting in the docs that state is not rolled back on a failed async action."
+    }
+  ],
+  "verifications": []
+}

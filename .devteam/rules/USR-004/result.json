@@ -1,0 +1,7 @@
+{
+  "checks": [],
+  "good": "// Existing behaviour is pinned first, then the new behaviour is added\n// __tests__/ZestButton.test.tsx\nit('keeps existing click behaviour (characterization)', () => {\n  const onClick = jest.fn();\n  render(<ZestButton onClick={onClick}>Save</ZestButton>);\n  fireEvent.click(screen.getByText('Save'));\n  expect(onClick).toHaveBeenCalledTimes(1);\n});",
+  "bad": "// Merged production code is extended with no characterization test written first\nexport function ZestButton(props) {\n  // new behaviour bolted on, existing behaviour never pinned by a test\n  return <button onClick={props.onClick}>{props.children}</button>;\n}",
+  "cannotTest": "Whether characterization tests were written before the change, and whether the edited code was already merged into master, depends on commit order, git history and the intent of the change. A line-by-line pattern or a command exit code cannot judge this, so a reviewer must check that tests pinning existing behaviour were created first.",
+  "facts": []
+}

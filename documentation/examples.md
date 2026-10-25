@@ -11,6 +11,7 @@ Welcome to the ZestButton Cookbook! This is the core learning path for mastering
 - [Recipe 3: Standardizing Your Buttons with a Global Config](#recipe-3-standardizing-your-buttons-with-a-global-config)
 - [Recipe 4: Creating a Custom "Archive" Button](#recipe-4-creating-a-custom-archive-button)
 - [Recipe 5: A Split Button with Overflow Actions](#recipe-5-a-split-button-with-overflow-actions)
+- [Recipe 6: An On/Off Toggle Button](#recipe-6-an-onoff-toggle-button)
 
 ---
 
@@ -283,6 +284,49 @@ const ExportButton = () => {
 ```
 
 *For the full prop reference, see [`dropdownOptions`](./api.md#zestcustomprops) and [`ZestDropdownOption`](./api.md#zestdropdownoption) in our API reference.*
+
+---
+
+### Recipe 6: An On/Off Toggle Button
+
+**Goal:** A "Bold" button that stays pressed when on, clearly shows its state, and works with an icon.
+
+**Solution:** Pass `toggleOptions` in `zest`. Control it with `pressed` and `onPressedChange`, or let it manage itself with `defaultPressed`.
+
+```tsx
+import React, { useState } from 'react';
+import ZestButton from 'jattac.libs.web.zest-button';
+import { FaBold } from 'react-icons/fa';
+
+// Controlled: your state is the source of truth.
+export const BoldToggle = () => {
+  const [bold, setBold] = useState(false);
+  return (
+    <ZestButton
+      zest={{
+        visualOptions: { iconLeft: <FaBold /> },
+        toggleOptions: { pressed: bold, onPressedChange: setBold, checkPosition: 'end' },
+      }}
+    >
+      Bold
+    </ZestButton>
+  );
+};
+
+// Self-managed: starts on, reports each change.
+export const NotifyToggle = () => (
+  <ZestButton zest={{ toggleOptions: { defaultPressed: true, onPressedChange: (on) => console.warn(on) } }}>
+    Notify me
+  </ZestButton>
+);
+
+// Icon-only toggles need an accessible name.
+export const StarToggle = () => (
+  <ZestButton aria-label="Favourite" zest={{ toggleOptions: {}, visualOptions: { iconLeft: '★' } }} />
+);
+```
+
+Notes: the toggle flips once per click; with `confirmOptions` it flips only after the user confirms; a disabled or busy toggle shows its state but ignores clicks.
 
 ---
 

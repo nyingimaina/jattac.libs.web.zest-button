@@ -1,3 +1,9 @@
+---
+title: Decision Log
+covers: AGENTS.md, docs/guidelines/decision-log.md
+covers-hash: 53f4b961fa3c3cd025ea
+---
+
 # Decision Log
 
 Purpose:

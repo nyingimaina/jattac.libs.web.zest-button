@@ -19,6 +19,7 @@ This document provides an exhaustive reference for all `ZestButton` props and ty
   - [ConfirmOptions](#confirmoptions)
   - [SemanticType](#semantictype)
   - [ZestDropdownOption](#zestdropdownoption)
+  - [ToggleOptions](#toggleoptions)
 
 ---
 
@@ -43,6 +44,7 @@ This is the main configuration object passed to the `zest` prop.
 
 | Prop Name | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
+| `toggleOptions` | `ToggleOptions` | `undefined` | If provided (even as `{}`), turns the button into an on/off toggle that renders `aria-pressed`. See [`ToggleOptions`](#toggleoptions). |
 | `visualOptions` | `VisualOptions` | `{}` | Controls the button's appearance, including variant, size, and icons. |
 | `busyOptions` | `BusyOptions` | `{}` | Configures behavior for asynchronous operations. |
 | `successOptions` | `SuccessOptions` | `{}` | Configures feedback after a successful or failed operation. |
@@ -159,6 +161,21 @@ Describes a single secondary action in a split button's dropdown menu (see [`dro
 | `confirmOptions` | `ConfirmOptions` | `undefined` | Same shape as the main button's `confirmOptions`, scoped to this item. |
 
 *See the [Split Button with Overflow Actions recipe](./examples.md#recipe-5-a-split-button-with-overflow-actions) for a full example.*
+
+---
+
+#### `ToggleOptions`
+
+Turns the button into an on/off toggle. The button stays a `<button>` (no `role="switch"`) and reports its state with `aria-pressed`. When on it shows a pressed look and a small check mark (hidden from screen readers). Also exported: the type `ToggleCheckPosition` (`'start' | 'end'`).
+
+| Prop Name | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `pressed` | `boolean` | `undefined` | Controlled value. The button only changes when you pass a new value. Wins over `defaultPressed` if both are given. |
+| `defaultPressed` | `boolean` | `false` | Starting value for a self-managed toggle. |
+| `onPressedChange` | `(pressed: boolean) => void` | `undefined` | Called with the new value on each click or key press of an enabled toggle. |
+| `checkPosition` | `'start' \| 'end'` | `'start'` | Which end of the button the check mark sits at. Unknown values fall back to `'start'`. |
+
+*See the [Toggle recipe](./examples.md#recipe-6-an-onoff-toggle-button) for a full example.*
 
 ---
 

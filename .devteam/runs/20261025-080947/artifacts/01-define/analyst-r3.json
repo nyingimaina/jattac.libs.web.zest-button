@@ -1,0 +1,267 @@
+{
+  "summary": "ZestButton gets an optional toggle mode, like a Bold button in an editor: it stays pressed when on and returns to normal when off. When on it shows a pressed look plus a small animated check mark; the check mark can sit at the start or end of the button so icons still work. Screen readers hear 'pressed' instead of the check mark. It is additive: buttons that do not turn it on look and behave exactly as before. It is for developers who install the library and for the people who use their apps.",
+  "roles": [
+    "Developer: installs the library and turns on toggle mode with props",
+    "App user: clicks, taps or uses the keyboard on the toggle and must always be able to tell whether it is on or off",
+    "Screen-reader user: hears whether the toggle is pressed"
+  ],
+  "requirements": [
+    {
+      "id": "R1",
+      "text": "A developer can turn a ZestButton into a toggle through a new optional `zest.toggleOptions` prop. Without it the button renders and behaves exactly as it does today.",
+      "rationale": "The builder decided the on/off state is a mode of ZestButton, not a separate control. Existing apps must not change on update.",
+      "acceptance": [
+        "<ZestButton zest={{ toggleOptions: {} }}>Bold</ZestButton> renders a button that exposes a pressed state (aria-pressed='false' when off)",
+        "A ZestButton without toggleOptions has no aria-pressed attribute and its existing tests still pass unchanged",
+        "The toggleOptions type is exported from UI/index.ts and the change is recorded as additive, with no breaking change"
+      ],
+      "edgeCases": [
+        "toggleOptions set to an empty object still enables toggle mode (off by default)",
+        "Removing toggleOptions on a later render returns the button to a plain button with no aria-pressed"
+      ],
+      "pitfalls": [
+        "Existing props, defaults and rendered markup of non-toggle buttons must not change",
+        "A removed or renamed export would be breaking and must not happen"
+      ],
+      "rules": ["LIB-001", "USR-004"],
+      "facts": [
+        { "subject": "toggle mode", "attribute": "default", "op": "equals", "value": "off (not enabled)" },
+        { "subject": "toggleOptions", "attribute": "change type", "op": "equals", "value": "additive" }
+      ]
+    },
+    {
+      "id": "R2",
+      "text": "The on/off value can be controlled by the app (`pressed` plus `onPressedChange`) or left to the button (`defaultPressed`, off when not given). Each click or key press on an enabled toggle calls onPressedChange with the new value.",
+      "rationale": "Apps like editor toolbars keep the value in their own state; simple uses just want it to work. Supporting both is the usual pattern for toggles.",
+      "acceptance": [
+        "With defaultPressed omitted the toggle starts off; one click turns it on and onPressedChange(true) is called once; a second click turns it off and calls onPressedChange(false)",
+        "With pressed={true} the toggle shows on; clicking calls onPressedChange(false) and the button only changes when the app passes pressed={false}",
+        "defaultPressed={true} starts the toggle on",
+        "The existing onClick handler is still called on each click, in addition to onPressedChange"
+      ],
+      "edgeCases": [
+        "If the app keeps pressed fixed and ignores onPressedChange, the button keeps showing that fixed value",
+        "Two rapid clicks flip the value twice, once per click; they are not merged or lost",
+        "If both pressed and defaultPressed are given, pressed wins"
+      ],
+      "pitfalls": [
+        "The visual state and aria-pressed must never disagree",
+        "A controlled toggle must not flip on its own before the app updates the value"
+      ],
+      "rules": ["LIB-001", "UI-001"],
+      "facts": [
+        { "subject": "toggle", "attribute": "initial state when no value given", "op": "equals", "value": "off" },
+        { "subject": "toggle", "attribute": "flips per click", "op": "equals", "value": "once" }
+      ]
+    },
+    {
+      "id": "R3",
+      "text": "When on, the button shows a pressed look (tinted or filled background with inset shading) plus a small check mark that animates in; when off, it shows the normal look with no check mark, and the check animates out when turning off.",
+      "rationale": "Builder decision: pressed look plus check mark, so on is clear even to people who cannot tell colours apart, and it renders beautifully.",
+      "acceptance": [
+        "On shows a visible check mark and the pressed look; off shows neither",
+        "Turning on or off plays a short animation of the check mark; the button's outer size does not jump when it appears",
+        "The check mark is hidden from screen readers (aria-hidden) and the button exposes aria-pressed='true' instead",
+        "The on look works with every existing variant, buttonStyle (solid, outline, text, dashed) and size, and is visibly different from off in each"
+      ],
+      "edgeCases": [
+        "A text-only or very long label does not overlap, clip or push out the check mark; the label wraps or truncates as it does today",
+        "Dashed and outline styles show on clearly even though they have no fill when off",
+        "When the user has asked for reduced motion, the check mark and pressed look change without animation"
+      ],
+      "pitfalls": [
+        "Colour alone must not be the only difference between on and off",
+        "The check mark must not be confused with the existing success checkmark shown after an async action"
+      ],
+      "rules": ["UI-001", "USR-006", "USR-002", "PERF-001"],
+      "facts": [
+        { "subject": "check mark", "attribute": "visible when", "op": "equals", "value": "toggle is on" },
+        { "subject": "check mark", "attribute": "screen reader exposure", "op": "must-not", "value": "be announced (aria-hidden)" },
+        { "subject": "toggle", "attribute": "on state indicated by", "op": "must", "value": "pressed look plus check mark" }
+      ]
+    },
+    {
+      "id": "R4",
+      "text": "The developer can choose whether the check mark sits at the start or the end of the button with `toggleOptions.checkPosition` ('start' or 'end'). Existing iconLeft and iconRight keep rendering alongside it.",
+      "rationale": "Builder decision: the position is configurable so buttons that already use icons are still supported.",
+      "acceptance": [
+        "checkPosition='start' places the check mark before the label; 'end' places it after the label",
+        "With iconLeft and checkPosition='start', both the icon and the check mark are visible and neither overlaps the other",
+        "With iconRight and checkPosition='end', both are visible without overlap",
+        "When checkPosition is not given the check mark appears at the start"
+      ],
+      "edgeCases": [
+        "An unknown checkPosition value falls back to the default instead of hiding the check mark",
+        "In a right-to-left page, start and end follow the page direction",
+        "With stretch (full width) the check mark stays next to the label"
+      ],
+      "pitfalls": [
+        "Adding the check mark must not remove or reorder the developer's own icons"
+      ],
+      "rules": ["UI-001", "USR-002", "LIB-001"],
+      "facts": [
+        { "subject": "checkPosition", "attribute": "allowed values", "op": "one-of", "value": "start, end" },
+        { "subject": "checkPosition", "attribute": "default", "op": "equals", "value": "start" }
+      ]
+    },
+    {
+      "id": "R5",
+      "text": "The toggle is fully operable by keyboard and assistive technology: it is focusable, Space and Enter toggle it, it shows a visible focus ring in both states, and it exposes aria-pressed with the current value.",
+      "rationale": "UI-001 requires keyboard use and correct ARIA. A toggle that screen readers cannot read as pressed or not pressed fails its purpose.",
+      "acceptance": [
+        "Pressing Space or Enter on a focused toggle flips it once",
+        "aria-pressed is 'true' when on and 'false' when off, and updates on every change",
+        "A visible focus indicator appears on keyboard focus whether the toggle is on or off",
+        "The touch target is at least as large as the existing button for its size setting"
+      ],
+      "edgeCases": [
+        "Holding the key down does not flip the toggle repeatedly",
+        "A toggle with only an icon and no text still exposes on/off state; the developer supplies the aria-label"
+      ],
+      "pitfalls": [
+        "The button's role must not change (no role='switch'); it stays a button that reports pressed"
+      ],
+      "rules": ["UI-001", "USR-002"],
+      "facts": [
+        { "subject": "toggle", "attribute": "aria-pressed", "op": "must", "value": "match the on/off state" }
+      ]
+    },
+    {
+      "id": "R6",
+      "text": "The toggle looks right in light, dark and system themes, using the same theme variables as the rest of the button, and sizes everything in rem (px only for borders).",
+      "rationale": "UI-001 and the library's existing theming; on must stay readable and distinct in every theme.",
+      "acceptance": [
+        "In light, dark and system themes, on is visibly distinct from off and the label and check mark are as readable as the existing button text",
+        "The new styles use CSS variables and rem units; no px except borders",
+        "The change adds no new font, image, dependency or runtime asset; the check mark reuses the check shape the button already has"
+      ],
+      "edgeCases": [
+        "Hover and active states on an on toggle are still distinguishable from the plain on state",
+        "With the system theme, the toggle follows the OS setting changing while it is on"
+      ],
+      "pitfalls": [
+        "Growing the bundle noticeably or adding a new dependency for the check mark"
+      ],
+      "rules": ["UI-001", "USR-006", "PERF-001", "USR-003"],
+      "facts": [
+        { "subject": "toggle styles", "attribute": "size unit", "op": "equals", "value": "rem", "scope": "except borders" },
+        { "subject": "toggle", "attribute": "supported themes", "op": "one-of", "value": "light, dark, system" }
+      ]
+    },
+    {
+      "id": "R7",
+      "text": "A toggle works together with the existing button features: while disabled or busy it does not flip and shows its current state; with a confirmation it flips only after the user confirms; with a dropdown the main part toggles and the dropdown arrow behaves as before.",
+      "rationale": "The toggle lives on ZestButton, so a developer will combine it with these options and must not get surprises.",
+      "acceptance": [
+        "A disabled toggle ignores clicks and keyboard, and still shows on or off clearly (dimmed like any disabled button)",
+        "While busy (async onClick), clicks do not flip the toggle and the busy spinner shows as today",
+        "With confirmOptions, the first click shows the confirm label and does not flip; the confirming click flips once; letting the confirm time out leaves the state unchanged",
+        "With dropdownOptions, clicking the main part toggles; opening the dropdown does not change the state"
+      ],
+      "edgeCases": [
+        "If onClick throws or rejects, the toggle keeps the value it flipped to (the app can correct it by controlling `pressed`)",
+        "A semanticType combined with toggle mode keeps its icon and label defaults, and the on look is still shown"
+      ],
+      "pitfalls": [
+        "Double clicks during busy or confirm must not flip the state twice or skip the confirmation"
+      ],
+      "rules": ["UI-001", "PERF-001", "USR-004"],
+      "facts": [
+        { "subject": "toggle", "attribute": "flips while disabled", "op": "must-not", "value": "true" },
+        { "subject": "toggle", "attribute": "flips while busy", "op": "must-not", "value": "true" }
+      ]
+    },
+    {
+      "id": "R8",
+      "text": "Toggle mode is documented where readers look: a first working example in README.md, recipes, the feature description, the new props and the 'additive, not breaking' note in the documentation pages.",
+      "rationale": "DOC-001: a feature nobody can find does not get used, and the library ships its documentation.",
+      "acceptance": [
+        "README.md shows a working toggle example (for example a Bold button with defaultPressed and onPressedChange)",
+        "documentation/examples.md has recipes for controlled, uncontrolled, check at the end with an icon, and toggle with confirmation",
+        "documentation/features.md describes the pressed look, check mark and accessibility behaviour",
+        "documentation/api.md lists pressed, defaultPressed, onPressedChange and checkPosition with types and defaults",
+        "documentation/configuration.md and documentation/breaking-changes.md mention toggle mode (breaking-changes states it is not breaking), and each page links to the previous and next page"
+      ],
+      "edgeCases": [
+        "Every code example in the docs compiles against the exported types"
+      ],
+      "pitfalls": [
+        "Docs that describe props the code does not have or omit ones it does"
+      ],
+      "rules": ["DOC-001", "LIB-001"],
+      "facts": []
+    },
+    {
+      "id": "R9",
+      "text": "Tests prove that existing ZestButton behaviour is unchanged and that every toggle requirement above holds.",
+      "rationale": "USR-004: ZestButton is already merged and published, so its current behaviour is pinned by tests before it is extended.",
+      "acceptance": [
+        "Characterization tests for the existing click, busy, success, confirm, dropdown and rendering behaviour pass before and after the change",
+        "New tests cover on and off rendering, aria-pressed, controlled and uncontrolled use, check position, keyboard, disabled, busy and confirm interplay",
+        "The full test suite passes"
+      ],
+      "edgeCases": [
+        "Tests check the resulting state, not animation timing"
+      ],
+      "pitfalls": [
+        "Editing existing test expectations to make the new feature pass"
+      ],
+      "rules": ["USR-004"],
+      "facts": []
+    }
+  ],
+  "outOfScope": [
+    "A separate switch control with a sliding track and knob",
+    "Grouping toggles into radio-like or exclusive toggle groups",
+    "Custom on and off icons other than the check mark (developers can still use iconLeft and iconRight)",
+    "Remembering the on/off value between page loads",
+    "Changing the look or behaviour of buttons that do not turn on toggle mode"
+  ],
+  "nonFunctional": [
+    {
+      "area": "accessibility",
+      "statement": "State is conveyed by shape and aria-pressed as well as colour; the focus ring is visible; reduced-motion preferences are honoured.",
+      "acceptance": "Tests assert aria-pressed, aria-hidden on the check mark and the check mark's presence only when on; a reduced-motion style rule exists for the new animations."
+    },
+    {
+      "area": "performance",
+      "statement": "Toggling re-renders only the toggle button, leaves no timers or listeners running after unmount, and adds no new dependency or asset to the bundle.",
+      "acceptance": "Review of the diff shows no new dependency, listener or timer left running after unmount; the build still produces the same set of output files."
+    },
+    {
+      "area": "compatibility",
+      "statement": "Works in light, dark and system themes, on small screens first, in Next.js App Router apps and in apps on React 18 and 19.",
+      "acceptance": "Existing build-externalization and peer-dependency tests still pass; the component stays usable from client components as it is today."
+    }
+  ],
+  "risks": [
+    "Rendered markup of non-toggle buttons must stay identical because apps may style against it.",
+    "The existing success checkmark and the new on-state check mark could look alike; they must stay distinguishable in context."
+  ],
+  "tensions": [],
+  "glossary": [
+    "Toggle: a button that stays pressed (on) until pressed again (off).",
+    "Pressed look: the tinted or filled, inset appearance that shows the toggle is on.",
+    "Controlled toggle: the app owns the on/off value and passes it in as `pressed`.",
+    "Uncontrolled toggle: the button keeps the value itself, starting from `defaultPressed`."
+  ],
+  "questions": [],
+  "coverage": [
+    { "topic": "users", "status": "answered", "note": "Developers installing the library and their app users; decided: a toggle mode on ZestButton." },
+    { "topic": "data", "status": "assumed", "note": "No stored data. The on/off value is held by the app (pressed) or by the button (defaultPressed); both supported (R2)." },
+    { "topic": "permissions", "status": "not-applicable", "note": "A UI library with no records, sign-in or ownership." },
+    { "topic": "validation", "status": "assumed", "note": "Unknown checkPosition falls back to start; toggle with confirm, busy, disabled and dropdown defined in R7." },
+    { "topic": "states", "status": "answered", "note": "Builder chose pressed look plus a check mark, position configurable start or end (R3, R4); disabled and busy covered in R7." },
+    { "topic": "duplicates", "status": "assumed", "note": "One flip per click; no flips while busy, disabled or awaiting confirmation (R2, R7)." },
+    { "topic": "volume", "status": "not-applicable", "note": "A single control; no lists, paging or searching." },
+    { "topic": "deletion", "status": "not-applicable", "note": "Nothing is stored or deleted." },
+    { "topic": "privacy", "status": "not-applicable", "note": "No personal data is collected or kept." },
+    { "topic": "quality", "status": "answered", "note": "Light/dark/system themes, keyboard, aria-pressed, rem sizing, React 18 and 19, additive change, docs (R5, R6, R8, nonFunctional)." }
+  ],
+  "assumptions": [
+    "The toggle is additive: it is off unless the developer passes zest.toggleOptions, so existing buttons are unchanged.",
+    "Both app-controlled (pressed) and self-managed (defaultPressed) use are supported; pressed wins if both are given.",
+    "The check mark defaults to the start of the button when checkPosition is not given.",
+    "If onClick fails, the toggle keeps its flipped value; apps that need otherwise control `pressed`."
+  ]
+}

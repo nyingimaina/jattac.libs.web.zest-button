@@ -1,0 +1,1249 @@
+{
+  "runId": "20261025-080947",
+  "options": {
+    "browser": "end",
+    "visible": false,
+    "document": true,
+    "referenceFolders": []
+  },
+  "browser": {
+    "ran": false,
+    "passed": false,
+    "visible": false,
+    "document": false,
+    "seconds": 0,
+    "treeHash": "AC49FA1F3F1168F6F8901F88750DFAD99BFE9F681F4DD9C59A4FB919D08DD2B7",
+    "reason": "this stack has no browser journeys",
+    "output": ""
+  },
+  "isVerification": false,
+  "stageSeconds": {
+    "define": 181.5339108,
+    "design": 66.9867691,
+    "build": 454.4146243,
+    "challenge": 133.4766726,
+    "prove": 128.3840121
+  },
+  "timeCapExtensions": {},
+  "stageClockStart": {
+    "design": 0,
+    "build": 382.9024486,
+    "challenge": 70.1378255,
+    "prove": 0
+  },
+  "featureRequest": "add a toggle on/off state that beautifully render and clearly communicate state",
+  "packId": "react-component-library",
+  "status": "completed",
+  "currentStage": "prove",
+  "stages": {
+    "define": "done",
+    "design": "done",
+    "build": "done",
+    "challenge": "done",
+    "prove": "done"
+  },
+  "defineRound": 4,
+  "designRound": 1,
+  "buildRound": 2,
+  "sliceHash": "CA19D2E4189C878D",
+  "slicesDone": 2,
+  "sliceReports": [
+    {
+      "summary": "Slice 1 of the toggle build. Added ToggleOptions/ToggleCheckPosition types and zest.toggleOptions to UI/ZestButton.tsx; new hook UI/hooks/useToggleState.ts (controlled via pressed, else self-managed from defaultPressed, rapid toggles safe via refs); new handleToggleClick (flips once, after confirmation when confirmOptions is set; disabled/busy buttons never reach it), aria-pressed, toggleOn class, a ToggleCheck svg (aria-hidden, only rendered when on, in a fixed-width slot at start by default or end, unknown values fall back to start, developer icons untouched) and a keydown guard against Enter auto-repeat. Non-toggle markup is unchanged (no aria-pressed, no extra class, no extra element). Styles appended to Styles/ZestButton.module.css: pressed look per buttonStyle, distinct hover/active, on-state focus ring, disabled-on look, check pop/draw animation and a prefers-reduced-motion override, all in rem and theme variables. Characterization tests were added first and passed on the baseline; the full suite (161 tests) and the build pass. Known limit: the check animates in; it is removed immediately on turn-off (no exit animation, to avoid a timer). Docs and version bump belong to slice 2.",
+      "tests": [
+        {
+          "name": "R1: an empty toggleOptions object enables toggle mode, off by default",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R1: removing toggleOptions returns a plain button with no aria-pressed",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R1: a button without toggleOptions has no aria-pressed and renders no toggle markup",
+          "file": "__tests__/ZestButton.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R9: a plain click calls onClick once and leaves the class list as it was",
+          "file": "__tests__/ZestButton.test.tsx",
+          "requirements": [
+            "R9"
+          ]
+        },
+        {
+          "name": "R2: self-managed toggle starts off, flips per click and reports each value",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R2: a controlled toggle only changes when the app passes a new pressed value",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R2: an app that ignores onPressedChange keeps seeing its fixed value",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R2: pressed wins when both pressed and defaultPressed are given",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R2: two rapid clicks flip twice, once per click",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R2: the existing onClick still runs on each click as well as onPressedChange",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R2: starts off when nothing is given and flips once per toggle, reporting each value",
+          "file": "__tests__/hooks/useToggleState.test.ts",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R2: a controlled value does not change until the app passes a new one",
+          "file": "__tests__/hooks/useToggleState.test.ts",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R2: pressed wins over defaultPressed",
+          "file": "__tests__/hooks/useToggleState.test.ts",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R9: reports the resulting state, with no timers left running",
+          "file": "__tests__/hooks/useToggleState.test.ts",
+          "requirements": [
+            "R9"
+          ]
+        },
+        {
+          "name": "R3: the check mark and pressed look show only when on, and the check is hidden from screen readers",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R3"
+          ]
+        },
+        {
+          "name": "R3: the on-state check is a different element from the async success checkmark",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R3"
+          ]
+        },
+        {
+          "name": "R3: the on look is applied with buttonStyle (solid, outline, text, dashed)",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R3"
+          ]
+        },
+        {
+          "name": "R3: a very long label keeps the check mark and the label together",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R3"
+          ]
+        },
+        {
+          "name": "R3: a reduced-motion rule switches the check animation off",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R3"
+          ]
+        },
+        {
+          "name": "R4: the check defaults to the start of the button, before the label",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R4"
+          ]
+        },
+        {
+          "name": "R4: checkPosition \u0027end\u0027 places the check after the label",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R4"
+          ]
+        },
+        {
+          "name": "R4: an unknown checkPosition falls back to the start instead of hiding the check",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R4"
+          ]
+        },
+        {
+          "name": "R4: iconLeft with the check at the start keeps both, icon first",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R4"
+          ]
+        },
+        {
+          "name": "R4: iconRight with the check at the end keeps both, icon before the check",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R4"
+          ]
+        },
+        {
+          "name": "R4: with stretch the check stays inside the content next to the label",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R4"
+          ]
+        },
+        {
+          "name": "R5: it stays a button (no switch role) that reports pressed",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R5"
+          ]
+        },
+        {
+          "name": "R5: an icon-only toggle exposes its name and pressed state",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R5"
+          ]
+        },
+        {
+          "name": "R5: a keyboard click flips it once",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R5"
+          ]
+        },
+        {
+          "name": "R5: holding Enter down does not repeat the activation",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R5"
+          ]
+        },
+        {
+          "name": "R5: a first Enter press is not suppressed and the developer\u0027s onKeyDown still runs",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R5"
+          ]
+        },
+        {
+          "name": "R5: the focus ring is defined for the on state",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R5"
+          ]
+        },
+        {
+          "name": "R6: the on look combines with the light and dark themes",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R6"
+          ]
+        },
+        {
+          "name": "R6: a theme change while on keeps it on",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R6"
+          ]
+        },
+        {
+          "name": "R6: the on state has its own hover and active rules and uses rem, not px",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R6"
+          ]
+        },
+        {
+          "name": "R7: a disabled toggle ignores clicks and still shows its state",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R7"
+          ]
+        },
+        {
+          "name": "R7: while busy, clicks do not flip the toggle",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R7"
+          ]
+        },
+        {
+          "name": "R7: with confirmOptions the first click does not flip, the confirming click flips once",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R7"
+          ]
+        },
+        {
+          "name": "R7: letting the confirmation time out leaves the state unchanged",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R7"
+          ]
+        },
+        {
+          "name": "R7: with a dropdown only the main part toggles and opening the menu keeps the state",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R7"
+          ]
+        },
+        {
+          "name": "R7: if onClick rejects, the toggle keeps the value it flipped to",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R7"
+          ]
+        },
+        {
+          "name": "R7: a semanticType keeps its label and icon defaults and still shows the on look",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R7"
+          ]
+        },
+        {
+          "name": "R9: toggle mode adds no listeners or timers that survive unmount",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R9"
+          ]
+        }
+      ],
+      "kickbacks": []
+    },
+    {
+      "summary": "Finished slice 2 (docs and version): README toggle example and feature bullet; documentation/api.md (toggleOptions row and ToggleOptions section), features.md (On/Off Toggle Mode), examples.md (Recipe 6), configuration.md (Toggle Defaults), development.md (Toggle Mode Internals), breaking-changes.md (1.6.0 additive note); docs/features/zest-button-toggle/BRS.md; version bumped to 1.6.0 in package.json and package-lock.json. Added R8 tests. Build succeeds and the full suite passes (15 suites, 163 tests).",
+      "tests": [
+        {
+          "name": "R8: the API page documents every ToggleOptions prop and the README shows a toggle example",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R8"
+          ]
+        },
+        {
+          "name": "R8: the documented examples type-check against the exported types and render",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R8"
+          ]
+        },
+        {
+          "name": "R1: an empty toggleOptions object enables toggle mode, off by default",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R2: self-managed toggle starts off, flips per click and reports each value",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R3: the check mark and pressed look show only when on, and the check is hidden from screen readers",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R3"
+          ]
+        },
+        {
+          "name": "R4: checkPosition \u0027end\u0027 places the check after the label",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R4"
+          ]
+        },
+        {
+          "name": "R5: it stays a button (no switch role) that reports pressed",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R5"
+          ]
+        },
+        {
+          "name": "R6: the on state has its own hover and active rules and uses rem, not px",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R6"
+          ]
+        },
+        {
+          "name": "R7: with confirmOptions the first click does not flip, the confirming click flips once",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R7"
+          ]
+        },
+        {
+          "name": "R9: toggle mode adds no listeners or timers that survive unmount",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R9"
+          ]
+        }
+      ],
+      "kickbacks": []
+    }
+  ],
+  "documentedRound": 2,
+  "revisionsUsed": 1,
+  "requirementKickbacks": 0,
+  "planReviewRounds": 0,
+  "planConflictHashes": [],
+  "sizeApproved": false,
+  "lastPlanConflicts": [],
+  "planRounds": [
+    {
+      "number": 1,
+      "at": "2026-10-25T08:18:20.2173191+00:00",
+      "outcome": "consistent",
+      "conflicts": [],
+      "resolution": ""
+    }
+  ],
+  "planCheck": "consistent",
+  "planWaivedRules": [],
+  "setAsideRequirements": [],
+  "reusedChecks": {},
+  "tensionPair": [],
+  "tensionDiagnoses": {},
+  "specialists": [],
+  "specialistsDone": [],
+  "specialistCallbacks": 0,
+  "specialistHashes": {},
+  "ran": [
+    "define",
+    "design",
+    "build",
+    "challenge",
+    "prove"
+  ],
+  "accepted": {
+    "define/analyst": "artifacts/01-define/analyst-r3.json",
+    "design/architect": "artifacts/02-design/architect-r1.json",
+    "design/planchecker": "artifacts/02-design/planchecker-r1.json",
+    "build/developer": "artifacts/03-build/developer-r2.json",
+    "challenge/security": "artifacts/04-challenge/security-r2.json",
+    "challenge/reviewer": "artifacts/04-challenge/reviewer-r1.json",
+    "challenge/qa": "artifacts/04-challenge/qa-r2.json",
+    "prove/documenter": "artifacts/05-prove/documenter-r2.json"
+  },
+  "extraRounds": 0,
+  "reviewPasses": 2,
+  "costUsd": 4.1261181,
+  "budgetUsd": 10,
+  "agentCalls": 15,
+  "modelCalls": {
+    "claude-sonnet-5-5": 15
+  },
+  "startedAt": "2026-10-25T08:09:47.4079526+00:00",
+  "updatedAt": "2026-10-25T08:30:17.6180393+00:00",
+  "completedAt": "2026-10-25T08:30:17.0192877+00:00",
+  "findings": [
+    {
+      "id": "CHK-lib-validate-package",
+      "source": "check:lib-validate-package",
+      "cites": "LIB-002",
+      "severity": "advisory",
+      "description": "Check \u0027Package check (attw and publint)\u0027 is failing.",
+      "file": "",
+      "evidence": "Not set up in this project: attw and publint are not installed, so nothing checks that the package works for everyone who installs it.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "note": "It could not be run, so nothing was checked here; it does not block this feature.",
+      "repeats": 0
+    },
+    {
+      "id": "CHK-lib-size",
+      "source": "check:lib-size",
+      "cites": "EFF-001",
+      "severity": "advisory",
+      "description": "Check \u0027Size budget\u0027 is failing.",
+      "file": "",
+      "evidence": "Not set up in this project: The project has no .size-limit.json, so this check has nothing to run.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "note": "It could not be run, so nothing was checked here; it does not block this feature.",
+      "repeats": 0
+    },
+    {
+      "id": "CHK-lib-consumer-smoke",
+      "source": "check:lib-consumer-smoke",
+      "cites": "LIB-003",
+      "severity": "advisory",
+      "description": "Check \u0027Install and import the packed library\u0027 is failing.",
+      "file": "",
+      "evidence": "Not set up in this project: Nothing installs the packed library into a scratch project and imports it  no scripts/consumer-smoke.mjs .",
+      "status": "advisory",
+      "raisedRound": 1,
+      "note": "It could not be run, so nothing was checked here; it does not block this feature.",
+      "repeats": 0
+    },
+    {
+      "id": "CHK-lib-docs",
+      "source": "check:lib-docs",
+      "cites": "DOC-001",
+      "severity": "advisory",
+      "description": "Check \u0027Documentation is complete\u0027 is failing.",
+      "file": "",
+      "evidence": "Not set up in this project: The project has no scripts/check-docs.mjs, so this check has nothing to run.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "note": "It could not be run, so nothing was checked here; it does not block this feature.",
+      "repeats": 0
+    },
+    {
+      "id": "REV-1",
+      "source": "reviewer",
+      "cites": "UI-001",
+      "severity": "advisory",
+      "description": "Fallback colours are literals rather than theme variables. They only apply where color-mix is unsupported, and the overlays match existing shadow use, so this is not blocking.",
+      "file": "Styles/ZestButton.module.css",
+      "line": 740,
+      "evidence": "Toggle-on tints use literal rgba(30, 64, 175, ...) and rgba(0,0,0,...) as fallback/overlay values; the color-mix variants follow currentColor.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "repeats": 0
+    },
+    {
+      "id": "REV-2",
+      "source": "reviewer",
+      "cites": "R1",
+      "severity": "advisory",
+      "description": "Documented behaviour (flip on accepted click). Consider noting in the docs that state is not rolled back on a failed async action.",
+      "file": "UI/ZestButton.tsx",
+      "line": 323,
+      "evidence": "handleToggleClick calls toggle() before handleConfirmClick/onClick, so an async onClick that throws leaves the toggle flipped.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "repeats": 0
+    },
+    {
+      "id": "QA-1",
+      "source": "qa",
+      "cites": "R6",
+      "severity": "blocking",
+      "description": "System theme has no test for toggle mode. Add a test that renders the toggle on without a theme (or with theme \u0027system\u0027) and checks the on state under both a light and a dark matchMedia result. Include a change of the OS setting while on, and assert the button stays aria-pressed=\u0027true\u0027 with toggleOn and gets the matching theme class.",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "line": 289,
+      "evidence": "R6 acceptance says \u0027In light, dark and system themes, on is visibly distinct from off\u0027. The R6 tests only use theme \u0027light\u0027 and \u0027dark\u0027 (it.each at line 290, rerender at line 295). Nothing renders the default/system theme with a toggle on, and nothing mocks matchMedia to check that an OS change is followed while on (R6 edge case). grep for matchMedia, prefers-color-scheme and \u0027system\u0027 in the file returns nothing.",
+      "status": "fixed",
+      "raisedRound": 1,
+      "fixedRound": 2,
+      "note": "__tests__/ZestButtonToggle.test.tsx lines 303-354 now has a \u0027system theme\u0027 describe that mocks matchMedia. It renders the default theme with an OS set to light and to dark and checks toggleOn, force-light or force-dark, and aria-pressed=\u0027true\u0027 (lines 328-337). It also renders theme \u0027system\u0027 with the toggle on and flips the OS setting dark then light, asserting the matching force-* class, toggleOn and aria-pressed=\u0027true\u0027 after each change (lines 339-353).",
+      "repeats": 0
+    },
+    {
+      "id": "QA-2",
+      "source": "qa",
+      "cites": "R4",
+      "severity": "advisory",
+      "description": "Add a test that the toggle CSS uses logical properties and no physical left/right margins for the check mark, or that DOM order is unchanged inside a dir=\u0027rtl\u0027 container. Advisory because DOM order already follows the page direction.",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "line": 171,
+      "evidence": "R4 edge case \u0027In a right-to-left page, start and end follow the page direction\u0027 has no test. grep for rtl and dir= in the test file finds nothing. The existing \u0027start\u0027/\u0027end\u0027 tests only check DOM order.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "repeats": 0
+    },
+    {
+      "id": "QA-3",
+      "source": "qa",
+      "cites": "R1",
+      "severity": "advisory",
+      "description": "Import ToggleOptions and ToggleCheckPosition from ../UI (the barrel) in one test, as a consumer would. The \u0060export *\u0060 makes a break unlikely, so this is advisory.",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "line": 19,
+      "evidence": "R1 acceptance \u0027The toggleOptions type is exported from UI/index.ts\u0027. UI/index.ts does \u0060export * from \u0022./ZestButton\u0022\u0060, and the only type import test goes through ../UI/ZestButton (line 456), not the entry point.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "repeats": 0
+    },
+    {
+      "id": "QA-4",
+      "source": "qa",
+      "cites": "R8",
+      "severity": "advisory",
+      "description": "Docs coverage is thin against the R8 acceptance lines. Assert the recipe headings in examples.md and the toggle sections in features.md and configuration.md, and check that each page links to the previous and next page. Advisory because documentation is checked by review.",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "line": 441,
+      "evidence": "The R8 tests check that api.md contains the prop names, that README mentions toggleOptions, and that breaking-changes mentions \u0027Version 1.6.0\u0027. They do not check the examples.md recipes (controlled, uncontrolled, check at end with an icon, with confirmation), the features.md or configuration.md mentions, or the previous/next links on each page. The \u0027documented examples type-check\u0027 test uses one hand-written object, not the actual doc snippets.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "repeats": 0
+    },
+    {
+      "id": "QA-5",
+      "source": "qa",
+      "cites": "R3",
+      "severity": "advisory",
+      "description": "Remove the dead assertion. Optionally assert that a \u0060.toggleOn.dashed\u0060 / \u0060.toggleOn.outline\u0060 rule exists in the CSS and that the label wrapping rule is unchanged. Advisory: the main regex does fail if the rule is removed.",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "line": 164,
+      "evidence": "The R3 reduced-motion test has a no-op assertion: \u0060block.length \u003E 0\u0060 always holds because lastIndexOf returns -1 and slice(-1) is non-empty. The real check is the regex on toggleCss. The \u0027dashed and outline show on clearly\u0027 edge case is only checked by class presence (line 149), not by any style rule. The long-label test checks only text and check presence, not wrapping or truncation.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "repeats": 0
+    },
+    {
+      "id": "QA-6",
+      "source": "qa",
+      "cites": "R2",
+      "severity": "advisory",
+      "description": "Advisory: the check is weak but would fail if the selectors were deleted.",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "line": 100,
+      "evidence": "The R2 \u0027two rapid clicks flip twice\u0027 test and the R5 \u0027holding the key down\u0027 test are covered, but the R6 edge case \u0027hover and active on an on toggle are distinguishable from plain on\u0027 is only checked by selector presence (line 303), not by differing declarations.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "repeats": 0
+    }
+  ],
+  "lastChecks": [
+    {
+      "id": "no-secrets",
+      "name": "No secrets in code",
+      "passed": true,
+      "seconds": 0.0426478,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "SEC-001"
+      ]
+    },
+    {
+      "id": "no-debug-leftovers",
+      "name": "No debugging leftovers",
+      "passed": true,
+      "seconds": 0.0319287,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "QUAL-001"
+      ]
+    },
+    {
+      "id": "lib-typecheck",
+      "name": "Type check (library and tests)",
+      "passed": true,
+      "seconds": 4.2323966,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "",
+      "rules": []
+    },
+    {
+      "id": "lib-tests",
+      "name": "Tests, with coverage",
+      "passed": true,
+      "seconds": 15.259313,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "\u003E jattac.libs.web.zest-button@1.6.0 test\r\n\u003E jest --coverage\r\n\r\n---------------------------------------|---------|----------|---------|---------|-------------------\r\nFile                                   | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s \r\n---------------------------------------|---------|----------|---------|---------|-------------------\r\nAll files                              |   98.07 |    95.13 |   98.36 |   98.82 |                   \r\n UI                                    |    96.9 |    95.69 |   97.14 |   98.12 |                   \r\n  SpinnerIcon.tsx                      |     100 |      100 |     100 |     100 |                   \r\n  ZestButton.tsx                       |   95.79 |       95 |   94.44 |   98.18 | 261-262           \r\n  ZestButtonConfigContext.ts           |     100 |      100 |     100 |     100 |                   \r\n  ZestButtonConfigProvider.tsx         |     100 |      100 |     100 |     100 |                   \r\n  ZestDropdownMenu.tsx                 |     100 |      100 |     100 |     100 |                   \r\n  ZestDropdownMenuItem.tsx             |    97.1 |    95.34 |     100 |   97.01 | 113-114           \r\n  semanticTypeButtonConfigDefaults.tsx |     100 |      100 |     100 |     100 |                   \r\n UI/hooks                              |     100 |    93.82 |     100 |     100 |                   \r\n  useBusyState.ts                      |     100 |    94.59 |     100 |     100 | 30-33             \r\n  useConfirmation.ts                   |     100 |       90 |     100 |     100 | 22                \r\n  useThemeDetection.ts                 |     100 |      100 |     100 |     100 |                   \r\n  useToggleState.ts                    |     100 |      100 |     100 |     100 |                   \r\n  useZestConfig.ts                     |     100 |    92.59 |     100 |     100 | 9,37              \r\n---------------------------------------|---------|----------|---------|---------|-------------------\r\n\nPASS __tests__/packagePeerDependencies.test.ts (6.788 s)\r\nPASS __tests__/hooks/useThemeDetection.test.ts (6.895 s)\r\nPASS __tests__/SpinnerIcon.test.tsx (7.027 s)\r\nPASS __tests__/buildExternalization.test.ts (7.297 s)\r\nPASS __tests__/semanticTypeButtonConfigDefaults.test.tsx (7.363 s)\r\nPASS __tests__/hooks/useConfirmation.test.ts (7.374 s)\r\nPASS __tests__/hooks/useZestConfig.test.ts (7.341 s)\r\nPASS __tests__/hooks/useToggleState.test.ts (7.437 s)\r\nPASS __tests__/ZestButtonConfigContext.test.tsx (7.474 s)\r\nPASS __tests__/ZestButtonConfigProvider.test.tsx (7.532 s)\r\nPASS __tests__/hooks/useBusyState.test.ts (7.556 s)\r\nPASS __tests__/ZestDropdownMenu.test.tsx (8.255 s)\r\nPASS __tests__/ZestDropdownMenuItem.test.tsx (8.265 s)\r\nPASS __tests__/ZestButton.test.tsx (8.814 s)\r\nPASS __tests__/ZestButtonToggle.test.tsx (10.316 s)\r\n\r\nTest Suites: 15 passed, 15 total\r\nTests:       166 passed, 166 total\r\nSnapshots:   0 total\r\nTime:        13.549 s\r\nRan all test suites.",
+      "rules": []
+    },
+    {
+      "id": "lib-build",
+      "name": "Build (CommonJS, ES modules, type definitions)",
+      "passed": true,
+      "seconds": 8.2518206,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "\u003E jattac.libs.web.zest-button@1.6.0 build\r\n\u003E rollup -c rollup.config.mjs\r\n\r\n\n\u001B[36m\r\n\u001B[1mUI/index.ts\u001B[22m \u2192 \u001B[1mdist/index.cjs.js, dist/index.esm.js\u001B[22m...\u001B[39m\r\n\u001B[1m\u001B[33m(!) Mixing named and default exports\u001B[39m\u001B[22m\r\n\u001B[90mhttps://rollupjs.org/configuration-options/#output-exports\u001B[39m\r\n\u001B[1mThe following entry modules are using named and default exports together:\u001B[22m\r\nUI/index.ts\r\n\r\nConsumers of your bundle will have to use chunk.default to access their default export, which may not be what you want. Use \u0060output.exports: \u0022named\u0022\u0060 to disable this warning.\r\n\u001B[32mcreated \u001B[1mdist/index.cjs.js, dist/index.esm.js\u001B[22m in \u001B[1m4.2s\u001B[22m\u001B[39m\r\n\u001B[36m\r\n\u001B[1mUI/index.ts\u001B[22m \u2192 \u001B[1mdist/index.d.ts\u001B[22m...\u001B[39m\r\n\u001B[32mcreated \u001B[1mdist/index.d.ts\u001B[22m in \u001B[1m2.3s\u001B[22m\u001B[39m",
+      "rules": []
+    },
+    {
+      "id": "lib-validate-package",
+      "name": "Package check (attw and publint)",
+      "passed": false,
+      "seconds": 0.0688757,
+      "notRun": true,
+      "flaky": false,
+      "tier": "fast",
+      "output": "Not set up in this project: attw and publint are not installed, so nothing checks that the package works for everyone who installs it.",
+      "rules": [
+        "LIB-002"
+      ]
+    },
+    {
+      "id": "lib-pack",
+      "name": "What would be published",
+      "passed": true,
+      "seconds": 1.6818262,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "jattac.libs.web.zest-button-1.6.0.tgz\r\n\nnpm notice\r\nnpm notice package: jattac.libs.web.zest-button@1.6.0\r\nnpm notice Tarball Contents\r\nnpm notice 1.1kB LICENSE\r\nnpm notice 4.0kB README.md\r\nnpm notice 696B dist/hooks/useBusyState.d.ts\r\nnpm notice 667B dist/hooks/useConfirmation.d.ts\r\nnpm notice 64B dist/hooks/useThemeDetection.d.ts\r\nnpm notice 547B dist/hooks/useToggleState.d.ts\r\nnpm notice 140B dist/hooks/useZestConfig.d.ts\r\nnpm notice 66.3kB dist/index.cjs.js\r\nnpm notice 67.7kB dist/index.cjs.js.map\r\nnpm notice 4.2kB dist/index.d.ts\r\nnpm notice 64.8kB dist/index.esm.js\r\nnpm notice 67.3kB dist/index.esm.js.map\r\nnpm notice 221B dist/semanticTypeButtonConfigDefaults.d.ts\r\nnpm notice 102B dist/SpinnerIcon.d.ts\r\nnpm notice 3.5kB dist/ZestButton.d.ts\r\nnpm notice 429B dist/ZestButtonConfigContext.d.ts\r\nnpm notice 316B dist/ZestButtonConfigProvider.d.ts\r\nnpm notice 809B dist/ZestDropdownMenu.d.ts\r\nnpm notice 335B dist/ZestDropdownMenuItem.d.ts\r\nnpm notice 10.3kB documentation/api.md\r\nnpm notice 5.1kB documentation/breaking-changes.md\r\nnpm notice 8.6kB documentation/configuration.md\r\nnpm notice 6.0kB documentation/development.md\r\nnpm notice 12.5kB documentation/examples.md\r\nnpm notice 5.8kB documentation/features.md\r\nnpm notice 2.4kB package.json\r\nnpm notice Tarball Details\r\nnpm notice name: jattac.libs.web.zest-button\r\nnpm notice version: 1.6.0\r\nnpm notice filename: jattac.libs.web.zest-button-1.6.0.tgz\r\nnpm notice package size: 75.6 kB\r\nnpm notice unpacked size: 334.0 kB\r\nnpm notice shasum: 6e835bf52b148d2834fd656df6cb733b4697b896\r\nnpm notice integrity: sha512-\u002BgSj33LxMoCjo[...]K98a8UOle/fCQ==\r\nnpm notice total files: 26\r\nnpm notice",
+      "rules": []
+    },
+    {
+      "id": "lib-publish-dry-run",
+      "name": "Publish dry run (everything npm checks, nothing is uploaded)",
+      "passed": true,
+      "seconds": 1.8181566,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "\u002B jattac.libs.web.zest-button@1.6.0\r\n\nnpm notice\r\nnpm notice package: jattac.libs.web.zest-button@1.6.0\r\nnpm notice Tarball Contents\r\nnpm notice 1.1kB LICENSE\r\nnpm notice 4.0kB README.md\r\nnpm notice 696B dist/hooks/useBusyState.d.ts\r\nnpm notice 667B dist/hooks/useConfirmation.d.ts\r\nnpm notice 64B dist/hooks/useThemeDetection.d.ts\r\nnpm notice 547B dist/hooks/useToggleState.d.ts\r\nnpm notice 140B dist/hooks/useZestConfig.d.ts\r\nnpm notice 66.3kB dist/index.cjs.js\r\nnpm notice 67.7kB dist/index.cjs.js.map\r\nnpm notice 4.2kB dist/index.d.ts\r\nnpm notice 64.8kB dist/index.esm.js\r\nnpm notice 67.3kB dist/index.esm.js.map\r\nnpm notice 221B dist/semanticTypeButtonConfigDefaults.d.ts\r\nnpm notice 102B dist/SpinnerIcon.d.ts\r\nnpm notice 3.5kB dist/ZestButton.d.ts\r\nnpm notice 429B dist/ZestButtonConfigContext.d.ts\r\nnpm notice 316B dist/ZestButtonConfigProvider.d.ts\r\nnpm notice 809B dist/ZestDropdownMenu.d.ts\r\nnpm notice 335B dist/ZestDropdownMenuItem.d.ts\r\nnpm notice 10.3kB documentation/api.md\r\nnpm notice 5.1kB documentation/breaking-changes.md\r\nnpm notice 8.6kB documentation/configuration.md\r\nnpm notice 6.0kB documentation/development.md\r\nnpm notice 12.5kB documentation/examples.md\r\nnpm notice 5.8kB documentation/features.md\r\nnpm notice 2.4kB package.json\r\nnpm notice Tarball Details\r\nnpm notice name: jattac.libs.web.zest-button\r\nnpm notice version: 1.6.0\r\nnpm notice filename: jattac.libs.web.zest-button-1.6.0.tgz\r\nnpm notice package size: 75.6 kB\r\nnpm notice unpacked size: 334.0 kB\r\nnpm notice shasum: 6e835bf52b148d2834fd656df6cb733b4697b896\r\nnpm notice integrity: sha512-\u002BgSj33LxMoCjo[...]K98a8UOle/fCQ==\r\nnpm notice total files: 26\r\nnpm notice\r\nnpm notice Publishing to https://registry.npmjs.org/ with tag latest and default access (dry-run)",
+      "rules": [
+        "LIB-003"
+      ]
+    },
+    {
+      "id": "lib-size",
+      "name": "Size budget",
+      "passed": false,
+      "seconds": 0.0761001,
+      "notRun": true,
+      "flaky": false,
+      "tier": "fast",
+      "output": "Not set up in this project: The project has no .size-limit.json, so this check has nothing to run.",
+      "rules": [
+        "EFF-001"
+      ]
+    },
+    {
+      "id": "lib-consumer-smoke",
+      "name": "Install and import the packed library",
+      "passed": false,
+      "seconds": 0.0635568,
+      "notRun": true,
+      "flaky": false,
+      "tier": "fast",
+      "output": "Not set up in this project: Nothing installs the packed library into a scratch project and imports it  no scripts/consumer-smoke.mjs .",
+      "rules": [
+        "LIB-003",
+        "LIB-004",
+        "LIB-005"
+      ]
+    },
+    {
+      "id": "lib-docs",
+      "name": "Documentation is complete",
+      "passed": false,
+      "seconds": 0.0596823,
+      "notRun": true,
+      "flaky": false,
+      "tier": "fast",
+      "output": "Not set up in this project: The project has no scripts/check-docs.mjs, so this check has nothing to run.",
+      "rules": [
+        "DOC-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-1",
+      "name": "No native button element",
+      "passed": true,
+      "seconds": 0.023863,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-2",
+      "name": "No native table element",
+      "passed": true,
+      "seconds": 0.0247952,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-3",
+      "name": "No native text box or text area",
+      "passed": true,
+      "seconds": 0.0254909,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-4",
+      "name": "No native file upload input",
+      "passed": true,
+      "seconds": 0.0231191,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-002-1",
+      "name": "No tiny fixed pixel font sizes",
+      "passed": true,
+      "seconds": 0.0199209,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-002"
+      ]
+    },
+    {
+      "id": "rule-USR-002-2",
+      "name": "Do not block pinch-zoom on mobile",
+      "passed": true,
+      "seconds": 0.0314964,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-002"
+      ]
+    },
+    {
+      "id": "rule-USR-003-1",
+      "name": "No dynamic code execution (eval / new Function)",
+      "passed": true,
+      "seconds": 0.0312655,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-2",
+      "name": "No raw HTML injection (XSS risk)",
+      "passed": true,
+      "seconds": 0.0256545,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-3",
+      "name": "No string-based timers (hidden eval)",
+      "passed": true,
+      "seconds": 0.0265052,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-4",
+      "name": "No leftover debugger statements or console.log",
+      "passed": true,
+      "seconds": 0.0257265,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-006-1",
+      "name": "No hard-coded colours in component code (use shared design tokens)",
+      "passed": true,
+      "seconds": 0.0254583,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-006"
+      ]
+    }
+  ],
+  "fullGreenHash": "5CA72145CBB9FE09E0E98DD59A598E8683074E081C463B6A1DE24CA94376F526",
+  "baseline": [
+    {
+      "id": "no-secrets",
+      "name": "No secrets in code",
+      "passed": true,
+      "seconds": 0.1150289,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "SEC-001"
+      ]
+    },
+    {
+      "id": "no-debug-leftovers",
+      "name": "No debugging leftovers",
+      "passed": true,
+      "seconds": 0.0903618,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "QUAL-001"
+      ]
+    },
+    {
+      "id": "lib-typecheck",
+      "name": "Type check (library and tests)",
+      "passed": true,
+      "seconds": 4.5911182,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "",
+      "rules": []
+    },
+    {
+      "id": "lib-tests",
+      "name": "Tests, with coverage",
+      "passed": true,
+      "seconds": 55.3662741,
+      "notRun": false,
+      "flaky": false,
+      "tier": "full",
+      "output": "\u003E jattac.libs.web.zest-button@1.5.3 test\r\n\u003E jest --coverage\r\n\r\n---------------------------------------|---------|----------|---------|---------|-------------------\r\nFile                                   | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s \r\n---------------------------------------|---------|----------|---------|---------|-------------------\r\nAll files                              |   97.85 |    93.33 |   98.18 |   98.68 |                   \r\n UI                                    |   96.61 |    93.29 |   96.77 |   97.94 |                   \r\n  SpinnerIcon.tsx                      |     100 |      100 |     100 |     100 |                   \r\n  ZestButton.tsx                       |      95 |    90.81 |   92.85 |   97.82 | 214-215           \r\n  ZestButtonConfigContext.ts           |     100 |      100 |     100 |     100 |                   \r\n  ZestButtonConfigProvider.tsx         |     100 |      100 |     100 |     100 |                   \r\n  ZestDropdownMenu.tsx                 |     100 |      100 |     100 |     100 |                   \r\n  ZestDropdownMenuItem.tsx             |    97.1 |    95.34 |     100 |   97.01 | 113-114           \r\n  semanticTypeButtonConfigDefaults.tsx |     100 |      100 |     100 |     100 |                   \r\n UI/hooks                              |     100 |    93.42 |     100 |     100 |                   \r\n  useBusyState.ts                      |     100 |    94.59 |     100 |     100 | 30-33             \r\n  useConfirmation.ts                   |     100 |       90 |     100 |     100 | 22                \r\n  useThemeDetection.ts                 |     100 |      100 |     100 |     100 |                   \r\n  useZestConfig.ts                     |     100 |    92.59 |     100 |     100 | 9,37              \r\n---------------------------------------|---------|----------|---------|---------|-------------------\r\n\nPASS __tests__/buildExternalization.test.ts (14.164 s)\r\nPASS __tests__/packagePeerDependencies.test.ts (14.591 s)\r\nPASS __tests__/hooks/useThemeDetection.test.ts (19.111 s)\r\nPASS __tests__/ZestButtonConfigContext.test.tsx (19.343 s)\r\nPASS __tests__/ZestButtonConfigProvider.test.tsx (19.345 s)\r\nPASS __tests__/hooks/useConfirmation.test.ts (19.398 s)\r\nPASS __tests__/hooks/useBusyState.test.ts (19.392 s)\r\nPASS __tests__/semanticTypeButtonConfigDefaults.test.tsx (19.528 s)\r\nPASS __tests__/SpinnerIcon.test.tsx (19.548 s)\r\nPASS __tests__/hooks/useZestConfig.test.ts (19.565 s)\r\nPASS __tests__/ZestDropdownMenuItem.test.tsx (20.198 s)\r\nPASS __tests__/ZestDropdownMenu.test.tsx (20.254 s)\r\nPASS __tests__/ZestButton.test.tsx (20.579 s)\r\n\r\nTest Suites: 13 passed, 13 total\r\nTests:       111 passed, 111 total\r\nSnapshots:   0 total\r\nTime:        43.408 s\r\nRan all test suites.",
+      "rules": []
+    },
+    {
+      "id": "lib-build",
+      "name": "Build (CommonJS, ES modules, type definitions)",
+      "passed": true,
+      "seconds": 12.8344616,
+      "notRun": false,
+      "flaky": false,
+      "tier": "full",
+      "output": "\u003E jattac.libs.web.zest-button@1.5.3 build\r\n\u003E rollup -c rollup.config.mjs\r\n\r\n\n\u001B[36m\r\n\u001B[1mUI/index.ts\u001B[22m \u2192 \u001B[1mdist/index.cjs.js, dist/index.esm.js\u001B[22m...\u001B[39m\r\n\u001B[1m\u001B[33m(!) Mixing named and default exports\u001B[39m\u001B[22m\r\n\u001B[90mhttps://rollupjs.org/configuration-options/#output-exports\u001B[39m\r\n\u001B[1mThe following entry modules are using named and default exports together:\u001B[22m\r\nUI/index.ts\r\n\r\nConsumers of your bundle will have to use chunk.default to access their default export, which may not be what you want. Use \u0060output.exports: \u0022named\u0022\u0060 to disable this warning.\r\n\u001B[32mcreated \u001B[1mdist/index.cjs.js, dist/index.esm.js\u001B[22m in \u001B[1m5.8s\u001B[22m\u001B[39m\r\n\u001B[36m\r\n\u001B[1mUI/index.ts\u001B[22m \u2192 \u001B[1mdist/index.d.ts\u001B[22m...\u001B[39m\r\n\u001B[32mcreated \u001B[1mdist/index.d.ts\u001B[22m in \u001B[1m1.9s\u001B[22m\u001B[39m",
+      "rules": []
+    },
+    {
+      "id": "lib-validate-package",
+      "name": "Package check (attw and publint)",
+      "passed": false,
+      "seconds": 0.127877,
+      "notRun": true,
+      "flaky": false,
+      "tier": "full",
+      "output": "Not set up in this project: attw and publint are not installed, so nothing checks that the package works for everyone who installs it.",
+      "rules": [
+        "LIB-002"
+      ]
+    },
+    {
+      "id": "lib-pack",
+      "name": "What would be published",
+      "passed": true,
+      "seconds": 2.0572062,
+      "notRun": false,
+      "flaky": false,
+      "tier": "full",
+      "output": "jattac.libs.web.zest-button-1.5.3.tgz\r\n\nnpm notice\r\nnpm notice package: jattac.libs.web.zest-button@1.5.3\r\nnpm notice Tarball Contents\r\nnpm notice 1.1kB LICENSE\r\nnpm notice 3.3kB README.md\r\nnpm notice 696B dist/hooks/useBusyState.d.ts\r\nnpm notice 667B dist/hooks/useConfirmation.d.ts\r\nnpm notice 64B dist/hooks/useThemeDetection.d.ts\r\nnpm notice 140B dist/hooks/useZestConfig.d.ts\r\nnpm notice 56.8kB dist/index.cjs.js\r\nnpm notice 60.9kB dist/index.cjs.js.map\r\nnpm notice 3.3kB dist/index.d.ts\r\nnpm notice 55.5kB dist/index.esm.js\r\nnpm notice 60.5kB dist/index.esm.js.map\r\nnpm notice 221B dist/semanticTypeButtonConfigDefaults.d.ts\r\nnpm notice 102B dist/SpinnerIcon.d.ts\r\nnpm notice 2.7kB dist/ZestButton.d.ts\r\nnpm notice 429B dist/ZestButtonConfigContext.d.ts\r\nnpm notice 316B dist/ZestButtonConfigProvider.d.ts\r\nnpm notice 809B dist/ZestDropdownMenu.d.ts\r\nnpm notice 335B dist/ZestDropdownMenuItem.d.ts\r\nnpm notice 9.1kB documentation/api.md\r\nnpm notice 4.7kB documentation/breaking-changes.md\r\nnpm notice 8.1kB documentation/configuration.md\r\nnpm notice 5.5kB documentation/development.md\r\nnpm notice 11.0kB documentation/examples.md\r\nnpm notice 4.9kB documentation/features.md\r\nnpm notice 2.5kB package.json\r\nnpm notice Tarball Details\r\nnpm notice name: jattac.libs.web.zest-button\r\nnpm notice version: 1.5.3\r\nnpm notice filename: jattac.libs.web.zest-button-1.5.3.tgz\r\nnpm notice package size: 66.0 kB\r\nnpm notice unpacked size: 293.3 kB\r\nnpm notice shasum: 8d24bf8f58f14be8294e32fab4100799de152d94\r\nnpm notice integrity: sha512-j5SHI4Vn3ZFP4[...]gzajO1zR9n/PA==\r\nnpm notice total files: 25\r\nnpm notice",
+      "rules": []
+    },
+    {
+      "id": "lib-publish-dry-run",
+      "name": "Publish dry run (everything npm checks, nothing is uploaded)",
+      "passed": true,
+      "seconds": 2.5097582,
+      "notRun": false,
+      "flaky": false,
+      "tier": "full",
+      "output": "\u002B jattac.libs.web.zest-button@1.5.3\r\n\nnpm notice\r\nnpm notice package: jattac.libs.web.zest-button@1.5.3\r\nnpm notice Tarball Contents\r\nnpm notice 1.1kB LICENSE\r\nnpm notice 3.3kB README.md\r\nnpm notice 696B dist/hooks/useBusyState.d.ts\r\nnpm notice 667B dist/hooks/useConfirmation.d.ts\r\nnpm notice 64B dist/hooks/useThemeDetection.d.ts\r\nnpm notice 140B dist/hooks/useZestConfig.d.ts\r\nnpm notice 56.8kB dist/index.cjs.js\r\nnpm notice 60.9kB dist/index.cjs.js.map\r\nnpm notice 3.3kB dist/index.d.ts\r\nnpm notice 55.5kB dist/index.esm.js\r\nnpm notice 60.5kB dist/index.esm.js.map\r\nnpm notice 221B dist/semanticTypeButtonConfigDefaults.d.ts\r\nnpm notice 102B dist/SpinnerIcon.d.ts\r\nnpm notice 2.7kB dist/ZestButton.d.ts\r\nnpm notice 429B dist/ZestButtonConfigContext.d.ts\r\nnpm notice 316B dist/ZestButtonConfigProvider.d.ts\r\nnpm notice 809B dist/ZestDropdownMenu.d.ts\r\nnpm notice 335B dist/ZestDropdownMenuItem.d.ts\r\nnpm notice 9.1kB documentation/api.md\r\nnpm notice 4.7kB documentation/breaking-changes.md\r\nnpm notice 8.1kB documentation/configuration.md\r\nnpm notice 5.5kB documentation/development.md\r\nnpm notice 11.0kB documentation/examples.md\r\nnpm notice 4.9kB documentation/features.md\r\nnpm notice 2.5kB package.json\r\nnpm notice Tarball Details\r\nnpm notice name: jattac.libs.web.zest-button\r\nnpm notice version: 1.5.3\r\nnpm notice filename: jattac.libs.web.zest-button-1.5.3.tgz\r\nnpm notice package size: 66.0 kB\r\nnpm notice unpacked size: 293.3 kB\r\nnpm notice shasum: 8d24bf8f58f14be8294e32fab4100799de152d94\r\nnpm notice integrity: sha512-j5SHI4Vn3ZFP4[...]gzajO1zR9n/PA==\r\nnpm notice total files: 25\r\nnpm notice\r\nnpm notice Publishing to https://registry.npmjs.org/ with tag latest and default access (dry-run)",
+      "rules": [
+        "LIB-003"
+      ]
+    },
+    {
+      "id": "lib-size",
+      "name": "Size budget",
+      "passed": false,
+      "seconds": 0.1390081,
+      "notRun": true,
+      "flaky": false,
+      "tier": "full",
+      "output": "Not set up in this project: The project has no .size-limit.json, so this check has nothing to run.",
+      "rules": [
+        "EFF-001"
+      ]
+    },
+    {
+      "id": "lib-consumer-smoke",
+      "name": "Install and import the packed library",
+      "passed": false,
+      "seconds": 0.1282479,
+      "notRun": true,
+      "flaky": false,
+      "tier": "full",
+      "output": "Not set up in this project: Nothing installs the packed library into a scratch project and imports it  no scripts/consumer-smoke.mjs .",
+      "rules": [
+        "LIB-003",
+        "LIB-004",
+        "LIB-005"
+      ]
+    },
+    {
+      "id": "lib-docs",
+      "name": "Documentation is complete",
+      "passed": false,
+      "seconds": 0.1287456,
+      "notRun": true,
+      "flaky": false,
+      "tier": "fast",
+      "output": "Not set up in this project: The project has no scripts/check-docs.mjs, so this check has nothing to run.",
+      "rules": [
+        "DOC-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-1",
+      "name": "No native button element",
+      "passed": true,
+      "seconds": 0.0779545,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-2",
+      "name": "No native table element",
+      "passed": true,
+      "seconds": 0.0777697,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-3",
+      "name": "No native text box or text area",
+      "passed": true,
+      "seconds": 0.0735066,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-4",
+      "name": "No native file upload input",
+      "passed": true,
+      "seconds": 0.0755225,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-002-1",
+      "name": "No tiny fixed pixel font sizes",
+      "passed": true,
+      "seconds": 0.0796291,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-002"
+      ]
+    },
+    {
+      "id": "rule-USR-002-2",
+      "name": "Do not block pinch-zoom on mobile",
+      "passed": true,
+      "seconds": 0.1036482,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-002"
+      ]
+    },
+    {
+      "id": "rule-USR-003-1",
+      "name": "No dynamic code execution (eval / new Function)",
+      "passed": true,
+      "seconds": 0.0833092,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-2",
+      "name": "No raw HTML injection (XSS risk)",
+      "passed": true,
+      "seconds": 0.086991,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-3",
+      "name": "No string-based timers (hidden eval)",
+      "passed": true,
+      "seconds": 0.0824834,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-4",
+      "name": "No leftover debugger statements or console.log",
+      "passed": true,
+      "seconds": 0.0769147,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-006-1",
+      "name": "No hard-coded colours in component code (use shared design tokens)",
+      "passed": true,
+      "seconds": 0.0766418,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-006"
+      ]
+    }
+  ],
+  "checkPassedOn": {
+    "lib-typecheck": "C424C12430521FB6563F15DE0FAEB57E1CFBD7CFD6E1264AFE729B32655E419E",
+    "lib-tests": "07A99F3CD353DA6EF0A0C62AD1DCCD2D242C17CB8E08AAF81DA88C1711B2D78C",
+    "lib-build": "E042480958DF552E98D6102EAD3908F3BC645131128BC9BBF499F1101A706D3A",
+    "lib-pack": "E1CDF09A99494EDB871FDA10D9B76CC4BA3F3703873DAE995A32581FFD090679",
+    "lib-publish-dry-run": "16B2AABEDA4420DA509122FF9216E4E1DFC80D3EF714BE28990BFC40D54E675F"
+  },
+  "checkFailedOn": {},
+  "generatedByChecks": [],
+  "ignoredPaths": [],
+  "acceptedGaps": [],
+  "scopeExtensions": [],
+  "rulings": [],
+  "shortcuts": 0,
+  "routeHistory": [],
+  "amendments": [],
+  "scopeSeen": {},
+  "scopeRequestsMade": 0,
+  "preflightAnswered": false,
+  "analystQuestions": 2,
+  "analysisClosed": false,
+  "youDecided": 0,
+  "requirementsApproved": true,
+  "signOffRounds": 1,
+  "changedFiles": [
+    "docs/features/zest-button-toggle/BRS.md",
+    "documentation/api.md",
+    "documentation/breaking-changes.md",
+    "documentation/configuration.md",
+    "documentation/development.md",
+    "documentation/examples.md",
+    "documentation/features.md",
+    "package-lock.json",
+    "package.json",
+    "README.md",
+    "Styles/ZestButton.module.css",
+    "UI/hooks/useToggleState.ts",
+    "UI/ZestButton.tsx",
+    "__tests__/hooks/useToggleState.test.ts",
+    "__tests__/ZestButton.test.tsx",
+    "__tests__/ZestButtonToggle.test.tsx"
+  ]
+}

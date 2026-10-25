@@ -1,3 +1,9 @@
+---
+title: AI_GIT_WORKFLOW.md
+covers: AGENTS.md, docs/guidelines/AI_GIT_WORKFLOW.md
+covers-hash: 923d89b29632890c4458
+---
+
 # AI_GIT_WORKFLOW.md
 
 # Purpose

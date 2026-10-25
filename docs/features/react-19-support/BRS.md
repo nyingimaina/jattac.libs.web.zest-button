@@ -1,3 +1,9 @@
+---
+title: BRS — React 19, onwards, and Vite support
+covers: package.json, UI/index.ts
+covers-hash: fbd3fdfe024f44eb296c
+---
+
 # BRS — React 19, onwards, and Vite support
 
 ## Metadata

@@ -1,3 +1,9 @@
+---
+title: AI Knowledge Graph
+covers: AGENTS.md, docs/guidelines/ai-knowledge.md
+covers-hash: 7440658068ef77165a4e
+---
+
 # AI Knowledge Graph
 
 Purpose:

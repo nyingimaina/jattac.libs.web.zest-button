@@ -1,3 +1,9 @@
+---
+title: AI Test Configuration
+covers: AGENTS.md, docs/guidelines/AI_TEST_CONFIGURATION.md
+covers-hash: cd41d1aac48b28abb0c6
+---
+
 # AI Test Configuration
 
 ## Terminology

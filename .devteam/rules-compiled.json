@@ -1,0 +1,347 @@
+{
+  "rules": [
+    {
+      "ruleId": "USR-001",
+      "ruleHash": "0CFA78785D959B3C",
+      "checks": [
+        {
+          "id": "check-1",
+          "name": "No native button element",
+          "kind": "pattern",
+          "command": "",
+          "workingDir": ".",
+          "timeoutSeconds": 600,
+          "rules": [],
+          "files": [
+            "src/**/*.tsx",
+            "app/**/*.tsx",
+            "components/**/*.tsx",
+            "pages/**/*.tsx",
+            "web/src/**/*.tsx"
+          ],
+          "exclude": [],
+          "forbid": "\u003Cbutton[\\s\u003E]",
+          "tier": "fast",
+          "requiresEnv": [],
+          "requiresTools": [],
+          "dependsOn": [],
+          "phase": "challenge",
+          "inDocumentation": false,
+          "inChallenge": true,
+          "gate": false
+        },
+        {
+          "id": "check-2",
+          "name": "No native table element",
+          "kind": "pattern",
+          "command": "",
+          "workingDir": ".",
+          "timeoutSeconds": 600,
+          "rules": [],
+          "files": [
+            "src/**/*.tsx",
+            "app/**/*.tsx",
+            "components/**/*.tsx",
+            "pages/**/*.tsx",
+            "web/src/**/*.tsx"
+          ],
+          "exclude": [],
+          "forbid": "\u003Ctable[\\s\u003E]",
+          "tier": "fast",
+          "requiresEnv": [],
+          "requiresTools": [],
+          "dependsOn": [],
+          "phase": "challenge",
+          "inDocumentation": false,
+          "inChallenge": true,
+          "gate": false
+        },
+        {
+          "id": "check-3",
+          "name": "No native text box or text area",
+          "kind": "pattern",
+          "command": "",
+          "workingDir": ".",
+          "timeoutSeconds": 600,
+          "rules": [],
+          "files": [
+            "src/**/*.tsx",
+            "app/**/*.tsx",
+            "components/**/*.tsx",
+            "pages/**/*.tsx",
+            "web/src/**/*.tsx"
+          ],
+          "exclude": [],
+          "forbid": "\u003Ctextarea[\\s\u003E]|\u003Cinput(?![^\u003E]*type=[\u0022\u0027](?:file|checkbox|radio|hidden)[\u0022\u0027])",
+          "tier": "fast",
+          "requiresEnv": [],
+          "requiresTools": [],
+          "dependsOn": [],
+          "phase": "challenge",
+          "inDocumentation": false,
+          "inChallenge": true,
+          "gate": false
+        },
+        {
+          "id": "check-4",
+          "name": "No native file upload input",
+          "kind": "pattern",
+          "command": "",
+          "workingDir": ".",
+          "timeoutSeconds": 600,
+          "rules": [],
+          "files": [
+            "src/**/*.tsx",
+            "app/**/*.tsx",
+            "components/**/*.tsx",
+            "pages/**/*.tsx",
+            "web/src/**/*.tsx"
+          ],
+          "exclude": [],
+          "forbid": "\u003Cinput[^\u003E]*type=[\u0022\u0027]file[\u0022\u0027]",
+          "tier": "fast",
+          "requiresEnv": [],
+          "requiresTools": [],
+          "dependsOn": [],
+          "phase": "challenge",
+          "inDocumentation": false,
+          "inChallenge": true,
+          "gate": false
+        }
+      ],
+      "good": "import ZestButton from \u0022jattac.libs.web.zest-button\u0022;\n\nexport const Save = () =\u003E \u003CZestButton onClick={save}\u003ESave\u003C/ZestButton\u003E;",
+      "bad": "export const Save = () =\u003E \u003Cbutton onClick={save}\u003ESave\u003C/button\u003E;\nexport const Name = () =\u003E \u003Cinput type=\u0022text\u0022 /\u003E;\nexport const Grid = () =\u003E \u003Ctable\u003E\u003C/table\u003E;\nexport const Up = () =\u003E \u003Cinput type=\u0022file\u0022 /\u003E;",
+      "notes": "Whether a custom-built component duplicates a function the listed libraries already offer (layout, tabs, side menu, overflow menu, polling) cannot be decided by a pattern, nor can whether the packages are installed and actually used; a reviewer must judge those. Native select, checkbox, radio and similar elements with no listed library equivalent are not checked. This repository is itself the zest-button library, so its own source is outside the scanned paths.",
+      "stackHash": "6DA53B1D1B2EE359",
+      "facts": [],
+      "at": "2026-10-25T08:07:23.5314106+00:00",
+      "by": "claude-code"
+    },
+    {
+      "ruleId": "USR-002",
+      "ruleHash": "62750E0B68A51502",
+      "checks": [
+        {
+          "id": "check-1",
+          "name": "No tiny fixed pixel font sizes",
+          "kind": "pattern",
+          "command": "",
+          "workingDir": ".",
+          "timeoutSeconds": 600,
+          "rules": [],
+          "files": [
+            "Styles/**/*.css",
+            "**/*.module.css"
+          ],
+          "exclude": [],
+          "forbid": "font-size:\\s*(?:[0-9]|1[01])(?:\\.\\d\u002B)?px",
+          "tier": "fast",
+          "requiresEnv": [],
+          "requiresTools": [],
+          "dependsOn": [],
+          "phase": "challenge",
+          "inDocumentation": false,
+          "inChallenge": true,
+          "gate": false
+        },
+        {
+          "id": "check-2",
+          "name": "Do not block pinch-zoom on mobile",
+          "kind": "pattern",
+          "command": "",
+          "workingDir": ".",
+          "timeoutSeconds": 600,
+          "rules": [],
+          "files": [
+            "UI/**/*.tsx",
+            "UI/**/*.ts",
+            "**/*.html"
+          ],
+          "exclude": [],
+          "forbid": "user-scalable\\s*=\\s*(?:no|0)|maximum-scale\\s*=\\s*1(?:\\.0)?(?![0-9.])",
+          "tier": "fast",
+          "requiresEnv": [],
+          "requiresTools": [],
+          "dependsOn": [],
+          "phase": "challenge",
+          "inDocumentation": false,
+          "inChallenge": true,
+          "gate": false
+        }
+      ],
+      "good": ".button {\n  font-size: 1rem;\n  min-height: 44px;\n}\n@media (min-width: 769px) {\n  .button { min-height: 0; }\n}",
+      "bad": ".button {\n  font-size: 9px;\n  min-height: 20px;\n}",
+      "notes": "Whether a screen is genuinely mobile-first, desktop-aware and tablet-optimised, looks custom-made on each device, stays DRY, and has comfortable visibility, font sizing and hit areas (e.g. touch targets of at least 44px, sensible breakpoints, a tablet layout) needs a reviewer to judge; only tiny fixed pixel font sizes and zoom-blocking viewport settings can be detected automatically.",
+      "stackHash": "6DA53B1D1B2EE359",
+      "facts": [],
+      "at": "2026-10-25T08:08:09.7825375+00:00",
+      "by": "claude-code"
+    },
+    {
+      "ruleId": "USR-003",
+      "ruleHash": "AF9AE73B6C4A0C9E",
+      "checks": [
+        {
+          "id": "check-1",
+          "name": "No dynamic code execution (eval / new Function)",
+          "kind": "pattern",
+          "command": "",
+          "workingDir": ".",
+          "timeoutSeconds": 600,
+          "rules": [],
+          "files": [
+            "UI/**/*.ts",
+            "UI/**/*.tsx"
+          ],
+          "exclude": [],
+          "forbid": "(^|[^\\w.$])eval\\s*\\(|\\bnew\\s\u002BFunction\\s*\\(",
+          "tier": "fast",
+          "requiresEnv": [],
+          "requiresTools": [],
+          "dependsOn": [],
+          "phase": "challenge",
+          "inDocumentation": false,
+          "inChallenge": true,
+          "gate": false
+        },
+        {
+          "id": "check-2",
+          "name": "No raw HTML injection (XSS risk)",
+          "kind": "pattern",
+          "command": "",
+          "workingDir": ".",
+          "timeoutSeconds": 600,
+          "rules": [],
+          "files": [
+            "UI/**/*.ts",
+            "UI/**/*.tsx"
+          ],
+          "exclude": [],
+          "forbid": "dangerouslySetInnerHTML|\\.(innerHTML|outerHTML)\\s*=[^=]|\\bdocument\\.write(ln)?\\s*\\(|\\binsertAdjacentHTML\\s*\\(",
+          "tier": "fast",
+          "requiresEnv": [],
+          "requiresTools": [],
+          "dependsOn": [],
+          "phase": "challenge",
+          "inDocumentation": false,
+          "inChallenge": true,
+          "gate": false
+        },
+        {
+          "id": "check-3",
+          "name": "No string-based timers (hidden eval)",
+          "kind": "pattern",
+          "command": "",
+          "workingDir": ".",
+          "timeoutSeconds": 600,
+          "rules": [],
+          "files": [
+            "UI/**/*.ts",
+            "UI/**/*.tsx"
+          ],
+          "exclude": [],
+          "forbid": "\\b(setTimeout|setInterval)\\s*\\(\\s*[\u0022\u0027\u0060]",
+          "tier": "fast",
+          "requiresEnv": [],
+          "requiresTools": [],
+          "dependsOn": [],
+          "phase": "challenge",
+          "inDocumentation": false,
+          "inChallenge": true,
+          "gate": false
+        },
+        {
+          "id": "check-4",
+          "name": "No leftover debugger statements or console.log",
+          "kind": "pattern",
+          "command": "",
+          "workingDir": ".",
+          "timeoutSeconds": 600,
+          "rules": [],
+          "files": [
+            "UI/**/*.ts",
+            "UI/**/*.tsx"
+          ],
+          "exclude": [],
+          "forbid": "^\\s*debugger\\s*;?\\s*$|\\bconsole\\.log\\s*\\(",
+          "tier": "fast",
+          "requiresEnv": [],
+          "requiresTools": [],
+          "dependsOn": [],
+          "phase": "challenge",
+          "inDocumentation": false,
+          "inChallenge": true,
+          "gate": false
+        }
+      ],
+      "good": "useEffect(() =\u003E {\n  const id = setTimeout(() =\u003E setBusy(false), 300);\n  return () =\u003E clearTimeout(id);\n}, []);\nreturn \u003Cspan\u003E{label}\u003C/span\u003E;",
+      "bad": "const result = eval(userInput);\nreturn \u003Cdiv dangerouslySetInnerHTML={{ __html: label }} /\u003E;",
+      "notes": "Whether code is efficient for lowest-spec environments, free of duplication or technical debt, and free of memory leaks (for example timers, listeners or subscriptions that are never cleaned up, unnecessary re-renders, missing memoization) needs human judgement. The checks above only catch common security and hygiene shortcuts; a reviewer must judge the rest.",
+      "stackHash": "6DA53B1D1B2EE359",
+      "facts": [],
+      "at": "2026-10-25T08:08:38.6774145+00:00",
+      "by": "claude-code"
+    },
+    {
+      "ruleId": "USR-004",
+      "ruleHash": "5EBA9B224B73F44C",
+      "checks": [],
+      "good": "// Existing behaviour is pinned first, then the new behaviour is added\n// __tests__/ZestButton.test.tsx\nit(\u0027keeps existing click behaviour (characterization)\u0027, () =\u003E {\n  const onClick = jest.fn();\n  render(\u003CZestButton onClick={onClick}\u003ESave\u003C/ZestButton\u003E);\n  fireEvent.click(screen.getByText(\u0027Save\u0027));\n  expect(onClick).toHaveBeenCalledTimes(1);\n});",
+      "bad": "// Merged production code is extended with no characterization test written first\nexport function ZestButton(props) {\n  // new behaviour bolted on, existing behaviour never pinned by a test\n  return \u003Cbutton onClick={props.onClick}\u003E{props.children}\u003C/button\u003E;\n}",
+      "notes": "Whether characterization tests were written before the change, and whether the edited code was already merged into master, depends on commit order, git history and the intent of the change. A line-by-line pattern or a command exit code cannot judge this, so a reviewer must check that tests pinning existing behaviour were created first.",
+      "stackHash": "6DA53B1D1B2EE359",
+      "facts": [],
+      "at": "2026-10-25T08:08:56.8675096+00:00",
+      "by": "claude-code"
+    },
+    {
+      "ruleId": "USR-005",
+      "ruleHash": "7C5808B743A9AC2B",
+      "checks": [],
+      "good": "export const Save = () =\u003E \u003CZestButton onClick={save}\u003ESave\u003C/ZestButton\u003E;",
+      "bad": "export const Save = () =\u003E \u003Cbutton onClick={save}\u003ESave\u003C/button\u003E;",
+      "notes": "The rule as given is only a heading (\u0022UI/UX, Form Intelligence, and Design System Standards\u0022) with no concrete requirement, so no specific forbidden pattern, dependency or measurable limit can be derived. UI/UX quality, form behaviour and design-system consistency need a reviewer\u0027s judgement.",
+      "stackHash": "6DA53B1D1B2EE359",
+      "facts": [],
+      "at": "2026-10-25T08:09:18.3079368+00:00",
+      "by": "claude-code"
+    },
+    {
+      "ruleId": "USR-006",
+      "ruleHash": "A8D56CEE52D5D2F1",
+      "checks": [
+        {
+          "id": "check-1",
+          "name": "No hard-coded colours in component code (use shared design tokens)",
+          "kind": "pattern",
+          "command": "",
+          "workingDir": ".",
+          "timeoutSeconds": 600,
+          "rules": [],
+          "files": [
+            "UI/**/*.tsx",
+            "UI/**/*.ts"
+          ],
+          "exclude": [],
+          "forbid": "(#[0-9a-fA-F]{3,8}\\b|\\brgba?\\(|\\bhsla?\\()",
+          "tier": "fast",
+          "requiresEnv": [],
+          "requiresTools": [],
+          "dependsOn": [],
+          "phase": "challenge",
+          "inDocumentation": false,
+          "inChallenge": true,
+          "gate": false
+        }
+      ],
+      "good": "const style = { color: \u0027var(--zest-color-primary)\u0027, padding: \u0027var(--zest-space-2)\u0027 };",
+      "bad": "const style = { color: \u0027#3366ff\u0027, padding: \u00278px\u0027 };",
+      "notes": "Almost all of this rule needs human judgement: whether the interface is friendly, intuitive and polished; form guidance, focus order, inline validation and tooltips; the adaptive prediction engine (confidence thresholds of 50% and 80%, suggestion behaviour, kernel/adapter architecture, learning, per-user isolation and calibration); the theme-creation wizard; and overall visual quality, animation and accessibility. These must be judged by a reviewer and by behavioural tests. Note that this app is a button component library, not a form or application, so most of the form and prediction requirements apply to apps that consume it. The single automatic check only guards the one measurable part: no hard-coded colour values in component code.",
+      "stackHash": "6DA53B1D1B2EE359",
+      "facts": [],
+      "at": "2026-10-25T08:09:43.3835719+00:00",
+      "by": "claude-code"
+    }
+  ],
+  "stackAsked": ""
+}

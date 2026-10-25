@@ -1,0 +1,29 @@
+{
+  "summary": "Added the missing covers: front matter (with title) to the 18 existing docs pages flagged in the task. The toggle guide (docs/features/zest-button-toggle/guide.md) was already current against UI/hooks/useToggleState.ts, so it was left alone.",
+  "pages": [
+    "docs/e2e/critical-paths.md",
+    "docs/features/react-19-support/BRS.md",
+    "docs/features/zest-button-dropdown-options/BRS.md",
+    "docs/features/zest-button-toggle/BRS.md",
+    "docs/guidelines/AI_ARCHITECTURE.md",
+    "docs/guidelines/AI_BRS.md",
+    "docs/guidelines/AI_CODE_REVIEW.md",
+    "docs/guidelines/AI_E2E_TESTING.md",
+    "docs/guidelines/AI_GIT_WORKFLOW.md",
+    "docs/guidelines/AI_KNOWLEDGE.md",
+    "docs/guidelines/AI_PITFALLS.md",
+    "docs/guidelines/AI_STYLE_GUIDE.md",
+    "docs/guidelines/AI_TESTING.md",
+    "docs/guidelines/AI_TEST_CONFIGURATION.md",
+    "docs/guidelines/AI_WORKFLOW.md",
+    "docs/guidelines/AI_WORKFLOW_TRIGGERS.md",
+    "docs/guidelines/ai-knowledge.md",
+    "docs/guidelines/decision-log.md"
+  ],
+  "notes": [
+    "I only re-read UI/hooks/useToggleState.ts against the existing toggle guide; I did not re-verify every claim in guide.md against UI/ZestButton.tsx or the CSS in this round.",
+    "The covers: values for the guideline pages (AGENTS.md plus the page itself) and for the React 19 BRS (package.json, UI/index.ts) are my best fit. The pages are process documents and I did not trace them to specific source files.",
+    "The pages were not rewritten beyond the front matter. They were not read in full, so I could not check whether their content is still accurate.",
+    "I did not run the tests or a build. Only docs files were changed."
+  ]
+}

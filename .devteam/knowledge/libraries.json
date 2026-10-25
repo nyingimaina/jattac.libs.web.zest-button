@@ -1,0 +1,238 @@
+{
+  "at": "2026-10-25T08:27:41.1177116+00:00",
+  "entries": [
+    {
+      "kind": "npm",
+      "name": "@radix-ui/react-dropdown-menu",
+      "version": "2.1.24",
+      "key": "eb6c43191bf51fd54835f15b",
+      "own": false,
+      "source": "npm:@radix-ui/react-dropdown-menu@2.1.24",
+      "size": 1968,
+      "ticks": 639208134907335585
+    },
+    {
+      "kind": "npm",
+      "name": "@rollup/plugin-commonjs",
+      "version": "25.0.8",
+      "key": "8281dffa3b8473695e2f21c9",
+      "own": false,
+      "source": "npm:@rollup/plugin-commonjs@25.0.8",
+      "size": 2321,
+      "ticks": 639055320242465647
+    },
+    {
+      "kind": "npm",
+      "name": "@rollup/plugin-node-resolve",
+      "version": "15.3.1",
+      "key": "ed3e1dab8cf241d6ff046203",
+      "own": false,
+      "source": "npm:@rollup/plugin-node-resolve@15.3.1",
+      "size": 2337,
+      "ticks": 639055320242280328
+    },
+    {
+      "kind": "npm",
+      "name": "@rollup/plugin-typescript",
+      "version": "11.1.6",
+      "key": "2b151d245bce07e3ec1e8ef7",
+      "own": false,
+      "source": "npm:@rollup/plugin-typescript@11.1.6",
+      "size": 2009,
+      "ticks": 639055320242300343
+    },
+    {
+      "kind": "npm",
+      "name": "@testing-library/jest-dom",
+      "version": "6.9.1",
+      "key": "0ed3e43d21b123f833fe61cf",
+      "own": false,
+      "source": "npm:@testing-library/jest-dom@6.9.1",
+      "size": 3906,
+      "ticks": 639208110401541771
+    },
+    {
+      "kind": "npm",
+      "name": "@testing-library/react",
+      "version": "16.3.2",
+      "key": "34271d7fc14245fd291f0871",
+      "own": false,
+      "source": "npm:@testing-library/react@16.3.2",
+      "size": 3387,
+      "ticks": 639208110404056870
+    },
+    {
+      "kind": "npm",
+      "name": "@types/jest",
+      "version": "30.0.0",
+      "key": "16da06dba7c026be907f63e6",
+      "own": false,
+      "source": "npm:@types/jest@30.0.0",
+      "size": 4473,
+      "ticks": 639208110398587090
+    },
+    {
+      "kind": "npm",
+      "name": "@types/node",
+      "version": "25.1.0",
+      "key": "13da17842e4e70bfe74fe4b8",
+      "own": false,
+      "source": "npm:@types/node@25.1.0",
+      "size": 4509,
+      "ticks": 639055336201296781
+    },
+    {
+      "kind": "npm",
+      "name": "@types/react",
+      "version": "18.3.27",
+      "key": "def8ec362758d329d8a9b62d",
+      "own": false,
+      "source": "npm:@types/react@18.3.27",
+      "size": 6010,
+      "ticks": 639257863335646393
+    },
+    {
+      "kind": "npm",
+      "name": "@types/react-dom",
+      "version": "18.3.7",
+      "key": "1778b1158a968692bcd66e71",
+      "own": false,
+      "source": "npm:@types/react-dom@18.3.7",
+      "size": 2399,
+      "ticks": 639257863335510871
+    },
+    {
+      "kind": "npm",
+      "name": "identity-obj-proxy",
+      "version": "3.0.0",
+      "key": "c0c16f4088115bf751f3b7cb",
+      "own": false,
+      "source": "npm:identity-obj-proxy@3.0.0",
+      "size": 1401,
+      "ticks": 639208110393672635
+    },
+    {
+      "kind": "npm",
+      "name": "jest",
+      "version": "30.4.2",
+      "key": "5525d6a8fc4f45de0b9beb6c",
+      "own": false,
+      "source": "npm:jest@30.4.2",
+      "size": 1467,
+      "ticks": 639208110398090275
+    },
+    {
+      "kind": "npm",
+      "name": "jest-environment-jsdom",
+      "version": "30.4.1",
+      "key": "c0df22aea711fbfd64c01894",
+      "own": false,
+      "source": "npm:jest-environment-jsdom@30.4.1",
+      "size": 1018,
+      "ticks": 639208110396687962
+    },
+    {
+      "kind": "npm",
+      "name": "postcss",
+      "version": "8.5.6",
+      "key": "39c3953bfe36255086e22886",
+      "own": false,
+      "source": "npm:postcss@8.5.6",
+      "size": 2496,
+      "ticks": 639055320244452949
+    },
+    {
+      "kind": "npm",
+      "name": "postcss-modules",
+      "version": "6.0.1",
+      "key": "f67185b2ca311b6bdf70d533",
+      "own": false,
+      "source": "npm:postcss-modules@6.0.1",
+      "size": 1599,
+      "ticks": 639055320242676204
+    },
+    {
+      "kind": "npm",
+      "name": "react",
+      "version": "18.3.1",
+      "key": "d4e68a5c96babb20cad1daaf",
+      "own": false,
+      "source": "npm:react@18.3.1",
+      "size": 999,
+      "ticks": 639257863335842638
+    },
+    {
+      "kind": "npm",
+      "name": "react-dom",
+      "version": "18.3.1",
+      "key": "d2f29e31bd48b833e48cd7bb",
+      "own": false,
+      "source": "npm:react-dom@18.3.1",
+      "size": 1353,
+      "ticks": 639257863336524331
+    },
+    {
+      "kind": "npm",
+      "name": "rollup",
+      "version": "4.57.1",
+      "key": "7ea38a15a3bee24c0d20f63f",
+      "own": false,
+      "source": "npm:rollup@4.57.1",
+      "size": 11977,
+      "ticks": 639055320246440801
+    },
+    {
+      "kind": "npm",
+      "name": "rollup-plugin-dts",
+      "version": "6.3.0",
+      "key": "09534ed1bc13089b9f725ee7",
+      "own": false,
+      "source": "npm:rollup-plugin-dts@6.3.0",
+      "size": 1902,
+      "ticks": 639055320241872065
+    },
+    {
+      "kind": "npm",
+      "name": "rollup-plugin-postcss",
+      "version": "4.0.2",
+      "key": "38f1b20910b81e29fd63b396",
+      "own": false,
+      "source": "npm:rollup-plugin-postcss@4.0.2",
+      "size": 2387,
+      "ticks": 639055320239760394
+    },
+    {
+      "kind": "npm",
+      "name": "ts-jest",
+      "version": "29.4.12",
+      "key": "e576b7e2e4f3c72962998463",
+      "own": false,
+      "source": "npm:ts-jest@29.4.12",
+      "size": 4485,
+      "ticks": 639208110410873552
+    },
+    {
+      "kind": "npm",
+      "name": "tslib",
+      "version": "2.8.1",
+      "key": "c6753e906098929dfd4e92a5",
+      "own": false,
+      "source": "npm:tslib@2.8.1",
+      "size": 1219,
+      "ticks": 639055320241280644
+    },
+    {
+      "kind": "npm",
+      "name": "typescript",
+      "version": "5.9.3",
+      "key": "822ef7ca6452205657b6288b",
+      "own": false,
+      "source": "npm:typescript@5.9.3",
+      "size": 3620,
+      "ticks": 639055320249358386
+    }
+  ],
+  "missing": [],
+  "incomplete": false,
+  "newlyRead": 0
+}

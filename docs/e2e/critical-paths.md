@@ -1,3 +1,9 @@
+---
+title: Critical Paths
+covers: docs/e2e/, docs/guidelines/AI_E2E_TESTING.md
+covers-hash: eab5e7d444cc375d2644
+---
+
 # Critical Paths
 
 This document defines the critical business paths that MUST be covered by e2E tests.

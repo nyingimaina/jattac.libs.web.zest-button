@@ -1,0 +1,28 @@
+{
+  "summary": "",
+  "requirements": [],
+  "questions": [],
+  "ask": {
+    "text": "Should the on/off state be a new mode of the existing ZestButton (the same button that stays pressed when it is on, like a Bold button in an editor), or a separate switch-style control (a sliding track and knob, like a settings switch)?",
+    "why": "It decides what developers import and what the control looks like: a mode of ZestButton keeps the button's look, sizes, variants and busy/confirm behaviour and adds a pressed look; a separate switch is a new exported component with its own shape and styling.",
+    "topic": "users",
+    "options": [
+      { "label": "A toggle mode on ZestButton", "consequence": "Developers turn it on through the existing zest prop; the button keeps its sizes, variants and themes and clearly looks pressed or not pressed. No new export is needed.", "recommended": true },
+      { "label": "A separate switch component", "consequence": "A new exported component with a sliding track and knob, designed only for on/off; it does not share the button's busy and confirm behaviour." },
+      { "label": "Both", "consequence": "More to build, document and test; the toggle mode ships first and the switch is a second piece of work." }
+    ]
+  },
+  "coverage": [
+    { "topic": "users", "status": "open", "note": "Developers installing the library; the form of the control is the open point." },
+    { "topic": "data", "status": "open", "note": "Whether the on/off state is held by the app or by the button depends on the answer." },
+    { "topic": "permissions", "status": "not-applicable", "note": "A UI library with no records, sign-in or ownership." },
+    { "topic": "validation", "status": "open", "note": "Depends on the form of the control." },
+    { "topic": "states", "status": "open", "note": "On, off, disabled and busy appearance depend on the form of the control." },
+    { "topic": "duplicates", "status": "open", "note": "Rapid repeated clicks on a toggle; depends on the form of the control." },
+    { "topic": "volume", "status": "not-applicable", "note": "A single control; no lists, paging or searching." },
+    { "topic": "deletion", "status": "not-applicable", "note": "Nothing is stored or deleted." },
+    { "topic": "privacy", "status": "not-applicable", "note": "No personal data is collected or kept." },
+    { "topic": "quality", "status": "open", "note": "Accessibility (pressed/checked announcement), themes and bundle size depend on the form of the control." }
+  ],
+  "assumptions": []
+}

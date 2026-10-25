@@ -1,0 +1,32 @@
+{
+  "summary": "",
+  "requirements": [],
+  "questions": [],
+  "ask": {
+    "text": "How should the button show that it is ON, so nobody has to guess? For example, a Bold button in an editor looks pressed in; you could also add a small tick or dot.",
+    "why": "It decides what the button looks like in each state and what the tests check: a pressed look alone keeps the button unchanged in size; a tick or dot adds a visible mark that still works when colours are hard to tell apart.",
+    "topic": "states",
+    "options": [
+      { "label": "Pressed look plus a small check mark when on", "consequence": "On reads clearly even for people who cannot tell the colours apart; the check animates in and out and is hidden from screen readers, which hear 'pressed' instead.", "recommended": true },
+      { "label": "Pressed look only (filled/tinted background, inset)", "consequence": "Cleanest and smallest; relies on colour and shading alone to tell on from off." },
+      { "label": "Pressed look plus the developer chooses the on and off icons", "consequence": "Most flexible (for example a sun and a moon), but the developer must supply icons or on looks like off." }
+    ]
+  },
+  "coverage": [
+    { "topic": "users", "status": "answered", "note": "Developers installing the library; decided: a toggle mode on ZestButton." },
+    { "topic": "data", "status": "open", "note": "On/off value is held either by the app or by the button; will be assumed unless it changes what the builder sees." },
+    { "topic": "permissions", "status": "not-applicable", "note": "A UI library with no records, sign-in or ownership." },
+    { "topic": "validation", "status": "assumed", "note": "Toggle mode combined with confirm or dropdown behaviour will be defined as a default." },
+    { "topic": "states", "status": "open", "note": "How on, off, disabled and busy look; asking how ON is communicated." },
+    { "topic": "duplicates", "status": "assumed", "note": "Rapid repeated clicks flip once per click and are ignored while busy, as the existing busy options do." },
+    { "topic": "volume", "status": "not-applicable", "note": "A single control; no lists, paging or searching." },
+    { "topic": "deletion", "status": "not-applicable", "note": "Nothing is stored or deleted." },
+    { "topic": "privacy", "status": "not-applicable", "note": "No personal data is collected or kept." },
+    { "topic": "quality", "status": "assumed", "note": "Light/dark/system themes, keyboard, aria-pressed, rem sizing, React 18 and 19, additive change." }
+  ],
+  "assumptions": [
+    "Toggle mode is additive: it is off unless the developer turns it on, so existing buttons look and behave exactly as before.",
+    "Rapid repeated clicks flip the state once per click and are ignored while the button is busy.",
+    "Toggle mode together with confirmation or a dropdown is defined by default rather than asked about."
+  ]
+}

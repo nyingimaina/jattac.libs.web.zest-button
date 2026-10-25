@@ -1,0 +1,14 @@
+{
+  "checks": [
+    {
+      "name": "No hard-coded colours in component code (use shared design tokens)",
+      "kind": "pattern",
+      "files": ["UI/**/*.tsx", "UI/**/*.ts"],
+      "forbid": "(#[0-9a-fA-F]{3,8}\\b|\\brgba?\\(|\\bhsla?\\()"
+    }
+  ],
+  "good": "const style = { color: 'var(--zest-color-primary)', padding: 'var(--zest-space-2)' };",
+  "bad": "const style = { color: '#3366ff', padding: '8px' };",
+  "cannotTest": "Almost all of this rule needs human judgement: whether the interface is friendly, intuitive and polished; form guidance, focus order, inline validation and tooltips; the adaptive prediction engine (confidence thresholds of 50% and 80%, suggestion behaviour, kernel/adapter architecture, learning, per-user isolation and calibration); the theme-creation wizard; and overall visual quality, animation and accessibility. These must be judged by a reviewer and by behavioural tests. Note that this app is a button component library, not a form or application, so most of the form and prediction requirements apply to apps that consume it. The single automatic check only guards the one measurable part: no hard-coded colour values in component code.",
+  "facts": []
+}

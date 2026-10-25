@@ -9,10 +9,19 @@ This document lists significant changes between versions that might require modi
 
 ## Table of Contents
 
+- [Version 1.6.0](#version-160)
 - [Version 2.0.0 (unreleased)](#version-200-unreleased)
 - [Version 1.2.7](#version-127)
 - [Version 1.2.6](#version-126)
 - [Version 1.2.0](#version-120)
+
+---
+
+## Version 1.6.0
+
+### On/off toggle mode (additive, no breaking changes)
+
+Adds the optional `zest.toggleOptions` prop and the exported types `ToggleOptions` and `ToggleCheckPosition`. Nothing was removed or changed: buttons without `toggleOptions` render exactly as before (no `aria-pressed`, no extra element or class). No action is needed to upgrade.
 
 ---
 

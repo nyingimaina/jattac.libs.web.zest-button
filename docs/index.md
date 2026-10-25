@@ -1,0 +1,32 @@
+# Documentation
+
+<!-- Written by DevTeam from the pages below. Do not edit: add a page and it is listed. -->
+
+## E2e
+
+- [Critical Paths](e2e/critical-paths.md)
+
+## Features
+
+- [BRS — React 19, onwards, and Vite support](features/react-19-support/BRS.md)
+- [BRS — ZestButton dropdown options (split button)](features/zest-button-dropdown-options/BRS.md)
+- [BRS — ZestButton on/off toggle mode](features/zest-button-toggle/BRS.md)
+- [Using the ZestButton on/off toggle](features/zest-button-toggle/guide.md)
+
+## Guidelines
+
+- [AI BRS (Business Requirements Specification)](guidelines/AI_BRS.md)
+- [AI Code Review](guidelines/AI_CODE_REVIEW.md)
+- [AI Knowledge Graph](guidelines/AI_KNOWLEDGE.md)
+- [AI Knowledge Graph](guidelines/ai-knowledge.md)
+- [AI Style Guide](guidelines/AI_STYLE_GUIDE.md)
+- [AI Test Configuration](guidelines/AI_TEST_CONFIGURATION.md)
+- [AI Workflow](guidelines/AI_WORKFLOW.md)
+- [AI Workflow Triggers](guidelines/AI_WORKFLOW_TRIGGERS.md)
+- [AI_GIT_WORKFLOW.md](guidelines/AI_GIT_WORKFLOW.md)
+- [Architectural Rules](guidelines/AI_ARCHITECTURE.md)
+- [Common AI Failure Modes](guidelines/AI_PITFALLS.md)
+- [Decision Log](guidelines/decision-log.md)
+- [E2E Testing Policy](guidelines/AI_E2E_TESTING.md)
+- [Testing Policy](guidelines/AI_TESTING.md)
+

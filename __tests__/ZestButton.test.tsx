@@ -612,3 +612,30 @@ describe("ZestButton", () => {
     });
   });
 });
+
+describe("ZestButton non-toggle characterization (R1, R9)", () => {
+  it("R1: a button without toggleOptions has no aria-pressed and renders no toggle markup", () => {
+    const { container } = render(<ZestButton>Plain</ZestButton>);
+    const button = screen.getByRole("button");
+
+    expect(button).not.toHaveAttribute("aria-pressed");
+    expect(button.className).not.toMatch(/toggle/i);
+    expect(container.querySelector(".toggleCheck, .toggleCheckSlot")).toBeNull();
+  });
+
+  it("R9: a plain click calls onClick once and leaves the class list as it was", () => {
+    const onClick = jest.fn();
+    render(
+      <ZestButton zest={{ busyOptions: { handleInternally: false } }} onClick={onClick}>
+        Go
+      </ZestButton>
+    );
+    const button = screen.getByRole("button");
+    const before = button.className;
+
+    fireEvent.click(button);
+
+    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(button.className).toBe(before);
+  });
+});

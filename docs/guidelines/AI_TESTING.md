@@ -1,3 +1,9 @@
+---
+title: Testing Policy
+covers: AGENTS.md, docs/guidelines/AI_TESTING.md
+covers-hash: cbd6465ff88987eaddf9
+---
+
 # Testing Policy
 
 This repository uses strict Test Driven Development.

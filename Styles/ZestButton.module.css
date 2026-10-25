@@ -701,3 +701,135 @@
   }
 }
 
+
+/* ------------------------------------------------------------------ */
+/* Toggle mode (zest.toggleOptions)                                   */
+/* ------------------------------------------------------------------ */
+/* On = pressed look (inset, no lift) + a check mark; colour is never the
+   only cue. Fixed-width slot keeps the button from changing size. */
+
+.toggleCheckSlot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 1.1em;
+  height: 1.1em;
+}
+
+.toggleCheck {
+  width: 1.1em;
+  height: 1.1em;
+  color: currentColor;
+  animation: toggleCheckPop 0.28s var(--zest-ease-spring) both;
+}
+
+.toggleCheck path {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: drawCheck 0.3s var(--zest-ease-standard) 0.05s forwards;
+}
+
+@keyframes toggleCheckPop {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Solid: darken with an overlay layer so every variant colour is kept. */
+.button.toggleOn {
+  transform: none;
+}
+.solid.toggleOn {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.22));
+  box-shadow: inset 0 0.125rem 0.375rem rgba(0, 0, 0, 0.45);
+}
+
+/* Outline, text and dashed have no fill when off: tint plus a heavier inset edge. */
+.outline.toggleOn,
+.text.toggleOn,
+.dashed.toggleOn {
+  background-color: rgba(30, 64, 175, 0.16);
+  background-color: color-mix(in srgb, currentColor 16%, transparent);
+  box-shadow: inset 0 0 0 0.0625rem currentColor, inset 0 0.125rem 0.25rem rgba(0, 0, 0, 0.18);
+}
+.text.toggleOn {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+/* Hover and active stay distinguishable from the plain on state. */
+.button.toggleOn:hover:not(:disabled) {
+  transform: none;
+}
+.solid.toggleOn:hover:not(:disabled) {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.32), rgba(0, 0, 0, 0.32));
+  box-shadow: inset 0 0.125rem 0.375rem rgba(0, 0, 0, 0.5);
+}
+.outline.toggleOn:hover:not(:disabled),
+.text.toggleOn:hover:not(:disabled),
+.dashed.toggleOn:hover:not(:disabled) {
+  background-color: rgba(30, 64, 175, 0.26);
+  background-color: color-mix(in srgb, currentColor 26%, transparent);
+}
+/* Hover must not inherit the base hover text colour (white on solid fills). */
+.outline.toggleOn:hover:not(:disabled),
+.dashed.toggleOn:hover:not(:disabled) {
+  color: var(--zest-color-standard-border);
+}
+.outline.success.toggleOn:hover:not(:disabled),
+.dashed.success.toggleOn:hover:not(:disabled) {
+  color: var(--zest-color-success-border);
+}
+.outline.danger.toggleOn:hover:not(:disabled),
+.dashed.danger.toggleOn:hover:not(:disabled) {
+  color: var(--zest-color-danger-border);
+}
+.button.toggleOn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* Visible keyboard focus in the on state (beats the inset shadow above). */
+.solid.toggleOn:focus-visible {
+  box-shadow: inset 0 0.125rem 0.375rem rgba(0, 0, 0, 0.45), var(--zest-focus-ring);
+}
+.outline.toggleOn:focus-visible,
+.text.toggleOn:focus-visible,
+.dashed.toggleOn:focus-visible {
+  box-shadow: inset 0 0 0 0.0625rem currentColor, var(--zest-focus-ring);
+}
+
+/* Disabled on: keeps the dimmed look and still reads as pressed. */
+.solid.toggleOn:disabled,
+.solid.toggleOn.disabled {
+  background-image: none;
+  box-shadow: inset 0 0.125rem 0.25rem rgba(0, 0, 0, 0.25);
+}
+.outline.toggleOn:disabled,
+.outline.toggleOn.disabled,
+.text.toggleOn:disabled,
+.text.toggleOn.disabled,
+.dashed.toggleOn:disabled,
+.dashed.toggleOn.disabled {
+  background-color: rgba(107, 114, 128, 0.2);
+  background-color: color-mix(in srgb, var(--zest-color-disabled-text) 20%, transparent);
+  box-shadow: inset 0 0 0 0.0625rem currentColor;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toggleCheck,
+  .toggleCheck path {
+    animation: none;
+  }
+  .toggleCheck path {
+    stroke-dashoffset: 0;
+  }
+  .button.toggleOn:active:not(:disabled) {
+    transform: none;
+  }
+}

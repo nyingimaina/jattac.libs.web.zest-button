@@ -1,3 +1,9 @@
+---
+title: Architectural Rules
+covers: AGENTS.md, docs/guidelines/AI_ARCHITECTURE.md
+covers-hash: 5fad42b8a8fe5a292c4f
+---
+
 # Architectural Rules
 
 Business behaviour is more important than implementation.

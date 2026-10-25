@@ -1,0 +1,32 @@
+{
+  "checks": [
+    {
+      "name": "No native button element",
+      "kind": "pattern",
+      "files": ["src/**/*.tsx", "app/**/*.tsx", "components/**/*.tsx", "pages/**/*.tsx", "web/src/**/*.tsx"],
+      "forbid": "<button[\\s>]"
+    },
+    {
+      "name": "No native table element",
+      "kind": "pattern",
+      "files": ["src/**/*.tsx", "app/**/*.tsx", "components/**/*.tsx", "pages/**/*.tsx", "web/src/**/*.tsx"],
+      "forbid": "<table[\\s>]"
+    },
+    {
+      "name": "No native text box or text area",
+      "kind": "pattern",
+      "files": ["src/**/*.tsx", "app/**/*.tsx", "components/**/*.tsx", "pages/**/*.tsx", "web/src/**/*.tsx"],
+      "forbid": "<textarea[\\s>]|<input(?![^>]*type=[\"'](?:file|checkbox|radio|hidden)[\"'])"
+    },
+    {
+      "name": "No native file upload input",
+      "kind": "pattern",
+      "files": ["src/**/*.tsx", "app/**/*.tsx", "components/**/*.tsx", "pages/**/*.tsx", "web/src/**/*.tsx"],
+      "forbid": "<input[^>]*type=[\"']file[\"']"
+    }
+  ],
+  "good": "import ZestButton from \"jattac.libs.web.zest-button\";\n\nexport const Save = () => <ZestButton onClick={save}>Save</ZestButton>;",
+  "bad": "export const Save = () => <button onClick={save}>Save</button>;\nexport const Name = () => <input type=\"text\" />;\nexport const Grid = () => <table></table>;\nexport const Up = () => <input type=\"file\" />;",
+  "cannotTest": "Whether a custom-built component duplicates a function the listed libraries already offer (layout, tabs, side menu, overflow menu, polling) cannot be decided by a pattern, nor can whether the packages are installed and actually used; a reviewer must judge those. Native select, checkbox, radio and similar elements with no listed library equivalent are not checked. This repository is itself the zest-button library, so its own source is outside the scanned paths.",
+  "facts": []
+}

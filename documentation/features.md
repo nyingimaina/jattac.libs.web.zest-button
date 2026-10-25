@@ -12,6 +12,7 @@ This document provides a high-level showcase of what's possible with `ZestButton
 - [Global Configuration](#global-configuration)
 - [Rich Styling](#rich-styling)
 - [Split Buttons & Overflow Menus](#split-buttons--overflow-menus)
+- [On/Off Toggle Mode](#onoff-toggle-mode)
 
 ---
 
@@ -144,6 +145,21 @@ const MyComponent = () => (
 );
 ```
 *__Learn more in the [Split Button with Overflow Actions recipe](./examples.md#recipe-5-a-split-button-with-overflow-actions).__*
+
+---
+
+### On/Off Toggle Mode
+
+**What it does:** Pass `toggleOptions` and the button stays pressed when on and returns to normal when off. When on it shows a pressed look plus a small animated check mark, so the state is clear without relying on colour. Screen readers hear "pressed" (`aria-pressed`) instead of the check mark. The check mark can sit at the `start` or `end` of the button, so your own icons keep working. Animations are switched off when the user prefers reduced motion. Buttons without `toggleOptions` are unchanged.
+
+```tsx
+const Example = () => (
+  <ZestButton zest={{ toggleOptions: { defaultPressed: false, checkPosition: 'end' } }}>
+    Notifications
+  </ZestButton>
+);
+```
+*See the [Toggle recipe](./examples.md#recipe-6-an-onoff-toggle-button) and the [`ToggleOptions` reference](./api.md#toggleoptions).*
 
 ---
 

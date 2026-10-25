@@ -1,0 +1,20 @@
+{
+  "checks": [
+    {
+      "name": "No tiny fixed pixel font sizes",
+      "kind": "pattern",
+      "files": ["Styles/**/*.css", "**/*.module.css"],
+      "forbid": "font-size:\\s*(?:[0-9]|1[01])(?:\\.\\d+)?px"
+    },
+    {
+      "name": "Do not block pinch-zoom on mobile",
+      "kind": "pattern",
+      "files": ["UI/**/*.tsx", "UI/**/*.ts", "**/*.html"],
+      "forbid": "user-scalable\\s*=\\s*(?:no|0)|maximum-scale\\s*=\\s*1(?:\\.0)?(?![0-9.])"
+    }
+  ],
+  "good": ".button {\n  font-size: 1rem;\n  min-height: 44px;\n}\n@media (min-width: 769px) {\n  .button { min-height: 0; }\n}",
+  "bad": ".button {\n  font-size: 9px;\n  min-height: 20px;\n}",
+  "cannotTest": "Whether a screen is genuinely mobile-first, desktop-aware and tablet-optimised, looks custom-made on each device, stays DRY, and has comfortable visibility, font sizing and hit areas (e.g. touch targets of at least 44px, sensible breakpoints, a tablet layout) needs a reviewer to judge; only tiny fixed pixel font sizes and zoom-blocking viewport settings can be detected automatically.",
+  "facts": []
+}

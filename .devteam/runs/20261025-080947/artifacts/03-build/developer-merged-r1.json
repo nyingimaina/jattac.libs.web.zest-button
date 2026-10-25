@@ -1,0 +1,314 @@
+{
+  "summary": "Slice 1 of the toggle build. Added ToggleOptions/ToggleCheckPosition types and zest.toggleOptions to UI/ZestButton.tsx; new hook UI/hooks/useToggleState.ts (controlled via pressed, else self-managed from defaultPressed, rapid toggles safe via refs); new handleToggleClick (flips once, after confirmation when confirmOptions is set; disabled/busy buttons never reach it), aria-pressed, toggleOn class, a ToggleCheck svg (aria-hidden, only rendered when on, in a fixed-width slot at start by default or end, unknown values fall back to start, developer icons untouched) and a keydown guard against Enter auto-repeat. Non-toggle markup is unchanged (no aria-pressed, no extra class, no extra element). Styles appended to Styles/ZestButton.module.css: pressed look per buttonStyle, distinct hover/active, on-state focus ring, disabled-on look, check pop/draw animation and a prefers-reduced-motion override, all in rem and theme variables. Characterization tests were added first and passed on the baseline; the full suite (161 tests) and the build pass. Known limit: the check animates in; it is removed immediately on turn-off (no exit animation, to avoid a timer). Docs and version bump belong to slice 2. Finished slice 2 (docs and version): README toggle example and feature bullet; documentation/api.md (toggleOptions row and ToggleOptions section), features.md (On/Off Toggle Mode), examples.md (Recipe 6), configuration.md (Toggle Defaults), development.md (Toggle Mode Internals), breaking-changes.md (1.6.0 additive note); docs/features/zest-button-toggle/BRS.md; version bumped to 1.6.0 in package.json and package-lock.json. Added R8 tests. Build succeeds and the full suite passes (15 suites, 163 tests).",
+  "tests": [
+    {
+      "name": "R1: an empty toggleOptions object enables toggle mode, off by default",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R1"
+      ]
+    },
+    {
+      "name": "R1: removing toggleOptions returns a plain button with no aria-pressed",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R1"
+      ]
+    },
+    {
+      "name": "R1: a button without toggleOptions has no aria-pressed and renders no toggle markup",
+      "file": "__tests__/ZestButton.test.tsx",
+      "requirements": [
+        "R1"
+      ]
+    },
+    {
+      "name": "R9: a plain click calls onClick once and leaves the class list as it was",
+      "file": "__tests__/ZestButton.test.tsx",
+      "requirements": [
+        "R9"
+      ]
+    },
+    {
+      "name": "R2: self-managed toggle starts off, flips per click and reports each value",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R2"
+      ]
+    },
+    {
+      "name": "R2: a controlled toggle only changes when the app passes a new pressed value",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R2"
+      ]
+    },
+    {
+      "name": "R2: an app that ignores onPressedChange keeps seeing its fixed value",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R2"
+      ]
+    },
+    {
+      "name": "R2: pressed wins when both pressed and defaultPressed are given",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R2"
+      ]
+    },
+    {
+      "name": "R2: two rapid clicks flip twice, once per click",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R2"
+      ]
+    },
+    {
+      "name": "R2: the existing onClick still runs on each click as well as onPressedChange",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R2"
+      ]
+    },
+    {
+      "name": "R2: starts off when nothing is given and flips once per toggle, reporting each value",
+      "file": "__tests__/hooks/useToggleState.test.ts",
+      "requirements": [
+        "R2"
+      ]
+    },
+    {
+      "name": "R2: a controlled value does not change until the app passes a new one",
+      "file": "__tests__/hooks/useToggleState.test.ts",
+      "requirements": [
+        "R2"
+      ]
+    },
+    {
+      "name": "R2: pressed wins over defaultPressed",
+      "file": "__tests__/hooks/useToggleState.test.ts",
+      "requirements": [
+        "R2"
+      ]
+    },
+    {
+      "name": "R9: reports the resulting state, with no timers left running",
+      "file": "__tests__/hooks/useToggleState.test.ts",
+      "requirements": [
+        "R9"
+      ]
+    },
+    {
+      "name": "R3: the check mark and pressed look show only when on, and the check is hidden from screen readers",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R3"
+      ]
+    },
+    {
+      "name": "R3: the on-state check is a different element from the async success checkmark",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R3"
+      ]
+    },
+    {
+      "name": "R3: the on look is applied with buttonStyle (solid, outline, text, dashed)",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R3"
+      ]
+    },
+    {
+      "name": "R3: a very long label keeps the check mark and the label together",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R3"
+      ]
+    },
+    {
+      "name": "R3: a reduced-motion rule switches the check animation off",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R3"
+      ]
+    },
+    {
+      "name": "R4: the check defaults to the start of the button, before the label",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R4"
+      ]
+    },
+    {
+      "name": "R4: checkPosition \u0027end\u0027 places the check after the label",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R4"
+      ]
+    },
+    {
+      "name": "R4: an unknown checkPosition falls back to the start instead of hiding the check",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R4"
+      ]
+    },
+    {
+      "name": "R4: iconLeft with the check at the start keeps both, icon first",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R4"
+      ]
+    },
+    {
+      "name": "R4: iconRight with the check at the end keeps both, icon before the check",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R4"
+      ]
+    },
+    {
+      "name": "R4: with stretch the check stays inside the content next to the label",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R4"
+      ]
+    },
+    {
+      "name": "R5: it stays a button (no switch role) that reports pressed",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R5"
+      ]
+    },
+    {
+      "name": "R5: an icon-only toggle exposes its name and pressed state",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R5"
+      ]
+    },
+    {
+      "name": "R5: a keyboard click flips it once",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R5"
+      ]
+    },
+    {
+      "name": "R5: holding Enter down does not repeat the activation",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R5"
+      ]
+    },
+    {
+      "name": "R5: a first Enter press is not suppressed and the developer\u0027s onKeyDown still runs",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R5"
+      ]
+    },
+    {
+      "name": "R5: the focus ring is defined for the on state",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R5"
+      ]
+    },
+    {
+      "name": "R6: the on look combines with the light and dark themes",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R6"
+      ]
+    },
+    {
+      "name": "R6: a theme change while on keeps it on",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R6"
+      ]
+    },
+    {
+      "name": "R6: the on state has its own hover and active rules and uses rem, not px",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R6"
+      ]
+    },
+    {
+      "name": "R7: a disabled toggle ignores clicks and still shows its state",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R7"
+      ]
+    },
+    {
+      "name": "R7: while busy, clicks do not flip the toggle",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R7"
+      ]
+    },
+    {
+      "name": "R7: with confirmOptions the first click does not flip, the confirming click flips once",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R7"
+      ]
+    },
+    {
+      "name": "R7: letting the confirmation time out leaves the state unchanged",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R7"
+      ]
+    },
+    {
+      "name": "R7: with a dropdown only the main part toggles and opening the menu keeps the state",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R7"
+      ]
+    },
+    {
+      "name": "R7: if onClick rejects, the toggle keeps the value it flipped to",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R7"
+      ]
+    },
+    {
+      "name": "R7: a semanticType keeps its label and icon defaults and still shows the on look",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R7"
+      ]
+    },
+    {
+      "name": "R9: toggle mode adds no listeners or timers that survive unmount",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R9"
+      ]
+    },
+    {
+      "name": "R8: the API page documents every ToggleOptions prop and the README shows a toggle example",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R8"
+      ]
+    },
+    {
+      "name": "R8: the documented examples type-check against the exported types and render",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R8"
+      ]
+    }
+  ],
+  "kickbacks": []
+}

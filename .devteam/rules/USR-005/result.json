@@ -1,0 +1,7 @@
+{
+  "checks": [],
+  "good": "export const Save = () => <ZestButton onClick={save}>Save</ZestButton>;",
+  "bad": "export const Save = () => <button onClick={save}>Save</button>;",
+  "cannotTest": "The rule as given is only a heading (\"UI/UX, Form Intelligence, and Design System Standards\") with no concrete requirement, so no specific forbidden pattern, dependency or measurable limit can be derived. UI/UX quality, form behaviour and design-system consistency need a reviewer's judgement.",
+  "facts": []
+}

@@ -13,6 +13,7 @@ This guide provides an overview of the project's internal structure and instruct
 - [Setup Instructions](#setup-instructions)
 - [Scripts](#scripts)
 - [Extending Semantic Types](#extending-semantic-types)
+- [Toggle Mode Internals](#toggle-mode-internals)
 
 ---
 
@@ -87,6 +88,12 @@ declare module 'jattac.libs.web.zest-button' {
 Once augmented, these new semantic types (`'archive'`, `'publish'`) will be available for autocompletion and type-checking when using the `semanticType` prop on your `ZestButton` instances.
 
 *(Note: This package supports `react`/`react-dom` `>=18.0.0`. It is tested against React 18 (the default `devDependency`) and React 19, and the published bundles treat React — including `react/jsx-runtime` — as external so the consumer's React version is used. See [Breaking Changes](./breaking-changes.md).)*
+
+---
+
+### Toggle Mode Internals
+
+Toggle mode lives in `UI/hooks/useToggleState.ts` (controlled when `pressed` is given, otherwise self-managed from `defaultPressed`), the `handleToggleClick` handler and `ToggleCheck` mark in `UI/ZestButton.tsx`, and the `.toggleOn` / `.toggleCheck` rules in `Styles/ZestButton.module.css`. It uses no timers or listeners. Tests: `__tests__/ZestButtonToggle.test.tsx` and `__tests__/hooks/useToggleState.test.ts`. Feature notes: `docs/features/zest-button-toggle/`.
 
 ---
 

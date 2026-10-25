@@ -1,3 +1,9 @@
+---
+title: AI Style Guide
+covers: AGENTS.md, docs/guidelines/AI_STYLE_GUIDE.md
+covers-hash: c51eef84fae9e1d3457d
+---
+
 # AI Style Guide
 
 Never introduce a second pattern when one already exists.

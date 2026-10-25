@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 0,
+  "runId": "20261025-080947",
+  "at": "2026-10-25T08:30:17.0192877+00:00",
+  "status": "Completed",
+  "feature": "add a toggle on/off state that beautifully render and clearly communicate state",
+  "testsReported": 48,
+  "checksPassed": 18,
+  "checksTotal": 22,
+  "checksNotRun": 4,
+  "bootPassed": 0,
+  "bootTotal": 0,
+  "findingsOpen": 0,
+  "findingsAdvisory": 11,
+  "findingsFixed": 1,
+  "requirementsTotal": 9,
+  "requirementsWithTests": 9,
+  "costUsd": 4.1261181,
+  "seconds": 1229.6113351,
+  "coverage": [
+    {
+      "name": "Library",
+      "linePercent": 98.8,
+      "branchPercent": 95.1,
+      "changedLinePercent": 98.4,
+      "filesCovered": 12,
+      "functionPercent": 98.4
+    }
+  ],
+  "testsExecuted": 0,
+  "testsFailed": 0,
+  "testsSkipped": 0,
+  "verification": false
+}

@@ -1,3 +1,9 @@
+---
+title: E2E Testing Policy
+covers: AGENTS.md, docs/guidelines/AI_E2E_TESTING.md
+covers-hash: 2c6246cc4d553d611182
+---
+
 # E2E Testing Policy
 
 ## Terminology

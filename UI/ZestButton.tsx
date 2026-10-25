@@ -5,6 +5,7 @@ import { useZestConfig } from './hooks/useZestConfig';
 import { useBusyState } from './hooks/useBusyState';
 import { useConfirmation } from './hooks/useConfirmation';
 import { useThemeDetection } from './hooks/useThemeDetection';
+import { useToggleState } from './hooks/useToggleState';
 import ZestDropdownMenu from './ZestDropdownMenu';
 
 // --- Types ---
@@ -68,8 +69,27 @@ export interface ZestDropdownOption {
   confirmOptions?: ConfirmOptions;
 }
 
+export type ToggleCheckPosition = 'start' | 'end';
+
+/**
+ * Turns the button into an on/off toggle (renders `aria-pressed`). Passing an
+ * empty object is enough; the toggle then starts off and manages itself.
+ */
+export interface ToggleOptions {
+  /** Controlled value. When given, the button only changes when you pass a new one. Wins over `defaultPressed`. */
+  pressed?: boolean;
+  /** Starting value for a self-managed toggle; off when not given. */
+  defaultPressed?: boolean;
+  /** Called with the new value on every click or key press of an enabled toggle. */
+  onPressedChange?: (pressed: boolean) => void;
+  /** Which end of the button the check mark sits at; defaults to `'start'`, unknown values fall back to it. */
+  checkPosition?: ToggleCheckPosition;
+}
+
 // New interface to encapsulate all custom ZestButton props
 export interface ZestCustomProps {
+  /** Optional on/off toggle mode. Absent means a plain button. */
+  toggleOptions?: ToggleOptions;
   visualOptions?: VisualOptions;
   busyOptions?: BusyOptions;
   successOptions?: SuccessOptions;
@@ -105,6 +125,23 @@ const AnimatedCheckmark: React.FC = () => (
     strokeWidth="3"
     strokeLinecap="round"
     strokeLinejoin="round"
+  >
+    <path d="M5 13l4 4L19 7" />
+  </svg>
+);
+
+// On-state mark for toggle mode; distinct from AnimatedCheckmark (async success).
+const ToggleCheck: React.FC = () => (
+  <svg
+    className={styles.toggleCheck}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="3"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+    focusable="false"
   >
     <path d="M5 13l4 4L19 7" />
   </svg>
@@ -147,7 +184,17 @@ const ZestButton: React.FC<ZestButtonProps> = ({
     dropdownAriaLabel = "More options",
     dropdownTheme,
     dropdownWidth,
+    toggleOptions,
   } = effectiveZestConfig;
+
+  const toggleEnabled = toggleOptions !== undefined;
+  const { pressed: togglePressed, toggle } = useToggleState({
+    pressed: toggleOptions?.pressed,
+    defaultPressed: toggleOptions?.defaultPressed,
+    onPressedChange: toggleOptions?.onPressedChange,
+  });
+  // Unknown values fall back to the default instead of hiding the check mark.
+  const checkAtEnd = toggleOptions?.checkPosition === 'end';
 
   const {
     variant = "standard",
@@ -273,6 +320,23 @@ const ZestButton: React.FC<ZestButtonProps> = ({
     }
   };
 
+  // Toggle mode: flips once per accepted click. With a confirmation pending the
+  // first click only starts it; the flip happens on the confirming click.
+  const handleToggleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (confirmOptions && !awaitingConfirm) {
+      handleConfirmClick(e);
+      return;
+    }
+    toggle();
+    handleConfirmClick(e);
+  };
+
+  // Holding Enter makes browsers repeat the click; one press must flip once.
+  const handleToggleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    props.onKeyDown?.(e);
+    if (e.key === "Enter" && e.repeat) e.preventDefault();
+  };
+
   useEffect(() => {
     if (!isDefault || isDisabled || dropdownOpen) return;
     const listener = (e: KeyboardEvent) => {
@@ -321,6 +385,16 @@ const ZestButton: React.FC<ZestButtonProps> = ({
     return null;
   };
 
+  // Fixed-width slot so the button does not change size when the mark appears.
+  const renderToggleCheck = (atEnd: boolean) =>
+    toggleEnabled && checkAtEnd === atEnd ? (
+      <span className={styles.toggleCheckSlot}>{togglePressed && <ToggleCheck />}</span>
+    ) : null;
+
+  const toggleButtonProps = toggleEnabled
+    ? { "aria-pressed": togglePressed, onKeyDown: handleToggleKeyDown }
+    : {};
+
   const buttonElement = (
     <button
       ref={buttonRef}
@@ -334,18 +408,22 @@ const ZestButton: React.FC<ZestButtonProps> = ({
         wasFailed ? styles.shake : "",
         effectiveTheme === 'light' ? styles['force-light'] : styles['force-dark'],
         hasDropdown ? styles.splitButtonMain : "",
+        ...(toggleEnabled && togglePressed ? [styles.toggleOn] : []),
         className,
       ].join(" ")}
       disabled={isDisabled}
       aria-busy={effectiveBusy}
-      onClick={handleConfirmClick}
+      onClick={toggleEnabled ? handleToggleClick : handleConfirmClick}
       {...props}
+      {...toggleButtonProps}
     >
       <span className={styles.inner}>
         {renderLeftIcon()}
         <span className={styles.content}>
+          {renderToggleCheck(false)}
           {currentChildren}
           {iconRight && <span className={styles.icon}>{iconRight}</span>}
+          {renderToggleCheck(true)}
         </span>
       </span>
     </button>

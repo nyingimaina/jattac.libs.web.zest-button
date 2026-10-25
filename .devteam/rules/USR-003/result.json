@@ -1,0 +1,32 @@
+{
+  "checks": [
+    {
+      "name": "No dynamic code execution (eval / new Function)",
+      "kind": "pattern",
+      "files": ["UI/**/*.ts", "UI/**/*.tsx"],
+      "forbid": "(^|[^\\w.$])eval\\s*\\(|\\bnew\\s+Function\\s*\\("
+    },
+    {
+      "name": "No raw HTML injection (XSS risk)",
+      "kind": "pattern",
+      "files": ["UI/**/*.ts", "UI/**/*.tsx"],
+      "forbid": "dangerouslySetInnerHTML|\\.(innerHTML|outerHTML)\\s*=[^=]|\\bdocument\\.write(ln)?\\s*\\(|\\binsertAdjacentHTML\\s*\\("
+    },
+    {
+      "name": "No string-based timers (hidden eval)",
+      "kind": "pattern",
+      "files": ["UI/**/*.ts", "UI/**/*.tsx"],
+      "forbid": "\\b(setTimeout|setInterval)\\s*\\(\\s*[\"'`]"
+    },
+    {
+      "name": "No leftover debugger statements or console.log",
+      "kind": "pattern",
+      "files": ["UI/**/*.ts", "UI/**/*.tsx"],
+      "forbid": "^\\s*debugger\\s*;?\\s*$|\\bconsole\\.log\\s*\\("
+    }
+  ],
+  "good": "useEffect(() => {\n  const id = setTimeout(() => setBusy(false), 300);\n  return () => clearTimeout(id);\n}, []);\nreturn <span>{label}</span>;",
+  "bad": "const result = eval(userInput);\nreturn <div dangerouslySetInnerHTML={{ __html: label }} />;",
+  "cannotTest": "Whether code is efficient for lowest-spec environments, free of duplication or technical debt, and free of memory leaks (for example timers, listeners or subscriptions that are never cleaned up, unnecessary re-renders, missing memoization) needs human judgement. The checks above only catch common security and hygiene shortcuts; a reviewer must judge the rest.",
+  "facts": []
+}

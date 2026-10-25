@@ -10,6 +10,8 @@ A highly customizable and interactive React button component designed for modern
 *   **Richly Styleable**: Comes with `solid`, `outline`, `text`, and `dashed` styles, multiple color variants, and automatic light/dark mode support.
 *   **Split Buttons & Overflow Menus**: Attach a set of secondary actions to a button's default action via `dropdownOptions` — a discoverable chevron opens a themeable, independently-sized menu, with each item running through the same busy/confirm feedback as the main button.
 
+*   **On/Off Toggle Mode**: Pass `toggleOptions` to turn the button into a toggle (like a Bold button in an editor). When on it looks pressed and shows an animated check mark; screen readers hear "pressed".
+
 ### Installation
 
 ```bash
@@ -39,6 +41,24 @@ const App = () => {
 
 export default App;
 ```
+
+### Toggle Example
+
+```tsx
+import React, { useState } from 'react';
+import ZestButton from 'jattac.libs.web.zest-button';
+
+const BoldButton = () => {
+  const [bold, setBold] = useState(false);
+  return (
+    <ZestButton zest={{ toggleOptions: { pressed: bold, onPressedChange: setBold, checkPosition: 'start' } }}>
+      Bold
+    </ZestButton>
+  );
+};
+```
+
+Use `defaultPressed` instead of `pressed` to let the button manage its own value. See the [Cookbook](./documentation/examples.md#recipe-6-an-onoff-toggle-button).
 
 ### Documentation
 

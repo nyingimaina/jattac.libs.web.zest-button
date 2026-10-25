@@ -1,7 +1,7 @@
 ---
 title: Decision Log
-covers: AGENTS.md, docs/guidelines/decision-log.md
-covers-hash: 53f4b961fa3c3cd025ea
+covers: AGENTS.md
+covers-hash: 10622e884f0ab941d0e1
 ---
 
 # Decision Log
@@ -191,4 +191,48 @@ While investigating "support Vite", discovered the published ESM bundle was **in
 ### Reversible
 
 Yes — `package.json` (peer range + `exports`), `rollup.config.mjs` (external arrays), two new `__tests__/` guard files, and docs. No `UI/**` runtime code changed. Revert by restoring the two peer ranges, removing the `exports` map, removing the two subpaths from both `external` arrays, and deleting the two guard tests + `docs/features/react-19-support/`.
+
+## [2026-10-25] Exhaustive semantic types and library-drawn standard icons (1.7.0)
+
+### Requested
+
+"exhaustive semantic types and standardized icons (svg?)" - add the everyday actions most apps need as built-in `semanticType` values, and give every built-in type a matching icon in one consistent style. The user chose own SVG drawings over keeping the ready-made Font Awesome icons, and a broad set of about 25-30 extra names over a smaller or much larger set.
+
+### Options Considered
+
+1. **Icon source:** keep organising the existing Font Awesome icons vs. draw the library's own SVG set. Chose own SVG: one 24-unit grid, one stroke weight, rounded ends/joins and `currentColor`, no icon-pack styling to fight, and the same drawings reusable through `ZestIcon`.
+2. **Breadth:** a small extension vs. the user's ~25-30 new names vs. "every conceivable action". Chose 28 new names (47 total) covering search/filter/sort, clipboard, navigation, account, status, approval, files and history; domain-specific actions remain custom types.
+3. **Static art vs. a runtime icon component:** a single map of module-level elements, rendered through `getZestIconElement`, plus a thin `ZestIcon` wrapper. Rejected per-render element construction and a new dependency.
+4. **Existing icon defaults:** replace every built-in type's old icon vs. only new types. Chose replace all, so old and new buttons share one visual language; the public API stays additive.
+5. **Failure handling for unknown names:** throw vs. render nothing. Chose render nothing; the lookup uses `hasOwnProperty` so inherited names cannot crash or render an empty shell.
+
+### Chosen
+
+- `UI/zestIcons.tsx`: 35 drawings, the 47-name `BuiltInIconName` union, the shared element map, the ordered name list and `getZestIconElement`.
+- `UI/ZestIcon.tsx`: public wrapper with `name`, `size` (`sm`/`md`/`lg`, number as rem, string as CSS length) and `className`; unknown names return `null`.
+- `UI/semanticTypeButtonConfigDefaults.tsx`: 28 new entries after the 19 original ones, each with a variant, icon side and (for the 8 async new names) a pinned 500 ms busy time; none adds confirmation.
+- `UI/ZestButton.tsx`: the `SemanticType` union extended; existing toggle and dropdown logic untouched.
+- `UI/index.ts`: additive `ZestIcon` export; no new peer dependency. `react-icons` stays for the busy spinner.
+
+### Rationale
+
+A semantic type is only useful if the result looks right without extra styling. One drawing style, driven by `currentColor`, makes 47 intents consistent in every theme and removes the visual mismatch of mixing an external icon pack with the button's own animations. Reusing module-level elements keeps the cost to one element per drawing rather than one per render, and `ZestIcon` lets app toolbars, menus and status rows share the same language.
+
+### Trade-offs
+
+- The icon art is a visual change for existing built-in types; apps with screenshot tests or CSS aimed at Font Awesome markup must update. It is documented as an additive-API visual change in `documentation/breaking-changes.md`.
+- The JS bundle grows by 14,887 bytes (65,106 -> 79,993 in `dist/index.esm.js`), under the 15,000-byte cap. The old `react-icons/fa`/`fa6` imports were external, so removing them did not shrink the bundle.
+- The shipped docs table and the defaults map must stay in sync; `__tests__/ZestIcon.test.tsx` and the semantic-type tests guard the count and the table where they can.
+- `BuiltInIconName`, `ZEST_ICON_NAMES` and `getZestIconElement` stay internal; only `ZestIcon` is public.
+
+### Reversible
+
+Yes - delete `UI/ZestIcon.tsx` and `UI/zestIcons.tsx`, remove the `ZestIcon` export from `UI/index.ts`, restore the 19-entry defaults map and the 19-name union, and restore the old icon imports in `semanticTypeButtonConfigDefaults.tsx`. No public prop or export was removed, so reverting does not break consumers at the type level (only the icon art changes back).
+
+### Evidence
+
+- 18 suites / 225 tests pass; `npx tsc --noEmit -p tsconfig.json` exits 0.
+- All 47 types render one accessible, decorative icon and keep their label; local and provider overrides replace rather than duplicate the icon.
+- The security test finds no script, image, external link, inline handler or raw HTML in any of the 47 drawings.
+- Bundle: 79,993 bytes against the 65,106-byte baseline (+14,887; cap 15,000).
 

@@ -1,0 +1,30 @@
+{
+  "summary": "",
+  "requirements": [],
+  "questions": [],
+  "ask": {
+    "text": "Today the library has 17 built-in button types (add, save, delete, cancel, download, print and so on). How many more should \"exhaustive\" mean? For example, a common set would add things like search, filter, copy, back, next, settings, help, info, warning, send, log in, log out, undo, approve and reject.",
+    "why": "It decides how many types and matching icons get designed, named, documented and tested, and how much the library grows in size.",
+    "topic": "data",
+    "options": [
+      { "label": "A broad everyday set: about 25 to 30 more types covering the actions most apps need", "consequence": "Covers navigation, search and filter, clipboard, account, status and approval actions; each gets an icon, default look and documentation.", "recommended": true },
+      { "label": "A small set: about 10 more types", "consequence": "Smallest growth and quickest to finish, but apps will still need custom types for common actions like search or copy." },
+      { "label": "Very wide: 50 or more more types", "consequence": "Almost nothing needs a custom type, but the library gets noticeably bigger and each type needs its own icon, docs and tests." }
+    ]
+  },
+  "coverage": [
+    { "topic": "users", "status": "assumed", "note": "Developers who install the library and the people using their apps; no roles or permissions." },
+    { "topic": "data", "status": "open", "note": "How many built-in semantic types are added decides the size of the work; names and icons follow from it." },
+    { "topic": "permissions", "status": "not-applicable", "note": "A UI library has no records or ownership." },
+    { "topic": "validation", "status": "assumed", "note": "An unknown semantic type renders a plain button, as today." },
+    { "topic": "states", "status": "assumed", "note": "Icons must keep working in the busy, success, fail and confirm states as today." },
+    { "topic": "duplicates", "status": "not-applicable", "note": "No submits or shared records are involved in defining types and icons." },
+    { "topic": "volume", "status": "assumed", "note": "Many buttons per page; icons must not be rebuilt on every render." },
+    { "topic": "deletion", "status": "not-applicable", "note": "Nothing is stored or deleted." },
+    { "topic": "privacy", "status": "not-applicable", "note": "No personal data." },
+    { "topic": "quality", "status": "answered", "note": "Builder chose the library's own SVG icons in one consistent style; the visible change to existing icons is noted in breaking-changes." }
+  ],
+  "assumptions": [
+    "The earlier toggle-mode decisions are already built and merged; this request does not change them."
+  ]
+}

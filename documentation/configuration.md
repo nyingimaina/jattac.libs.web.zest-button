@@ -17,7 +17,7 @@ This document explains how to configure `ZestButton` on a component and global l
   - [Usage](#usage)
   - [Precedence with the ZestButtonConfigProvider](#precedence-with-the-zestbuttonconfigprovider)
 - [Advanced: Customizing Semantic Defaults](#advanced-customizing-semantic-defaults)
-  - [Example: Defining a Custom 'archive' Type](#example-defining-a-custom-archive-type)
+  - [Example: Defining a Custom 'publish' Type](#example-defining-a-custom-publish-type)
   - [Example: Overriding a Built-in 'delete' Default](#example-overriding-a-built-in-delete-default)
 
 ---
@@ -115,9 +115,9 @@ This is one of the most powerful features of the `ZestButtonConfigProvider`. You
 
 The `ZestButtonConfigProvider`'s `config` prop accepts a `semanticTypeDefaults` object. You can use this to **override** built-in defaults or **define** defaults for your own custom types.
 
-#### Example: Defining a Custom 'archive' Type
+#### Example: Defining a Custom 'publish' Type
 
-First, let's imagine you've used module augmentation to create a new `semanticType` called `'archive'`, as explained in the [Development Guide](./development.md). Now, you want all `'archive'` buttons to have a specific look and feel across your app.
+First, let's imagine you've used module augmentation to create a new `semanticType` called `'publish'`, as explained in the [Development Guide](./development.md). Now, you want all `'publish'` buttons to have a specific look and feel across your app.
 
 ```tsx
 // your-project/src/typings/zest-button-extensions.d.ts
@@ -125,7 +125,7 @@ import 'jattac.libs.web.zest-button';
 
 declare module 'jattac.libs.web.zest-button' {
   export interface CustomZestSemanticTypes {
-    archive: 'archive';
+    publish: 'publish';
   }
 }
 ```
@@ -134,21 +134,20 @@ Now, configure the defaults in your `ZestButtonConfigProvider`:
 
 ```tsx
 // In your main App.tsx file
-import { ZestButtonConfigProvider } from 'jattac.libs.web.zest-button';
-import { FaArchive } from 'react-icons/fa';
+import { ZestButtonConfigProvider, ZestIcon } from 'jattac.libs.web.zest-button';
 import MyRoutes from './MyRoutes';
 
 const appZestConfig = {
   // Define defaults for our new custom semantic type
   semanticTypeDefaults: {
-    archive: {
+    publish: {
       buttonStyle: 'outline',
       visualOptions: {
-        iconLeft: <FaArchive />,
+        iconLeft: <ZestIcon name="upload" />,
         variant: 'standard',
       },
       confirmOptions: {
-        displayLabel: 'Confirm Archive?',
+        displayLabel: 'Confirm Publish?',
         timeoutSecs: 10,
       }
     }
@@ -164,8 +163,8 @@ const App = () => (
 // --- Later, in some other component ---
 
 // This button will automatically get the icon, style, and confirmation behavior!
-<ZestButton zest={{ semanticType: 'archive' }} onClick={handleArchiveAction}>
-  Archive Record
+<ZestButton zest={{ semanticType: 'publish' }} onClick={handlePublishAction}>
+  Publish Record
 </ZestButton>
 ```
 

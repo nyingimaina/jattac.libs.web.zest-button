@@ -1,0 +1,262 @@
+{
+  "summary": "ZestButton gets a much wider set of built-in semantic types (about 28 new ones on top of the 19 names it has today, covering navigation, search and filter, clipboard, account, status and approval actions) and every built-in type, old and new, shows an icon drawn by the library itself as inline SVG in one consistent style (same grid, line weight, rounded ends, uses the button's text colour). This replaces the Font Awesome icons the built-in types use today. Developers who install the library get a ready icon and sensible default look for common actions by writing only zest={{ semanticType: 'search' }}; their end users see matching, crisp icons in light, dark and system themes. Existing props, types and unknown-type behaviour do not change.",
+  "roles": [
+    "Developer who installs the library: picks a semanticType, optionally overrides icons and options, reads the docs",
+    "End user of the developer's app: sees and operates the buttons, with a keyboard or screen reader if needed"
+  ],
+  "requirements": [
+    {
+      "id": "R1",
+      "text": "The library ships these 28 new built-in semantic types, in addition to the existing ones: search, filter, sort, copy, paste, back, next, home, menu, more, settings, help, info, warning, send, login, logout, undo, redo, approve, reject, favorite, attach, lock, unlock, archive, export, import. Each can be used as zest={{ semanticType: '<name>' }} and is accepted by the SemanticType type.",
+      "rationale": "The builder chose a broad everyday set of about 25 to 30 new types so most apps need no custom type for common actions.",
+      "acceptance": [
+        "Each of the 28 names, passed as semanticType, renders a button with its default icon and no console error",
+        "TypeScript accepts each of the 28 names as a SemanticType, and still accepts the names added through CustomZestSemanticTypes",
+        "A test lists all built-in names (old and new) and fails if one has no defaults entry"
+      ],
+      "edgeCases": [
+        "An app that already registered a custom type with one of the new names (for example 'search') still gets its own configuration, not the built-in one",
+        "An unknown semanticType still renders a plain button without an icon, exactly as today",
+        "A name typed in capitals or with spaces is not treated as a built-in type, same as today"
+      ],
+      "pitfalls": [
+        "Adding the new names must not change the look or behaviour of the existing 19 names other than the icon change in R3",
+        "A new type must not switch on confirmation, busy delay or success options unless R2 says so"
+      ],
+      "rules": ["LIB-001", "USR-004"],
+      "facts": [
+        { "subject": "built-in semantic types", "attribute": "new count", "op": "equals", "value": "28" },
+        { "subject": "built-in semantic types", "attribute": "existing names removed or renamed", "op": "must-not", "value": "true" }
+      ]
+    },
+    {
+      "id": "R2",
+      "text": "Each new type has a sensible default look: a variant, a button style, an icon position, and (only where the action needs it) default behaviour. Defaults: navigation types back (icon at the start) and next (icon at the end); approve uses the success variant and reject the danger variant; send, login, logout, export and import are standard; warning uses the danger variant; lock, unlock, info, help, settings, favorite, attach, home, menu, more, undo, redo, copy, paste, search, filter, sort and archive are standard. No new type asks for confirmation by default. send, login, logout, export, import, approve, reject and archive get the same minimum busy time as 'save' (500 ms) so quick async actions still show feedback.",
+      "rationale": "A developer should get a sensible button from the name alone, and consistent variants make the same meaning look the same across apps.",
+      "acceptance": [
+        "Each new type resolves to the variant, icon position and options listed, checked by one test per type or one table-driven test",
+        "Any default can still be overridden by the developer's own zest props, which win over the built-in default as they do today",
+        "No new type shows a confirmation step unless the developer sets confirmOptions"
+      ],
+      "edgeCases": [
+        "A developer passes iconLeft themselves with a built-in type: their icon is shown and the default icon is not added a second time",
+        "A developer sets a different variant on a built-in type: the variant they set is used",
+        "A type with its icon at the end (next) shows the icon on the right and flips correctly for right-to-left pages"
+      ],
+      "pitfalls": [
+        "A default must not hide the button text; every built-in type still shows its label from children",
+        "Defaults must not be merged by editing the configuration the app passes in"
+      ],
+      "rules": ["LIB-001", "UI-001", "USR-004"],
+      "facts": [
+        { "subject": "new semantic types", "attribute": "confirmation by default", "op": "must-not", "value": "true" },
+        { "subject": "approve", "attribute": "variant", "op": "equals", "value": "success" },
+        { "subject": "reject", "attribute": "variant", "op": "equals", "value": "danger" },
+        { "subject": "busy minimum duration for async new types", "attribute": "minBusyDurationMs", "op": "equals", "value": "500", "unit": "ms" }
+      ]
+    },
+    {
+      "id": "R3",
+      "text": "Every built-in semantic type, old and new, shows an icon drawn by the library as inline SVG, replacing the Font Awesome icons that the built-in types use today. All icons share one style: the same 24-unit drawing grid, the same stroke width, rounded line ends and joins, no fill by default, and they take the current text colour.",
+      "rationale": "The builder chose the library's own SVG icons in one consistent style so buttons look matching instead of a mix of icon sets.",
+      "acceptance": [
+        "Every built-in type renders an <svg> with the shared view box, stroke width, line caps and joins, and stroke set to the current text colour",
+        "A test checks that all icons use the same view box and stroke settings, so a mismatched icon fails the build",
+        "Icons follow the text colour in light, dark and system themes and in every variant and button style",
+        "No built-in type imports an icon from react-icons any more"
+      ],
+      "edgeCases": [
+        "On a disabled button the icon is dimmed along with the text, not left at full strength",
+        "On a filled variant (success, danger) the icon stays readable against the background",
+        "The icon scales with the button size small, medium and large, sized in rem"
+      ],
+      "pitfalls": [
+        "Icons must not be redrawn or re-created on every render of a button, so a page with a hundred buttons stays fast",
+        "Icon drawings must not carry any script, external link or embedded image",
+        "The confirm, busy, success and fail states must still show their own indicators as today, not the type icon stacked under them"
+      ],
+      "rules": ["UI-001", "USR-006", "PERF-001", "USR-003"],
+      "facts": [
+        { "subject": "built-in icon", "attribute": "view box", "op": "equals", "value": "0 0 24 24" },
+        { "subject": "built-in icon", "attribute": "stroke width", "op": "equals", "value": "same for every icon" },
+        { "subject": "built-in icon", "attribute": "size unit", "op": "equals", "value": "rem" },
+        { "subject": "built-in icon", "attribute": "external image or script", "op": "must-not", "value": "true" }
+      ]
+    },
+    {
+      "id": "R4",
+      "text": "Icons are decorative by default and never speak twice: each built-in icon is hidden from screen readers and is not focusable, so the button is announced by its text label only.",
+      "rationale": "A screen reader user should hear 'Search' once, not 'Search, magnifier image'.",
+      "acceptance": [
+        "Every built-in icon has aria-hidden set to true and is not focusable",
+        "A built-in type with text children has an accessible name equal to that text",
+        "A built-in type used without text children (icon-only) is reported by the docs as needing an aria-label, and works with one"
+      ],
+      "edgeCases": [
+        "An icon-only button with aria-label announces that label, not the icon",
+        "Keyboard focus ring is visible on every built-in type in light and dark themes"
+      ],
+      "pitfalls": [
+        "Do not add a title to the icons that would show a second tooltip next to the button's own"
+      ],
+      "rules": ["UI-001", "USR-006"],
+      "facts": [
+        { "subject": "built-in icon", "attribute": "hidden from screen readers", "op": "must", "value": "true" }
+      ]
+    },
+    {
+      "id": "R5",
+      "text": "Developers can use the same standardized icons outside the built-in types: the library exports an icon component that takes a built-in type name and an optional size, so a custom button, menu item or iconLeft/iconRight can show the matching icon. The existing 'iconLeft' and 'iconRight' props keep accepting any React node.",
+      "rationale": "Standardizing icons only helps if developers can reuse the same ones in custom controls and dropdown items, and not mix styles again.",
+      "acceptance": [
+        "import { ZestIcon } from the package and render <ZestIcon name=\"search\" /> shows the search icon in the shared style",
+        "Passing <ZestIcon name=\"copy\" /> as iconLeft on a ZestButton renders one icon",
+        "An unknown name renders nothing and does not throw",
+        "Adding the export does not remove or rename any existing export of UI/index.ts"
+      ],
+      "edgeCases": [
+        "Two ZestIcon components on one page do not clash (no shared ids that break when repeated)",
+        "A size passed in rem or a size name scales the icon, and no value in px is applied to the icon box"
+      ],
+      "pitfalls": [
+        "Importing one icon should not force an app to include code for icons it never uses beyond what the bundle already contains"
+      ],
+      "rules": ["LIB-001", "PERF-001", "UI-001"],
+      "facts": [
+        { "subject": "package exports", "attribute": "existing exports removed", "op": "must-not", "value": "true" }
+      ]
+    },
+    {
+      "id": "R6",
+      "text": "Existing buttons keep working. Only the picture of the icon changes for the 19 existing names (add, new, save, submit, edit, update, delete, remove, cancel, close, view, details, download, upload, refresh, reload, print, share, confirm). Their variants, styles, confirmation texts, busy and success options, toggle mode and dropdown behave exactly as before. The change to a visible output apps may style against is listed in the breaking-changes page, and the version is raised by a minor step.",
+      "rationale": "Apps already in production depend on the current behaviour; only the icon art is changed on purpose by the builder's decision.",
+      "acceptance": [
+        "Characterization tests written before the change, for each existing name's variant, options and icon position, still pass after it",
+        "The existing ZestButton and toggle tests pass without edits other than icon markup assertions",
+        "documentation/breaking-changes.md has an entry explaining that built-in icons are now library SVGs, with the version number",
+        "package.json version is raised from 1.6.1 to the next minor version"
+      ],
+      "edgeCases": [
+        "An app that overrode a built-in type's iconLeft through the provider keeps its own icon",
+        "A toggle button with a built-in type shows its type icon and the check mark side by side as before"
+      ],
+      "pitfalls": [
+        "react-icons stays a peer dependency because the busy spinner and the dropdown arrow still use it; it must not be removed in this change",
+        "Do not reorder or rename existing entries in the defaults map beyond adding new ones"
+      ],
+      "rules": ["LIB-001", "USR-004", "DOC-001"],
+      "facts": [
+        { "subject": "existing semantic types", "attribute": "variant, style and options", "op": "must", "value": "stay unchanged" },
+        { "subject": "react-icons peer dependency", "attribute": "removed", "op": "must-not", "value": "true" }
+      ]
+    },
+    {
+      "id": "R7",
+      "text": "Everything new is documented where readers look: README.md has a first example using a new type and the icon component; documentation/features.md lists all built-in types with their icon, variant and defaults; documentation/api.md covers the extended SemanticType and the icon component; documentation/examples.md has recipes (icon-only button with aria-label, overriding a default icon, using the icon in a custom control); documentation/configuration.md shows how to override defaults; documentation/breaking-changes.md has the icon change from R6; documentation/development.md explains how to add a new icon in the shared style. Each page links to the previous and next page.",
+      "rationale": "A library nobody can figure out does not get used, and the builder asked for documentation with this feature.",
+      "acceptance": [
+        "Each listed page contains the content described and links to the previous and next page",
+        "The features page table lists all 47 built-in names (19 existing plus 28 new) with an icon, variant and default behaviour",
+        "Every code example in the pages compiles against the new types"
+      ],
+      "edgeCases": [
+        "A name in the docs table that is not a real built-in type, or a built-in type missing from the table, is caught by a test"
+      ],
+      "pitfalls": [
+        "Do not leave the old '17 built-in types' wording anywhere in the docs"
+      ],
+      "rules": ["DOC-001"],
+      "facts": [
+        { "subject": "built-in semantic type names documented", "attribute": "count", "op": "equals", "value": "47" }
+      ]
+    },
+    {
+      "id": "R8",
+      "text": "Tests prove the change: new tests cover the new names, their defaults, the shared icon style, the hidden-from-screen-readers rule, the icon export and the unchanged behaviour of the existing names, and the full suite passes.",
+      "rationale": "This is released library code used by other apps; the house rule requires characterization tests before changing merged code.",
+      "acceptance": [
+        "Characterization tests for the existing names are added and pass before any production code is changed",
+        "New tests for R1 to R5 fail first and pass after",
+        "npm test passes with no failures"
+      ],
+      "edgeCases": [
+        "A new icon added later without the shared view box or stroke settings makes the style test fail"
+      ],
+      "pitfalls": [
+        "Tests must not depend on the exact path data of an icon, so redrawing an icon does not break them"
+      ],
+      "rules": ["USR-004"],
+      "facts": []
+    }
+  ],
+  "outOfScope": [
+    "A separate switch control with a sliding track and knob",
+    "Changing the busy spinner or the dropdown arrow icons (they keep using react-icons)",
+    "Animating the type icons",
+    "Custom per-app icon packs or an icon picker",
+    "Colour-filled or multi-colour icons",
+    "Translating button labels: the label always comes from the developer's children",
+    "Removing react-icons from the peer dependencies",
+    "More than the 28 new types chosen by the builder"
+  ],
+  "nonFunctional": [
+    {
+      "area": "performance",
+      "statement": "Rendering 100 buttons with built-in types is not slower because of the new icons: icon elements are created once and reused, not rebuilt on every render of a button.",
+      "acceptance": "A test renders 100 buttons with built-in types and re-renders them; the icon element for a given type is the same reference between renders and no extra work grows with the number of types used."
+    },
+    {
+      "area": "performance",
+      "statement": "The package gets bigger by no more than the 28 new small icons minus the Font Awesome icons no longer imported; each icon drawing stays small (a few simple strokes).",
+      "acceptance": "Built dist/index.esm.js is not more than 15 KB larger than before the change, measured after the build; no .size-limit.json exists yet so this is checked by hand and the number is recorded in the review."
+    },
+    {
+      "area": "accessibility",
+      "statement": "All built-in icons are decorative and hidden from screen readers; icon-only buttons are documented to need an aria-label; icons stay visible with enough contrast in light, dark and system themes.",
+      "acceptance": "Tests check aria-hidden on every icon; icons use the current text colour so the existing contrast of each variant applies."
+    },
+    {
+      "area": "compatibility",
+      "statement": "Works in Next.js App Router apps (client component) and in apps on React 18 and 19, with no new runtime dependency.",
+      "acceptance": "package.json dependencies and peer dependencies are unchanged; the icon files need no browser-only API at import time."
+    },
+    {
+      "area": "security",
+      "statement": "Icons are static drawings: no script, event attribute, external reference or raw HTML insertion is part of any icon.",
+      "acceptance": "A test checks that no icon uses dangerouslySetInnerHTML, href or on* attributes."
+    }
+  ],
+  "risks": [
+    "The 19 existing names change how their icon looks; an app with screenshot tests or CSS written against the old icon markup will notice. This is called out in breaking-changes.",
+    "Drawing 47 matching icons by hand is the largest piece of work; a mismatched icon is visible to every user.",
+    "The names login, logout, export, import and archive can clash with names an app already registered as custom types; the app's own registration wins (R1)."
+  ],
+  "tensions": [],
+  "glossary": [
+    "Semantic type: a named kind of button (for example 'search') that sets a default icon, look and behaviour.",
+    "Standardized icon: an icon drawn by this library in the same grid and line style as all the others.",
+    "Icon-only button: a button with an icon and no visible text, which needs an aria-label so screen readers can name it."
+  ],
+  "questions": [],
+  "coverage": [
+    { "topic": "users", "status": "not-applicable", "note": "A UI library has no roles or permissions; the two audiences (developers who install it, people using their apps) are listed under roles." },
+    { "topic": "data", "status": "answered", "note": "Builder chose about 25 to 30 new types; 28 names fixed in R1 (assumed names, count answered)." },
+    { "topic": "permissions", "status": "not-applicable", "note": "A UI library has no records or ownership." },
+    { "topic": "validation", "status": "assumed", "note": "An unknown semantic type renders a plain button, as today; an unknown icon name renders nothing." },
+    { "topic": "states", "status": "assumed", "note": "Icons keep working in busy, success, fail, confirm, disabled and toggle states as today." },
+    { "topic": "duplicates", "status": "not-applicable", "note": "No submits or shared records are involved in defining types and icons." },
+    { "topic": "volume", "status": "assumed", "note": "Many buttons per page; icons are not rebuilt on each render (R3 and the performance requirement)." },
+    { "topic": "deletion", "status": "not-applicable", "note": "Nothing is stored or deleted." },
+    { "topic": "privacy", "status": "not-applicable", "note": "No personal data." },
+    { "topic": "quality", "status": "answered", "note": "Builder chose own SVG icons in one consistent style; accessibility, performance, compatibility and security covered in the non-functional list." }
+  ],
+  "assumptions": [
+    "The earlier toggle-mode decisions are already built and merged; this request does not change them.",
+    "The 28 new names are my choice from the builder's examples plus common everyday actions: search, filter, sort, copy, paste, back, next, home, menu, more, settings, help, info, warning, send, login, logout, undo, redo, approve, reject, favorite, attach, lock, unlock, archive, export, import.",
+    "The library today has 19 built-in names (the request says 17 types because some are aliases); after this change it has 47.",
+    "Defaults for the new types follow R2; only the async actions get a 500 ms minimum busy time and none ask for confirmation.",
+    "The standardized icons are also exported as a ZestIcon component so developers can reuse them; this is additive.",
+    "The change is released as a minor version (1.6.1 to 1.7.0) with a note in breaking-changes about the new icon art, since no prop or export is removed.",
+    "react-icons stays a peer dependency because the spinner and dropdown arrow still use it."
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "findings": [
+    {
+      "cites": "R5",
+      "severity": "blocking",
+      "file": "UI/zestIcons.tsx",
+      "line": 167,
+      "evidence": "getZestIconElement checks `name in ZEST_ICON_ELEMENTS`, which walks the prototype chain. Rendering <ZestIcon name=\"__proto__\" /> through React 18 renderToStaticMarkup against the built dist/index.cjs.js throws \"Objects are not valid as a React child (found: object with keys {})\"; name=\"constructor\" and name=\"toString\" resolve to Object.prototype functions and render an empty <span class=\"zestIcon\"> plus a React warning, while a genuinely unknown name (\"not-a-real-icon\") correctly returns null.",
+      "description": "R5 requires an unknown icon name to render nothing and not throw, and documentation/api.md and documentation/features.md promise exactly that. Because inherited Object.prototype keys are treated as built-in icons, a consumer passing an untrusted string (route param, API value) can crash the render tree or render a bogus empty icon. Guard with Object.prototype.hasOwnProperty.call(ZEST_ICON_ELEMENTS, name) (or use a Map/null-prototype object) before indexing."
+    },
+    {
+      "cites": "EFF-001",
+      "severity": "blocking",
+      "file": "dist/index.esm.js",
+      "line": 1,
+      "evidence": "Building HEAD (126a067) and the current working tree with the same rollup config and node_modules in scratch copies gives dist/index.esm.js = 65,106 bytes before and 81,018 bytes after: +15,912 bytes (15.9 kB / 15.5 KiB). The requirements cap the growth at 15 KB, so the bundle is over by 912 bytes (15 KB decimal) or 552 bytes (15 KiB). The bundle is unminified, so the unused duplicate icon definitions and leftover comments are shipped verbatim.",
+      "description": "The feature's non-functional performance requirement is that the built ESM bundle grow by no more than 15 KB; it grew by 15,912 bytes, exceeding the agreed size budget. Trim the icon additions (remove the unused duplicate icons, share one element for identical drawings such as export/download and import/upload, and drop the leftover comments) until the delta is within 15 KB, or record an approved budget change. Do not leave the requirement unmet."
+    },
+    {
+      "cites": "DOC-001",
+      "severity": "blocking",
+      "file": "documentation/features.md",
+      "line": 147,
+      "evidence": "The built-in table describes the `settings` icon as \"Sliders\", but UI/zestIcons.tsx:96 draws a centre circle with a four-way cross (a target/crosshair): <circle cx=\"12\" cy=\"12\" r=\"3\" /> plus path \"M12 1v6m0 6v6m11-7h-6m-6 0H1\". There are no slider tracks or knobs in the drawing.",
+      "description": "The documentation's Icon column does not match the icon the code ships: a reader looking for the sliders glyph gets a target. Either draw sliders for `settings` or correct the documentation so the table describes the shipped icon."
+    },
+    {
+      "cites": "USR-003",
+      "severity": "blocking",
+      "file": "UI/zestIcons.tsx",
+      "line": 77,
+      "evidence": "Lines 77-78 define `arrowRightIcon` and `arrowRightDirIcon`, neither referenced by ZEST_ICON_ELEMENTS or anywhere else; `arrowRightIcon` is also an exact duplicate of `rightArrowIcon` on line 79. Leftover development comments are shipped too: \"// We'll use different orientation for back/next\" (line 77), \"// complex, better simple\" (line 78), \"// simplified\" (line 96) and \"// similar to download/upload\" (lines 110-111).",
+      "description": "This introduces dead, duplicated icon definitions that are constructed at module load and shipped in the unminified bundle, plus debugging commentary - the code duplication and technical debt USR-003 forbids. Delete the two unused constants and the leftover comments; the aliases already reuse the single existing element."
+    },
+    {
+      "cites": "USR-003",
+      "severity": "advisory",
+      "file": "UI/semanticTypeButtonConfigDefaults.tsx",
+      "line": 1,
+      "evidence": "`import React from 'react';` remains at the top of the file, but the file contains no JSX and never references `React` (it only builds objects with getZestIconElement), so the import is dead after the react-icons removal.",
+      "description": "Unused import left over from the previous implementation; harmless but unnecessary. Remove it."
+    }
+  ],
+  "verifications": []
+}

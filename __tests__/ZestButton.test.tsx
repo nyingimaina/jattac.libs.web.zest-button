@@ -1,6 +1,10 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor, act } from "@testing-library/react";
 import ZestButton from "../UI/ZestButton";
+import ZestButtonConfigProvider from "../UI/ZestButtonConfigProvider";
+import { ZEST_ICON_ELEMENTS } from "../UI/zestIcons";
+import { semanticTypeButtonConfigDefaults } from "../UI/semanticTypeButtonConfigDefaults";
+import type { SemanticType } from "../UI/ZestButton";
 
 describe("ZestButton", () => {
   afterEach(() => {
@@ -637,5 +641,129 @@ describe("ZestButton non-toggle characterization (R1, R9)", () => {
 
     expect(onClick).toHaveBeenCalledTimes(1);
     expect(button.className).toBe(before);
+  });
+});
+
+describe("built-in semantic type characterisation (R1, R3, R6, R8)", () => {
+  const EXISTING_TYPES: SemanticType[] = [
+    "add",
+    "new",
+    "save",
+    "submit",
+    "edit",
+    "update",
+    "delete",
+    "remove",
+    "cancel",
+    "close",
+    "view",
+    "details",
+    "download",
+    "upload",
+    "refresh",
+    "reload",
+    "print",
+    "share",
+    "confirm",
+  ];
+
+  it("R1: a new type renders its default icon and label end to end", () => {
+    const { container } = render(
+      <ZestButton zest={{ semanticType: "search" }}>Find</ZestButton>
+    );
+
+    const button = screen.getByRole("button", { name: "Find" });
+    expect(button).toHaveClass("standard", "solid");
+    expect(container.querySelector(".icon svg")).not.toBeNull();
+    expect(button).toHaveTextContent("Find");
+  });
+
+  it("R6: the 19 existing names keep their variant, button style, icon side and label", () => {
+    const expected: Record<string, { variant: string; buttonStyle: string; side: "left" | "right" }> = {
+      add: { variant: "standard", buttonStyle: "solid", side: "left" },
+      new: { variant: "standard", buttonStyle: "solid", side: "left" },
+      save: { variant: "success", buttonStyle: "solid", side: "left" },
+      submit: { variant: "success", buttonStyle: "solid", side: "left" },
+      edit: { variant: "standard", buttonStyle: "solid", side: "left" },
+      update: { variant: "standard", buttonStyle: "solid", side: "left" },
+      delete: { variant: "danger", buttonStyle: "solid", side: "left" },
+      remove: { variant: "danger", buttonStyle: "solid", side: "left" },
+      cancel: { variant: "standard", buttonStyle: "outline", side: "left" },
+      close: { variant: "standard", buttonStyle: "outline", side: "left" },
+      view: { variant: "standard", buttonStyle: "text", side: "right" },
+      details: { variant: "standard", buttonStyle: "text", side: "right" },
+      download: { variant: "standard", buttonStyle: "solid", side: "left" },
+      upload: { variant: "standard", buttonStyle: "solid", side: "left" },
+      refresh: { variant: "standard", buttonStyle: "solid", side: "left" },
+      reload: { variant: "standard", buttonStyle: "solid", side: "left" },
+      print: { variant: "standard", buttonStyle: "solid", side: "left" },
+      share: { variant: "standard", buttonStyle: "solid", side: "left" },
+      confirm: { variant: "success", buttonStyle: "solid", side: "left" },
+    };
+
+    EXISTING_TYPES.forEach((semanticType) => {
+      const label = `Label ${semanticType}`;
+      const { unmount } = render(
+        <ZestButton zest={{ semanticType }}>{label}</ZestButton>
+      );
+
+      const button = screen.getByRole("button", { name: label });
+      const want = expected[semanticType];
+
+      expect(button).toHaveClass(want.variant, want.buttonStyle);
+      expect(button).toHaveTextContent(label);
+
+      if (want.side === "right") {
+        expect(button.querySelector(".content .icon svg")).not.toBeNull();
+      } else {
+        expect(button.querySelector(".inner > .icon svg")).not.toBeNull();
+      }
+
+      unmount();
+    });
+  });
+
+  it("R6: an iconLeft override from the provider wins for a built-in type", () => {
+    render(
+      <ZestButtonConfigProvider
+        config={{
+          semanticTypeDefaults: {
+            save: {
+              visualOptions: { iconLeft: <span data-testid="app-icon">*</span> },
+            },
+          },
+        }}
+      >
+        <ZestButton zest={{ semanticType: "save" }}>Save</ZestButton>
+      </ZestButtonConfigProvider>
+    );
+
+    expect(screen.getByTestId("app-icon")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Save" })).toHaveClass("success");
+  });
+
+  it("R3: re-rendering a built-in type reuses the same icon node instead of rebuilding it", () => {
+    const { container, rerender } = render(
+      <ZestButton zest={{ semanticType: "search" }}>Find</ZestButton>
+    );
+
+    const firstIcon = container.querySelector("button svg");
+    expect(firstIcon).not.toBeNull();
+
+    rerender(<ZestButton zest={{ semanticType: "search" }}>Find</ZestButton>);
+
+    expect(container.querySelector("button svg")).toBe(firstIcon);
+  });
+
+  it("R8: the characterisation relies on the shared icon element, not on path data", () => {
+    const before = ZEST_ICON_ELEMENTS.search;
+
+    const { rerender } = render(
+      <ZestButton zest={{ semanticType: "search" }}>Find</ZestButton>
+    );
+    rerender(<ZestButton zest={{ semanticType: "search" }}>Find</ZestButton>);
+
+    expect(ZEST_ICON_ELEMENTS.search).toBe(before);
+    expect(semanticTypeButtonConfigDefaults.search?.visualOptions?.iconLeft).toBe(before);
   });
 });

@@ -1,0 +1,1561 @@
+{
+  "runId": "20261025-084314",
+  "options": {
+    "browser": "end",
+    "visible": false,
+    "document": true,
+    "referenceFolders": []
+  },
+  "isVerification": false,
+  "stageSeconds": {
+    "define": 192.12932639999997,
+    "design": 221.782778,
+    "build": 5046.5815309,
+    "challenge": 3406.0767935000003,
+    "prove": 3273.1532369
+  },
+  "timeCapExtensions": {},
+  "stageClockStart": {
+    "design": 0,
+    "build": 4669.6970031,
+    "challenge": 2931.2034996,
+    "prove": 0
+  },
+  "featureRequest": "exhaustive semantic types and standardized icons (svg?)",
+  "packId": "react-component-library",
+  "status": "stopped",
+  "currentStage": "prove",
+  "stages": {
+    "define": "done",
+    "design": "done",
+    "build": "done",
+    "challenge": "done",
+    "prove": "running"
+  },
+  "defineRound": 4,
+  "designRound": 1,
+  "buildRound": 4,
+  "sliceHash": "668FAE9B65318D12",
+  "slicesDone": 3,
+  "sliceReports": [
+    {
+      "summary": "Implemented ZestIcon/ZestIcon registry with 47 built-in SVG icons (shared style, aliases share instances), added 28 new semantic types to SemanticType union and defaults with specified variants/options, wired ZestButton defaults to library icons (replacing FA usage), exported ZestIcon/ZestIconProps/ZestIconSize from barrel, added icon styles, bumped version to 1.7.0, updated breaking changes.",
+      "tests": [
+        {
+          "name": "semanticTypeButtonConfigDefaults maps existing types",
+          "file": "__tests__/semanticTypeButtonConfigDefaults.test.tsx",
+          "requirements": [
+            "R1",
+            "R2",
+            "R6"
+          ]
+        },
+        {
+          "name": "All tests pass (full suite)",
+          "file": "__tests__/packagePeerDependencies.test.ts",
+          "requirements": [
+            "R1",
+            "R2",
+            "R3",
+            "R4",
+            "R5",
+            "R6",
+            "R8"
+          ]
+        }
+      ],
+      "kickbacks": []
+    },
+    {
+      "summary": "Finished the documentation and ZestIcon-test slice of the standardized-icons build. README now has a working semantic-types/ZestIcon example and Previous/Next links; features.md gained a Standardized Icons section and a 47-row built-in semantic-types table (one row per built-in name); api.md lists all 47 SemanticTypes and documents ZestIcon/ZestIconProps/ZestIconSize; examples.md replaces the now-built-in \u0027archive\u0027 custom-type example with \u0027publish\u0027, adds Recipe 7 for reusing standard icons, and uses ZestIcon; configuration.md and development.md use the new names and explain UI/zestIcons.tsx; breaking-changes.md keeps the 1.7.0 icon-change note. The ZestIcon size classes now resolve to the dedicated .zestIconSm/.zestIconMd/.zestIconLg rem-based CSS rules instead of the button size classes. Full suite passes (175 tests, 16 suites) and the Rollup build succeeds.",
+      "tests": [
+        {
+          "name": "R5: renders the named built-in icon in the shared style",
+          "file": "__tests__/ZestIcon.test.tsx",
+          "requirements": [
+            "R5",
+            "R8"
+          ]
+        },
+        {
+          "name": "R5: an icon passed as iconLeft renders exactly one icon",
+          "file": "__tests__/ZestIcon.test.tsx",
+          "requirements": [
+            "R5",
+            "R2"
+          ]
+        },
+        {
+          "name": "R5: an unknown name renders nothing and does not throw",
+          "file": "__tests__/ZestIcon.test.tsx",
+          "requirements": [
+            "R5",
+            "R1"
+          ]
+        },
+        {
+          "name": "R5: two ZestIcons on one page do not clash (no shared ids)",
+          "file": "__tests__/ZestIcon.test.tsx",
+          "requirements": [
+            "R5"
+          ]
+        },
+        {
+          "name": "R5: a rem size or a size name scales the icon without px",
+          "file": "__tests__/ZestIcon.test.tsx",
+          "requirements": [
+            "R5",
+            "R3"
+          ]
+        },
+        {
+          "name": "R8: every built-in icon uses the shared view box and stroke settings",
+          "file": "__tests__/ZestIcon.test.tsx",
+          "requirements": [
+            "R8",
+            "R3"
+          ]
+        },
+        {
+          "name": "R7: the features table lists exactly the built-in semantic types",
+          "file": "__tests__/ZestIcon.test.tsx",
+          "requirements": [
+            "R7",
+            "R1"
+          ]
+        },
+        {
+          "name": "R7: the docs use the new types and icon component, with no stale type count",
+          "file": "__tests__/ZestIcon.test.tsx",
+          "requirements": [
+            "R7",
+            "R1",
+            "R5",
+            "R6"
+          ]
+        },
+        {
+          "name": "R7: every documentation page links to the previous and next page",
+          "file": "__tests__/ZestIcon.test.tsx",
+          "requirements": [
+            "R7"
+          ]
+        }
+      ],
+      "kickbacks": []
+    },
+    {
+      "summary": "Completed the slice-3 test suite for the exhaustive semantic types and standardized SVG icons. Added characterization and requirement tests for all 47 built-in types (28 new), providers/config precedence, defaults, ZestIcon reuse/performance, accessibility, security, and the existing-19 compatibility guard, plus a toggle/type-icon coexistence regression. The tests exposed one genuine R3 sizing gap: raw built-in SVG icons used directly as iconLeft were outside the .zestIcon wrapper, so they fell back to the browser\u0027s default SVG size. Added width/height 1em to the shared iconBaseProps in UI/zestIcons.tsx, which makes every built-in icon scale with the button\u0027s font size. Verified with npx tsc --noEmit, npm run build, and the full Jest suite (18 suites, 221 tests) all passing.",
+      "tests": [
+        {
+          "name": "R1: all 47 built-in types render a default icon and keep their children label",
+          "file": "__tests__/semanticTypeIcons.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R1: each of the 28 new names is accepted by the SemanticType type",
+          "file": "__tests__/semanticTypeIcons.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R1: an app that registered a custom configuration for a new name keeps its own configuration",
+          "file": "__tests__/semanticTypeIcons.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R1: an unknown semanticType renders a plain button without an icon",
+          "file": "__tests__/semanticTypeIcons.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R1: a name in capitals or with spaces is not treated as a built-in type",
+          "file": "__tests__/semanticTypeIcons.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R2: every new type resolves to its documented variant and icon side",
+          "file": "__tests__/semanticTypeIcons.test.tsx",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R2: no new type asks for confirmation by default",
+          "file": "__tests__/semanticTypeIcons.test.tsx",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R2: a developer-supplied iconLeft wins and the default icon is not added twice",
+          "file": "__tests__/semanticTypeIcons.test.tsx",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R2: a developer-set variant wins over the built-in default",
+          "file": "__tests__/semanticTypeIcons.test.tsx",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R2: next places its icon after the label so right-to-left layouts mirror it",
+          "file": "__tests__/semanticTypeIcons.test.tsx",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R3: every built-in type renders its icon in the shared style",
+          "file": "__tests__/semanticTypeIcons.test.tsx",
+          "requirements": [
+            "R3"
+          ]
+        },
+        {
+          "name": "R3: the icon box is sized in rem/em so it follows the small, medium and large button sizes",
+          "file": "__tests__/semanticTypeIcons.test.tsx",
+          "requirements": [
+            "R3"
+          ]
+        },
+        {
+          "name": "R3: a disabled button dims the icon with the text instead of leaving it at full strength",
+          "file": "__tests__/semanticTypeIcons.test.tsx",
+          "requirements": [
+            "R3"
+          ]
+        },
+        {
+          "name": "R3: an icon on a filled success or danger variant stays readable against the background",
+          "file": "__tests__/semanticTypeIcons.test.tsx",
+          "requirements": [
+            "R3"
+          ]
+        },
+        {
+          "name": "R3: the busy state shows its spinner instead of the type icon",
+          "file": "__tests__/semanticTypeIcons.test.tsx",
+          "requirements": [
+            "R3"
+          ]
+        },
+        {
+          "name": "R3: the success state shows its own check mark instead of the type icon",
+          "file": "__tests__/semanticTypeIcons.test.tsx",
+          "requirements": [
+            "R3"
+          ]
+        },
+        {
+          "name": "R3: the fail state shows its own cross instead of the type icon",
+          "file": "__tests__/semanticTypeIcons.test.tsx",
+          "requirements": [
+            "R3"
+          ]
+        },
+        {
+          "name": "R4: every built-in icon is hidden from screen readers and not focusable",
+          "file": "__tests__/semanticTypeIcons.test.tsx",
+          "requirements": [
+            "R4"
+          ]
+        },
+        {
+          "name": "R4: a built-in type with text children has an accessible name equal to that text",
+          "file": "__tests__/semanticTypeIcons.test.tsx",
+          "requirements": [
+            "R4"
+          ]
+        },
+        {
+          "name": "R4: an icon-only button with aria-label announces that label, not the icon",
+          "file": "__tests__/semanticTypeIcons.test.tsx",
+          "requirements": [
+            "R4"
+          ]
+        },
+        {
+          "name": "R4: every built-in type gets the shared keyboard focus ring in light and dark themes",
+          "file": "__tests__/semanticTypeIcons.test.tsx",
+          "requirements": [
+            "R4"
+          ]
+        },
+        {
+          "name": "R8: an icon added later without the shared view box or stroke settings fails the style test",
+          "file": "__tests__/semanticTypeIcons.test.tsx",
+          "requirements": [
+            "R8"
+          ]
+        },
+        {
+          "name": "R8: no icon carries a script, event handler, external link, image or raw HTML",
+          "file": "__tests__/semanticTypeIcons.test.tsx",
+          "requirements": [
+            "R8"
+          ]
+        },
+        {
+          "name": "R3: an icon element is created once and the same reference is reused on every lookup",
+          "file": "__tests__/zestIconPerformance.test.tsx",
+          "requirements": [
+            "R3"
+          ]
+        },
+        {
+          "name": "R3: aliases share one icon element instead of building a copy per type",
+          "file": "__tests__/zestIconPerformance.test.tsx",
+          "requirements": [
+            "R3"
+          ]
+        },
+        {
+          "name": "R3: a hundred built-in buttons render one icon each and keep the module-level elements on re-render",
+          "file": "__tests__/zestIconPerformance.test.tsx",
+          "requirements": [
+            "R3"
+          ]
+        },
+        {
+          "name": "R8: the icon registry is a fixed module-level map, not something rebuilt per render",
+          "file": "__tests__/zestIconPerformance.test.tsx",
+          "requirements": [
+            "R8"
+          ]
+        },
+        {
+          "name": "R1: lists all 47 built-in names and every one has a defaults entry",
+          "file": "__tests__/semanticTypeButtonConfigDefaults.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R1: keeps the 19 existing entries in their original order before the new ones",
+          "file": "__tests__/semanticTypeButtonConfigDefaults.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R6: the 19 existing types keep their variant, button style, icon side and options",
+          "file": "__tests__/semanticTypeButtonConfigDefaults.test.tsx",
+          "requirements": [
+            "R6"
+          ]
+        },
+        {
+          "name": "R2: the 28 new types keep the documented variant and icon side",
+          "file": "__tests__/semanticTypeButtonConfigDefaults.test.tsx",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R2: only the eight async new types get a 500 ms busy time and none ask for confirmation",
+          "file": "__tests__/semanticTypeButtonConfigDefaults.test.tsx",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R1: a new type renders its default icon and label end to end",
+          "file": "__tests__/ZestButton.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R6: the 19 existing names keep their variant, button style, icon side and label",
+          "file": "__tests__/ZestButton.test.tsx",
+          "requirements": [
+            "R6"
+          ]
+        },
+        {
+          "name": "R6: an iconLeft override from the provider wins for a built-in type",
+          "file": "__tests__/ZestButton.test.tsx",
+          "requirements": [
+            "R6"
+          ]
+        },
+        {
+          "name": "R3: re-rendering a built-in type reuses the same icon node instead of rebuilding it",
+          "file": "__tests__/ZestButton.test.tsx",
+          "requirements": [
+            "R3"
+          ]
+        },
+        {
+          "name": "R8: the characterisation relies on the shared icon element, not on path data",
+          "file": "__tests__/ZestButton.test.tsx",
+          "requirements": [
+            "R8"
+          ]
+        },
+        {
+          "name": "R6 and R8: a new type icon and the toggle check coexist without replacing each other",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R6",
+            "R8"
+          ]
+        },
+        {
+          "name": "R1: a new built-in type resolves to its default icon and look",
+          "file": "__tests__/hooks/useZestConfig.test.ts",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R1: an app\u0027s own configuration for a new name wins over the built-in default",
+          "file": "__tests__/hooks/useZestConfig.test.ts",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R1: an unknown, capitalised or spaced name is not treated as a built-in type",
+          "file": "__tests__/hooks/useZestConfig.test.ts",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R2: a local iconLeft wins and the built-in icon is not kept alongside it",
+          "file": "__tests__/hooks/useZestConfig.test.ts",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R2: defaults are merged without changing the configuration the app passes in",
+          "file": "__tests__/hooks/useZestConfig.test.ts",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R6: a provider override of a built-in type\u0027s iconLeft keeps the app\u0027s own icon",
+          "file": "__tests__/hooks/useZestConfig.test.ts",
+          "requirements": [
+            "R6"
+          ]
+        },
+        {
+          "name": "R6: the existing types keep their options after the icon change",
+          "file": "__tests__/hooks/useZestConfig.test.ts",
+          "requirements": [
+            "R6"
+          ]
+        },
+        {
+          "name": "R8: deep merging a type preserves the shared icon element reference",
+          "file": "__tests__/hooks/useZestConfig.test.ts",
+          "requirements": [
+            "R8"
+          ]
+        }
+      ],
+      "kickbacks": []
+    }
+  ],
+  "revisionsUsed": 3,
+  "requirementKickbacks": 0,
+  "planReviewRounds": 0,
+  "planConflictHashes": [
+    "668FAE9B65318D12"
+  ],
+  "sizeApproved": true,
+  "lastPlanConflicts": [
+    {
+      "requirement": "R1",
+      "against": "design",
+      "kind": "scope",
+      "owner": "requirements",
+      "why": "This plan has 22 parts to build for 8 requirements. Plans this big have not finished in earlier runs: they take many hours and stall. Build a smaller first slice, then the rest.",
+      "evidence": "22 components in the design; the most one run is given is 20."
+    }
+  ],
+  "planRounds": [
+    {
+      "number": 1,
+      "at": "2026-10-25T09:03:25.7396528+00:00",
+      "outcome": "conflicts",
+      "conflicts": [
+        {
+          "requirement": "R1",
+          "against": "design",
+          "kind": "scope",
+          "owner": "requirements",
+          "why": "This plan has 22 parts to build for 8 requirements. Plans this big have not finished in earlier runs: they take many hours and stall. Build a smaller first slice, then the rest.",
+          "evidence": "22 components in the design; the most one run is given is 20."
+        }
+      ],
+      "resolution": "You chose: Build as planned and see what happens"
+    }
+  ],
+  "planCheck": "conflicts",
+  "planWaivedRules": [],
+  "setAsideRequirements": [],
+  "reusedChecks": {},
+  "tensionPair": [],
+  "tensionDiagnoses": {},
+  "specialists": [],
+  "specialistsDone": [],
+  "specialistCallbacks": 0,
+  "specialistHashes": {},
+  "ran": [
+    "define",
+    "design",
+    "build",
+    "challenge",
+    "prove"
+  ],
+  "accepted": {
+    "define/analyst": "artifacts/01-define/analyst-r3.json",
+    "design/architect": "artifacts/02-design/architect-r1.json",
+    "build/developer": "artifacts/03-build/developer-r4.json",
+    "challenge/security": "artifacts/04-challenge/security-r4.json",
+    "challenge/reviewer": "artifacts/04-challenge/reviewer-r4.json",
+    "challenge/qa": "artifacts/04-challenge/qa-r2.json",
+    "prove/documenter": "artifacts/05-prove/documenter-r4.json"
+  },
+  "extraRounds": 1,
+  "reviewPasses": 4,
+  "costUsd": 0.9270403,
+  "budgetUsd": 10,
+  "agentCalls": 26,
+  "modelCalls": {
+    "claude-sonnet-5-5": 4,
+    "opencode/big-pickle": 20
+  },
+  "startedAt": "2026-10-25T08:43:14.2646633+00:00",
+  "updatedAt": "2026-10-25T12:19:43.9547948+00:00",
+  "completedAt": "2026-10-25T12:19:41.7574789+00:00",
+  "findings": [
+    {
+      "id": "CHK-lib-validate-package",
+      "source": "check:lib-validate-package",
+      "cites": "LIB-002",
+      "severity": "advisory",
+      "description": "Check \u0027Package check (attw and publint)\u0027 is failing.",
+      "file": "",
+      "evidence": "Not set up in this project: attw and publint are not installed, so nothing checks that the package works for everyone who installs it.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "note": "It could not be run, so nothing was checked here; it does not block this feature.",
+      "repeats": 0
+    },
+    {
+      "id": "CHK-lib-size",
+      "source": "check:lib-size",
+      "cites": "EFF-001",
+      "severity": "advisory",
+      "description": "Check \u0027Size budget\u0027 is failing.",
+      "file": "",
+      "evidence": "Not set up in this project: The project has no .size-limit.json, so this check has nothing to run.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "note": "It could not be run, so nothing was checked here; it does not block this feature.",
+      "repeats": 0
+    },
+    {
+      "id": "CHK-lib-consumer-smoke",
+      "source": "check:lib-consumer-smoke",
+      "cites": "LIB-003",
+      "severity": "advisory",
+      "description": "Check \u0027Install and import the packed library\u0027 is failing.",
+      "file": "",
+      "evidence": "Not set up in this project: Nothing installs the packed library into a scratch project and imports it  no scripts/consumer-smoke.mjs .",
+      "status": "advisory",
+      "raisedRound": 1,
+      "note": "It could not be run, so nothing was checked here; it does not block this feature.",
+      "repeats": 0
+    },
+    {
+      "id": "CHK-lib-docs",
+      "source": "check:lib-docs",
+      "cites": "DOC-001",
+      "severity": "advisory",
+      "description": "Check \u0027Documentation is complete\u0027 is failing.",
+      "file": "",
+      "evidence": "Not set up in this project: The project has no scripts/check-docs.mjs, so this check has nothing to run.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "note": "It could not be run, so nothing was checked here; it does not block this feature.",
+      "repeats": 0
+    },
+    {
+      "id": "REV-1",
+      "source": "reviewer",
+      "cites": "R5",
+      "severity": "blocking",
+      "description": "R5 requires an unknown icon name to render nothing and not throw, and documentation/api.md and documentation/features.md promise exactly that. Because inherited Object.prototype keys are treated as built-in icons, a consumer passing an untrusted string (route param, API value) can crash the render tree or render a bogus empty icon. Guard with Object.prototype.hasOwnProperty.call(ZEST_ICON_ELEMENTS, name) (or use a Map/null-prototype object) before indexing.",
+      "file": "UI/zestIcons.tsx",
+      "line": 167,
+      "evidence": "getZestIconElement checks \u0060name in ZEST_ICON_ELEMENTS\u0060, which walks the prototype chain. Rendering \u003CZestIcon name=\u0022__proto__\u0022 /\u003E through React 18 renderToStaticMarkup against the built dist/index.cjs.js throws \u0022Objects are not valid as a React child (found: object with keys {})\u0022; name=\u0022constructor\u0022 and name=\u0022toString\u0022 resolve to Object.prototype functions and render an empty \u003Cspan class=\u0022zestIcon\u0022\u003E plus a React warning, while a genuinely unknown name (\u0022not-a-real-icon\u0022) correctly returns null.",
+      "status": "fixed",
+      "raisedRound": 1,
+      "fixedRound": 3,
+      "note": "UI/zestIcons.tsx:161 now guards the lookup with Object.prototype.hasOwnProperty.call(ZEST_ICON_ELEMENTS, name) and returns null otherwise, so __proto__, constructor, toString, hasOwnProperty and valueOf are not treated as icons. __tests__/ZestIcon.test.tsx:68-80 asserts getZestIconElement returns null and no svg renders for those names; the full suite passes.",
+      "repeats": 0
+    },
+    {
+      "id": "REV-2",
+      "source": "reviewer",
+      "cites": "EFF-001",
+      "severity": "blocking",
+      "description": "The feature\u0027s non-functional performance requirement is that the built ESM bundle grow by no more than 15 KB; it grew by 15,912 bytes, exceeding the agreed size budget. Trim the icon additions (remove the unused duplicate icons, share one element for identical drawings such as export/download and import/upload, and drop the leftover comments) until the delta is within 15 KB, or record an approved budget change. Do not leave the requirement unmet.",
+      "file": "dist/index.esm.js",
+      "line": 1,
+      "evidence": "Building HEAD (126a067) and the current working tree with the same rollup config and node_modules in scratch copies gives dist/index.esm.js = 65,106 bytes before and 81,018 bytes after: \u002B15,912 bytes (15.9 kB / 15.5 KiB). The requirements cap the growth at 15 KB, so the bundle is over by 912 bytes (15 KB decimal) or 552 bytes (15 KiB). The bundle is unminified, so the unused duplicate icon definitions and leftover comments are shipped verbatim.",
+      "status": "fixed",
+      "raisedRound": 1,
+      "fixedRound": 3,
+      "note": "Fresh rollup builds from the same config and node_modules (scratch copies): baseline commit 126a067 dist/index.esm.js = 65,106 bytes; current working tree = 79,993 bytes; delta = 14,887 bytes, which is within the 15,000-byte (and 15 KiB) allowance. The built ESM file hash from the project dist matches a clean rebuild of the current source.",
+      "repeats": 0
+    },
+    {
+      "id": "REV-3",
+      "source": "reviewer",
+      "cites": "DOC-001",
+      "severity": "blocking",
+      "description": "The documentation\u0027s Icon column does not match the icon the code ships: a reader looking for the sliders glyph gets a target. Either draw sliders for \u0060settings\u0060 or correct the documentation so the table describes the shipped icon.",
+      "file": "documentation/features.md",
+      "line": 147,
+      "evidence": "The built-in table describes the \u0060settings\u0060 icon as \u0022Sliders\u0022, but UI/zestIcons.tsx:96 draws a centre circle with a four-way cross (a target/crosshair): \u003Ccircle cx=\u002212\u0022 cy=\u002212\u0022 r=\u00223\u0022 /\u003E plus path \u0022M12 1v6m0 6v6m11-7h-6m-6 0H1\u0022. There are no slider tracks or knobs in the drawing.",
+      "status": "fixed",
+      "raisedRound": 1,
+      "fixedRound": 3,
+      "note": "UI/zestIcons.tsx:93 now draws three vertical slider tracks with round knobs (lines at x=4/12/20 with circles at differing heights), and documentation/features.md:147 describes the settings icon as \u0027Sliders\u0027; the earlier target/crosshair drawing is gone.",
+      "repeats": 0
+    },
+    {
+      "id": "REV-4",
+      "source": "reviewer",
+      "cites": "USR-003",
+      "severity": "blocking",
+      "description": "This introduces dead, duplicated icon definitions that are constructed at module load and shipped in the unminified bundle, plus debugging commentary - the code duplication and technical debt USR-003 forbids. Delete the two unused constants and the leftover comments; the aliases already reuse the single existing element.",
+      "file": "UI/zestIcons.tsx",
+      "line": 77,
+      "evidence": "Lines 77-78 define \u0060arrowRightIcon\u0060 and \u0060arrowRightDirIcon\u0060, neither referenced by ZEST_ICON_ELEMENTS or anywhere else; \u0060arrowRightIcon\u0060 is also an exact duplicate of \u0060rightArrowIcon\u0060 on line 79. Leftover development comments are shipped too: \u0022// We\u0027ll use different orientation for back/next\u0022 (line 77), \u0022// complex, better simple\u0022 (line 78), \u0022// simplified\u0022 (line 96) and \u0022// similar to download/upload\u0022 (lines 110-111).",
+      "status": "fixed",
+      "raisedRound": 1,
+      "fixedRound": 3,
+      "note": "UI/zestIcons.tsx contains no comments and no unused icon constants: all 35 createIcon constants (plusIcon through archiveIcon) are referenced exactly twice (their definition and a ZEST_ICON_ELEMENTS entry), and the former arrowRightIcon/arrowRightDirIcon duplicates are gone; aliases such as add/new, save/submit, view/details, download/export and upload/import share one element.",
+      "repeats": 0
+    },
+    {
+      "id": "REV-5",
+      "source": "reviewer",
+      "cites": "USR-003",
+      "severity": "advisory",
+      "description": "Unused import left over from the previous implementation; harmless but unnecessary. Remove it.",
+      "file": "UI/semanticTypeButtonConfigDefaults.tsx",
+      "line": 1,
+      "evidence": "\u0060import React from \u0027react\u0027;\u0060 remains at the top of the file, but the file contains no JSX and never references \u0060React\u0060 (it only builds objects with getZestIconElement), so the import is dead after the react-icons removal.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "repeats": 0
+    },
+    {
+      "id": "QA-1",
+      "source": "qa",
+      "cites": "R5",
+      "severity": "blocking",
+      "description": "R5 says an unknown name renders nothing and does not throw, and documentation/examples.md:358 and the API docs promise this. A consumer passing an untrusted string as ZestIcon name can crash the render tree. Guard the lookup with Object.prototype.hasOwnProperty.call(ZEST_ICON_ELEMENTS, name) or use a Map/null-prototype object, and add tests for \u0022__proto__\u0022, \u0022constructor\u0022, \u0022toString\u0022 and \u0022hasOwnProperty\u0022.",
+      "file": "UI/zestIcons.tsx",
+      "line": 167,
+      "evidence": "getZestIconElement uses \u0060if (name in ZEST_ICON_ELEMENTS)\u0060, which walks the prototype chain. Through the built package, \u003CZestIcon name=\u0022__proto__\u0022 /\u003E throws \u0022Objects are not valid as a React child (found: object with keys {})\u0022; name=\u0022toString\u0022 and name=\u0022constructor\u0022 resolve to Object.prototype functions and log React warnings while rendering an empty \u003Cspan class=\u0022zestIcon\u0022\u003E. The only unknown-name test (ZestIcon.test.tsx:50-58) uses \u0022not-a-real-icon\u0022, which is not on the prototype, so it passes.",
+      "status": "fixed",
+      "raisedRound": 1,
+      "fixedRound": 2,
+      "note": "UI/zestIcons.tsx:161 now guards the lookup with \u0060Object.prototype.hasOwnProperty.call(ZEST_ICON_ELEMENTS, name)\u0060 and returns null otherwise. __tests__/ZestIcon.test.tsx:68-80 asserts getZestIconElement returns null and \u003CZestIcon\u003E renders no svg/text for __proto__, constructor, toString, hasOwnProperty and valueOf. The suite passes: 18 suites, 224 tests.",
+      "repeats": 0
+    },
+    {
+      "id": "QA-2",
+      "source": "qa",
+      "cites": "R7",
+      "severity": "blocking",
+      "description": "R7 requires every code example to compile against the new types; these examples do not compile. Change both imports to a default \u0060ZestButton\u0060 import, and add a test that extracts the documented snippets and type-checks/renders them (the toggle feature has a type-check precedent at ZestButtonToggle.test.tsx:523, but it uses a hand-written object rather than the actual snippets).",
+      "file": "documentation/examples.md",
+      "line": 180,
+      "evidence": "The code examples at documentation/examples.md:123 and :180 use \u0060import { ZestButtonConfigProvider, ZestButton, ZestIcon } from \u0027jattac.libs.web.zest-button\u0027\u0060, but the package has no named \u0060ZestButton\u0060 export: UI/ZestButton.tsx:457 only default-exports it, UI/index.ts:1-2 re-exports only the default, and the built dist/index.cjs.js exports are default, ZestIcon, ZestButtonConfigProvider and useZestButtonConfig. The R7 docs tests (ZestIcon.test.tsx:117-136) only assert substrings, so no test compiles a snippet and the broken import ships.",
+      "status": "fixed",
+      "raisedRound": 1,
+      "fixedRound": 2,
+      "note": "documentation/examples.md:123 and :180 now use a default \u0060ZestButton\u0060 import; no named ZestButton import remains. __tests__/ZestIcon.test.tsx:193-222 extracts every package import clause from README/examples, rejects a named ZestButton import, and checks each named import exists on the real barrel. The suite passes: 18 suites, 224 tests.",
+      "repeats": 0
+    },
+    {
+      "id": "QA-3",
+      "source": "qa",
+      "cites": "R7",
+      "severity": "advisory",
+      "description": "Correct the \u0060settings\u0060 drawing or its description, and extend the table test to compare the icon description, variant, button style, icon side and default behaviour against semanticTypeButtonConfigDefaults. Advisory: documentation content is checked by review, and the reviewer already blocks the settings mismatch under DOC-001.",
+      "file": "documentation/features.md",
+      "line": 147,
+      "evidence": "The table row for \u0060settings\u0060 says the icon is \u0022Sliders\u0022, but UI/zestIcons.tsx:96 draws a centre circle and a four-way cross (a target/crosshair), not sliders. The R7 table test (ZestIcon.test.tsx:104-115) extracts only the first column, so it cannot fail if the Icon, Variant, Button style, Icon side or Default behaviour columns are wrong; the settings mismatch passes.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "repeats": 0
+    },
+    {
+      "id": "QA-4",
+      "source": "qa",
+      "cites": "R5",
+      "severity": "blocking",
+      "description": "Add one consumer-style test that imports ZestIcon, ZestIconProps, ZestIconSize, the default ZestButton, ZestButtonConfigProvider and useZestButtonConfig from \u0022../UI\u0022, then renders a ZestIcon as a ZestButton iconLeft. This is blocking because the acceptance explicitly requires the package import and no test would fail if the barrel export regressed.",
+      "file": "__tests__/ZestIcon.test.tsx",
+      "line": 6,
+      "evidence": "ZestIcon is imported from \u0022../UI/ZestIcon\u0022 in every test; no test imports it from \u0022../UI\u0022 or the package root. The R5 acceptance \u0022import { ZestIcon } from the package\u0022 and \u0022does not remove or rename any existing export of UI/index.ts\u0022 therefore are not guarded: deleting UI/index.ts:4-5 or an existing export leaves the suite green. The built dist currently does export ZestIcon, so the present artifact is fine, but the source barrel regression would pass CI.",
+      "status": "fixed",
+      "raisedRound": 1,
+      "fixedRound": 2,
+      "note": "__tests__/ZestIcon.test.tsx:8-15 imports the default ZestButton, ZestButtonConfigProvider, useZestButtonConfig, ZestIcon, ZestIconProps and ZestIconSize from \u0022../UI\u0022, and the test at lines 82-107 renders a barrel-exported ZestIcon as a button iconLeft inside the provider and asserts the rendered icon and hook config. The suite passes: 18 suites, 224 tests.",
+      "repeats": 0
+    },
+    {
+      "id": "QA-5",
+      "source": "qa",
+      "cites": "R1",
+      "severity": "advisory",
+      "description": "Add a small declaration file/test that augments \u0060CustomZestSemanticTypes\u0060 with e.g. \u0060publish: \u0027publish\u0027\u0060 and assigns \u0060\u0027publish\u0027\u0060 to SemanticType, mirroring the docs recipe at examples.md:167. Advisory because the union still ends in \u0060keyof CustomZestSemanticTypes\u0060 today.",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "line": 120,
+      "evidence": "The \u0022each of the 28 new names is accepted by the SemanticType type\u0022 test only declares the literals in a SemanticType[] and asserts the array length. It never augments CustomZestSemanticTypes. If \u0060keyof CustomZestSemanticTypes\u0060 were removed from the union at ZestButton.tsx:20, this test would still compile and pass; the R1 acceptance \u0022still accepts the names added through CustomZestSemanticTypes\u0022 has no test.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "repeats": 1
+    },
+    {
+      "id": "QA-6",
+      "source": "qa",
+      "cites": "R1",
+      "severity": "advisory",
+      "description": "Wrap the ALL_TYPES render loop with a console.error spy and assert it was not called (restore afterwards). Advisory: this is a stronger assertion on an already-tested render path.",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "line": 105,
+      "evidence": "The all-47 rendering test checks the label and that a button svg exists, but never spies on console.error. The R1 acceptance also says \u0022and no console error\u0022; a React warning or error on any of the 28 new types would not fail the loop. The fail-state test spies on console.error elsewhere (line 414), so the pattern exists.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "repeats": 0
+    },
+    {
+      "id": "QA-7",
+      "source": "qa",
+      "cites": "R2",
+      "severity": "advisory",
+      "description": "Render the next button inside a \u0060dir=\u0022rtl\u0022\u0060 container and assert the icon remains visually after the label (e.g. order/margin logic or computed direction), or assert the CSS uses logical properties. Advisory because inline-flex already mirrors in RTL and the mechanism is present.",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "line": 274,
+      "evidence": "The \u0022next ... flips correctly for right-to-left pages\u0022 test only asserts child order and that the stylesheet has \u0060.content { display: inline-flex }\u0060. It never renders inside \u0060dir=\u0022rtl\u0022\u0060 or checks logical margins; DOM order alone is direction-agnostic. The R2 edge case is therefore not actually exercised.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "repeats": 0
+    },
+    {
+      "id": "QA-8",
+      "source": "qa",
+      "cites": "R3",
+      "severity": "advisory",
+      "description": "Optionally add a small matrix (a few variants/styles x light/dark/system) asserting the icon still uses currentColor and its variant text-colour variable. Advisory: the mechanism is already proven for every type.",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "line": 287,
+      "evidence": "The shared-style test covers all 47 types with stroke=currentColor. The \u0022follow the text colour\u0022 acceptance also names light, dark and system themes and every variant/button style, but tests render only the filled success/danger icons (line 346); outline/text/dashed and explicit light/dark/system icon renders are not checked. The currentColor mechanism is the same for all, so this is coverage breadth, not an uncovered behaviour.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "repeats": 0
+    },
+    {
+      "id": "QA-9",
+      "source": "qa",
+      "cites": "R4",
+      "severity": "advisory",
+      "description": "Focus a representative button and assert the focus-visible class/selector path, or document that the CSS rule is the contract. Advisory: the shared button focus rule is not changed by this feature.",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "line": 472,
+      "evidence": "The \u0022focus ring visible on every built-in type in light and dark themes\u0022 test only adds force-light/force-dark classes and regex-checks the stylesheet for \u0060.button:focus-visible\u0060 and \u0060--zest-focus-ring\u0060; it never focuses a button. jsdom cannot compute :focus-visible, so the assertion proves the rule exists, not that a keyboard user sees it.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "repeats": 0
+    },
+    {
+      "id": "QA-10",
+      "source": "qa",
+      "cites": "R6",
+      "severity": "advisory",
+      "description": "Assert the icon-change heading/paragraph in breaking-changes.md, e.g. that it mentions library/inline SVG and Font Awesome. Advisory: the content is present today and the version check passes.",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "line": 519,
+      "evidence": "The R6 documentation check only asserts that breaking-changes.md contains \u0022Version 1.7.0\u0022. The required explanation that built-in icons are now library SVGs (breaking-changes.md:23-25) could be deleted and the test would still pass.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "repeats": 0
+    },
+    {
+      "id": "QA-11",
+      "source": "qa",
+      "cites": "R6",
+      "severity": "advisory",
+      "description": "Add an assertion that package.json peerDependencies contains react-icons (and optionally that its bounds are unchanged). Advisory: the dependency is currently present.",
+      "file": "__tests__/packagePeerDependencies.test.ts",
+      "line": 62,
+      "evidence": "packagePeerDependencies.test.ts only reads and asserts the react/react-dom ranges. Nothing asserts that react-icons remains a peer dependency, although R6 says it must not be removed (the busy spinner and dropdown chevron still import it). package.json:61 currently keeps it, so this is a missing guard, not a current break.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "repeats": 0
+    },
+    {
+      "id": "QA-12",
+      "source": "qa",
+      "cites": "PERF-001",
+      "severity": "advisory",
+      "description": "Trim the unused/duplicate drawings and leftover comments until the delta is within 15 KB, or get an approved budget change; record the measurement in the build report and add an automated size guard when the project gets one. Advisory to QA because the reviewer already blocks the overage under EFF-001.",
+      "file": "dist/index.esm.js",
+      "line": 1,
+      "evidence": "The size NFR is manual only (no .size-limit.json, no test). The challenge review measured 65,106 bytes before and 81,018 bytes after (\u002B15,912 B), over the 15 KB cap; the current dist/index.esm.js is 81,018 bytes. The same review found unused arrowRightIcon/arrowRightDirIcon constants and duplicate export/import drawings (UI/zestIcons.tsx:77-79, 110-111) that add unminified bytes.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "repeats": 0
+    },
+    {
+      "id": "QA-13",
+      "source": "qa",
+      "cites": "LIB-003",
+      "severity": "advisory",
+      "description": "When consumer smoke scaffolding exists, add a packed install/import check for ZestIcon under CJS and ESM; at minimum assert the dependency/peer surface (including react-icons) is unchanged. Advisory: the project explicitly has no packed-library check and the task says not to add that scaffolding for this request.",
+      "file": "package.json",
+      "line": 16,
+      "evidence": "The project has no scripts/consumer-smoke.mjs and no test installs the packed library and imports it under CommonJS and ES modules. packagePeerDependencies.test.ts checks only the react/react-dom ranges and the exports map strings, not the compatibility NFR that dependencies/peer dependencies are unchanged. The build report lists no packed-artifact check.",
+      "status": "advisory",
+      "raisedRound": 1,
+      "repeats": 0
+    },
+    {
+      "id": "SEC-1",
+      "source": "security",
+      "cites": "R5",
+      "severity": "blocking",
+      "description": "R5 requires an unknown icon name to render nothing and not throw, but names that collide with Object.prototype (__proto__, constructor, toString, valueOf, hasOwnProperty) are treated as built-in icons. A library consumer that passes an untrusted string as ZestIcon name (for example a route parameter or API value) can crash the app\u0027s render tree (availability/DoS) or render a bogus empty icon. Use a null-prototype map, a Map, or Object.prototype.hasOwnProperty.call(ZEST_ICON_ELEMENTS, name) before indexing.",
+      "file": "UI/zestIcons.tsx",
+      "line": 167,
+      "evidence": "getZestIconElement checks \u0060name in ZEST_ICON_ELEMENTS\u0060 (line 167), so inherited Object.prototype keys pass as known icons. A probe rendering \u003CZestIcon name=\u0022__proto__\u0022 /\u003E threw \u0022Objects are not valid as a React child (found: object with keys {})\u0022 under React 18; name=\u0022toString\u0022 returned Object.prototype.toString and rendered an empty \u003Cspan class=\u0022zestIcon\u0022\u003E instead of null.",
+      "status": "fixed",
+      "raisedRound": 1,
+      "fixedRound": 2,
+      "note": "UI/zestIcons.tsx:161 now guards the lookup with Object.prototype.hasOwnProperty.call(ZEST_ICON_ELEMENTS, name), so inherited Object.prototype keys such as __proto__, constructor, toString, valueOf and hasOwnProperty fall through to null instead of being treated as icons. The shipped dist/index.esm.js contains the same guard. __tests__/ZestIcon.test.tsx covers those inherited names, and the ZestIcon plus semanticTypeIcons suites pass (70 tests, 4 suites).",
+      "repeats": 0
+    },
+    {
+      "id": "CHK-lib-tests",
+      "source": "check:lib-tests",
+      "cites": "CHK-lib-tests",
+      "severity": "advisory",
+      "description": "Check \u0027Tests, with coverage\u0027 is failing.",
+      "file": "",
+      "evidence": "\u2026\nPASS __tests__/ZestDropdownMenu.test.tsx\r\nPASS __tests__/SpinnerIcon.test.tsx\r\nPASS __tests__/hooks/useToggleState.test.ts\r\nPASS __tests__/ZestButtonConfigProvider.test.tsx\r\nPASS __tests__/zestIconPerformance.test.tsx\r\nPASS __tests__/ZestButton.test.tsx\r\nPASS __tests__/buildExternalization.test.ts\r\nPASS __tests__/ZestIcon.test.tsx\r\nPASS __tests__/hooks/useConfirmation.test.ts\r\nPASS __tests__/hooks/useZestConfig.test.ts\r\nPASS __tests__/semanticTypeButtonConfigDefaults.test.tsx\r\nPASS __tests__/hooks/useThemeDetection.test.ts\r\nPASS __tests__/ZestButtonConfigContext.test.tsx\r\nPASS __tests__/hooks/useBusyState.test.ts\r\nPASS __tests__/packagePeerDependencies.test.ts\r\nPASS __tests__/semanticTypeIcons.test.tsx (5.044 s)\r\nPASS .devteam/runs/20261025-084314/scratch/reviewer/current/__tests__/semanticTypeIcons.test.tsx (5.288 s)\r\n\r\nSummary of all failing tests\r\nFAIL .devteam/runs/20261025-084314/scratch/security/prototype.probe.test.tsx (8.791 s)\r\n  \u25CF prototype-chain lookup probe \u203A getZestIconElement returns inherited prototype members for unknown names\r\n\r\n    expect(received).not.toBeNull()\r\n\r\n    Received: null\r\n\r\n    \u001B[0m \u001B[90m 10 |\u001B[39m       \u001B[90m// eslint-disable-next-line no-console\u001B[39m\r\n     \u001B[90m 11 |\u001B[39m       console\u001B[33m.\u001B[39mlog(name\u001B[33m,\u001B[39m \u001B[36mtypeof\u001B[39m el\u001B[33m,\u001B[39m el \u001B[33m===\u001B[39m \u001B[36mnull\u001B[39m \u001B[33m?\u001B[39m \u001B[32m\u0022null\u0022\u001B[39m \u001B[33m:\u001B[39m \u001B[32m\u0022NOT NULL\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n    \u001B[31m\u001B[1m\u003E\u001B[22m\u001B[39m\u001B[90m 12 |\u001B[39m       expect(el)\u001B[33m.\u001B[39mnot\u001B[33m.\u001B[39mtoBeNull()\u001B[33m;\u001B[39m\r\n     \u001B[90m    |\u001B[39m                      \u001B[31m\u001B[1m^\u001B[22m\u001B[39m\r\n     \u001B[90m 13 |\u001B[39m     }\r\n     \u001B[90m 14 |\u001B[39m   })\u001B[33m;\u001B[39m\r\n     \u001B[90m 15 |\u001B[39m\u001B[0m\r\n\r\n      at Object.\u003Canonymous\u003E (.devteam/runs/20261025-084314/scratch/security/prototype.probe.test.tsx:12:22)\r\n\r\nFAIL .devteam/runs/20261025-084314/scratch/reviewer/base/__tests__/ZestButtonToggle.test.tsx (10.577 s)\r\n  \u25CF ZestButton toggle mode \u203A R8 documentation \u203A R8: the API page documents every ToggleOptions prop and the README shows a toggle example\r\n\r\n    expect(received).toBe(expected) // Object.is equality\r\n\r\n    Expected: \u00221.6.0\u0022\r\n    Received: \u00221.6.1\u0022\r\n\r\n    \u001B[0m \u001B[90m 502 |\u001B[39m       expect(read(\u001B[32m\u0022README.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022toggleOptions\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m 503 |\u001B[39m       expect(read(\u001B[32m\u0022documentation/breaking-changes.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022Version 1.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n    \u001B[31m\u001B[1m\u003E\u001B[22m\u001B[39m\u001B[90m 504 |\u001B[39m       expect(\u001B[33mJSON\u001B[39m\u001B[33m.\u001B[39mparse(read(\u001B[32m\u0022package.json\u0022\u001B[39m))\u001B[33m.\u001B[39mversion)\u001B[33m.\u001B[39mtoBe(\u001B[32m\u00221.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m     |\u001B[39m                                                        \u001B[31m\u001B[1m^\u001B[22m\u001B[39m\r\n     \u001B[90m 505 |\u001B[39m     })\u001B[33m;\u001B[39m\r\n     \u001B[90m 506 |\u001B[39m\r\n     \u001B[90m 507 |\u001B[39m     it(\u001B[32m\u0022R8: the documented examples type-check against the exported types and render\u0022\u001B[39m\u001B[33m,\u001B[39m () \u001B[33m=\u003E\u001B[39m {\u001B[0m\r\n\r\n      at Object.\u003Canonymous\u003E (.devteam/runs/20261025-084314/scratch/reviewer/base/__tests__/ZestButtonToggle.test.tsx:504:56)\r\n\r\n\r\nTest Suites: 2 failed, 50 passed, 52 total\r\nTests:       2 failed, 614 passed, 616 total\r\nSnapshots:   0 total\r\nTime:        17.222 s, estimated 23 s\r\nRan all test suites.",
+      "status": "advisory",
+      "raisedRound": 2,
+      "note": "It was already failing before this run started, so it does not block this feature.",
+      "repeats": 0
+    },
+    {
+      "id": "REV-6",
+      "source": "reviewer",
+      "cites": "R7, DOC-001",
+      "severity": "advisory",
+      "description": "The examples page is missing one of the three recipes R7 names explicitly, so readers are never shown how to replace a built-in type\u0027s default icon. Add a short recipe, e.g. \u0060\u003CZestButton zest={{ semanticType: \u0027save\u0027, visualOptions: { iconLeft: \u003CZestIcon name=\u0022archive\u0022 /\u003E } }}\u003EArchive\u003C/ZestButton\u003E\u0060 (and/or the provider form \u0060semanticTypeDefaults: { save: { visualOptions: { iconLeft: \u003CZestIcon name=\u0022archive\u0022 /\u003E } } }\u0060), with the default import of ZestButton and a named ZestIcon import.",
+      "file": "documentation/examples.md",
+      "line": 332,
+      "evidence": "R7 requires documentation/examples.md to have three recipes: (1) an icon-only button with aria-label, (2) overriding a default icon, (3) using the icon in a custom control. Recipe 7 (\u0022Reusing the Standard Icons\u0022, lines 332-358) contains only (1) at lines 347-351 and (3) at line 353. There is no example that keeps a built-in semanticType and replaces its built-in icon. Recipe 4\u0027s only built-in override (lines 196-199) changes delete.buttonStyle, and documentation/configuration.md:181-194 overrides delete.buttonStyle and confirmOptions only; neither touches visualOptions.iconLeft/iconRight. A search for semanticType together with iconLeft/iconRight across README.md and documentation/*.md returns no match, so the capability is not shown anywhere. architect-r1 also lists \u0022overriding a built-in icon\u0022 among the documentation deliverables for this feature.",
+      "status": "advisory",
+      "raisedRound": 2,
+      "note": "uncited: \u0027R7, DOC-001\u0027 is not a known rule or requirement",
+      "repeats": 0
+    },
+    {
+      "id": "REV-7",
+      "source": "reviewer",
+      "cites": "R7",
+      "severity": "advisory",
+      "description": "R7\u0027s acceptance says every documented example must compile against the real types. The override examples are pre-existing, but they are still part of the pages this feature rewrites and they currently show TypeScript an error. Annotate the config objects (\u0060const appZestConfig: ZestGlobalConfig = ...\u0060) or inline them so the recipes compile.",
+      "file": "documentation/examples.md",
+      "line": 183,
+      "evidence": "The documented provider configuration does not type-check: when the \u0060const appZestConfig = { semanticTypeDefaults: { delete: { buttonStyle: \u0027outline\u0027, ... } } }\u0060 snippet (examples.md:183-200, identical shape at configuration.md:181-197) is checked with \u0060npx tsc --noEmit --strict\u0060, \u0060buttonStyle\u0060 widens to \u0060string\u0060 and \u0060\u003CZestButtonConfigProvider config={appZestConfig}\u003E\u0060 fails with TS2322: \u0060Type \u0027string\u0027 is not assignable to type \u0027ZestButtonStyle | undefined\u0027\u0060. Passing the object inline or annotating it as \u0060ZestGlobalConfig\u0060 (or \u0060as const\u0060) fixes it. The pattern predates this change (it is present at 126a067), so this is advisory rather than a regression.",
+      "status": "advisory",
+      "raisedRound": 2,
+      "repeats": 0
+    },
+    {
+      "id": "REV-8",
+      "source": "reviewer",
+      "cites": "USR-003",
+      "severity": "advisory",
+      "description": "Restore the original indentation so the diff only changes the version values.",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "line": 518,
+      "evidence": "Lines 518-520 are indented four spaces while the surrounding statements inside the same \u0060it(...)\u0060 block are indented six, e.g. \u0060    expect(read(\u0022README.md\u0022)).toContain(\u0022toggleOptions\u0022);\u0060 sits under a block whose other statements start at column seven. The mis-indentation was introduced with the version-expectation update from 1.6.0 to 1.7.0; it is cosmetic and does not affect behaviour.",
+      "status": "advisory",
+      "raisedRound": 2,
+      "repeats": 0
+    },
+    {
+      "id": "QA-14",
+      "source": "qa",
+      "cites": "R7",
+      "severity": "advisory",
+      "description": "Extend the R7 docs test to all seven pages and compare every features-table column against semanticTypeButtonConfigDefaults, and add the missing default ZestButton import to the configuration.md example. Advisory: the shipped table content currently matches the defaults and the broken named import that QA-2 reported is now guarded, so this is proof breadth, not a current requirement break.",
+      "file": "__tests__/ZestIcon.test.tsx",
+      "line": 193,
+      "evidence": "The docs-import test only reads README.md and documentation/examples.md (line 194) and only parses \u0060import ... from \u0027jattac.libs.web.zest-button\u0027\u0060 clauses; features.md, api.md, configuration.md and breaking-changes.md are not parsed, and the features-table test at lines 159-170 extracts only the first table column. Consequently an incorrect Icon, Variant, Button style, Icon side or Default behaviour cell, or a non-compiling example outside README/examples, leaves the suite green. One such example exists today: documentation/configuration.md:137 imports only \u0060ZestButtonConfigProvider, ZestIcon\u0060 but the same snippet renders \u0060\u003CZestButton\u003E\u0060 at line 166 without importing it.",
+      "status": "advisory",
+      "raisedRound": 2,
+      "repeats": 0
+    },
+    {
+      "id": "REV-9",
+      "source": "reviewer",
+      "cites": "DOC-001",
+      "severity": "blocking",
+      "description": "The documented recipe for overriding a built-in type\u0027s default icon is missing from examples.md, so the feature\u0027s override path that R6/R7 promise is not shown where readers look.",
+      "file": "documentation/examples.md",
+      "line": 332,
+      "evidence": "R7 requires documentation/examples.md to contain recipes for (a) an icon-only button with aria-label, (b) overriding a default icon, and (c) using the icon in a custom control. Recipe 7 (lines 341-355) covers (a) and (c), but no recipe combines a built-in semanticType with visualOptions.iconLeft/iconRight to replace that type\u0027s default icon. Recipe 4\u0027s built-in override example (line 197) only changes buttonStyle on \u0027delete\u0027, and its provider example (line 188) sets iconLeft for a custom \u0027publish\u0027 type, not a built-in default.",
+      "status": "fixed",
+      "raisedRound": 3,
+      "fixedRound": 4,
+      "note": "documentation/examples.md now has the missing override recipe: the TOC lists it at line 16, the body heading \u0027### Recipe 8: Swapping a Built-in Icon\u0027 is at line 363, the first example (lines 371-386) keeps zest={{ semanticType: \u0027search\u0027 }} and replaces the built-in icon with visualOptions.iconLeft: \u003CZestIcon name=\u0022filter\u0022 /\u003E, and lines 389-397 show the iconRight form for the end-icon types (next, view, details). The recipe states the local icon wins so the default is not added twice and the label still comes from children. The recipe is accurate against the implementation: useZestConfig.ts applies local zest props last (step 4), and semanticTypeButtonConfigDefaults.tsx places the defaults for view (line 101), details (line 108) and next (line 212) in iconRight. The red-first guard __tests__/ZestIcon.test.tsx:193-203 reads examples.md and asserts the recipe exists with semanticType, visualOptions.iconLeft, a \u003CZestIcon\u003E and the iconRight case. Re-ran verification: npx jest --ci --silent = 18 suites / 225 tests passed; npx tsc --noEmit -p tsconfig.json = exit 0.",
+      "repeats": 0
+    }
+  ],
+  "lastChecks": [
+    {
+      "id": "no-secrets",
+      "name": "No secrets in code",
+      "passed": true,
+      "seconds": 0.059069,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "SEC-001"
+      ]
+    },
+    {
+      "id": "no-debug-leftovers",
+      "name": "No debugging leftovers",
+      "passed": true,
+      "seconds": 0.0441299,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "QUAL-001"
+      ]
+    },
+    {
+      "id": "lib-typecheck",
+      "name": "Type check (library and tests)",
+      "passed": true,
+      "seconds": 4.4581173,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "",
+      "rules": []
+    },
+    {
+      "id": "lib-build",
+      "name": "Build (CommonJS, ES modules, type definitions)",
+      "passed": true,
+      "seconds": 8.3107922,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "\u003E jattac.libs.web.zest-button@1.7.0 build\r\n\u003E rollup -c rollup.config.mjs\r\n\r\n\n\u001B[36m\r\n\u001B[1mUI/index.ts\u001B[22m \u2192 \u001B[1mdist/index.cjs.js, dist/index.esm.js\u001B[22m...\u001B[39m\r\n\u001B[1m\u001B[33m(!) Mixing named and default exports\u001B[39m\u001B[22m\r\n\u001B[90mhttps://rollupjs.org/configuration-options/#output-exports\u001B[39m\r\n\u001B[1mThe following entry modules are using named and default exports together:\u001B[22m\r\nUI/index.ts\r\n\r\nConsumers of your bundle will have to use chunk.default to access their default export, which may not be what you want. Use \u0060output.exports: \u0022named\u0022\u0060 to disable this warning.\r\n\u001B[32mcreated \u001B[1mdist/index.cjs.js, dist/index.esm.js\u001B[22m in \u001B[1m4.4s\u001B[22m\u001B[39m\r\n\u001B[36m\r\n\u001B[1mUI/index.ts\u001B[22m \u2192 \u001B[1mdist/index.d.ts\u001B[22m...\u001B[39m\r\n\u001B[32mcreated \u001B[1mdist/index.d.ts\u001B[22m in \u001B[1m2s\u001B[22m\u001B[39m",
+      "rules": []
+    },
+    {
+      "id": "lib-validate-package",
+      "name": "Package check (attw and publint)",
+      "passed": false,
+      "seconds": 0.0939772,
+      "notRun": true,
+      "flaky": false,
+      "tier": "fast",
+      "output": "Not set up in this project: attw and publint are not installed, so nothing checks that the package works for everyone who installs it.",
+      "rules": [
+        "LIB-002"
+      ]
+    },
+    {
+      "id": "lib-pack",
+      "name": "What would be published",
+      "passed": true,
+      "seconds": 1.6459133,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "jattac.libs.web.zest-button-1.7.0.tgz\r\n\nnpm notice\r\nnpm notice package: jattac.libs.web.zest-button@1.7.0\r\nnpm notice Tarball Contents\r\nnpm notice 1.1kB LICENSE\r\nnpm notice 5.5kB README.md\r\nnpm notice 696B dist/hooks/useBusyState.d.ts\r\nnpm notice 667B dist/hooks/useConfirmation.d.ts\r\nnpm notice 64B dist/hooks/useThemeDetection.d.ts\r\nnpm notice 547B dist/hooks/useToggleState.d.ts\r\nnpm notice 140B dist/hooks/useZestConfig.d.ts\r\nnpm notice 83.0kB dist/index.cjs.js\r\nnpm notice 98.1kB dist/index.cjs.js.map\r\nnpm notice 4.7kB dist/index.d.ts\r\nnpm notice 80.0kB dist/index.esm.js\r\nnpm notice 97.8kB dist/index.esm.js.map\r\nnpm notice 221B dist/semanticTypeButtonConfigDefaults.d.ts\r\nnpm notice 102B dist/SpinnerIcon.d.ts\r\nnpm notice 3.8kB dist/ZestButton.d.ts\r\nnpm notice 429B dist/ZestButtonConfigContext.d.ts\r\nnpm notice 316B dist/ZestButtonConfigProvider.d.ts\r\nnpm notice 809B dist/ZestDropdownMenu.d.ts\r\nnpm notice 335B dist/ZestDropdownMenuItem.d.ts\r\nnpm notice 275B dist/ZestIcon.d.ts\r\nnpm notice 771B dist/zestIcons.d.ts\r\nnpm notice 12.4kB documentation/api.md\r\nnpm notice 5.7kB documentation/breaking-changes.md\r\nnpm notice 8.6kB documentation/configuration.md\r\nnpm notice 7.1kB documentation/development.md\r\nnpm notice 15.7kB documentation/examples.md\r\nnpm notice 11.2kB documentation/features.md\r\nnpm notice 2.5kB package.json\r\nnpm notice Tarball Details\r\nnpm notice name: jattac.libs.web.zest-button\r\nnpm notice version: 1.7.0\r\nnpm notice filename: jattac.libs.web.zest-button-1.7.0.tgz\r\nnpm notice package size: 94.1 kB\r\nnpm notice unpacked size: 442.5 kB\r\nnpm notice shasum: 950f5306dd49cf4a76f87966bcb991bfde5e946b\r\nnpm notice integrity: sha512-0JKN\u002BHZIvkDir[...]tVpvba6nr02mQ==\r\nnpm notice total files: 28\r\nnpm notice",
+      "rules": []
+    },
+    {
+      "id": "lib-publish-dry-run",
+      "name": "Publish dry run (everything npm checks, nothing is uploaded)",
+      "passed": true,
+      "seconds": 1.6524825,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "\u002B jattac.libs.web.zest-button@1.7.0\r\n\nnpm notice\r\nnpm notice package: jattac.libs.web.zest-button@1.7.0\r\nnpm notice Tarball Contents\r\nnpm notice 1.1kB LICENSE\r\nnpm notice 5.5kB README.md\r\nnpm notice 696B dist/hooks/useBusyState.d.ts\r\nnpm notice 667B dist/hooks/useConfirmation.d.ts\r\nnpm notice 64B dist/hooks/useThemeDetection.d.ts\r\nnpm notice 547B dist/hooks/useToggleState.d.ts\r\nnpm notice 140B dist/hooks/useZestConfig.d.ts\r\nnpm notice 83.0kB dist/index.cjs.js\r\nnpm notice 98.1kB dist/index.cjs.js.map\r\nnpm notice 4.7kB dist/index.d.ts\r\nnpm notice 80.0kB dist/index.esm.js\r\nnpm notice 97.8kB dist/index.esm.js.map\r\nnpm notice 221B dist/semanticTypeButtonConfigDefaults.d.ts\r\nnpm notice 102B dist/SpinnerIcon.d.ts\r\nnpm notice 3.8kB dist/ZestButton.d.ts\r\nnpm notice 429B dist/ZestButtonConfigContext.d.ts\r\nnpm notice 316B dist/ZestButtonConfigProvider.d.ts\r\nnpm notice 809B dist/ZestDropdownMenu.d.ts\r\nnpm notice 335B dist/ZestDropdownMenuItem.d.ts\r\nnpm notice 275B dist/ZestIcon.d.ts\r\nnpm notice 771B dist/zestIcons.d.ts\r\nnpm notice 12.4kB documentation/api.md\r\nnpm notice 5.7kB documentation/breaking-changes.md\r\nnpm notice 8.6kB documentation/configuration.md\r\nnpm notice 7.1kB documentation/development.md\r\nnpm notice 15.7kB documentation/examples.md\r\nnpm notice 11.2kB documentation/features.md\r\nnpm notice 2.5kB package.json\r\nnpm notice Tarball Details\r\nnpm notice name: jattac.libs.web.zest-button\r\nnpm notice version: 1.7.0\r\nnpm notice filename: jattac.libs.web.zest-button-1.7.0.tgz\r\nnpm notice package size: 94.1 kB\r\nnpm notice unpacked size: 442.5 kB\r\nnpm notice shasum: 950f5306dd49cf4a76f87966bcb991bfde5e946b\r\nnpm notice integrity: sha512-0JKN\u002BHZIvkDir[...]tVpvba6nr02mQ==\r\nnpm notice total files: 28\r\nnpm notice\r\nnpm notice Publishing to https://registry.npmjs.org/ with tag latest and default access (dry-run)",
+      "rules": [
+        "LIB-003"
+      ]
+    },
+    {
+      "id": "lib-size",
+      "name": "Size budget",
+      "passed": false,
+      "seconds": 0.1095183,
+      "notRun": true,
+      "flaky": false,
+      "tier": "fast",
+      "output": "Not set up in this project: The project has no .size-limit.json, so this check has nothing to run.",
+      "rules": [
+        "EFF-001"
+      ]
+    },
+    {
+      "id": "lib-consumer-smoke",
+      "name": "Install and import the packed library",
+      "passed": false,
+      "seconds": 0.0946403,
+      "notRun": true,
+      "flaky": false,
+      "tier": "fast",
+      "output": "Not set up in this project: Nothing installs the packed library into a scratch project and imports it  no scripts/consumer-smoke.mjs .",
+      "rules": [
+        "LIB-003",
+        "LIB-004",
+        "LIB-005"
+      ]
+    },
+    {
+      "id": "lib-docs",
+      "name": "Documentation is complete",
+      "passed": false,
+      "seconds": 0.0755551,
+      "notRun": true,
+      "flaky": false,
+      "tier": "fast",
+      "output": "Not set up in this project: The project has no scripts/check-docs.mjs, so this check has nothing to run.",
+      "rules": [
+        "DOC-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-1",
+      "name": "No native button element",
+      "passed": true,
+      "seconds": 0.0298202,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-2",
+      "name": "No native table element",
+      "passed": true,
+      "seconds": 0.032877,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-3",
+      "name": "No native text box or text area",
+      "passed": true,
+      "seconds": 0.0340539,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-4",
+      "name": "No native file upload input",
+      "passed": true,
+      "seconds": 0.0354587,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-002-1",
+      "name": "No tiny fixed pixel font sizes",
+      "passed": true,
+      "seconds": 0.0329627,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-002"
+      ]
+    },
+    {
+      "id": "rule-USR-002-2",
+      "name": "Do not block pinch-zoom on mobile",
+      "passed": true,
+      "seconds": 0.0388974,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-002"
+      ]
+    },
+    {
+      "id": "rule-USR-003-1",
+      "name": "No dynamic code execution (eval / new Function)",
+      "passed": true,
+      "seconds": 0.0374762,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-2",
+      "name": "No raw HTML injection (XSS risk)",
+      "passed": true,
+      "seconds": 0.0370071,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-3",
+      "name": "No string-based timers (hidden eval)",
+      "passed": true,
+      "seconds": 0.0383103,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-4",
+      "name": "No leftover debugger statements or console.log",
+      "passed": true,
+      "seconds": 0.0360898,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-006-1",
+      "name": "No hard-coded colours in component code (use shared design tokens)",
+      "passed": true,
+      "seconds": 0.035439,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-006"
+      ]
+    },
+    {
+      "id": "lib-tests",
+      "name": "Tests, with coverage",
+      "passed": false,
+      "seconds": 19.2610337,
+      "notRun": false,
+      "flaky": false,
+      "tier": "full",
+      "output": "\u2026\nPASS __tests__/ZestDropdownMenu.test.tsx\r\nPASS __tests__/SpinnerIcon.test.tsx\r\nPASS __tests__/hooks/useToggleState.test.ts\r\nPASS __tests__/ZestButtonConfigProvider.test.tsx\r\nPASS __tests__/zestIconPerformance.test.tsx\r\nPASS __tests__/ZestButton.test.tsx\r\nPASS __tests__/buildExternalization.test.ts\r\nPASS __tests__/ZestIcon.test.tsx\r\nPASS __tests__/hooks/useConfirmation.test.ts\r\nPASS __tests__/hooks/useZestConfig.test.ts\r\nPASS __tests__/semanticTypeButtonConfigDefaults.test.tsx\r\nPASS __tests__/hooks/useThemeDetection.test.ts\r\nPASS __tests__/ZestButtonConfigContext.test.tsx\r\nPASS __tests__/hooks/useBusyState.test.ts\r\nPASS __tests__/packagePeerDependencies.test.ts\r\nPASS __tests__/semanticTypeIcons.test.tsx (5.044 s)\r\nPASS .devteam/runs/20261025-084314/scratch/reviewer/current/__tests__/semanticTypeIcons.test.tsx (5.288 s)\r\n\r\nSummary of all failing tests\r\nFAIL .devteam/runs/20261025-084314/scratch/security/prototype.probe.test.tsx (8.791 s)\r\n  \u25CF prototype-chain lookup probe \u203A getZestIconElement returns inherited prototype members for unknown names\r\n\r\n    expect(received).not.toBeNull()\r\n\r\n    Received: null\r\n\r\n    \u001B[0m \u001B[90m 10 |\u001B[39m       \u001B[90m// eslint-disable-next-line no-console\u001B[39m\r\n     \u001B[90m 11 |\u001B[39m       console\u001B[33m.\u001B[39mlog(name\u001B[33m,\u001B[39m \u001B[36mtypeof\u001B[39m el\u001B[33m,\u001B[39m el \u001B[33m===\u001B[39m \u001B[36mnull\u001B[39m \u001B[33m?\u001B[39m \u001B[32m\u0022null\u0022\u001B[39m \u001B[33m:\u001B[39m \u001B[32m\u0022NOT NULL\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n    \u001B[31m\u001B[1m\u003E\u001B[22m\u001B[39m\u001B[90m 12 |\u001B[39m       expect(el)\u001B[33m.\u001B[39mnot\u001B[33m.\u001B[39mtoBeNull()\u001B[33m;\u001B[39m\r\n     \u001B[90m    |\u001B[39m                      \u001B[31m\u001B[1m^\u001B[22m\u001B[39m\r\n     \u001B[90m 13 |\u001B[39m     }\r\n     \u001B[90m 14 |\u001B[39m   })\u001B[33m;\u001B[39m\r\n     \u001B[90m 15 |\u001B[39m\u001B[0m\r\n\r\n      at Object.\u003Canonymous\u003E (.devteam/runs/20261025-084314/scratch/security/prototype.probe.test.tsx:12:22)\r\n\r\nFAIL .devteam/runs/20261025-084314/scratch/reviewer/base/__tests__/ZestButtonToggle.test.tsx (10.577 s)\r\n  \u25CF ZestButton toggle mode \u203A R8 documentation \u203A R8: the API page documents every ToggleOptions prop and the README shows a toggle example\r\n\r\n    expect(received).toBe(expected) // Object.is equality\r\n\r\n    Expected: \u00221.6.0\u0022\r\n    Received: \u00221.6.1\u0022\r\n\r\n    \u001B[0m \u001B[90m 502 |\u001B[39m       expect(read(\u001B[32m\u0022README.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022toggleOptions\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m 503 |\u001B[39m       expect(read(\u001B[32m\u0022documentation/breaking-changes.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022Version 1.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n    \u001B[31m\u001B[1m\u003E\u001B[22m\u001B[39m\u001B[90m 504 |\u001B[39m       expect(\u001B[33mJSON\u001B[39m\u001B[33m.\u001B[39mparse(read(\u001B[32m\u0022package.json\u0022\u001B[39m))\u001B[33m.\u001B[39mversion)\u001B[33m.\u001B[39mtoBe(\u001B[32m\u00221.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m     |\u001B[39m                                                        \u001B[31m\u001B[1m^\u001B[22m\u001B[39m\r\n     \u001B[90m 505 |\u001B[39m     })\u001B[33m;\u001B[39m\r\n     \u001B[90m 506 |\u001B[39m\r\n     \u001B[90m 507 |\u001B[39m     it(\u001B[32m\u0022R8: the documented examples type-check against the exported types and render\u0022\u001B[39m\u001B[33m,\u001B[39m () \u001B[33m=\u003E\u001B[39m {\u001B[0m\r\n\r\n      at Object.\u003Canonymous\u003E (.devteam/runs/20261025-084314/scratch/reviewer/base/__tests__/ZestButtonToggle.test.tsx:504:56)\r\n\r\n\r\nTest Suites: 2 failed, 50 passed, 52 total\r\nTests:       2 failed, 614 passed, 616 total\r\nSnapshots:   0 total\r\nTime:        17.222 s, estimated 23 s\r\nRan all test suites.",
+      "rules": []
+    }
+  ],
+  "fullGreenHash": "393A6FEF6A61548B7309EDC914473D06143A7D64593D5FF89184CBF82F77760F",
+  "baseline": [
+    {
+      "id": "no-secrets",
+      "name": "No secrets in code",
+      "passed": true,
+      "seconds": 0.1440416,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "SEC-001"
+      ]
+    },
+    {
+      "id": "no-debug-leftovers",
+      "name": "No debugging leftovers",
+      "passed": true,
+      "seconds": 0.0961825,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "QUAL-001"
+      ]
+    },
+    {
+      "id": "lib-typecheck",
+      "name": "Type check (library and tests)",
+      "passed": true,
+      "seconds": 4.4557605,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "",
+      "rules": []
+    },
+    {
+      "id": "lib-tests",
+      "name": "Tests, with coverage",
+      "passed": false,
+      "seconds": 33.842657,
+      "notRun": false,
+      "flaky": false,
+      "tier": "full",
+      "output": "Failed twice in a row, so this is not a one-off.\n\u2026\n\u003E jest --coverage\r\n\r\n---------------------------------------|---------|----------|---------|---------|-------------------\r\nFile                                   | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s \r\n---------------------------------------|---------|----------|---------|---------|-------------------\r\nAll files                              |   98.07 |    95.13 |   98.36 |   98.82 |                   \r\n UI                                    |    96.9 |    95.69 |   97.14 |   98.12 |                   \r\n  SpinnerIcon.tsx                      |     100 |      100 |     100 |     100 |                   \r\n  ZestButton.tsx                       |   95.79 |       95 |   94.44 |   98.18 | 261-262           \r\n  ZestButtonConfigContext.ts           |     100 |      100 |     100 |     100 |                   \r\n  ZestButtonConfigProvider.tsx         |     100 |      100 |     100 |     100 |                   \r\n  ZestDropdownMenu.tsx                 |     100 |      100 |     100 |     100 |                   \r\n  ZestDropdownMenuItem.tsx             |    97.1 |    95.34 |     100 |   97.01 | 113-114           \r\n  semanticTypeButtonConfigDefaults.tsx |     100 |      100 |     100 |     100 |                   \r\n UI/hooks                              |     100 |    93.82 |     100 |     100 |                   \r\n  useBusyState.ts                      |     100 |    94.59 |     100 |     100 | 30-33             \r\n  useConfirmation.ts                   |     100 |       90 |     100 |     100 | 22                \r\n  useThemeDetection.ts                 |     100 |      100 |     100 |     100 |                   \r\n  useToggleState.ts                    |     100 |      100 |     100 |     100 |                   \r\n  useZestConfig.ts                     |     100 |    92.59 |     100 |     100 | 9,37              \r\n---------------------------------------|---------|----------|---------|---------|-------------------\r\n\nPASS __tests__/packagePeerDependencies.test.ts (6.902 s)\r\nPASS __tests__/buildExternalization.test.ts (7.127 s)\r\nPASS __tests__/ZestButtonConfigContext.test.tsx (7.269 s)\r\nPASS __tests__/hooks/useToggleState.test.ts (7.306 s)\r\nPASS __tests__/hooks/useBusyState.test.ts (7.313 s)\r\nPASS __tests__/ZestButtonConfigProvider.test.tsx (7.386 s)\r\nPASS __tests__/hooks/useThemeDetection.test.ts (7.392 s)\r\nPASS __tests__/hooks/useConfirmation.test.ts (7.401 s)\r\nPASS __tests__/semanticTypeButtonConfigDefaults.test.tsx (7.403 s)\r\nPASS __tests__/SpinnerIcon.test.tsx (7.448 s)\r\nPASS __tests__/hooks/useZestConfig.test.ts (7.532 s)\r\nPASS __tests__/ZestDropdownMenuItem.test.tsx (8.136 s)\r\nPASS __tests__/ZestDropdownMenu.test.tsx (8.222 s)\r\nFAIL __tests__/ZestButtonToggle.test.tsx (8.383 s)\r\n  \u25CF ZestButton toggle mode \u203A R8 documentation \u203A R8: the API page documents every ToggleOptions prop and the README shows a toggle example\r\n\r\n    expect(received).toBe(expected) // Object.is equality\r\n\r\n    Expected: \u00221.6.0\u0022\r\n    Received: \u00221.6.1\u0022\r\n\r\n    \u001B[0m \u001B[90m 502 |\u001B[39m       expect(read(\u001B[32m\u0022README.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022toggleOptions\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m 503 |\u001B[39m       expect(read(\u001B[32m\u0022documentation/breaking-changes.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022Version 1.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n    \u001B[31m\u001B[1m\u003E\u001B[22m\u001B[39m\u001B[90m 504 |\u001B[39m       expect(\u001B[33mJSON\u001B[39m\u001B[33m.\u001B[39mparse(read(\u001B[32m\u0022package.json\u0022\u001B[39m))\u001B[33m.\u001B[39mversion)\u001B[33m.\u001B[39mtoBe(\u001B[32m\u00221.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m     |\u001B[39m                                                        \u001B[31m\u001B[1m^\u001B[22m\u001B[39m\r\n     \u001B[90m 505 |\u001B[39m     })\u001B[33m;\u001B[39m\r\n     \u001B[90m 506 |\u001B[39m\r\n     \u001B[90m 507 |\u001B[39m     it(\u001B[32m\u0022R8: the documented examples type-check against the exported types and render\u0022\u001B[39m\u001B[33m,\u001B[39m () \u001B[33m=\u003E\u001B[39m {\u001B[0m\r\n\r\n      at Object.\u003Canonymous\u003E (__tests__/ZestButtonToggle.test.tsx:504:56)\r\n\r\nPASS __tests__/ZestButton.test.tsx (8.475 s)\r\n\r\nTest Suites: 1 failed, 14 passed, 15 total\r\nTests:       1 failed, 165 passed, 166 total\r\nSnapshots:   0 total\r\nTime:        11.734 s, estimated 15 s\r\nRan all test suites.",
+      "rules": []
+    },
+    {
+      "id": "lib-build",
+      "name": "Build (CommonJS, ES modules, type definitions)",
+      "passed": true,
+      "seconds": 8.0423637,
+      "notRun": false,
+      "flaky": false,
+      "tier": "full",
+      "output": "\u003E jattac.libs.web.zest-button@1.6.1 build\r\n\u003E rollup -c rollup.config.mjs\r\n\r\n\n\u001B[36m\r\n\u001B[1mUI/index.ts\u001B[22m \u2192 \u001B[1mdist/index.cjs.js, dist/index.esm.js\u001B[22m...\u001B[39m\r\n\u001B[1m\u001B[33m(!) Mixing named and default exports\u001B[39m\u001B[22m\r\n\u001B[90mhttps://rollupjs.org/configuration-options/#output-exports\u001B[39m\r\n\u001B[1mThe following entry modules are using named and default exports together:\u001B[22m\r\nUI/index.ts\r\n\r\nConsumers of your bundle will have to use chunk.default to access their default export, which may not be what you want. Use \u0060output.exports: \u0022named\u0022\u0060 to disable this warning.\r\n\u001B[32mcreated \u001B[1mdist/index.cjs.js, dist/index.esm.js\u001B[22m in \u001B[1m4.1s\u001B[22m\u001B[39m\r\n\u001B[36m\r\n\u001B[1mUI/index.ts\u001B[22m \u2192 \u001B[1mdist/index.d.ts\u001B[22m...\u001B[39m\r\n\u001B[32mcreated \u001B[1mdist/index.d.ts\u001B[22m in \u001B[1m1.9s\u001B[22m\u001B[39m",
+      "rules": []
+    },
+    {
+      "id": "lib-validate-package",
+      "name": "Package check (attw and publint)",
+      "passed": false,
+      "seconds": 0.1557269,
+      "notRun": true,
+      "flaky": false,
+      "tier": "full",
+      "output": "Not set up in this project: attw and publint are not installed, so nothing checks that the package works for everyone who installs it.",
+      "rules": [
+        "LIB-002"
+      ]
+    },
+    {
+      "id": "lib-pack",
+      "name": "What would be published",
+      "passed": true,
+      "seconds": 1.7814487,
+      "notRun": false,
+      "flaky": false,
+      "tier": "full",
+      "output": "jattac.libs.web.zest-button-1.6.1.tgz\r\n\nnpm notice\r\nnpm notice package: jattac.libs.web.zest-button@1.6.1\r\nnpm notice Tarball Contents\r\nnpm notice 1.1kB LICENSE\r\nnpm notice 4.0kB README.md\r\nnpm notice 696B dist/hooks/useBusyState.d.ts\r\nnpm notice 667B dist/hooks/useConfirmation.d.ts\r\nnpm notice 64B dist/hooks/useThemeDetection.d.ts\r\nnpm notice 547B dist/hooks/useToggleState.d.ts\r\nnpm notice 140B dist/hooks/useZestConfig.d.ts\r\nnpm notice 66.5kB dist/index.cjs.js\r\nnpm notice 67.8kB dist/index.cjs.js.map\r\nnpm notice 4.2kB dist/index.d.ts\r\nnpm notice 65.1kB dist/index.esm.js\r\nnpm notice 67.4kB dist/index.esm.js.map\r\nnpm notice 221B dist/semanticTypeButtonConfigDefaults.d.ts\r\nnpm notice 102B dist/SpinnerIcon.d.ts\r\nnpm notice 3.5kB dist/ZestButton.d.ts\r\nnpm notice 429B dist/ZestButtonConfigContext.d.ts\r\nnpm notice 316B dist/ZestButtonConfigProvider.d.ts\r\nnpm notice 809B dist/ZestDropdownMenu.d.ts\r\nnpm notice 335B dist/ZestDropdownMenuItem.d.ts\r\nnpm notice 10.3kB documentation/api.md\r\nnpm notice 5.1kB documentation/breaking-changes.md\r\nnpm notice 8.6kB documentation/configuration.md\r\nnpm notice 6.0kB documentation/development.md\r\nnpm notice 12.5kB documentation/examples.md\r\nnpm notice 5.8kB documentation/features.md\r\nnpm notice 2.5kB package.json\r\nnpm notice Tarball Details\r\nnpm notice name: jattac.libs.web.zest-button\r\nnpm notice version: 1.6.1\r\nnpm notice filename: jattac.libs.web.zest-button-1.6.1.tgz\r\nnpm notice package size: 75.4 kB\r\nnpm notice unpacked size: 334.7 kB\r\nnpm notice shasum: a907687b6bd6c7365f7f4f89c16627fef82e4b7c\r\nnpm notice integrity: sha512-SEJrBnAi7BmzC[...]IbfSveGO4apEQ==\r\nnpm notice total files: 26\r\nnpm notice",
+      "rules": []
+    },
+    {
+      "id": "lib-publish-dry-run",
+      "name": "Publish dry run (everything npm checks, nothing is uploaded)",
+      "passed": true,
+      "seconds": 1.6724088,
+      "notRun": false,
+      "flaky": false,
+      "tier": "full",
+      "output": "\u002B jattac.libs.web.zest-button@1.6.1\r\n\nnpm notice\r\nnpm notice package: jattac.libs.web.zest-button@1.6.1\r\nnpm notice Tarball Contents\r\nnpm notice 1.1kB LICENSE\r\nnpm notice 4.0kB README.md\r\nnpm notice 696B dist/hooks/useBusyState.d.ts\r\nnpm notice 667B dist/hooks/useConfirmation.d.ts\r\nnpm notice 64B dist/hooks/useThemeDetection.d.ts\r\nnpm notice 547B dist/hooks/useToggleState.d.ts\r\nnpm notice 140B dist/hooks/useZestConfig.d.ts\r\nnpm notice 66.5kB dist/index.cjs.js\r\nnpm notice 67.8kB dist/index.cjs.js.map\r\nnpm notice 4.2kB dist/index.d.ts\r\nnpm notice 65.1kB dist/index.esm.js\r\nnpm notice 67.4kB dist/index.esm.js.map\r\nnpm notice 221B dist/semanticTypeButtonConfigDefaults.d.ts\r\nnpm notice 102B dist/SpinnerIcon.d.ts\r\nnpm notice 3.5kB dist/ZestButton.d.ts\r\nnpm notice 429B dist/ZestButtonConfigContext.d.ts\r\nnpm notice 316B dist/ZestButtonConfigProvider.d.ts\r\nnpm notice 809B dist/ZestDropdownMenu.d.ts\r\nnpm notice 335B dist/ZestDropdownMenuItem.d.ts\r\nnpm notice 10.3kB documentation/api.md\r\nnpm notice 5.1kB documentation/breaking-changes.md\r\nnpm notice 8.6kB documentation/configuration.md\r\nnpm notice 6.0kB documentation/development.md\r\nnpm notice 12.5kB documentation/examples.md\r\nnpm notice 5.8kB documentation/features.md\r\nnpm notice 2.5kB package.json\r\nnpm notice Tarball Details\r\nnpm notice name: jattac.libs.web.zest-button\r\nnpm notice version: 1.6.1\r\nnpm notice filename: jattac.libs.web.zest-button-1.6.1.tgz\r\nnpm notice package size: 75.4 kB\r\nnpm notice unpacked size: 334.7 kB\r\nnpm notice shasum: a907687b6bd6c7365f7f4f89c16627fef82e4b7c\r\nnpm notice integrity: sha512-SEJrBnAi7BmzC[...]IbfSveGO4apEQ==\r\nnpm notice total files: 26\r\nnpm notice\r\nnpm notice Publishing to https://registry.npmjs.org/ with tag latest and default access (dry-run)",
+      "rules": [
+        "LIB-003"
+      ]
+    },
+    {
+      "id": "lib-size",
+      "name": "Size budget",
+      "passed": false,
+      "seconds": 0.1367463,
+      "notRun": true,
+      "flaky": false,
+      "tier": "full",
+      "output": "Not set up in this project: The project has no .size-limit.json, so this check has nothing to run.",
+      "rules": [
+        "EFF-001"
+      ]
+    },
+    {
+      "id": "lib-consumer-smoke",
+      "name": "Install and import the packed library",
+      "passed": false,
+      "seconds": 0.1392269,
+      "notRun": true,
+      "flaky": false,
+      "tier": "full",
+      "output": "Not set up in this project: Nothing installs the packed library into a scratch project and imports it  no scripts/consumer-smoke.mjs .",
+      "rules": [
+        "LIB-003",
+        "LIB-004",
+        "LIB-005"
+      ]
+    },
+    {
+      "id": "lib-docs",
+      "name": "Documentation is complete",
+      "passed": false,
+      "seconds": 0.1816641,
+      "notRun": true,
+      "flaky": false,
+      "tier": "fast",
+      "output": "Not set up in this project: The project has no scripts/check-docs.mjs, so this check has nothing to run.",
+      "rules": [
+        "DOC-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-1",
+      "name": "No native button element",
+      "passed": true,
+      "seconds": 0.0938772,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-2",
+      "name": "No native table element",
+      "passed": true,
+      "seconds": 0.1053192,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-3",
+      "name": "No native text box or text area",
+      "passed": true,
+      "seconds": 0.0948478,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-4",
+      "name": "No native file upload input",
+      "passed": true,
+      "seconds": 0.1070284,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-002-1",
+      "name": "No tiny fixed pixel font sizes",
+      "passed": true,
+      "seconds": 0.090186,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-002"
+      ]
+    },
+    {
+      "id": "rule-USR-002-2",
+      "name": "Do not block pinch-zoom on mobile",
+      "passed": true,
+      "seconds": 0.1071284,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-002"
+      ]
+    },
+    {
+      "id": "rule-USR-003-1",
+      "name": "No dynamic code execution (eval / new Function)",
+      "passed": true,
+      "seconds": 0.0926308,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-2",
+      "name": "No raw HTML injection (XSS risk)",
+      "passed": true,
+      "seconds": 0.094272,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-3",
+      "name": "No string-based timers (hidden eval)",
+      "passed": true,
+      "seconds": 0.1010109,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-4",
+      "name": "No leftover debugger statements or console.log",
+      "passed": true,
+      "seconds": 0.0984532,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-006-1",
+      "name": "No hard-coded colours in component code (use shared design tokens)",
+      "passed": true,
+      "seconds": 0.0974537,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-006"
+      ]
+    }
+  ],
+  "checkPassedOn": {
+    "lib-typecheck": "7CA85FFEDC8C6BE7B8A909444C3F6FD080EA1EC7476C15E4A3F89A9FB22DBFDF",
+    "lib-build": "3C04D49E82CB033DF615484AA2F79D47B8FF9059570DAF8CCC637B6FFD06379B",
+    "lib-pack": "B0293CF30F11C8B4B49EE97B9AE26F5339F5F84FBECF78C42F658406DCB55999",
+    "lib-publish-dry-run": "5AD3595035AB4B2552421D14F108F8685314D72194930877197E255F657DA0F8"
+  },
+  "checkFailedOn": {},
+  "generatedByChecks": [],
+  "ignoredPaths": [],
+  "acceptedGaps": [],
+  "scopeExtensions": [],
+  "rulings": [],
+  "shortcuts": 0,
+  "routeHistory": [],
+  "amendments": [],
+  "scopeSeen": {},
+  "scopeRequestsMade": 0,
+  "preflightAnswered": false,
+  "analystQuestions": 2,
+  "analysisClosed": false,
+  "youDecided": 0,
+  "requirementsApproved": true,
+  "signOffRounds": 1,
+  "changedFiles": [
+    "documentation/api.md",
+    "documentation/breaking-changes.md",
+    "documentation/configuration.md",
+    "documentation/development.md",
+    "documentation/examples.md",
+    "documentation/features.md",
+    "package-lock.json",
+    "package.json",
+    "README.md",
+    "Styles/ZestButton.module.css",
+    "UI/index.ts",
+    "UI/semanticTypeButtonConfigDefaults.tsx",
+    "UI/ZestButton.tsx",
+    "UI/ZestIcon.tsx",
+    "UI/zestIcons.tsx",
+    "__tests__/hooks/useZestConfig.test.ts",
+    "__tests__/semanticTypeButtonConfigDefaults.test.tsx",
+    "__tests__/semanticTypeIcons.test.tsx",
+    "__tests__/ZestButton.test.tsx",
+    "__tests__/ZestButtonToggle.test.tsx",
+    "__tests__/ZestIcon.test.tsx",
+    "__tests__/zestIconPerformance.test.tsx"
+  ],
+  "stopReason": "stopped by builder while the documenter was quiet"
+}

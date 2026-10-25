@@ -1,24 +1,23 @@
 {
   "pack": ".devteam/pack",
   "agent": {
-    "runtime": "claude-code",
-    "command": "claude",
+    "runtime": "opencode",
+    "command": "opencode",
     "args": [
-      "-p",
-      "{prompt}",
-      "--output-format",
-      "stream-json",
-      "--verbose",
-      "--permission-mode",
-      "acceptEdits",
-      "--allowedTools",
-      "Read,Write,Edit,Glob,Grep,Bash(dotnet:*),Bash(npm:*),Bash(npx:*),Bash(git status:*),Bash(git diff:*)"
-    ],
-    "discussArgs": [
-      "--permission-mode",
-      "plan",
+      "run",
+      "--format",
+      "json",
+      "--dir",
+      "{dir}",
       "{prompt}"
     ],
+    "discussArgs": [
+      "--agent",
+      "plan",
+      "--prompt",
+      "{prompt}"
+    ],
+    "model": "opencode/big-pickle",
     "timeoutSeconds": 900,
     "ceilingSeconds": 7200,
     "stallSeconds": 900,

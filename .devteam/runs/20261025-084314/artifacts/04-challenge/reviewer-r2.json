@@ -1,0 +1,80 @@
+{
+  "findings": [
+    {
+      "cites": "R7, DOC-001",
+      "severity": "blocking",
+      "file": "documentation/examples.md",
+      "line": 332,
+      "evidence": "R7 requires documentation/examples.md to have three recipes: (1) an icon-only button with aria-label, (2) overriding a default icon, (3) using the icon in a custom control. Recipe 7 (\"Reusing the Standard Icons\", lines 332-358) contains only (1) at lines 347-351 and (3) at line 353. There is no example that keeps a built-in semanticType and replaces its built-in icon. Recipe 4's only built-in override (lines 196-199) changes delete.buttonStyle, and documentation/configuration.md:181-194 overrides delete.buttonStyle and confirmOptions only; neither touches visualOptions.iconLeft/iconRight. A search for semanticType together with iconLeft/iconRight across README.md and documentation/*.md returns no match, so the capability is not shown anywhere. architect-r1 also lists \"overriding a built-in icon\" among the documentation deliverables for this feature.",
+      "description": "The examples page is missing one of the three recipes R7 names explicitly, so readers are never shown how to replace a built-in type's default icon. Add a short recipe, e.g. `<ZestButton zest={{ semanticType: 'save', visualOptions: { iconLeft: <ZestIcon name=\"archive\" /> } }}>Archive</ZestButton>` (and/or the provider form `semanticTypeDefaults: { save: { visualOptions: { iconLeft: <ZestIcon name=\"archive\" /> } } }`), with the default import of ZestButton and a named ZestIcon import."
+    },
+    {
+      "cites": "R7",
+      "severity": "advisory",
+      "file": "documentation/examples.md",
+      "line": 183,
+      "evidence": "The documented provider configuration does not type-check: when the `const appZestConfig = { semanticTypeDefaults: { delete: { buttonStyle: 'outline', ... } } }` snippet (examples.md:183-200, identical shape at configuration.md:181-197) is checked with `npx tsc --noEmit --strict`, `buttonStyle` widens to `string` and `<ZestButtonConfigProvider config={appZestConfig}>` fails with TS2322: `Type 'string' is not assignable to type 'ZestButtonStyle | undefined'`. Passing the object inline or annotating it as `ZestGlobalConfig` (or `as const`) fixes it. The pattern predates this change (it is present at 126a067), so this is advisory rather than a regression.",
+      "description": "R7's acceptance says every documented example must compile against the real types. The override examples are pre-existing, but they are still part of the pages this feature rewrites and they currently show TypeScript an error. Annotate the config objects (`const appZestConfig: ZestGlobalConfig = ...`) or inline them so the recipes compile."
+    },
+    {
+      "cites": "USR-003",
+      "severity": "advisory",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "line": 518,
+      "evidence": "Lines 518-520 are indented four spaces while the surrounding statements inside the same `it(...)` block are indented six, e.g. `    expect(read(\"README.md\")).toContain(\"toggleOptions\");` sits under a block whose other statements start at column seven. The mis-indentation was introduced with the version-expectation update from 1.6.0 to 1.7.0; it is cosmetic and does not affect behaviour.",
+      "description": "Restore the original indentation so the diff only changes the version values."
+    }
+  ],
+  "verifications": [
+    {
+      "id": "REV-1 / QA-1 / SEC-1 (R5 unknown-name guard)",
+      "status": "fixed",
+      "evidence": "UI/zestIcons.tsx:160-165 now uses `Object.prototype.hasOwnProperty.call(ZEST_ICON_ELEMENTS, name)` before indexing, so __proto__, constructor, toString, valueOf and hasOwnProperty fall through to null. __tests__/ZestIcon.test.tsx:70-83 renders those names and asserts no SVG, no text and no throw. The built dist/index.esm.js and dist/index.cjs.js contain the same guard."
+    },
+    {
+      "id": "REV-2 / EFF-001 (bundle size)",
+      "status": "fixed",
+      "evidence": "Rebuilt both trees with the same rollup config in scratch: base 126a067 dist/index.esm.js = 65,106 bytes; current working tree = 79,993 bytes. Delta = 14,887 bytes, under the 15,000-byte (and 15 KiB) cap. All 35 icon constants in UI/zestIcons.tsx are referenced by the 47-entry map; the unused arrowRightIcon/arrowRightDirIcon duplicates and the development comments flagged in review-r1 are gone."
+    },
+    {
+      "id": "REV-3 / DOC-001 (settings icon)",
+      "status": "fixed",
+      "evidence": "UI/zestIcons.tsx:93 now draws three vertical slider tracks with two round knobs, and documentation/features.md:147 describes settings as \"Sliders\", so the table matches the shipped drawing."
+    },
+    {
+      "id": "REV-4 / USR-003 (dead icon code)",
+      "status": "fixed",
+      "evidence": "UI/zestIcons.tsx has no unused icon constants (reference count is >= 2 for every const, i.e. definition plus map entry) and no leftover development comments; line 158 builds ZEST_ICON_NAMES from the map and line 160 exposes the O(1) lookup."
+    },
+    {
+      "id": "QA-2 / R7 (documented imports)",
+      "status": "fixed",
+      "evidence": "documentation/examples.md:123 and :180 and README.md:51 now use the default ZestButton import (the barrel exports ZestButton as default; there is no named ZestButton export). __tests__/ZestIcon.test.tsx:196-221 extracts every package import clause from README/examples and checks each named import exists on the real barrel."
+    },
+    {
+      "id": "QA-4 / R5 (consumer barrel test)",
+      "status": "fixed",
+      "evidence": "__tests__/ZestIcon.test.tsx:85-115 imports the default ZestButton, ZestButtonConfigProvider, ZestIcon, useZestButtonConfig, ZestIconProps and ZestIconSize from ../UI and renders a ZestIcon as a button iconLeft."
+    },
+    {
+      "id": "R1/R2/R3/R4/R6/R8 behaviour",
+      "status": "fixed",
+      "evidence": "All 47 names are in the SemanticType union, the BuiltInIconName union and ZEST_ICON_ELEMENTS (47 each, no missing/extra keys). The 28 new defaults match R2 (variant, icon side, 500 ms busy on send/login/logout/export/import/approve/reject/archive, no confirm/success options); existing entries keep their order, variant, button style, icon side and options. Tests cover unknown/capitalised/spaced names, aria-hidden/focusable=false, currentColor, shared viewBox/stroke, no href/script/event/raw HTML, and icon reuse across re-renders and 100 buttons."
+    },
+    {
+      "id": "EFF-001 recorded measurement",
+      "status": "fixed",
+      "evidence": "dist/index.esm.js 65,106 -> 79,993 bytes = +14,887 bytes (14.887 kB decimal / 14.538 KiB), below the 15 KB budget. No .size-limit.json exists, so this manual measurement is the recorded check."
+    },
+    {
+      "id": "Full test suite",
+      "status": "fixed",
+      "evidence": "Ran `npx jest --ci --silent` in the current working tree copy: 18 suites passed, 224 tests passed, 0 failed. `npx tsc` (project typecheck) and the rollup build both pass."
+    },
+    {
+      "id": "Package/version and peer surface",
+      "status": "fixed",
+      "evidence": "package.json and package-lock.json are at 1.7.0 (from 1.6.1); the only package.json diff is the version line, so dependencies/peerDependencies (react, react-dom, react-icons, radix) are unchanged. documentation/breaking-changes.md has a 1.7.0 entry for the icon-art change and the additive ZestIcon export. No console.log/console.debug/debugger in library source."
+    }
+  ]
+}

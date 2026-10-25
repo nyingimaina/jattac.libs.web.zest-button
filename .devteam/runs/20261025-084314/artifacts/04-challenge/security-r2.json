@@ -1,0 +1,10 @@
+{
+  "findings": [],
+  "verifications": [
+    {
+      "id": "SEC-1",
+      "status": "fixed",
+      "evidence": "UI/zestIcons.tsx:161 now guards the lookup with Object.prototype.hasOwnProperty.call(ZEST_ICON_ELEMENTS, name), so inherited Object.prototype keys such as __proto__, constructor, toString, valueOf and hasOwnProperty fall through to null instead of being treated as icons. The shipped dist/index.esm.js contains the same guard. __tests__/ZestIcon.test.tsx covers those inherited names, and the ZestIcon plus semanticTypeIcons suites pass (70 tests, 4 suites)."
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "summary": "",
+  "requirements": [],
+  "questions": [],
+  "ask": {
+    "text": "For the standardized icons, should the library draw its own small set of matching SVG icons (the same line weight and look on every button), or keep using the ready-made Font Awesome icons it uses today and just organise them in one place?",
+    "why": "Own SVG icons make every built-in button look consistent and remove the dependency on an icon package for built-ins, but the icons on today's buttons (Save, Delete, Add and so on) would look different after the update. Keeping Font Awesome keeps today's look but leaves the style tied to that package.",
+    "topic": "quality",
+    "options": [
+      { "label": "Own SVG icons, one consistent style", "consequence": "All built-in types share one look and need no icon package; existing buttons' icons change appearance, so this is noted as a visible change in the release notes.", "recommended": true },
+      { "label": "Keep Font Awesome icons, organised in one shared place", "consequence": "Today's icons stay exactly as they are; new types use the same icon family." },
+      { "label": "Own SVG icons for new types only; leave existing ones untouched", "consequence": "Nothing changes for current users, but the built-in set mixes two icon styles." }
+    ]
+  },
+  "coverage": [
+    { "topic": "users", "status": "assumed", "note": "Developers who install the library and the people using their apps; no roles or permissions." },
+    { "topic": "data", "status": "not-applicable", "note": "Nothing is stored; only built-in type names and icon definitions." },
+    { "topic": "permissions", "status": "not-applicable", "note": "A UI library has no records or ownership." },
+    { "topic": "validation", "status": "assumed", "note": "An unknown semantic type renders a plain button, as today." },
+    { "topic": "states", "status": "assumed", "note": "Icons must keep working in the busy, success, fail and confirm states as today." },
+    { "topic": "duplicates", "status": "not-applicable", "note": "No submits or shared records are involved in defining types and icons." },
+    { "topic": "volume", "status": "assumed", "note": "Many buttons per page; icons must not be rebuilt on every render." },
+    { "topic": "deletion", "status": "not-applicable", "note": "Nothing is stored or deleted." },
+    { "topic": "privacy", "status": "not-applicable", "note": "No personal data." },
+    { "topic": "quality", "status": "open", "note": "Icon source (own SVG vs Font Awesome) decides bundle size, look and whether existing icons change." }
+  ],
+  "assumptions": [
+    "The earlier toggle-mode decisions are already built and merged; this request does not change them."
+  ]
+}

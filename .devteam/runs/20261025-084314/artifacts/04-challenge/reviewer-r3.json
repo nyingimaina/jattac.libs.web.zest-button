@@ -1,0 +1,34 @@
+{
+  "findings": [
+    {
+      "cites": "DOC-001",
+      "severity": "blocking",
+      "file": "documentation/examples.md",
+      "line": 332,
+      "evidence": "R7 requires documentation/examples.md to contain recipes for (a) an icon-only button with aria-label, (b) overriding a default icon, and (c) using the icon in a custom control. Recipe 7 (lines 341-355) covers (a) and (c), but no recipe combines a built-in semanticType with visualOptions.iconLeft/iconRight to replace that type's default icon. Recipe 4's built-in override example (line 197) only changes buttonStyle on 'delete', and its provider example (line 188) sets iconLeft for a custom 'publish' type, not a built-in default.",
+      "description": "The documented recipe for overriding a built-in type's default icon is missing from examples.md, so the feature's override path that R6/R7 promise is not shown where readers look."
+    }
+  ],
+  "verifications": [
+    {
+      "id": "REV-1",
+      "status": "fixed",
+      "evidence": "UI/zestIcons.tsx:161 now guards the lookup with Object.prototype.hasOwnProperty.call(ZEST_ICON_ELEMENTS, name) and returns null otherwise, so __proto__, constructor, toString, hasOwnProperty and valueOf are not treated as icons. __tests__/ZestIcon.test.tsx:68-80 asserts getZestIconElement returns null and no svg renders for those names; the full suite passes."
+    },
+    {
+      "id": "REV-2",
+      "status": "fixed",
+      "evidence": "Fresh rollup builds from the same config and node_modules (scratch copies): baseline commit 126a067 dist/index.esm.js = 65,106 bytes; current working tree = 79,993 bytes; delta = 14,887 bytes, which is within the 15,000-byte (and 15 KiB) allowance. The built ESM file hash from the project dist matches a clean rebuild of the current source."
+    },
+    {
+      "id": "REV-3",
+      "status": "fixed",
+      "evidence": "UI/zestIcons.tsx:93 now draws three vertical slider tracks with round knobs (lines at x=4/12/20 with circles at differing heights), and documentation/features.md:147 describes the settings icon as 'Sliders'; the earlier target/crosshair drawing is gone."
+    },
+    {
+      "id": "REV-4",
+      "status": "fixed",
+      "evidence": "UI/zestIcons.tsx contains no comments and no unused icon constants: all 35 createIcon constants (plusIcon through archiveIcon) are referenced exactly twice (their definition and a ZEST_ICON_ELEMENTS entry), and the former arrowRightIcon/arrowRightDirIcon duplicates are gone; aliases such as add/new, save/submit, view/details, download/export and upload/import share one element."
+    }
+  ]
+}

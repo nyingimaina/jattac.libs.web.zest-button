@@ -8,6 +8,7 @@ A highly customizable and interactive React button component designed for modern
 *   **Success & Failure Feedback**: Provide instant visual feedback with animated checkmarks for success or an animated 'X' with a shake for failures and timeouts.
 *   **Built-in Confirmation Flow**: Protect critical actions with a configurable "click-to-confirm" mechanism, complete with a countdown timer.
 *   **Richly Styleable**: Comes with `solid`, `outline`, `text`, and `dashed` styles, multiple color variants, and automatic light/dark mode support.
+*   **47 Built-in Semantic Types & Standard Icons**: Name an intent (`save`, `search`, `delete`, …) and get a matching icon, variant and behaviour. Every icon is an inline SVG drawn by the library on one 24-unit grid, and `ZestIcon` lets you reuse the same drawings anywhere.
 *   **Split Buttons & Overflow Menus**: Attach a set of secondary actions to a button's default action via `dropdownOptions` — a discoverable chevron opens a themeable, independently-sized menu, with each item running through the same busy/confirm feedback as the main button.
 
 *   **On/Off Toggle Mode**: Pass `toggleOptions` to turn the button into a toggle (like a Bold button in an editor). When on it looks pressed and shows an animated check mark; screen readers hear "pressed".
@@ -41,6 +42,31 @@ const App = () => {
 
 export default App;
 ```
+
+### Semantic Types & Standard Icons
+
+Name the action and the button supplies the matching icon, variant and sensible behaviour. All 47 types are listed in the [built-in type table](./documentation/features.md#built-in-semantic-types-reference).
+
+```tsx
+import ZestButton, { ZestIcon } from 'jattac.libs.web.zest-button';
+
+const Actions = () => (
+  <div style={{ display: 'flex', gap: '0.5rem' }}>
+    <ZestButton zest={{ semanticType: 'search' }}>Search</ZestButton>
+    <ZestButton zest={{ semanticType: 'save' }}>Save</ZestButton>
+    <ZestButton zest={{ semanticType: 'delete' }}>Delete</ZestButton>
+
+    {/* Reuse the same drawing in your own control. */}
+    <ZestIcon name="filter" size="lg" />
+    <ZestButton
+      aria-label="Copy"
+      zest={{ visualOptions: { iconLeft: <ZestIcon name="copy" /> } }}
+    />
+  </div>
+);
+```
+
+`ZestIcon` is decorative (`aria-hidden`), so icon-only controls need their own `aria-label`. See the [`ZestIcon` API reference](./documentation/api.md#zesticon) and [Recipe 7](./documentation/examples.md#recipe-7-reusing-the-standard-icons).
 
 ### Toggle Example
 
@@ -79,4 +105,4 @@ Licensed under [MIT](./LICENSE).
 
 ---
 
-[Next: The Cookbook (Examples) ➡️](./documentation/examples.md)
+[⬅️ Previous: Breaking Changes](./documentation/breaking-changes.md) | [Next: The Cookbook (Examples) ➡️](./documentation/examples.md)

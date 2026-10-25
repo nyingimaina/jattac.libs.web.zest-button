@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 0,
+  "runId": "20261025-084314",
+  "at": "2026-10-25T12:19:41.7574789+00:00",
+  "status": "Stopped",
+  "feature": "exhaustive semantic types and standardized icons (svg?)",
+  "testsReported": 59,
+  "checksPassed": 17,
+  "checksTotal": 22,
+  "checksNotRun": 4,
+  "bootPassed": 0,
+  "bootTotal": 0,
+  "findingsOpen": 0,
+  "findingsAdvisory": 20,
+  "findingsFixed": 9,
+  "requirementsTotal": 8,
+  "requirementsWithTests": 8,
+  "costUsd": 0.9270403,
+  "seconds": 12987.4928156,
+  "coverage": [
+    {
+      "name": "Library",
+      "linePercent": 99,
+      "branchPercent": 95.6,
+      "changedLinePercent": 98.7,
+      "filesCovered": 42,
+      "functionPercent": 98.5
+    }
+  ],
+  "testsExecuted": 0,
+  "testsFailed": 0,
+  "testsSkipped": 0,
+  "verification": false
+}

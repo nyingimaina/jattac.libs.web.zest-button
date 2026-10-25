@@ -1,7 +1,7 @@
 ---
 title: AI Knowledge Graph
-covers: AGENTS.md, docs/guidelines/ai-knowledge.md
-covers-hash: 7440658068ef77165a4e
+covers: AGENTS.md
+covers-hash: 10622e884f0ab941d0e1
 ---
 
 # AI Knowledge Graph
@@ -127,6 +127,40 @@ All three are no-ops when `dropdownOptions` is absent (the new state variables n
 - jsdom has no `ResizeObserver` either — also polyfilled in `jest.setup.js` (Radix's Popper-based content measurement needs it).
 - `ZestDropdownMenu`'s `open` prop is fully controlled. A `jest.fn()` passed as `onOpenChange` that doesn't feed back into a real `open` state will never actually open the menu, regardless of whether Radix's internal toggle logic fired correctly — tests asserting the open *result* (not just that the callback fired) need a real state-backed wrapper component.
 
+## Standard icons and semantic type defaults
+
+### Purpose
+`ZestButton` ships 47 built-in semantic names and draws every one of their icons itself as inline SVG, so a button created with only `zest={{ semanticType: 'search' }}` gets an icon, variant, style and behaviour that match the rest of the interface. `ZestIcon` exposes the same drawings to the rest of the app.
+
+### Location
+`UI/zestIcons.tsx` (35 SVG drawings, the `BuiltInIconName` union, `ZEST_ICON_ELEMENTS`, `ZEST_ICON_NAMES`, `getZestIconElement`), `UI/ZestIcon.tsx` (public wrapper and `ZestIconSize`), `UI/semanticTypeButtonConfigDefaults.tsx` (the 47 defaults), `UI/ZestButton.tsx` (`SemanticType` union), `Styles/ZestButton.module.css` (`.zestIcon*`), `UI/index.ts` (exports `ZestIcon`).
+
+### Callers
+`ZestButton` through `useZestConfig`; consumers through `zest.semanticType`, `zest.visualOptions.iconLeft/iconRight`, dropdown-item `semanticType`, or `<ZestIcon>` in their own controls.
+
+### Callees
+`getZestIconElement(name)` for every lookup. No icon package is used for these 47 drawings. The busy spinner is still `FaSpinner` from `react-icons/fa6`, so `react-icons` remains a peer dependency.
+
+### Dependencies
+None added; the drawings are plain React elements.
+
+### Configuration
+`semanticType`, `semanticTypeDefaults`, `defaultProps`, and local `visualOptions`. Precedence is global `defaultProps` -> built-in type defaults -> provider `semanticTypeDefaults` -> local `zest` (`UI/hooks/useZestConfig.ts`). Custom types come from TypeScript module augmentation of `CustomZestSemanticTypes`; augmentation supplies the name, the provider supplies the defaults.
+
+### Known Invariants
+- Exactly 47 built-in names, in `UI/ZestButton.tsx` and in the defaults map: the 19 original entries keep their original order, then 28 new ones.
+- 35 unique drawings serve the 47 names. Aliases (`add`/`new`, `save`/`submit`, `edit`/`update`, `delete`/`remove`, `cancel`/`close`, `view`/`details`, `refresh`/`reload`) share one module-level element instance; `view`/`details`/`next` also share the right arrow, and `export`/`import` reuse the download/upload art.
+- Every SVG uses `viewBox="0 0 24 24"`, `fill="none"`, `stroke="currentColor"`, `strokeWidth="2"`, round caps/joins, `aria-hidden="true"` and `focusable="false"`.
+- `getZestIconElement` uses `Object.prototype.hasOwnProperty.call`, so unknown and inherited names (`toString`, `__proto__`, ...) return `null` instead of rendering or throwing.
+- `deepMerge` must preserve untouched React-element references; tests assert the shared icon instance survives re-renders, provider merges and local overrides. An override (local or provider `iconLeft`) replaces the built-in icon rather than adding a second one.
+- `next` is the only new type using `iconRight`; every other new type uses `iconLeft`. Only the 8 async new types (`send`, `login`, `logout`, `approve`, `reject`, `archive`, `export`, `import`) pin `minBusyDurationMs: 500`; no new type asks for confirmation.
+- `ZestIcon` sizes: `sm` = 1rem, `md` = 1.25rem, `lg` = 1.5rem; a number is `rem`; any other string is used as `font-size`. An unknown name renders `null`.
+- Only `ZestIcon` and its prop types are public from `UI/index.ts`; `BuiltInIconName`/`ZEST_ICON_NAMES`/`getZestIconElement` are internal.
+- Bundle cost: `dist/index.esm.js` went from 65,106 to 79,993 bytes (+14,887), under the 15,000-byte cap; the drawings are bundled, while the old `react-icons/fa`/`fa6` imports were external either way.
+
+### Test Coverage
+`__tests__/semanticTypeButtonConfigDefaults.test.tsx`, `__tests__/semanticTypeIcons.test.tsx`, `__tests__/ZestIcon.test.tsx`, `__tests__/zestIconPerformance.test.tsx`, plus new cases in `__tests__/ZestButton.test.tsx`, `__tests__/ZestButtonToggle.test.tsx` and `__tests__/hooks/useZestConfig.test.ts`. Full suite at this revision: 18 suites / 225 tests, `tsc --noEmit` exit 0.
+
 ## Jest test infrastructure
 
 ### Purpose
@@ -156,7 +190,7 @@ All added as devDependencies only: `jest`, `@types/jest`, `ts-jest`, `jest-envir
 `scripts/verify-pre.ps1` / `scripts/verify-post.ps1` hardcode `$projectRoot` — originally pointed at a `lattice-web-light` subfolder that doesn't exist in this repo (copied from a different project's version of these scripts); fixed 2026-07-28 to `$projectRoot = $repoRoot`. If these scripts are ever copied into yet another repo, check this first.
 
 ### Test Coverage
-As of 2026-07-28: 52 tests across 9 suites, covering every file currently in `UI/`'s public surface (`ZestButton.tsx` incl. busy/confirm/keyboard flows, all 4 hooks, `ZestButtonConfigContext.ts`, `ZestButtonConfigProvider.tsx`, `SpinnerIcon.tsx`, `semanticTypeButtonConfigDefaults.tsx`). 95.38% lines / 94.76% statements / 97.36% functions / 85.23% branches. Baseline recorded in `test-reports/coverage-baseline.json`. Superseded by the dropdown-options feature's test additions above (81 tests, 97.21% lines as of the same date).
+As of 2026-07-28: 52 tests across 9 suites, covering every file currently in `UI/`'s public surface (`ZestButton.tsx` incl. busy/confirm/keyboard flows, all 4 hooks, `ZestButtonConfigContext.ts`, `ZestButtonConfigProvider.tsx`, `SpinnerIcon.tsx`, `semanticTypeButtonConfigDefaults.tsx`). 95.38% lines / 94.76% statements / 97.36% functions / 85.23% branches. Baseline recorded in `test-reports/coverage-baseline.json`. Superseded by the dropdown-options feature's test additions above (81 tests, 97.21% lines as of the same date), then by the React 19/Vite and semantic-types/icons work: 18 suites / 225 tests as of 2026-10-25.
 
 ## React 19 / Vite packaging support
 

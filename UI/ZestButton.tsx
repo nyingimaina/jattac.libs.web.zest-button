@@ -17,7 +17,7 @@ export type ZestButtonStyle = 'solid' | 'outline' | 'text' | 'dashed';
 
 // Allows developers to extend the semantic types via module augmentation
 export interface CustomZestSemanticTypes {}
-export type SemanticType = 'add' | 'save' | 'submit' | 'edit' | 'update' | 'delete' | 'remove' | 'cancel' | 'close' | 'view' | 'details' | 'download' | 'upload' | 'refresh' | 'reload' | 'print' | 'share' | 'confirm' | keyof CustomZestSemanticTypes;
+export type SemanticType = 'add' | 'new' | 'save' | 'submit' | 'edit' | 'update' | 'delete' | 'remove' | 'cancel' | 'close' | 'view' | 'details' | 'download' | 'upload' | 'refresh' | 'reload' | 'print' | 'share' | 'confirm' | 'search' | 'filter' | 'sort' | 'copy' | 'paste' | 'back' | 'next' | 'home' | 'menu' | 'more' | 'settings' | 'help' | 'info' | 'warning' | 'send' | 'login' | 'logout' | 'undo' | 'redo' | 'approve' | 'reject' | 'favorite' | 'attach' | 'lock' | 'unlock' | 'archive' | 'export' | 'import' | keyof CustomZestSemanticTypes;
 
 /**
  * Visual appearance of the button

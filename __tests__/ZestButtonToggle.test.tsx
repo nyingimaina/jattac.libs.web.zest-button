@@ -489,6 +489,22 @@ describe("ZestButton toggle mode", () => {
       expect(button).toHaveTextContent("Save");
       expect(button.querySelector("svg")).not.toBeNull();
     });
+
+    it("R6 and R8: a new type icon and the toggle check coexist without replacing each other", () => {
+      const { container } = render(
+        <ZestButton
+          zest={{ semanticType: "favorite", toggleOptions: { defaultPressed: true, checkPosition: "end" } }}
+        >
+          Favourite
+        </ZestButton>
+      );
+
+      const button = screen.getByRole("button", { name: "Favourite" });
+      expect(button).toHaveClass("toggleOn");
+      expect(button).toHaveAttribute("aria-pressed", "true");
+      expect(container.querySelector(".inner > .icon svg")).not.toBeNull();
+      expect(container.querySelector(".content .toggleCheck")).not.toBeNull();
+    });
   });
 
   describe("R8 documentation", () => {
@@ -499,9 +515,9 @@ describe("ZestButton toggle mode", () => {
       ["pressed", "defaultPressed", "onPressedChange", "checkPosition", "toggleOptions"].forEach((prop) =>
         expect(api).toContain("`" + prop + "`")
       );
-      expect(read("README.md")).toContain("toggleOptions");
-      expect(read("documentation/breaking-changes.md")).toContain("Version 1.6.0");
-      expect(JSON.parse(read("package.json")).version).toBe("1.6.0");
+    expect(read("README.md")).toContain("toggleOptions");
+    expect(read("documentation/breaking-changes.md")).toContain("Version 1.7.0");
+    expect(JSON.parse(read("package.json")).version).toBe("1.7.0");
     });
 
     it("R8: the documented examples type-check against the exported types and render", () => {

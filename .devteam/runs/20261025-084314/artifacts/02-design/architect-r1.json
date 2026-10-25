@@ -1,0 +1,164 @@
+{
+  "summary": "Additive icon layer on the existing semantic-type system, with no new framework, dependency or build-output change. A new internal module, UI/zestIcons.tsx, owns the 47 built-in names' path data and a module-level map of React SVG elements that are created once at import (aliases deliberately share one element). A new public component, UI/ZestIcon.tsx, looks a name up in O(1), renders the shared element unchanged, hides it from screen readers (aria-hidden + focusable=false) and returns null for unknown names; an optional size and className are applied by a thin wrapper so the shared SVG element is never cloned or rebuilt. UI/semanticTypeButtonConfigDefaults.tsx drops every react-icons/fa import and uses those shared elements as iconLeft (or iconRight for view, details and next) for the existing entries, keeping their order and every option they have today; confirm gains the standard check icon because R3 requires an icon on every built-in type. The same file appends exactly the 28 new entries with the R2 defaults: standard solid variant and iconLeft for search, filter, sort, copy, paste, home, menu, more, settings, help, info, favorite, attach, lock, unlock, undo, redo; back uses iconLeft, next iconRight; approve is success, reject and warning are danger; send, login, logout, export, import, approve, reject and archive get only busyOptions.minBusyDurationMs = 500 (no successOptions, no confirmOptions). UI/ZestButton.tsx only widens the SemanticType union from 19 to 47 names. UI/index.ts adds the ZestIcon, ZestIconProps and ZestIconSize exports. Existing CSS Modules, the styles.icon slot, currentColor theming and the existing useZestConfig precedence/deep-merge are reused; one .zestIcon rule is added for size in em (font sizes are already rem based). No change to useZestConfig, react-icons (FaSpinner and the dropdown chevron stay), rollup, peer or runtime dependencies, or the dist layout. Public surface: added ZestIcon/ZestIconProps/ZestIconSize; extended SemanticType; no existing export, prop or type removed or renamed. Release: package.json and package-lock.json go to 1.7.0 and documentation/breaking-changes.md gets a 1.7.0 entry for the new icon art. Scale/cost: the number of built-in types is fixed at 47, lookup is a single object property read, the 47 SVG elements and their path strings are allocated once at module load (a few KB), and per button, per render the work is constant; 100x more buttons only adds the unavoidable DOM nodes, with no loops over the type list, no caches that grow, no timers, listeners, network or storage. Drawing set: search magnifier, filter funnel, sort up/down arrows, copy two sheets, paste clipboard, back arrow-left, next arrow-right, home house, menu three lines, more three dots, settings gear, help question circle, info info circle, warning triangle, send paper plane, login arrow into a door, logout arrow out of a door, undo/redo curved arrows, approve check circle, reject x circle, favorite heart, attach paperclip, lock/unlock padlock, archive box, export/import arrow out of/into a box.",
+  "impact": {
+    "touches": [
+      "UI/ZestButton.tsx — widen the SemanticType union with the 28 new names; icon-rendering, busy/success/fail, confirmation, toggle and dropdown logic stay byte-for-byte unchanged",
+      "UI/semanticTypeButtonConfigDefaults.tsx — replace the 12 react-icons/fa imports with the shared SVG elements, add a check icon to confirm, append the 28 new entries with R2 defaults; keep existing entry order and options",
+      "UI/index.ts — add the public ZestIcon/ZestIconProps/ZestIconSize exports",
+      "Styles/ZestButton.module.css — add .zestIcon (1em box, currentColor already inherited) plus the optional ZestIcon size classes/wrapper; no existing rule changes",
+      "package.json and package-lock.json — raise 1.6.1 to 1.7.0; dependencies and peerDependencies untouched",
+      "README.md and documentation/{features,api,examples,configuration,development,breaking-changes}.md — document the 47 types, ZestIcon, defaults and the icon-art note, keeping previous/next links",
+      "Existing tests that assert icon markup or the semantic defaults map — characterization coverage extended without changing behavioural expectations"
+    ],
+    "reuses": [
+      "The existing semanticTypeButtonConfigDefaults map and useZestConfig precedence chain (global defaultProps -> built-in -> provider semanticTypeDefaults -> local zest)",
+      "The existing styles.icon slot, flex layout and currentColor text colour for disabled, variant and light/dark/system contrast",
+      "The existing in-repo SVG convention (viewBox 0 0 24 24, fill none, currentColor stroke, round caps and joins) used by AnimatedCheckmark and ToggleCheck",
+      "CSS Modules injected into the bundle, rem sizing and mobile-first styling; no new CSS file or consumer CSS import",
+      "react-icons/fa6 FaSpinner for busy and the existing dropdown chevron (out of scope, kept as peers)",
+      "The existing __tests__ Jest + React Testing Library setup and documentation page chain"
+    ],
+    "adds": [
+      "UI/zestIcons.tsx — internal 24-unit path data for the drawings, ZEST_ICON_ELEMENTS (one module-level element per built-in name, shared by aliases), ZEST_ICON_NAMES and getZestIconElement",
+      "UI/ZestIcon.tsx — public ZestIcon component and ZestIconProps/ZestIconSize types; unknown name returns null and never throws",
+      "Tests: ZestIcon, semanticTypeIcons, zestIconPerformance and the characterization/regression additions to the existing defaults, ZestButton, toggle and useZestConfig suites",
+      "Documentation for the 47-type table, ZestIcon recipes, icon-only aria-label guidance, overriding a built-in icon and adding a future icon in the shared style"
+    ]
+  },
+  "scope": [
+    "UI/ZestButton.tsx",
+    "UI/ZestIcon.tsx",
+    "UI/zestIcons.tsx",
+    "UI/semanticTypeButtonConfigDefaults.tsx",
+    "UI/index.ts",
+    "Styles/ZestButton.module.css",
+    "__tests__/ZestIcon.test.tsx",
+    "__tests__/semanticTypeIcons.test.tsx",
+    "__tests__/zestIconPerformance.test.tsx",
+    "__tests__/semanticTypeButtonConfigDefaults.test.tsx",
+    "__tests__/ZestButton.test.tsx",
+    "__tests__/ZestButtonToggle.test.tsx",
+    "__tests__/hooks/useZestConfig.test.ts",
+    "README.md",
+    "documentation/features.md",
+    "documentation/api.md",
+    "documentation/examples.md",
+    "documentation/configuration.md",
+    "documentation/development.md",
+    "documentation/breaking-changes.md",
+    "package.json",
+    "package-lock.json"
+  ],
+  "components": [
+    {
+      "name": "ZestIcon",
+      "path": "UI/ZestIcon.tsx",
+      "requirements": ["R3", "R4", "R5"]
+    },
+    {
+      "name": "BuiltInIconRegistry",
+      "path": "UI/zestIcons.tsx",
+      "requirements": ["R3", "R4", "R5", "R8"]
+    },
+    {
+      "name": "SemanticTypeButtonConfigDefaults",
+      "path": "UI/semanticTypeButtonConfigDefaults.tsx",
+      "requirements": ["R1", "R2", "R3", "R6"]
+    },
+    {
+      "name": "ZestButtonSemanticType",
+      "path": "UI/ZestButton.tsx",
+      "requirements": ["R1", "R6"]
+    },
+    {
+      "name": "PublicApiBarrel",
+      "path": "UI/index.ts",
+      "requirements": ["R5", "R6"]
+    },
+    {
+      "name": "ZestButtonIconStyles",
+      "path": "Styles/ZestButton.module.css",
+      "requirements": ["R3", "R4"]
+    },
+    {
+      "name": "PackageReleaseMetadata",
+      "path": "package.json",
+      "requirements": ["R6"]
+    },
+    {
+      "name": "PackageLockReleaseMetadata",
+      "path": "package-lock.json",
+      "requirements": ["R6"]
+    },
+    {
+      "name": "ReadmeFirstExample",
+      "path": "README.md",
+      "requirements": ["R5", "R7"]
+    },
+    {
+      "name": "FeaturesDocumentation",
+      "path": "documentation/features.md",
+      "requirements": ["R1", "R2", "R3", "R7"]
+    },
+    {
+      "name": "ApiDocumentation",
+      "path": "documentation/api.md",
+      "requirements": ["R1", "R3", "R4", "R5", "R7"]
+    },
+    {
+      "name": "ExamplesDocumentation",
+      "path": "documentation/examples.md",
+      "requirements": ["R4", "R5", "R7"]
+    },
+    {
+      "name": "ConfigurationDocumentation",
+      "path": "documentation/configuration.md",
+      "requirements": ["R2", "R7"]
+    },
+    {
+      "name": "DevelopmentDocumentation",
+      "path": "documentation/development.md",
+      "requirements": ["R3", "R7"]
+    },
+    {
+      "name": "BreakingChangesDocumentation",
+      "path": "documentation/breaking-changes.md",
+      "requirements": ["R6", "R7"]
+    },
+    {
+      "name": "ZestIconTests",
+      "path": "__tests__/ZestIcon.test.tsx",
+      "requirements": ["R5", "R8"]
+    },
+    {
+      "name": "SemanticTypeIconTests",
+      "path": "__tests__/semanticTypeIcons.test.tsx",
+      "requirements": ["R1", "R2", "R3", "R4", "R8"]
+    },
+    {
+      "name": "IconPerformanceTests",
+      "path": "__tests__/zestIconPerformance.test.tsx",
+      "requirements": ["R3", "R8"]
+    },
+    {
+      "name": "SemanticTypeDefaultsTests",
+      "path": "__tests__/semanticTypeButtonConfigDefaults.test.tsx",
+      "requirements": ["R1", "R2", "R6", "R8"]
+    },
+    {
+      "name": "ZestButtonTests",
+      "path": "__tests__/ZestButton.test.tsx",
+      "requirements": ["R1", "R3", "R6", "R8"]
+    },
+    {
+      "name": "ZestButtonToggleRegressionTests",
+      "path": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": ["R6", "R8"]
+    },
+    {
+      "name": "ZestConfigPrecedenceTests",
+      "path": "__tests__/hooks/useZestConfig.test.ts",
+      "requirements": ["R1", "R2", "R6", "R8"]
+    }
+  ]
+}

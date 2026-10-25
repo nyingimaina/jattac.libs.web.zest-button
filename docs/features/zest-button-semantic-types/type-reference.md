@@ -1,7 +1,7 @@
 ---
 title: Built-in semantic type reference
 covers: UI/semanticTypeButtonConfigDefaults.tsx, UI/zestIcons.tsx, UI/ZestButton.tsx, Styles/ZestButton.module.css, UI/hooks/useBusyState.ts, UI/hooks/useConfirmation.ts
-covers-hash: 286050f3def14e1e1cda
+covers-hash: 90aced549eafb9ee689f
 ---
 
 # Built-in semantic type reference
@@ -200,6 +200,8 @@ arrow after the word, so the two arrows sit on the outside edges.
 - [Customising semantic types](./customising.md) — override the table's defaults.
 - [Using the ZestButton on/off toggle](../zest-button-toggle/guide.md) — a toggle's check
   mark and the type icon in one button.
+- [Styling toggle buttons from one place](../zest-button-toggle-style/guide.md) — a type's
+  colour variant selects the look under `styles.toggle.variants`.
 - [Shipped type table](../../../documentation/features.md#built-in-semantic-types-reference)
   and [API reference](../../../documentation/api.md#semantictype) — the published
   documentation for consumers.

@@ -1,7 +1,7 @@
 ---
 title: BRS — React 19, onwards, and Vite support
 covers: package.json, UI/index.ts
-covers-hash: 912dd7900df0d4966fb4
+covers-hash: 7852cdd2fbc2a7791b18
 ---
 
 # BRS — React 19, onwards, and Vite support
@@ -21,14 +21,16 @@ covers-hash: 912dd7900df0d4966fb4
 
 See `test-reports/CHANGE_MANIFEST_react-19-vite.md` for the file list. All 10 acceptance criteria satisfied; 111/111 tests pass under both React 18.3.1 and React 19.3.0; `verify-post.ps1` reports `RESULT: COMPLETE` with coverage 98.68% lines (the pre-existing HEAD coverage gap below the 97.21% baseline was closed with two targeted `useBusyState` tests, matching the precedent set by the dropdown-options feature); `tsc --noEmit` and `npm run build` clean under `@types/react@19`; a Vite 5 + React 19 SSR build consuming the `npm pack`ed tarball rendered both button forms (`SMOKE_OK`). The key empirical finding: the ESM bundle had been inlining React 18's JSX runtime (`react/jsx-runtime` was not in rollup's `external`), which React 19 rejects (element brand renamed to `react.transitional.element`) — fixed by externalizing the JSX-runtime subpaths. No `UI/**` runtime code changed.
 
-### Current state in 1.7.0
+### Current state in 1.8.0
 
-`package.json` is now version 1.7.0 (it was 1.5.2 when this BRS landed; versions are
-bumped in separate release commits). The peer ranges `>=18.0.0`, the `"exports"` map and
+`package.json` is now version 1.8.0 (it was 1.5.2 when this BRS landed, and 1.7.0 before
+the toggle styling release; versions are bumped in separate release commits). The peer ranges `>=18.0.0`, the `"exports"` map and
 the externalized `react/jsx-runtime` / `react/jsx-dev-runtime` entries are unchanged.
 `UI/index.ts` now also re-exports `ZestIcon`, `ZestIconProps` and `ZestIconSize`; that is
-additive and does not change module resolution. React 18 and React 19 remain the tested
-majors.
+additive and does not change module resolution. In 1.8.0 it also re-exports the toggle
+style types from `UI/toggleStyle/types` (`ZestToggleStyle`, `ZestButtonStyles` and the
+related types); those are type-only, so they add nothing to the runtime bundle. React 18
+and React 19 remain the tested majors.
 
 `package.json` also declares `"sideEffects": ["**/*.css"]`. This is a hint to bundlers
 (Vite, webpack, Rollup): only CSS files may do work just by being imported, so every other

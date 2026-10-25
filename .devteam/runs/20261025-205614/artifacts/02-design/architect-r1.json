@@ -1,0 +1,100 @@
+{
+  "summary": "Add an optional `styles.toggle` section to ZestGlobalConfig (the existing ZestButtonConfigProvider/context), and an optional `style` field on ToggleOptions for per-button overrides. Settings are organised by button kind (`toggle` only for now) as { base state looks, `light`/`dark` theme looks, `variants.<ZestVariant>`, `sizes.<ZestSize>` }, each holding per-state looks (off, on, hoverOff, hoverOn, focus, disabled, busy) as maps of CSS property name -> value. A pure compile step sanitises the settings (R8, security NFR: property names must match /^[a-zA-Z-]+$/ or be a known custom key; values must be strings/numbers with no `;`, `{`, `}`, `<`, `url(`/`expression(`/`@import`/comment tokens, otherwise the single property is dropped) and flattens them, for the button's resolved theme, variant and size, using the precedence all-toggles < size < variant < provider theme < per-button (R4, R5, R6), into declarations per state. The compiled declarations are emitted once as one CSS rule per state under a generated class/attribute id (`[data-zest-toggle-style=\"<id>\"]`, selector specificity raised by repeating the attribute so it beats the library's own `.solid.toggleOn:hover:not(:disabled)` rules without `!important`), so pseudo-states (hover, focus-visible, disabled, busy) work, which inline styles cannot do. Rules go into one shared, ref-counted <style> element in document.head (inserted in an effect, so Next.js server rendering and React 18/19 are unaffected; the button just gets the data attribute). Compilation is memoised per settings object (WeakMap keyed on the provider's `styles.toggle` and on the per-button `style` object) and per (theme, variant, size) key, and rule insertion is deduplicated by id, so 100 toggles under one provider do the work once, an unchanged config object does no recompute, and unmounting releases the ref count and removes unused rules. No new dependencies, no timers, no listeners. The library's own CSS is untouched (no new px), the focus indicator stays unless the developer sets a `focus` look, and aria-pressed/keyboard/check mark logic is not changed. Only the data attribute (and `data-zest-toggle-check` on the already aria-hidden check svg for check colour/size) is added to the toggle render path. Public surface grows additively through the existing `export *` lines in UI/index.ts; version gets a minor bump; docs are updated in documentation/ and README.",
+  "impact": {
+    "touches": [
+      "UI/ZestButtonConfigContext.ts: ZestGlobalConfig gains optional `styles?: ZestGlobalStyles` (additive field only)",
+      "UI/ZestButton.tsx: ToggleOptions gains optional `style?: ZestToggleStyle`; the button calls the new useToggleStyle hook and renders the `data-zest-toggle-style` attribute only when toggle mode is on and a style resolves; ToggleCheck svg gets `data-zest-toggle-check`. Toggle behaviour, aria and classes are unchanged",
+      "UI/hooks/useZestConfig.ts: not changed; the provider config is read directly by the new hook so existing merge behaviour and its tests stay untouched",
+      "UI/index.ts: add exports for the new types and helpers (existing exports unchanged)",
+      "package.json (and package-lock.json version field): minor version bump only; dependencies and peerDependencies unchanged",
+      "README.md and documentation/api.md, configuration.md, features.md, examples.md, breaking-changes.md (states 'no breaking changes'), development.md: new settings documented with runnable examples and prev/next links",
+      "__tests__/: new test files; existing tests are not edited (characterization tests of current toggle/provider behaviour are written first)"
+    ],
+    "reuses": [
+      "ZestButtonConfigProvider and ZestButtonConfigContext / useZestButtonConfig as the single central place for configuration (same pattern as ZestTextbox provider)",
+      "ZestVariant, ZestSize, ZestTheme, ToggleOptions and the already-resolved effectiveTheme from useThemeDetection in ZestButton, so theme follows the existing light/dark/system choice",
+      "Existing toggle state, aria-pressed, key handling and CSS Module classes (.toggleOn etc.), kept as the fallback look when no styles are given",
+      "Existing Jest + React Testing Library setup (jsdom, identity-obj-proxy) and build/peer-dependency tests, which must keep passing"
+    ],
+    "adds": [
+      "Types: ZestToggleStyle (per-state looks), ZestToggleStateStyle (CSS property map plus checkColor/checkSize), ZestToggleStyleSet, ZestButtonStyles ({ toggle?: ... }), exported from UI/index.ts",
+      "UI/toggleStyle/types.ts: the settings types",
+      "UI/toggleStyle/compileToggleStyle.ts: pure sanitise + precedence-merge + CSS text generation (memoised via WeakMap)",
+      "UI/toggleStyle/toggleStyleSheet.ts: shared ref-counted style element/registry that inserts each rule once and removes it when the last user unmounts; no-op without a document",
+      "UI/hooks/useToggleStyle.ts: hook that reads provider styles + per-button style + theme/variant/size and returns the id to put in the data attribute",
+      "Tests for compile (precedence, R8 invalid input, security strings), registry (dedupe, release), provider integration, 100-toggle perf check, accessibility with heavy styling, light/dark/system themes"
+    ]
+  },
+  "scope": [
+    "UI/ZestButton.tsx",
+    "UI/ZestButtonConfigContext.ts",
+    "UI/index.ts",
+    "UI/toggleStyle/**",
+    "UI/hooks/useToggleStyle.ts",
+    "__tests__/toggleStyle/**",
+    "__tests__/hooks/useToggleStyle.test.tsx",
+    "__tests__/ZestButtonToggleStyle.test.tsx",
+    "__tests__/ZestButtonToggleStyleCharacterization.test.tsx",
+    "README.md",
+    "documentation/api.md",
+    "documentation/configuration.md",
+    "documentation/features.md",
+    "documentation/examples.md",
+    "documentation/breaking-changes.md",
+    "documentation/development.md",
+    "package.json",
+    "package-lock.json"
+  ],
+  "components": [
+    {
+      "name": "ZestToggleStyle types",
+      "path": "UI/toggleStyle/types.ts",
+      "requirements": ["R1", "R2", "R3", "R4", "R5", "R6", "R9"]
+    },
+    {
+      "name": "compileToggleStyle (sanitise, precedence merge, CSS generation, memoised)",
+      "path": "UI/toggleStyle/compileToggleStyle.ts",
+      "requirements": ["R2", "R3", "R4", "R5", "R6", "R7", "R8"]
+    },
+    {
+      "name": "toggleStyleSheet (shared ref-counted rule registry)",
+      "path": "UI/toggleStyle/toggleStyleSheet.ts",
+      "requirements": ["R3", "R7", "R8"]
+    },
+    {
+      "name": "useToggleStyle hook",
+      "path": "UI/hooks/useToggleStyle.ts",
+      "requirements": ["R1", "R4", "R5", "R6", "R8"]
+    },
+    {
+      "name": "ZestGlobalConfig.styles (provider config)",
+      "path": "UI/ZestButtonConfigContext.ts",
+      "requirements": ["R1", "R9"]
+    },
+    {
+      "name": "ZestButton toggle wiring (ToggleOptions.style, data attributes)",
+      "path": "UI/ZestButton.tsx",
+      "requirements": ["R1", "R5", "R6", "R7"]
+    },
+    {
+      "name": "Public exports",
+      "path": "UI/index.ts",
+      "requirements": ["R9"]
+    },
+    {
+      "name": "Version bump (minor, additive)",
+      "path": "package.json",
+      "requirements": ["R9"]
+    },
+    {
+      "name": "Tests: compile, sheet, hook, button integration, characterization, perf, a11y, security, themes",
+      "path": "__tests__/toggleStyle/",
+      "requirements": ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9"]
+    },
+    {
+      "name": "Documentation (README, api, configuration, features, examples, breaking-changes, development)",
+      "path": "documentation/",
+      "requirements": ["R10"]
+    }
+  ]
+}

@@ -15,6 +15,7 @@ This document provides a high-level showcase of what's possible with `ZestButton
 - [Rich Styling](#rich-styling)
 - [Split Buttons & Overflow Menus](#split-buttons--overflow-menus)
 - [On/Off Toggle Mode](#onoff-toggle-mode)
+- [Styling Toggles App-Wide](#styling-toggles-app-wide)
 
 ---
 
@@ -246,6 +247,19 @@ const Example = () => (
 );
 ```
 *See the [Toggle recipe](./examples.md#recipe-6-an-onoff-toggle-button) and the [`ToggleOptions` reference](./api.md#toggleoptions).*
+
+---
+
+### Styling Toggles App-Wide
+
+**What it does:** Set colours, sizes, hover effects and any other CSS property of every toggle in one place, the provider's `styles.toggle`, separately for off and on, light and dark, each size and each variant. Individual toggles can override it with `zest.toggleOptions.style`. Apps that do not pass `styles` are unchanged, and accessibility behaviour is never affected.
+
+```tsx
+<ZestButtonConfigProvider config={{ styles: { toggle: { on: { background: '#0a7', checkColor: '#fff' } } } }}>
+  <ZestButton zest={{ toggleOptions: {} }}>Bold</ZestButton>
+</ZestButtonConfigProvider>
+```
+*See the [Toggle styling recipe](./examples.md#recipe-9-styling-all-toggles-in-one-place) and [Toggle Styling](./configuration.md#toggle-styling).*
 
 ---
 

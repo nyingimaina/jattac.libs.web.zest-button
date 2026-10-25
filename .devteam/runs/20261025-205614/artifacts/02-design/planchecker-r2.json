@@ -1,0 +1,13 @@
+{
+  "summary": "Consistent except that the design's precedence order puts variant above size, the reverse of what R4 requires.",
+  "conflicts": [
+    {
+      "requirement": "R4",
+      "against": "design",
+      "kind": "design",
+      "owner": "design",
+      "why": "The design merges looks in an order where the variant look beats the size look, but R4 requires the size look to beat the variant look. A toggle with a variant and a size that set the same property would get the wrong value, and the R4 acceptance test could never pass as designed.",
+      "evidence": "R4 acceptance: 'the size look wins over the variant look, and the variant look wins over the all-toggles look' (fact: 'built-in look, all toggles, variant, size, per-button override', lowest to highest). Design summary: 'using the precedence all-toggles < size < variant < provider theme < per-button (R4, R5, R6)', which puts variant above size."
+    }
+  ]
+}

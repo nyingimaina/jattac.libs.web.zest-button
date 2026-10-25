@@ -1,7 +1,7 @@
 ---
 title: Using ZestIcon and the standard icons
 covers: UI/ZestIcon.tsx, UI/zestIcons.tsx, Styles/ZestButton.module.css, UI/index.ts
-covers-hash: ad7481609254761c6a95
+covers-hash: 9b5c890b851699242343
 ---
 
 # Using ZestIcon and the standard icons
@@ -307,6 +307,8 @@ normal work.
 - [Customising semantic types](./customising.md) — replace an icon locally or app-wide.
 - [Using the ZestButton on/off toggle](../zest-button-toggle/guide.md) — the toggle check
   mark is a separate drawing from the type icon.
+- [Styling toggle buttons from one place](../zest-button-toggle-style/guide.md) — the
+  check mark's colour and size (`checkColor`, `checkSize`) are set there.
 - [`ZestIcon` API reference](../../../documentation/api.md#zesticon) and
   [Recipe 7: reusing the standard icons](../../../documentation/examples.md#recipe-7-reusing-the-standard-icons)
   — the published documentation for consumers.

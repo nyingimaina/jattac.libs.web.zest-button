@@ -1,7 +1,7 @@
 ---
 title: Critical Paths
-covers: docs/guidelines/AI_E2E_TESTING.md, __tests__/
-covers-hash: 5337b05ac08d8b621c70
+covers: docs/guidelines/AI_E2E_TESTING.md, __tests__/, UI/toggleStyle/, UI/hooks/useToggleStyle.ts
+covers-hash: 65667fe77d792e7ce3f5
 ---
 
 # Critical Paths
@@ -108,10 +108,41 @@ Protected by `__tests__/semanticTypeButtonConfigDefaults.test.tsx`,
 - [x] The pressed look and check mark follow the value.
 - [x] The check mark can sit at `start` or `end` and coexists with a type icon.
 - [x] The toggle still flips on the confirming click when confirmation is configured.
+
 Protected by `__tests__/ZestButtonToggle.test.tsx` and
 `__tests__/hooks/useToggleState.test.ts`.
 
-### 6. Split buttons and overflow menus
+### 6. Toggle styling from the provider
+
+The `styles.toggle` setting of `ZestButtonConfigProvider` (and the per-button
+`toggleOptions.style`) changes how toggles look. It must never change how they behave.
+
+- [x] A toggle inside a styled provider gets the configured look through a
+      `data-zest-toggle-style` attribute; a plain button does not.
+- [x] A toggle outside any provider, and a provider with an empty `styles` section, render
+      exactly as before.
+- [x] `defaultProps` and `semanticTypeDefaults` keep working next to `styles`.
+- [x] Size, variant (including the variant a semantic type supplies) and theme feed the
+      look; theme `'system'` follows the operating system live.
+- [x] A per-button style changes only that button and updates on re-render.
+- [x] Heavy styling keeps `aria-pressed`, click and Space/Enter, the `aria-hidden` check
+      and the check position. A disabled styled toggle is still not operable.
+- [x] A hostile value (for example one with `;`, `{` or `url(`) never becomes an extra
+      rule, element or property.
+- [x] A hostile config does not unmount the button or throw.
+- [x] 100 styled toggles share one rule set; unmounting releases it and leaves no style
+      element behind.
+- [x] A config object recreated on every render keeps the same style id (no flicker).
+
+Protected by `__tests__/ZestButtonToggleStyle.test.tsx`,
+`__tests__/ZestButtonToggleStyleCharacterization.test.tsx`,
+`__tests__/hooks/useToggleStyle.test.tsx`,
+`__tests__/toggleStyle/compileToggleStyle.test.ts` and
+`__tests__/toggleStyle/toggleStyleSheet.test.ts`.
+`__tests__/toggleStyle/documentation.test.ts` checks that the published documentation
+mentions the feature.
+
+### 7. Split buttons and overflow menus
 
 - [x] With no `dropdownOptions`, the rendered button is unchanged.
 - [x] The main segment runs the main action; the chevron opens the menu.
@@ -125,7 +156,7 @@ Protected by `__tests__/ZestButtonToggle.test.tsx` and
 Protected by `__tests__/ZestButton.test.tsx`, `__tests__/ZestDropdownMenu.test.tsx` and
 `__tests__/ZestDropdownMenuItem.test.tsx`.
 
-### 7. Packaging and compatibility
+### 8. Packaging and compatibility
 
 - [x] `react` and `react-dom` peers accept React 18 and React 19 and reject 16.8/17.
 - [x] `rollup.config.mjs` externalizes `react/jsx-runtime` and `react/jsx-dev-runtime`.
@@ -170,5 +201,7 @@ time, because the tests read the configuration rather than build the package.
   behaviour behind path 4.
 - [Using the ZestButton on/off toggle](../features/zest-button-toggle/guide.md) — the
   behaviour behind path 5.
+- [Styling toggle buttons from one place](../features/zest-button-toggle-style/guide.md) —
+  the behaviour behind path 6.
 - [Dropdown options feature record](../features/zest-button-dropdown-options/BRS.md) — the
-  behaviour behind path 6.
+  behaviour behind path 7.

@@ -1,0 +1,45 @@
+{
+  "findings": [
+    {
+      "cites": "USR-003",
+      "severity": "advisory",
+      "file": "UI/toggleStyle/compileToggleStyle.ts",
+      "line": 30,
+      "evidence": "FORBIDDEN_VALUE blocks url( but not other CSS functions that fetch resources from a string, e.g. image-set(\"https://host/x.png\" 1x), cross-fade(), image(), src(). They contain no ; { } \\ or url( so sanitizeValue accepts them for background-image, border-image, content, list-style-image, cursor.",
+      "description": "A value can still make the browser request an external URL (tracking beacon) without writing url(). This does not add rules or scripts, so R-security (single property only) holds; the values come from the app developer, not end users. Consider also rejecting image-set(, image(, src(, cross-fade(, element( or documenting that values are trusted."
+    },
+    {
+      "cites": "USR-003",
+      "severity": "advisory",
+      "file": "UI/toggleStyle/compileToggleStyle.ts",
+      "line": 78,
+      "evidence": "collectStates iterates Object.keys(look) with no cap on the number of properties, and sizes/variants maps are unbounded; only each value is capped at 500 chars. The cache key includes the variant and size strings.",
+      "description": "Unbounded input is a low-severity DoS/memory risk if a very large or dynamically generated style object is supplied. Consider a cap on properties per state, or document that the config must be static."
+    },
+    {
+      "cites": "USR-003",
+      "severity": "advisory",
+      "file": "UI/toggleStyle/compileToggleStyle.ts",
+      "line": 107,
+      "evidence": "The rule id is a 32-bit djb2 hash plus text length, and toggleStyleSheet.acquireToggleStyle reuses the first entry registered for an id without comparing css.",
+      "description": "Two different style bodies that collide would share the first one's CSS. This is a correctness risk rather than a vulnerability; accidental collision is unlikely and an attacker would already control the developer config. Consider keying the registry by the full css string, or comparing css on reuse."
+    },
+    {
+      "cites": "USR-003",
+      "severity": "advisory",
+      "file": "UI/toggleStyle/toggleStyleSheet.ts",
+      "line": 23,
+      "evidence": "The shared <style> element is created without a nonce.",
+      "description": "Under a strict CSP (style-src without 'unsafe-inline') the injected rules are blocked and toggles fall back to the library defaults. The library already injects CSS at runtime (rollup inject: true), so this is consistent with the existing behaviour. Worth a documentation note."
+    },
+    {
+      "cites": "USR-003",
+      "severity": "advisory",
+      "file": "UI/hooks/useToggleStyle.ts",
+      "line": 27,
+      "evidence": "compileToggleStyle is memoised in a WeakMap keyed by the provider and per-button style objects. An inline zest.toggleOptions.style object is new on every render.",
+      "description": "Each render of such a button recompiles its style and adds a throwaway cache entry (garbage-collected via WeakMap). The work is bounded by one button's style and does not leak, so this is only a note; the docs should recommend hoisting style objects."
+    }
+  ],
+  "verifications": []
+}

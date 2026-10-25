@@ -86,6 +86,35 @@ const BoldButton = () => {
 
 Use `defaultPressed` instead of `pressed` to let the button manage its own value. See the [Cookbook](./documentation/examples.md#recipe-6-an-onoff-toggle-button).
 
+### Styling Toggles Once, App-Wide
+
+Set the exact look of every toggle in one place with `styles.toggle` on the provider. Any CSS property works (camelCase or kebab-case), separately for off, on, hover, focus, disabled and busy, per theme, per size and per variant. Apps that do not pass `styles` look exactly as before.
+
+```tsx
+import ZestButton, { ZestButtonConfigProvider } from 'jattac.libs.web.zest-button';
+
+const config = {
+  styles: {
+    toggle: {
+      off: { background: 'transparent', borderRadius: '0.5rem' },
+      on: { background: '#0a7', color: '#fff', checkColor: '#fff' },
+      hoverOn: { background: '#086' },
+      dark: { on: { background: '#0c9' } },
+      sizes: { lg: { off: { fontSize: '1.25rem' } } },
+      variants: { danger: { on: { background: '#c00' } } },
+    },
+  },
+};
+
+const App = () => (
+  <ZestButtonConfigProvider config={config}>
+    <ZestButton zest={{ toggleOptions: {} }}>Bold</ZestButton>
+  </ZestButtonConfigProvider>
+);
+```
+
+A single toggle can override the provider with `zest.toggleOptions.style`. See [Configuration](./documentation/configuration.md#toggle-styling).
+
 ### Documentation
 
 To get started, check out our **Cookbook** of practical recipes.

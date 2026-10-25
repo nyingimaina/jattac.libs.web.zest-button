@@ -6,3 +6,5 @@ export * from "./ZestIcon";
 
 export { default as ZestButtonConfigProvider } from "./ZestButtonConfigProvider";
 export * from "./ZestButtonConfigContext";
+
+export * from "./toggleStyle/types";

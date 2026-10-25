@@ -1,7 +1,7 @@
 ---
 title: Using the ZestButton on/off toggle
 covers: UI/ZestButton.tsx, UI/hooks/useToggleState.ts, Styles/ZestButton.module.css, UI/index.ts
-covers-hash: c8579802431644f425de
+covers-hash: 5f3cfb116a38d0881b15
 ---
 
 # Using the ZestButton on/off toggle
@@ -24,9 +24,9 @@ This page is for developers who install the library and use `ZestButton` in thei
 ## Before you start
 
 - You need the package installed: `npm i jattac.libs.web.zest-button`.
-- You need a version that includes toggle mode. Toggle mode arrived in 1.6.0; the current
-  release in this repository is 1.7.0, which also adds the wider set of semantic types and
-  the library-drawn icons.
+- You need a version that includes toggle mode. Toggle mode arrived in 1.6.0; 1.7.0 added the
+  wider set of semantic types and the library-drawn icons, and 1.8.0 (current) adds central
+  toggle styling.
 - Import the button as the default export:
 
 ```tsx
@@ -52,6 +52,7 @@ The types `ToggleOptions` and `ToggleCheckPosition` are exported from the same p
 | `defaultPressed` | `boolean` | `false` | Starting value when the button manages itself. |
 | `onPressedChange` | `(pressed: boolean) => void` | not set | Called with the new value each time an enabled toggle is clicked or activated by keyboard. |
 | `checkPosition` | `'start' \| 'end'` | `'start'` | Which end of the button holds the check mark. Any other value falls back to `'start'`. |
+| `style` | `ZestToggleStyle` | not set | Looks for this toggle only. See [Styling toggle buttons](../zest-button-toggle-style/guide.md). |
 
 ## Examples
 
@@ -208,6 +209,8 @@ These are outside this feature: a sliding switch control, groups where only one 
 ## See also
 
 - [Feature record (BRS) for the toggle](./BRS.md)
+- [Styling toggle buttons from one place](../zest-button-toggle-style/guide.md) — set the
+  look of every toggle centrally.
 - [Using ZestButton semantic types](../zest-button-semantic-types/guide.md) — combine a
   toggle with a built-in icon and colour.
 - [Built-in semantic type reference](../zest-button-semantic-types/type-reference.md) —

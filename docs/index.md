@@ -13,6 +13,7 @@
 - [BRS — ZestButton on/off toggle mode](features/zest-button-toggle/BRS.md)
 - [Built-in semantic type reference](features/zest-button-semantic-types/type-reference.md)
 - [Customising semantic types and adding your own](features/zest-button-semantic-types/customising.md)
+- [Styling toggle buttons from one place](features/zest-button-toggle-style/guide.md)
 - [Using ZestButton semantic types](features/zest-button-semantic-types/guide.md)
 - [Using ZestIcon and the standard icons](features/zest-button-semantic-types/icons.md)
 - [Using the ZestButton on/off toggle](features/zest-button-toggle/guide.md)

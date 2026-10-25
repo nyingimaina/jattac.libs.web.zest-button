@@ -6,6 +6,8 @@ import { useBusyState } from './hooks/useBusyState';
 import { useConfirmation } from './hooks/useConfirmation';
 import { useThemeDetection } from './hooks/useThemeDetection';
 import { useToggleState } from './hooks/useToggleState';
+import { useToggleStyle } from './hooks/useToggleStyle';
+import type { ZestToggleStyle } from './toggleStyle/types';
 import ZestDropdownMenu from './ZestDropdownMenu';
 
 // --- Types ---
@@ -84,6 +86,8 @@ export interface ToggleOptions {
   onPressedChange?: (pressed: boolean) => void;
   /** Which end of the button the check mark sits at; defaults to `'start'`, unknown values fall back to it. */
   checkPosition?: ToggleCheckPosition;
+  /** Looks for this toggle only; beats the provider's `styles.toggle` for the properties it gives. */
+  style?: ZestToggleStyle;
 }
 
 // New interface to encapsulate all custom ZestButton props
@@ -142,6 +146,7 @@ const ToggleCheck: React.FC = () => (
     strokeLinejoin="round"
     aria-hidden="true"
     focusable="false"
+    data-zest-toggle-check=""
   >
     <path d="M5 13l4 4L19 7" />
   </svg>
@@ -231,6 +236,13 @@ const ZestButton: React.FC<ZestButtonProps> = ({
   const buttonRef = useRef<HTMLButtonElement>(null);
   const systemTheme = useThemeDetection();
   const effectiveTheme = theme === 'system' ? systemTheme : theme;
+  const toggleStyleId = useToggleStyle({
+    enabled: toggleEnabled,
+    style: toggleOptions?.style,
+    theme: effectiveTheme,
+    variant,
+    size,
+  });
   // Dropdown menus follow the OS/browser theme by default, independently of
   // the button's own `theme` — mirrors effectiveTheme's own 'system' handling
   // above. dropdownTheme has no destructure-time default because unset must
@@ -392,7 +404,11 @@ const ZestButton: React.FC<ZestButtonProps> = ({
     ) : null;
 
   const toggleButtonProps = toggleEnabled
-    ? { "aria-pressed": togglePressed, onKeyDown: handleToggleKeyDown }
+    ? {
+        "aria-pressed": togglePressed,
+        onKeyDown: handleToggleKeyDown,
+        ...(toggleStyleId !== undefined ? { "data-zest-toggle-style": toggleStyleId } : {}),
+      }
     : {};
 
   const buttonElement = (

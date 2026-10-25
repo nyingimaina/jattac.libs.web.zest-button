@@ -1,0 +1,109 @@
+{
+  "findings": [
+    {
+      "cites": "R5",
+      "severity": "blocking",
+      "file": "UI/zestIcons.tsx",
+      "line": 167,
+      "evidence": "getZestIconElement uses `if (name in ZEST_ICON_ELEMENTS)`, which walks the prototype chain. Through the built package, <ZestIcon name=\"__proto__\" /> throws \"Objects are not valid as a React child (found: object with keys {})\"; name=\"toString\" and name=\"constructor\" resolve to Object.prototype functions and log React warnings while rendering an empty <span class=\"zestIcon\">. The only unknown-name test (ZestIcon.test.tsx:50-58) uses \"not-a-real-icon\", which is not on the prototype, so it passes.",
+      "description": "R5 says an unknown name renders nothing and does not throw, and documentation/examples.md:358 and the API docs promise this. A consumer passing an untrusted string as ZestIcon name can crash the render tree. Guard the lookup with Object.prototype.hasOwnProperty.call(ZEST_ICON_ELEMENTS, name) or use a Map/null-prototype object, and add tests for \"__proto__\", \"constructor\", \"toString\" and \"hasOwnProperty\"."
+    },
+    {
+      "cites": "R7",
+      "severity": "blocking",
+      "file": "documentation/examples.md",
+      "line": 180,
+      "evidence": "The code examples at documentation/examples.md:123 and :180 use `import { ZestButtonConfigProvider, ZestButton, ZestIcon } from 'jattac.libs.web.zest-button'`, but the package has no named `ZestButton` export: UI/ZestButton.tsx:457 only default-exports it, UI/index.ts:1-2 re-exports only the default, and the built dist/index.cjs.js exports are default, ZestIcon, ZestButtonConfigProvider and useZestButtonConfig. The R7 docs tests (ZestIcon.test.tsx:117-136) only assert substrings, so no test compiles a snippet and the broken import ships.",
+      "description": "R7 requires every code example to compile against the new types; these examples do not compile. Change both imports to a default `ZestButton` import, and add a test that extracts the documented snippets and type-checks/renders them (the toggle feature has a type-check precedent at ZestButtonToggle.test.tsx:523, but it uses a hand-written object rather than the actual snippets)."
+    },
+    {
+      "cites": "R7",
+      "severity": "advisory",
+      "file": "documentation/features.md",
+      "line": 147,
+      "evidence": "The table row for `settings` says the icon is \"Sliders\", but UI/zestIcons.tsx:96 draws a centre circle and a four-way cross (a target/crosshair), not sliders. The R7 table test (ZestIcon.test.tsx:104-115) extracts only the first column, so it cannot fail if the Icon, Variant, Button style, Icon side or Default behaviour columns are wrong; the settings mismatch passes.",
+      "description": "Correct the `settings` drawing or its description, and extend the table test to compare the icon description, variant, button style, icon side and default behaviour against semanticTypeButtonConfigDefaults. Advisory: documentation content is checked by review, and the reviewer already blocks the settings mismatch under DOC-001."
+    },
+    {
+      "cites": "R5",
+      "severity": "blocking",
+      "file": "__tests__/ZestIcon.test.tsx",
+      "line": 6,
+      "evidence": "ZestIcon is imported from \"../UI/ZestIcon\" in every test; no test imports it from \"../UI\" or the package root. The R5 acceptance \"import { ZestIcon } from the package\" and \"does not remove or rename any existing export of UI/index.ts\" therefore are not guarded: deleting UI/index.ts:4-5 or an existing export leaves the suite green. The built dist currently does export ZestIcon, so the present artifact is fine, but the source barrel regression would pass CI.",
+      "description": "Add one consumer-style test that imports ZestIcon, ZestIconProps, ZestIconSize, the default ZestButton, ZestButtonConfigProvider and useZestButtonConfig from \"../UI\", then renders a ZestIcon as a ZestButton iconLeft. This is blocking because the acceptance explicitly requires the package import and no test would fail if the barrel export regressed."
+    },
+    {
+      "cites": "R1",
+      "severity": "advisory",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "line": 120,
+      "evidence": "The \"each of the 28 new names is accepted by the SemanticType type\" test only declares the literals in a SemanticType[] and asserts the array length. It never augments CustomZestSemanticTypes. If `keyof CustomZestSemanticTypes` were removed from the union at ZestButton.tsx:20, this test would still compile and pass; the R1 acceptance \"still accepts the names added through CustomZestSemanticTypes\" has no test.",
+      "description": "Add a small declaration file/test that augments `CustomZestSemanticTypes` with e.g. `publish: 'publish'` and assigns `'publish'` to SemanticType, mirroring the docs recipe at examples.md:167. Advisory because the union still ends in `keyof CustomZestSemanticTypes` today."
+    },
+    {
+      "cites": "R1",
+      "severity": "advisory",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "line": 105,
+      "evidence": "The all-47 rendering test checks the label and that a button svg exists, but never spies on console.error. The R1 acceptance also says \"and no console error\"; a React warning or error on any of the 28 new types would not fail the loop. The fail-state test spies on console.error elsewhere (line 414), so the pattern exists.",
+      "description": "Wrap the ALL_TYPES render loop with a console.error spy and assert it was not called (restore afterwards). Advisory: this is a stronger assertion on an already-tested render path."
+    },
+    {
+      "cites": "R2",
+      "severity": "advisory",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "line": 274,
+      "evidence": "The \"next ... flips correctly for right-to-left pages\" test only asserts child order and that the stylesheet has `.content { display: inline-flex }`. It never renders inside `dir=\"rtl\"` or checks logical margins; DOM order alone is direction-agnostic. The R2 edge case is therefore not actually exercised.",
+      "description": "Render the next button inside a `dir=\"rtl\"` container and assert the icon remains visually after the label (e.g. order/margin logic or computed direction), or assert the CSS uses logical properties. Advisory because inline-flex already mirrors in RTL and the mechanism is present."
+    },
+    {
+      "cites": "R3",
+      "severity": "advisory",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "line": 287,
+      "evidence": "The shared-style test covers all 47 types with stroke=currentColor. The \"follow the text colour\" acceptance also names light, dark and system themes and every variant/button style, but tests render only the filled success/danger icons (line 346); outline/text/dashed and explicit light/dark/system icon renders are not checked. The currentColor mechanism is the same for all, so this is coverage breadth, not an uncovered behaviour.",
+      "description": "Optionally add a small matrix (a few variants/styles x light/dark/system) asserting the icon still uses currentColor and its variant text-colour variable. Advisory: the mechanism is already proven for every type."
+    },
+    {
+      "cites": "R4",
+      "severity": "advisory",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "line": 472,
+      "evidence": "The \"focus ring visible on every built-in type in light and dark themes\" test only adds force-light/force-dark classes and regex-checks the stylesheet for `.button:focus-visible` and `--zest-focus-ring`; it never focuses a button. jsdom cannot compute :focus-visible, so the assertion proves the rule exists, not that a keyboard user sees it.",
+      "description": "Focus a representative button and assert the focus-visible class/selector path, or document that the CSS rule is the contract. Advisory: the shared button focus rule is not changed by this feature."
+    },
+    {
+      "cites": "R6",
+      "severity": "advisory",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "line": 519,
+      "evidence": "The R6 documentation check only asserts that breaking-changes.md contains \"Version 1.7.0\". The required explanation that built-in icons are now library SVGs (breaking-changes.md:23-25) could be deleted and the test would still pass.",
+      "description": "Assert the icon-change heading/paragraph in breaking-changes.md, e.g. that it mentions library/inline SVG and Font Awesome. Advisory: the content is present today and the version check passes."
+    },
+    {
+      "cites": "R6",
+      "severity": "advisory",
+      "file": "__tests__/packagePeerDependencies.test.ts",
+      "line": 62,
+      "evidence": "packagePeerDependencies.test.ts only reads and asserts the react/react-dom ranges. Nothing asserts that react-icons remains a peer dependency, although R6 says it must not be removed (the busy spinner and dropdown chevron still import it). package.json:61 currently keeps it, so this is a missing guard, not a current break.",
+      "description": "Add an assertion that package.json peerDependencies contains react-icons (and optionally that its bounds are unchanged). Advisory: the dependency is currently present."
+    },
+    {
+      "cites": "PERF-001",
+      "severity": "advisory",
+      "file": "dist/index.esm.js",
+      "line": 1,
+      "evidence": "The size NFR is manual only (no .size-limit.json, no test). The challenge review measured 65,106 bytes before and 81,018 bytes after (+15,912 B), over the 15 KB cap; the current dist/index.esm.js is 81,018 bytes. The same review found unused arrowRightIcon/arrowRightDirIcon constants and duplicate export/import drawings (UI/zestIcons.tsx:77-79, 110-111) that add unminified bytes.",
+      "description": "Trim the unused/duplicate drawings and leftover comments until the delta is within 15 KB, or get an approved budget change; record the measurement in the build report and add an automated size guard when the project gets one. Advisory to QA because the reviewer already blocks the overage under EFF-001."
+    },
+    {
+      "cites": "LIB-003",
+      "severity": "advisory",
+      "file": "package.json",
+      "line": 16,
+      "evidence": "The project has no scripts/consumer-smoke.mjs and no test installs the packed library and imports it under CommonJS and ES modules. packagePeerDependencies.test.ts checks only the react/react-dom ranges and the exports map strings, not the compatibility NFR that dependencies/peer dependencies are unchanged. The build report lists no packed-artifact check.",
+      "description": "When consumer smoke scaffolding exists, add a packed install/import check for ZestIcon under CJS and ESM; at minimum assert the dependency/peer surface (including react-icons) is unchanged. Advisory: the project explicitly has no packed-library check and the task says not to add that scaffolding for this request."
+    }
+  ],
+  "verifications": []
+}

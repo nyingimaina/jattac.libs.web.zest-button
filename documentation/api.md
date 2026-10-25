@@ -18,6 +18,7 @@ This document provides an exhaustive reference for all `ZestButton` props and ty
   - [SuccessOptions](#successoptions)
   - [ConfirmOptions](#confirmoptions)
   - [SemanticType](#semantictype)
+  - [ZestIcon](#zesticon)
   - [ZestDropdownOption](#zestdropdownoption)
   - [ToggleOptions](#toggleoptions)
 
@@ -122,10 +123,10 @@ If this object is provided, the button will require two clicks to fire the `onCl
 
 #### `SemanticType`
 
-The `SemanticType` defines common button actions, allowing `ZestButton` to automatically apply default visuals (e.g., icons, variants) and behaviors (e.g., confirmation prompts). This type is extensible through TypeScript module augmentation.
+The `SemanticType` defines common button actions, allowing `ZestButton` to automatically apply default visuals (e.g., icons, variants) and behaviors (e.g., confirmation prompts). Every built-in type includes an icon drawn by the library; see the [built-in type table](./features.md#built-in-semantic-types-reference) for each type's icon, variant, button style, icon side and default behaviour. This type is extensible through TypeScript module augmentation.
 
-**Built-in Semantic Types:**
-`'add'`, `'save'`, `'submit'`, `'edit'`, `'update'`, `'delete'`, `'remove'`, `'cancel'`, `'close'`, `'view'`, `'details'`, `'download'`, `'upload'`, `'refresh'`, `'reload'`, `'print'`, `'share'`, `'confirm'`.
+**Built-in Semantic Types (47):**
+`'add'`, `'new'`, `'save'`, `'submit'`, `'edit'`, `'update'`, `'delete'`, `'remove'`, `'cancel'`, `'close'`, `'view'`, `'details'`, `'download'`, `'upload'`, `'refresh'`, `'reload'`, `'print'`, `'share'`, `'confirm'`, `'search'`, `'filter'`, `'sort'`, `'copy'`, `'paste'`, `'back'`, `'next'`, `'home'`, `'menu'`, `'more'`, `'settings'`, `'help'`, `'info'`, `'warning'`, `'send'`, `'login'`, `'logout'`, `'undo'`, `'redo'`, `'approve'`, `'reject'`, `'favorite'`, `'attach'`, `'lock'`, `'unlock'`, `'archive'`, `'export'`, `'import'`.
 
 **Extensibility:** Developers can extend this list to include custom semantic types by augmenting the `CustomZestSemanticTypes` interface in their project. For example:
 
@@ -135,12 +136,36 @@ import 'jattac.libs.web.zest-button';
 
 declare module 'jattac.libs.web.zest-button' {
   export interface CustomZestSemanticTypes {
-    archive: 'archive';
     publish: 'publish';
+    pin: 'pin';
   }
 }
 ```
-After augmentation, `'archive'` and `'publish'` would be valid `SemanticType` values, available for autocompletion and type-checking.
+After augmentation, `'publish'` and `'pin'` would be valid `SemanticType` values, available for autocompletion and type-checking.
+
+---
+
+#### `ZestIcon`
+
+Renders one of the library's standard icons. All icons share a `0 0 24 24` view box, `fill="none"`, `stroke="currentColor"`, `stroke-width="2"` and rounded line caps/joins, so they match the built-in semantic types and inherit the surrounding text colour. Also exported: `ZestIconProps` and `ZestIconSize`.
+
+| Prop Name | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `name` | `string` | **(Required)** | A built-in icon name. Unknown names render nothing (no error). See the [built-in type table](./features.md#built-in-semantic-types-reference), where each row's icon name matches the type name. |
+| `size` | `'sm' \| 'md' \| 'lg' \| number \| string` | `undefined` | A named size (`sm` = 1rem, `md` = 1.25rem, `lg` = 1.5rem) or a number/string used as the wrapper's `font-size` (numbers are treated as `rem`; `'1.5rem'` is used as-is). When omitted, the icon inherits the surrounding font size. |
+| `className` | `string` | `undefined` | Extra class name for the wrapper `<span>`. |
+
+The SVG is decorative: it is marked `aria-hidden="true"` and `focusable="false"`, so give any icon-only control its own accessible name with `aria-label`.
+
+```tsx
+import { ZestIcon } from 'jattac.libs.web.zest-button';
+
+<ZestIcon name="search" />
+<ZestIcon name="filter" size="lg" />
+<ZestIcon name="settings" size="1.25rem" className="my-icon" />
+```
+
+*See [Recipe 7: Reusing the Standard Icons](./examples.md#recipe-7-reusing-the-standard-icons) for a full example.*
 
 ---
 

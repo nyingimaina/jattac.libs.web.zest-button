@@ -9,11 +9,20 @@ This document lists significant changes between versions that might require modi
 
 ## Table of Contents
 
+- [Version 1.7.0](#version-170)
 - [Version 1.6.0](#version-160)
 - [Version 2.0.0 (unreleased)](#version-200-unreleased)
 - [Version 1.2.7](#version-127)
 - [Version 1.2.6](#version-126)
 - [Version 1.2.0](#version-120)
+
+---
+
+## Version 1.7.0
+
+### Built-in icons changed to library SVGs (visual change, additive API)
+
+Every built-in semantic type now renders an icon drawn by the library as inline SVG in a consistent style (24-unit grid, same stroke width, rounded ends/joins, using current text color). This replaces the previous Font Awesome icons. The public API is additive (`ZestIcon` exported) with no props or exports removed. The change to icon art may affect apps with screenshot tests or CSS written against old icon markup. No action is needed to upgrade in most cases.
 
 ---
 

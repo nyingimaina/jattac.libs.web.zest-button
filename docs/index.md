@@ -11,6 +11,10 @@
 - [BRS — React 19, onwards, and Vite support](features/react-19-support/BRS.md)
 - [BRS — ZestButton dropdown options (split button)](features/zest-button-dropdown-options/BRS.md)
 - [BRS — ZestButton on/off toggle mode](features/zest-button-toggle/BRS.md)
+- [Built-in semantic type reference](features/zest-button-semantic-types/type-reference.md)
+- [Customising semantic types and adding your own](features/zest-button-semantic-types/customising.md)
+- [Using ZestButton semantic types](features/zest-button-semantic-types/guide.md)
+- [Using ZestIcon and the standard icons](features/zest-button-semantic-types/icons.md)
 - [Using the ZestButton on/off toggle](features/zest-button-toggle/guide.md)
 
 ## Guidelines

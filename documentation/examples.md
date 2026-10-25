@@ -9,9 +9,11 @@ Welcome to the ZestButton Cookbook! This is the core learning path for mastering
 - [Recipe 1: Your First Async Button](#recipe-1-your-first-async-button)
 - [Recipe 2: The Safe "Delete" Button](#recipe-2-the-safe-delete-button)
 - [Recipe 3: Standardizing Your Buttons with a Global Config](#recipe-3-standardizing-your-buttons-with-a-global-config)
-- [Recipe 4: Creating a Custom "Archive" Button](#recipe-4-creating-a-custom-archive-button)
+- [Recipe 4: Creating a Custom Semantic Type](#recipe-4-creating-a-custom-semantic-type)
 - [Recipe 5: A Split Button with Overflow Actions](#recipe-5-a-split-button-with-overflow-actions)
 - [Recipe 6: An On/Off Toggle Button](#recipe-6-an-onoff-toggle-button)
+- [Recipe 7: Reusing the Standard Icons](#recipe-7-reusing-the-standard-icons)
+- [Recipe 8: Swapping a Built-in Icon](#recipe-8-swapping-a-built-in-icon)
 
 ---
 
@@ -119,7 +121,7 @@ const DeleteButton = () => {
 ```tsx
 // In your main App.tsx
 import React from 'react';
-import { ZestButtonConfigProvider, ZestButton } from 'jattac.libs.web.zest-button';
+import ZestButton, { ZestButtonConfigProvider } from 'jattac.libs.web.zest-button';
 
 const appZestConfig = {
   defaultProps: {
@@ -146,11 +148,11 @@ const App = () => (
 
 ---
 
-### Recipe 4: Creating a Custom "Archive" Button
+### Recipe 4: Creating a Custom Semantic Type
 
 **Goal:** Create a new, reusable button "type" with its own specific icon, style, and behavior that can be used anywhere in the app.
 
-**Problem:** You have a common action in your app, like "Archive," that should always look and feel the same. You want to avoid configuring it manually each time and just be able to write `zest={{ semanticType: 'archive' }}`.
+**Problem:** You have a common action in your app, like "Publish," that should always look and feel the same. You want to avoid configuring it manually each time and just be able to write `zest={{ semanticType: 'publish' }}`. (Many common actions are already built in — see the [built-in type table](./features.md#built-in-semantic-types-reference) before adding a new one.)
 
 **Solution:** This is a two-step process that combines **TypeScript Module Augmentation** with the **`ZestButtonConfigProvider`**.
 
@@ -160,37 +162,35 @@ In your project's type declarations file (e.g., `src/zest.d.ts`), augment the `C
 ```typescript
 // src/zest.d.ts
 import 'jattac.libs.web.zest-button';
-import { FaArchive } from 'react-icons/fa';
 
-// 1. Tell ZestButton that 'archive' is a valid semantic type
+// 1. Tell ZestButton that 'publish' is a valid semantic type
 declare module 'jattac.libs.web.zest-button' {
   export interface CustomZestSemanticTypes {
-    archive: 'archive';
+    publish: 'publish';
   }
 }
 ```
 *(For more on this, see the [Contributor's Guide](./development.md#extending-semantic-types).)*
 
 **Step 2: Provide the default configuration**
-In your `App.tsx`, use the `semanticTypeDefaults` property in the `ZestButtonConfigProvider` to define the default props for your new `'archive'` type.
+In your `App.tsx`, use the `semanticTypeDefaults` property in the `ZestButtonConfigProvider` to define the default props for your new `'publish'` type.
 
 ```tsx
 // In your main App.tsx
 import React from 'react';
-import { ZestButtonConfigProvider, ZestButton } from 'jattac.libs.web.zest-button';
-import { FaArchive } from 'react-icons/fa';
+import ZestButton, { ZestButtonConfigProvider, ZestIcon } from 'jattac.libs.web.zest-button';
 
 const appZestConfig = {
   semanticTypeDefaults: {
-    // 2. Define the default props for the 'archive' type
-    archive: {
+    // 2. Define the default props for the 'publish' type
+    publish: {
       buttonStyle: 'outline',
       visualOptions: {
-        iconLeft: <FaArchive />,
+        iconLeft: <ZestIcon name="upload" />,
         variant: 'standard',
       },
       confirmOptions: {
-        displayLabel: 'Confirm Archive?',
+        displayLabel: 'Confirm Publish?',
         timeoutSecs: 10,
       },
     },
@@ -206,10 +206,10 @@ const App = () => (
     <div style={{ display: 'flex', gap: '1rem' }}>
         {/* 3. Now just use it! */}
         <ZestButton 
-          zest={{ semanticType: 'archive' }} 
-          onClick={() => alert('Archived!')}
+          zest={{ semanticType: 'publish' }} 
+          onClick={() => alert('Published!')}
         >
-          Archive
+          Publish
         </ZestButton>
 
         <ZestButton 
@@ -327,6 +327,78 @@ export const StarToggle = () => (
 ```
 
 Notes: the toggle flips once per click; with `confirmOptions` it flips only after the user confirms; a disabled or busy toggle shows its state but ignores clicks.
+
+---
+
+### Recipe 7: Reusing the Standard Icons
+
+**Goal:** Use the same icon drawings as the built-in semantic types in your own controls, without pulling in an icon pack or hand-authoring SVG.
+
+**Problem:** Your toolbar, menu and buttons should share one visual language. Mixing icon sets gives different stroke weights, corners and optical sizes.
+
+**Solution:** Import `ZestIcon` and pass a built-in name. Every icon uses the same 24-unit grid, 2-unit stroke, rounded ends/joins and `currentColor`, so it inherits the surrounding text colour in light, dark and system themes.
+
+```tsx
+import ZestButton, { ZestIcon } from 'jattac.libs.web.zest-button';
+
+const Toolbar = () => (
+  <div style={{ display: 'flex', gap: '0.5rem' }}>
+    <ZestButton zest={{ semanticType: 'search' }}>Search</ZestButton>
+    <ZestButton zest={{ semanticType: 'filter' }}>Filter</ZestButton>
+
+    {/* Same drawings, your own control: size can be 'sm' | 'md' | 'lg' or a CSS length. */}
+    <ZestButton
+      aria-label="Copy"
+      zest={{ visualOptions: { iconLeft: <ZestIcon name="copy" size="lg" /> } }}
+    />
+    <ZestIcon name="settings" size="1.25rem" />
+  </div>
+);
+```
+
+`ZestIcon` is decorative by default (`aria-hidden`, not focusable), so give any icon-only control its own `aria-label`. An unknown name renders nothing rather than throwing. See the [`ZestIcon` reference](./api.md#zesticon) for the full prop list.
+
+---
+
+### Recipe 8: Swapping a Built-in Icon
+
+**Goal:** Keep a built-in semantic type's look and behaviour, but show a different picture with it.
+
+**Problem:** `search` already gives you a ready button, yet your app uses its own magnifier. You want the type's defaults without its icon.
+
+**Solution:** Pass `visualOptions.iconLeft` on the button. Your local `zest` props win over the built-in defaults, so your icon replaces the type's icon — the default is not added a second time. Everything else the type provides (variant, options and the label from `children`) still applies.
+
+```tsx
+import React from 'react';
+import ZestButton, { ZestIcon } from 'jattac.libs.web.zest-button';
+
+// Keep the 'search' defaults, but swap in another standard icon.
+export const BrandSearch = () => (
+  <ZestButton
+    zest={{
+      semanticType: 'search',
+      visualOptions: { iconLeft: <ZestIcon name="filter" /> },
+    }}
+  >
+    Search
+  </ZestButton>
+);
+```
+
+For a type whose default icon sits at the end (`next`, `view` and `details`), override `iconRight` instead:
+
+```tsx
+<ZestButton
+  zest={{
+    semanticType: 'next',
+    visualOptions: { iconRight: <ZestIcon name="send" /> },
+  }}
+>
+  Continue
+</ZestButton>
+```
+
+Overriding an icon never hides the button text: the label always comes from `children`. You can also set the override once for a built-in type through the provider — see [Recipe 4](#recipe-4-creating-a-custom-semantic-type) and the [Configuration Guide](./configuration.md).
 
 ---
 

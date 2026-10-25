@@ -1,7 +1,7 @@
 ---
 title: BRS — ZestButton on/off toggle mode
 covers: UI/ZestButton.tsx, UI/hooks/useToggleState.ts, Styles/ZestButton.module.css, __tests__/ZestButtonToggle.test.tsx
-covers-hash: 75279f6cb9f1ca071573
+covers-hash: 1d6d589dd535b7c2252f
 ---
 
 # BRS — ZestButton on/off toggle mode
@@ -12,7 +12,7 @@ covers-hash: 75279f6cb9f1ca071573
 |-------|-------|
 | Status | Complete |
 | Task Type | Feature (additive) |
-| Version | 1.6.0 |
+| Version | 1.6.0 (unchanged in 1.7.0) |
 
 ## Summary
 
@@ -31,6 +31,27 @@ covers-hash: 75279f6cb9f1ca071573
 
 `UI/ZestButton.tsx`, `UI/hooks/useToggleState.ts`, `Styles/ZestButton.module.css`, `__tests__/ZestButtonToggle.test.tsx`, `__tests__/hooks/useToggleState.test.ts`, and the pages under `documentation/`.
 
+## Current state in 1.7.0
+
+The 1.7.0 feature widened `SemanticType` on the same `ZestButton.tsx` from 19 to 47
+built-in names and replaced every built-in type's Font Awesome icon with a library-drawn
+inline SVG. Toggle mode itself is unchanged: `toggleOptions`, `useToggleState`,
+`ToggleCheck`, `aria-pressed` and the fixed check-mark slot all behave as described above.
+A type's icon and the toggle check coexist; the check is inserted at `start` or `end` and
+does not replace the icon. `__tests__/ZestButtonToggle.test.tsx` and the semantic-type
+icon tests cover the combined case, and the guide shows it under "A toggle with a semantic
+type".
+
 ## Out of scope
 
 Sliding switch control, exclusive toggle groups, custom on/off icons, persisting the value.
+
+## See also
+
+- [Using the ZestButton on/off toggle](./guide.md) — the developer guide for this record.
+- [Using ZestButton semantic types](../zest-button-semantic-types/guide.md) — combine a
+  toggle with a built-in icon and colour.
+- [Built-in semantic type reference](../zest-button-semantic-types/type-reference.md) —
+  the 47 type names.
+- [API reference: `ToggleOptions`](../../../documentation/api.md#toggleoptions) — the
+  published prop reference.

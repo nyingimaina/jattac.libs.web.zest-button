@@ -1,0 +1,13 @@
+{
+  "findings": [
+    {
+      "cites": "R5",
+      "severity": "blocking",
+      "file": "UI/zestIcons.tsx",
+      "line": 167,
+      "evidence": "getZestIconElement checks `name in ZEST_ICON_ELEMENTS` (line 167), so inherited Object.prototype keys pass as known icons. A probe rendering <ZestIcon name=\"__proto__\" /> threw \"Objects are not valid as a React child (found: object with keys {})\" under React 18; name=\"toString\" returned Object.prototype.toString and rendered an empty <span class=\"zestIcon\"> instead of null.",
+      "description": "R5 requires an unknown icon name to render nothing and not throw, but names that collide with Object.prototype (__proto__, constructor, toString, valueOf, hasOwnProperty) are treated as built-in icons. A library consumer that passes an untrusted string as ZestIcon name (for example a route parameter or API value) can crash the app's render tree (availability/DoS) or render a bogus empty icon. Use a null-prototype map, a Map, or Object.prototype.hasOwnProperty.call(ZEST_ICON_ELEMENTS, name) before indexing."
+    }
+  ],
+  "verifications": []
+}

@@ -1,7 +1,7 @@
 ---
 title: BRS — React 19, onwards, and Vite support
 covers: package.json, UI/index.ts
-covers-hash: fbd3fdfe024f44eb296c
+covers-hash: c48f460b6eae5cf3389d
 ---
 
 # BRS — React 19, onwards, and Vite support
@@ -20,6 +20,15 @@ covers-hash: fbd3fdfe024f44eb296c
 ### Implementation notes
 
 See `test-reports/CHANGE_MANIFEST_react-19-vite.md` for the file list. All 10 acceptance criteria satisfied; 111/111 tests pass under both React 18.3.1 and React 19.3.0; `verify-post.ps1` reports `RESULT: COMPLETE` with coverage 98.68% lines (the pre-existing HEAD coverage gap below the 97.21% baseline was closed with two targeted `useBusyState` tests, matching the precedent set by the dropdown-options feature); `tsc --noEmit` and `npm run build` clean under `@types/react@19`; a Vite 5 + React 19 SSR build consuming the `npm pack`ed tarball rendered both button forms (`SMOKE_OK`). The key empirical finding: the ESM bundle had been inlining React 18's JSX runtime (`react/jsx-runtime` was not in rollup's `external`), which React 19 rejects (element brand renamed to `react.transitional.element`) — fixed by externalizing the JSX-runtime subpaths. No `UI/**` runtime code changed.
+
+### Current state in 1.7.0
+
+`package.json` is now version 1.7.0 (it was 1.5.2 when this BRS landed; versions are
+bumped in separate release commits). The peer ranges `>=18.0.0`, the `"exports"` map and
+the externalized `react/jsx-runtime` / `react/jsx-dev-runtime` entries are unchanged.
+`UI/index.ts` now also re-exports `ZestIcon`, `ZestIconProps` and `ZestIconSize`; that is
+additive and does not change module resolution. React 18 and React 19 remain the tested
+majors.
 
 ---
 
@@ -281,3 +290,14 @@ This makes the ESM output emit `import { jsx, jsxs, Fragment } from "react/jsx-r
 - [x] Change manifest produced
 - [x] Self review passed with all PASS items
 - [x] `docs/guidelines/ai-knowledge.md` and `docs/guidelines/decision-log.md` updated
+
+## See also
+
+- [README: installation and supported React versions](../../../README.md#installation) —
+  the consumer-facing statement of the peer range and bundler support.
+- [Dropdown options feature record](../zest-button-dropdown-options/BRS.md) — the other
+  feature that adds a runtime peer dependency.
+- [Shipped breaking changes](../../../documentation/breaking-changes.md) — what consumers
+  must know when upgrading.
+- [Test configuration](../../guidelines/AI_TEST_CONFIGURATION.md) — the coverage rules that
+  apply to these guard tests.

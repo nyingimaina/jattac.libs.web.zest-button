@@ -1,0 +1,37 @@
+{
+  "findings": [
+    {
+      "cites": "R7",
+      "severity": "advisory",
+      "file": "__tests__/ZestIcon.test.tsx",
+      "line": 193,
+      "evidence": "The docs-import test only reads README.md and documentation/examples.md (line 194) and only parses `import ... from 'jattac.libs.web.zest-button'` clauses; features.md, api.md, configuration.md and breaking-changes.md are not parsed, and the features-table test at lines 159-170 extracts only the first table column. Consequently an incorrect Icon, Variant, Button style, Icon side or Default behaviour cell, or a non-compiling example outside README/examples, leaves the suite green. One such example exists today: documentation/configuration.md:137 imports only `ZestButtonConfigProvider, ZestIcon` but the same snippet renders `<ZestButton>` at line 166 without importing it.",
+      "description": "Extend the R7 docs test to all seven pages and compare every features-table column against semanticTypeButtonConfigDefaults, and add the missing default ZestButton import to the configuration.md example. Advisory: the shipped table content currently matches the defaults and the broken named import that QA-2 reported is now guarded, so this is proof breadth, not a current requirement break."
+    },
+    {
+      "cites": "R1",
+      "severity": "advisory",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "line": 120,
+      "evidence": "The test named \"each of the 28 new names is accepted by the SemanticType type\" only annotates a literal array as SemanticType[] and asserts its length. No test augments `CustomZestSemanticTypes`; if `| keyof CustomZestSemanticTypes` were removed from the union at UI/ZestButton.tsx:20, every test would still compile and pass, so the R1 acceptance \"and still accepts the names added through CustomZestSemanticTypes\" remains unproven.",
+      "description": "Add a small declaration fixture that augments CustomZestSemanticTypes with `publish: 'publish'` and assigns `'publish'` to SemanticType, mirroring the docs recipe at examples.md:161-171. Advisory (carried over from round 1): the union still ends in `keyof CustomZestSemanticTypes` today, so the behaviour is present but unguarded."
+    }
+  ],
+  "verifications": [
+    {
+      "id": "QA-1",
+      "status": "fixed",
+      "evidence": "UI/zestIcons.tsx:161 now guards the lookup with `Object.prototype.hasOwnProperty.call(ZEST_ICON_ELEMENTS, name)` and returns null otherwise. __tests__/ZestIcon.test.tsx:68-80 asserts getZestIconElement returns null and <ZestIcon> renders no svg/text for __proto__, constructor, toString, hasOwnProperty and valueOf. The suite passes: 18 suites, 224 tests."
+    },
+    {
+      "id": "QA-2",
+      "status": "fixed",
+      "evidence": "documentation/examples.md:123 and :180 now use a default `ZestButton` import; no named ZestButton import remains. __tests__/ZestIcon.test.tsx:193-222 extracts every package import clause from README/examples, rejects a named ZestButton import, and checks each named import exists on the real barrel. The suite passes: 18 suites, 224 tests."
+    },
+    {
+      "id": "QA-4",
+      "status": "fixed",
+      "evidence": "__tests__/ZestIcon.test.tsx:8-15 imports the default ZestButton, ZestButtonConfigProvider, useZestButtonConfig, ZestIcon, ZestIconProps and ZestIconSize from \"../UI\", and the test at lines 82-107 renders a barrel-exported ZestIcon as a button iconLeft inside the provider and asserts the rendered icon and hook config. The suite passes: 18 suites, 224 tests."
+    }
+  ]
+}

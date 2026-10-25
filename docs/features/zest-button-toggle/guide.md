@@ -1,7 +1,7 @@
 ---
 title: Using the ZestButton on/off toggle
 covers: UI/ZestButton.tsx, UI/hooks/useToggleState.ts, Styles/ZestButton.module.css, UI/index.ts
-covers-hash: 83974655294af58a3a6c
+covers-hash: c8579802431644f425de
 ---
 
 # Using the ZestButton on/off toggle
@@ -24,7 +24,9 @@ This page is for developers who install the library and use `ZestButton` in thei
 ## Before you start
 
 - You need the package installed: `npm i jattac.libs.web.zest-button`.
-- You need a version that includes toggle mode (1.6.0 or later; `package.json` in this repository says `1.6.0`).
+- You need a version that includes toggle mode. Toggle mode arrived in 1.6.0; the current
+  release in this repository is 1.7.0, which also adds the wider set of semantic types and
+  the library-drawn icons.
 - Import the button as the default export:
 
 ```tsx
@@ -121,6 +123,32 @@ export const NotifyToggle = () => (
 
 What you should see: the button starts on, with a check mark before the label and the bell after it.
 
+### A toggle with a semantic type
+
+A semantic type supplies an icon and a starting look; the toggle adds the on/off state.
+Put the type and the toggle in the same `zest` object:
+
+```tsx
+import React from 'react';
+import ZestButton from 'jattac.libs.web.zest-button';
+
+export const FavouriteToggle = () => (
+  <ZestButton
+    aria-label="Favourite"
+    zest={{
+      semanticType: 'favorite',
+      toggleOptions: { defaultPressed: false, checkPosition: 'end' },
+    }}
+  />
+);
+```
+
+What you should see: a button with the heart icon and no visible text. When on, it looks
+pressed and a check mark appears at the end, after the heart. The check mark does not
+replace the heart. See
+[Using ZestButton semantic types](../zest-button-semantic-types/guide.md) for the type
+names and their default looks.
+
 ## Scenarios
 
 ### Works with every style, variant and size
@@ -137,11 +165,11 @@ If the button has an `onClick` and `busyOptions.handleInternally` is on, the tog
 
 ### Setting shared defaults
 
-`toggleOptions` merges with the rest of your `ZestButtonConfigProvider` settings, like other `zest` options. For example, to put the check mark at the end for every `confirm` button:
+`toggleOptions` merges with the rest of your `ZestButtonConfigProvider` settings, like other `zest` options. Setting it for a type also makes that type a toggle. For example, to make every `favorite` button a toggle with the check mark at the end:
 
 ```tsx
 <ZestButtonConfigProvider
-  config={{ semanticTypeDefaults: { confirm: { toggleOptions: { checkPosition: 'end' } } } }}
+  config={{ semanticTypeDefaults: { favorite: { toggleOptions: { checkPosition: 'end' } } } }}
 >
   {/* your app */}
 </ZestButtonConfigProvider>
@@ -180,6 +208,10 @@ These are outside this feature: a sliding switch control, groups where only one 
 ## See also
 
 - [Feature record (BRS) for the toggle](./BRS.md)
+- [Using ZestButton semantic types](../zest-button-semantic-types/guide.md) — combine a
+  toggle with a built-in icon and colour.
+- [Built-in semantic type reference](../zest-button-semantic-types/type-reference.md) —
+  the 47 type names.
 - [API reference: `ToggleOptions`](../../../documentation/api.md#toggleoptions)
 - [Cookbook: Recipe 6, an on/off toggle button](../../../documentation/examples.md#recipe-6-an-onoff-toggle-button)
 - [Configuration and provider defaults](../../../documentation/configuration.md)

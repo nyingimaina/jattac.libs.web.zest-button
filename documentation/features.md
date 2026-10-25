@@ -9,6 +9,8 @@ This document provides a high-level showcase of what's possible with `ZestButton
 - [Asynchronous Operations & Feedback](#asynchronous-operations--feedback)
 - [Confirmation Flow](#confirmation-flow)
 - [Semantic Types](#semantic-types)
+- [Standardized Icons](#standardized-icons)
+- [Built-in Semantic Types Reference](#built-in-semantic-types-reference)
 - [Global Configuration](#global-configuration)
 - [Rich Styling](#rich-styling)
 - [Split Buttons & Overflow Menus](#split-buttons--overflow-menus)
@@ -65,17 +67,101 @@ const MyComponent = () => {
 
 ### Semantic Types
 
-**What it does:** Streamlines development by allowing you to declare button intent (e.g., `'save'`, `'delete'`). The button automatically gets appropriate icons, colors, and behaviors.
+**What it does:** Streamlines development by allowing you to declare button intent (e.g., `'save'`, `'search'`, `'delete'`). The library ships 47 built-in types covering common actions; each one automatically gets an icon, colour variant, and sensible behaviour.
 
 ```tsx
 const MyComponent = () => (
     <div style={{ display: 'flex', gap: '1rem' }}>
         <ZestButton zest={{ semanticType: 'save' }}>Save</ZestButton>
+        <ZestButton zest={{ semanticType: 'search' }}>Search</ZestButton>
         <ZestButton zest={{ semanticType: 'cancel' }}>Cancel</ZestButton>
     </div>
 );
 ```
-*__Learn how to create your own in the [Creating a Custom "Archive" Button recipe](./examples.md#recipe-4-creating-a-custom-archive-button).__*
+*__Learn how to create your own in the [Creating a Custom Semantic Type recipe](./examples.md#recipe-4-creating-a-custom-semantic-type).__*
+
+---
+
+### Standardized Icons
+
+**What it does:** Every built-in type uses an icon drawn by the library itself: one 24-unit grid, one stroke weight, rounded ends and joins, and `currentColor` so it matches the button text in light, dark and system themes. The same drawings are available outside a button through `ZestIcon`.
+
+```tsx
+import ZestButton, { ZestIcon } from 'jattac.libs.web.zest-button';
+
+// A built-in type gets its icon automatically.
+<ZestButton zest={{ semanticType: 'search' }}>Search</ZestButton>
+
+// Reuse the same drawing anywhere: buttons, menus or a custom control.
+<ZestIcon name="copy" />
+<ZestIcon name="filter" size="lg" />
+<ZestIcon name="settings" size="1.25rem" />
+
+// An icon-only button needs its own accessible name.
+<ZestButton
+  aria-label="Search"
+  zest={{ visualOptions: { iconLeft: <ZestIcon name="search" /> } }}
+/>
+```
+`ZestIcon` takes a built-in `name`, an optional `size` (`'sm' | 'md' | 'lg'` or a number/string treated as a `rem` size) and an optional `className`. It is decorative (`aria-hidden`, not focusable); give icon-only controls an `aria-label`. An unknown name renders nothing instead of throwing.
+
+*__See the [`ZestIcon` reference](./api.md#zesticon) and the [standard icons recipe](./examples.md#recipe-7-reusing-the-standard-icons).__*
+
+---
+
+### Built-in Semantic Types Reference
+
+Every entry below is a built-in `semanticType`. The variant, button style, icon side and default behaviour are what you get from the name alone; any of them can be overridden with your own `zest` props or through `ZestButtonConfigProvider`.
+
+| Type | Icon | Variant | Button style | Icon side | Default behaviour |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `add` | Plus sign | `standard` | `solid` | left | — |
+| `new` | Plus sign (alias of `add`) | `standard` | `solid` | left | — |
+| `save` | Floppy disk | `success` | `solid` | left | 500 ms busy, success check mark |
+| `submit` | Floppy disk (alias of `save`) | `success` | `solid` | left | 500 ms busy, success check mark |
+| `edit` | Pencil | `standard` | `solid` | left | — |
+| `update` | Pencil (alias of `edit`) | `standard` | `solid` | left | — |
+| `delete` | Trash can | `danger` | `solid` | left | Confirm “Confirm Delete” (5 s), fail shake |
+| `remove` | Trash can (alias of `delete`) | `danger` | `solid` | left | Confirm “Confirm Remove” (5 s), fail shake |
+| `cancel` | Cross | `standard` | `outline` | left | — |
+| `close` | Cross (alias of `cancel`) | `standard` | `outline` | left | — |
+| `view` | Right arrow | `standard` | `text` | right | — |
+| `details` | Right arrow (alias of `view`) | `standard` | `text` | right | — |
+| `download` | Arrow into a tray | `standard` | `solid` | left | — |
+| `upload` | Arrow out of a tray | `standard` | `solid` | left | — |
+| `refresh` | Circular arrow | `standard` | `solid` | left | 500 ms busy |
+| `reload` | Circular arrow (alias of `refresh`) | `standard` | `solid` | left | 500 ms busy |
+| `print` | Printer | `standard` | `solid` | left | — |
+| `share` | Share nodes | `standard` | `solid` | left | — |
+| `confirm` | Check mark | `success` | `solid` | left | Confirm “Are you sure?” (5 s) |
+| `search` | Magnifying glass | `standard` | `solid` | left | — |
+| `filter` | Funnel | `standard` | `solid` | left | — |
+| `sort` | Lines, longest to shortest | `standard` | `solid` | left | — |
+| `copy` | Overlapping pages | `standard` | `solid` | left | — |
+| `paste` | Clipboard | `standard` | `solid` | left | — |
+| `back` | Left arrow | `standard` | `solid` | left | — |
+| `next` | Right arrow | `standard` | `solid` | right | — |
+| `home` | House | `standard` | `solid` | left | — |
+| `menu` | Three lines | `standard` | `solid` | left | — |
+| `more` | Three dots | `standard` | `solid` | left | — |
+| `settings` | Sliders | `standard` | `solid` | left | — |
+| `help` | Question mark in a circle | `standard` | `solid` | left | — |
+| `info` | Letter i in a circle | `standard` | `solid` | left | — |
+| `warning` | Triangle with an exclamation mark | `danger` | `solid` | left | — |
+| `send` | Paper plane | `standard` | `solid` | left | 500 ms busy |
+| `login` | Arrow entering a door | `standard` | `solid` | left | 500 ms busy |
+| `logout` | Arrow leaving a door | `standard` | `solid` | left | 500 ms busy |
+| `undo` | Curved arrow to the left | `standard` | `solid` | left | — |
+| `redo` | Curved arrow to the right | `standard` | `solid` | left | — |
+| `approve` | Check mark | `success` | `solid` | left | 500 ms busy |
+| `reject` | Cross | `danger` | `solid` | left | 500 ms busy |
+| `favorite` | Heart | `standard` | `solid` | left | — |
+| `attach` | Paperclip | `standard` | `solid` | left | — |
+| `lock` | Closed padlock | `standard` | `solid` | left | — |
+| `unlock` | Open padlock | `standard` | `solid` | left | — |
+| `archive` | Archive box | `standard` | `solid` | left | 500 ms busy |
+| `export` | Arrow into a tray | `standard` | `solid` | left | 500 ms busy |
+| `import` | Arrow out of a tray | `standard` | `solid` | left | 500 ms busy |
 
 ---
 

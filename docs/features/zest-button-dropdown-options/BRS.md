@@ -1,7 +1,7 @@
 ---
 title: BRS — ZestButton dropdown options (split button)
 covers: UI/ZestButton.tsx, UI/ZestDropdownMenu.tsx, UI/ZestDropdownMenuItem.tsx
-covers-hash: 2f5ac954d130bc3f5074
+covers-hash: 1d5a3c45d32756291c59
 ---
 
 # BRS — ZestButton dropdown options (split button)
@@ -20,6 +20,16 @@ covers-hash: 2f5ac954d130bc3f5074
 ### Implementation notes
 
 See `test-reports/CHANGE_MANIFEST_dropdown-options.md` for the full file list, four implementation deviations from this document's original Technical Design (each empirically discovered, not guessed), and the coverage-regression fix. All 9 acceptance criteria satisfied; 81/81 tests pass; coverage 97.21% (up from the prior 95.38% baseline).
+
+### Current state in 1.7.0
+
+The 1.7.0 feature widened `SemanticType` on the shared `ZestButton.tsx` from 19 to 47
+built-in names and replaced the built-in types' Font Awesome icons with library-drawn
+inline SVG. Dropdown behaviour is unchanged: the split control, the Radix menu, per-item
+busy/confirm/success feedback and the independent menu theme all work as described here.
+A `ZestDropdownOption` may use any `semanticType` (built-in or custom); its default icon
+and behaviour come from the same defaults map as the main button. The full suite at this
+revision is 18 suites / 225 tests, all passing.
 
 ---
 
@@ -217,3 +227,14 @@ Styles/ZestButton.module.css    — extended (not replaced) with chevron/menu/di
 - [ ] Change manifest produced
 - [ ] Self review passed with all PASS items
 - [ ] `docs/guidelines/ai-knowledge.md` and `docs/guidelines/decision-log.md` updated
+
+## See also
+
+- [Using ZestButton semantic types](../zest-button-semantic-types/guide.md) — a menu
+  item can carry a built-in type.
+- [Built-in semantic type reference](../zest-button-semantic-types/type-reference.md) —
+  the names and icons available to the main button and its items.
+- [Using the ZestButton on/off toggle](../zest-button-toggle/guide.md) — the toggle is
+  independent of the dropdown.
+- [Recipe 5: a split button with overflow actions](../../../documentation/examples.md#recipe-5-a-split-button-with-overflow-actions)
+  — the consumer cookbook.

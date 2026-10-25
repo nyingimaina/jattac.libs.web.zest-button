@@ -1,0 +1,159 @@
+{
+  "checks": [
+    {
+      "id": "no-secrets",
+      "name": "No secrets in code",
+      "status": "passed",
+      "seconds": 0.0660351,
+      "output": ""
+    },
+    {
+      "id": "no-debug-leftovers",
+      "name": "No debugging leftovers",
+      "status": "passed",
+      "seconds": 0.0414469,
+      "output": ""
+    },
+    {
+      "id": "lib-typecheck",
+      "name": "Type check (library and tests)",
+      "status": "passed",
+      "seconds": 4.9235909,
+      "output": ""
+    },
+    {
+      "id": "lib-tests",
+      "name": "Tests, with coverage",
+      "status": "failed",
+      "seconds": 21.8973909,
+      "output": "\u2026\nSummary of all failing tests\r\nFAIL .devteam/runs/20261025-084314/scratch/security/prototype.probe.test.tsx (8.295 s)\r\n  \u25CF prototype-chain lookup probe \u203A getZestIconElement returns inherited prototype members for unknown names\r\n\r\n    expect(received).not.toBeNull()\r\n\r\n    Received: null\r\n\r\n    \u001B[0m \u001B[90m 10 |\u001B[39m       \u001B[90m// eslint-disable-next-line no-console\u001B[39m\r\n     \u001B[90m 11 |\u001B[39m       console\u001B[33m.\u001B[39mlog(name\u001B[33m,\u001B[39m \u001B[36mtypeof\u001B[39m el\u001B[33m,\u001B[39m el \u001B[33m===\u001B[39m \u001B[36mnull\u001B[39m \u001B[33m?\u001B[39m \u001B[32m\u0022null\u0022\u001B[39m \u001B[33m:\u001B[39m \u001B[32m\u0022NOT NULL\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n    \u001B[31m\u001B[1m\u003E\u001B[22m\u001B[39m\u001B[90m 12 |\u001B[39m       expect(el)\u001B[33m.\u001B[39mnot\u001B[33m.\u001B[39mtoBeNull()\u001B[33m;\u001B[39m\r\n     \u001B[90m    |\u001B[39m                      \u001B[31m\u001B[1m^\u001B[22m\u001B[39m\r\n     \u001B[90m 13 |\u001B[39m     }\r\n     \u001B[90m 14 |\u001B[39m   })\u001B[33m;\u001B[39m\r\n     \u001B[90m 15 |\u001B[39m\u001B[0m\r\n\r\n      at Object.\u003Canonymous\u003E (.devteam/runs/20261025-084314/scratch/security/prototype.probe.test.tsx:12:22)\r\n\r\nFAIL .devteam/runs/20261025-084314/scratch/reviewer/basecopy/__tests__/ZestButtonToggle.test.tsx (9.793 s)\r\n  \u25CF ZestButton toggle mode \u203A R8 documentation \u203A R8: the API page documents every ToggleOptions prop and the README shows a toggle example\r\n\r\n    expect(received).toBe(expected) // Object.is equality\r\n\r\n    Expected: \u00221.6.0\u0022\r\n    Received: \u00221.6.1\u0022\r\n\r\n    \u001B[0m \u001B[90m 502 |\u001B[39m       expect(read(\u001B[32m\u0022README.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022toggleOptions\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m 503 |\u001B[39m       expect(read(\u001B[32m\u0022documentation/breaking-changes.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022Version 1.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n    \u001B[31m\u001B[1m\u003E\u001B[22m\u001B[39m\u001B[90m 504 |\u001B[39m       expect(\u001B[33mJSON\u001B[39m\u001B[33m.\u001B[39mparse(read(\u001B[32m\u0022package.json\u0022\u001B[39m))\u001B[33m.\u001B[39mversion)\u001B[33m.\u001B[39mtoBe(\u001B[32m\u00221.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m     |\u001B[39m                                                        \u001B[31m\u001B[1m^\u001B[22m\u001B[39m\r\n     \u001B[90m 505 |\u001B[39m     })\u001B[33m;\u001B[39m\r\n     \u001B[90m 506 |\u001B[39m\r\n     \u001B[90m 507 |\u001B[39m     it(\u001B[32m\u0022R8: the documented examples type-check against the exported types and render\u0022\u001B[39m\u001B[33m,\u001B[39m () \u001B[33m=\u003E\u001B[39m {\u001B[0m\r\n\r\n      at Object.\u003Canonymous\u003E (.devteam/runs/20261025-084314/scratch/reviewer/basecopy/__tests__/ZestButtonToggle.test.tsx:504:56)\r\n\r\nFAIL .devteam/runs/20261025-084314/scratch/reviewer/base/__tests__/ZestButtonToggle.test.tsx (10.176 s)\r\n  \u25CF ZestButton toggle mode \u203A R8 documentation \u203A R8: the API page documents every ToggleOptions prop and the README shows a toggle example\r\n\r\n    expect(received).toBe(expected) // Object.is equality\r\n\r\n    Expected: \u00221.6.0\u0022\r\n    Received: \u00221.6.1\u0022\r\n\r\n    \u001B[0m \u001B[90m 502 |\u001B[39m       expect(read(\u001B[32m\u0022README.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022toggleOptions\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m 503 |\u001B[39m       expect(read(\u001B[32m\u0022documentation/breaking-changes.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022Version 1.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n    \u001B[31m\u001B[1m\u003E\u001B[22m\u001B[39m\u001B[90m 504 |\u001B[39m       expect(\u001B[33mJSON\u001B[39m\u001B[33m.\u001B[39mparse(read(\u001B[32m\u0022package.json\u0022\u001B[39m))\u001B[33m.\u001B[39mversion)\u001B[33m.\u001B[39mtoBe(\u001B[32m\u00221.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m     |\u001B[39m                                                        \u001B[31m\u001B[1m^\u001B[22m\u001B[39m\r\n     \u001B[90m 505 |\u001B[39m     })\u001B[33m;\u001B[39m\r\n     \u001B[90m 506 |\u001B[39m\r\n     \u001B[90m 507 |\u001B[39m     it(\u001B[32m\u0022R8: the documented examples type-check against the exported types and render\u0022\u001B[39m\u001B[33m,\u001B[39m () \u001B[33m=\u003E\u001B[39m {\u001B[0m\r\n\r\n      at Object.\u003Canonymous\u003E (.devteam/runs/20261025-084314/scratch/reviewer/base/__tests__/ZestButtonToggle.test.tsx:504:56)\r\n\r\n\r\nTest Suites: 3 failed, 82 passed, 85 total\r\nTests:       3 failed, 1006 passed, 1009 total\r\nSnapshots:   0 total\r\nTime:        20.021 s\r\nRan all test suites."
+    },
+    {
+      "id": "lib-build",
+      "name": "Build (CommonJS, ES modules, type definitions)",
+      "status": "passed",
+      "seconds": 9.7045877,
+      "output": ""
+    },
+    {
+      "id": "lib-validate-package",
+      "name": "Package check (attw and publint)",
+      "status": "notrun",
+      "seconds": 0.0957567,
+      "output": "Not set up in this project: attw and publint are not installed, so nothing checks that the package works for everyone who installs it."
+    },
+    {
+      "id": "lib-pack",
+      "name": "What would be published",
+      "status": "passed",
+      "seconds": 2.8008028,
+      "output": ""
+    },
+    {
+      "id": "lib-publish-dry-run",
+      "name": "Publish dry run (everything npm checks, nothing is uploaded)",
+      "status": "passed",
+      "seconds": 1.6973199,
+      "output": ""
+    },
+    {
+      "id": "lib-size",
+      "name": "Size budget",
+      "status": "notrun",
+      "seconds": 0.0848971,
+      "output": "Not set up in this project: The project has no .size-limit.json, so this check has nothing to run."
+    },
+    {
+      "id": "lib-consumer-smoke",
+      "name": "Install and import the packed library",
+      "status": "notrun",
+      "seconds": 0.0755541,
+      "output": "Not set up in this project: Nothing installs the packed library into a scratch project and imports it  no scripts/consumer-smoke.mjs ."
+    },
+    {
+      "id": "lib-docs",
+      "name": "Documentation is complete",
+      "status": "notrun",
+      "seconds": 0.0759874,
+      "output": "Not set up in this project: The project has no scripts/check-docs.mjs, so this check has nothing to run."
+    },
+    {
+      "id": "rule-USR-001-1",
+      "name": "No native button element",
+      "status": "passed",
+      "seconds": 0.0383102,
+      "output": ""
+    },
+    {
+      "id": "rule-USR-001-2",
+      "name": "No native table element",
+      "status": "passed",
+      "seconds": 0.0382457,
+      "output": ""
+    },
+    {
+      "id": "rule-USR-001-3",
+      "name": "No native text box or text area",
+      "status": "passed",
+      "seconds": 0.0366496,
+      "output": ""
+    },
+    {
+      "id": "rule-USR-001-4",
+      "name": "No native file upload input",
+      "status": "passed",
+      "seconds": 0.039743,
+      "output": ""
+    },
+    {
+      "id": "rule-USR-002-1",
+      "name": "No tiny fixed pixel font sizes",
+      "status": "passed",
+      "seconds": 0.0424182,
+      "output": ""
+    },
+    {
+      "id": "rule-USR-002-2",
+      "name": "Do not block pinch-zoom on mobile",
+      "status": "passed",
+      "seconds": 0.0408507,
+      "output": ""
+    },
+    {
+      "id": "rule-USR-003-1",
+      "name": "No dynamic code execution (eval / new Function)",
+      "status": "passed",
+      "seconds": 0.0424889,
+      "output": ""
+    },
+    {
+      "id": "rule-USR-003-2",
+      "name": "No raw HTML injection (XSS risk)",
+      "status": "passed",
+      "seconds": 0.0378712,
+      "output": ""
+    },
+    {
+      "id": "rule-USR-003-3",
+      "name": "No string-based timers (hidden eval)",
+      "status": "passed",
+      "seconds": 0.0465039,
+      "output": ""
+    },
+    {
+      "id": "rule-USR-003-4",
+      "name": "No leftover debugger statements or console.log",
+      "status": "passed",
+      "seconds": 0.0418376,
+      "output": ""
+    },
+    {
+      "id": "rule-USR-006-1",
+      "name": "No hard-coded colours in component code (use shared design tokens)",
+      "status": "passed",
+      "seconds": 0.0407799,
+      "output": ""
+    }
+  ],
+  "tests": []
+}

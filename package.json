@@ -22,6 +22,9 @@
     "./dist/*": "./dist/*",
     "./package.json": "./package.json"
   },
+  "sideEffects": [
+    "**/*.css"
+  ],
   "files": [
     "dist",
     "README.md",

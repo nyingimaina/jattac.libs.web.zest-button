@@ -1,0 +1,4 @@
+{
+  "summary": "Consistent: the requirements agree with each other, the design covers them within its declared scope, and no blocking rule, check or earlier toggle requirement is contradicted.",
+  "conflicts": []
+}

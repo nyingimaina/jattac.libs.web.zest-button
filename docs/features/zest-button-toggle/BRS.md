@@ -1,7 +1,7 @@
 ---
 title: BRS — ZestButton on/off toggle mode
 covers: UI/ZestButton.tsx, UI/hooks/useToggleState.ts, Styles/ZestButton.module.css, __tests__/ZestButtonToggle.test.tsx
-covers-hash: 1d6d589dd535b7c2252f
+covers-hash: 2eaea46b284c18005e3f
 ---
 
 # BRS — ZestButton on/off toggle mode

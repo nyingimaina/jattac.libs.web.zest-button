@@ -1,7 +1,7 @@
 ---
 title: Using ZestButton semantic types
 covers: UI/ZestButton.tsx, UI/semanticTypeButtonConfigDefaults.tsx, UI/hooks/useZestConfig.ts, UI/index.ts
-covers-hash: f7c930dcbd8d24250fc6
+covers-hash: bbd66c365ea6481035f7
 ---
 
 # Using ZestButton semantic types

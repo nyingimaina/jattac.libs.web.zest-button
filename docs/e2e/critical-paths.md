@@ -1,7 +1,7 @@
 ---
 title: Critical Paths
 covers: docs/guidelines/AI_E2E_TESTING.md, __tests__/
-covers-hash: 2b74bfb43681b2895ca6
+covers-hash: 5337b05ac08d8b621c70
 ---
 
 # Critical Paths
@@ -93,6 +93,9 @@ Protected by `__tests__/ZestButton.test.tsx` and
 - [x] All 47 icons render safe SVG: no script, image, link, inline event handler or
       `dangerouslySetInnerHTML`.
 - [x] The SVG is decorative (`aria-hidden`, not focusable) and inherits the text colour.
+- [x] Merging the built-in defaults with an app's `ZestButtonConfigProvider` settings edits
+      neither one: a frozen provider config and the built-in table are unchanged after
+      rendering.
 
 Protected by `__tests__/semanticTypeButtonConfigDefaults.test.tsx`,
 `__tests__/semanticTypeIcons.test.tsx`, `__tests__/ZestIcon.test.tsx`,
@@ -105,7 +108,6 @@ Protected by `__tests__/semanticTypeButtonConfigDefaults.test.tsx`,
 - [x] The pressed look and check mark follow the value.
 - [x] The check mark can sit at `start` or `end` and coexists with a type icon.
 - [x] The toggle still flips on the confirming click when confirmation is configured.
-
 Protected by `__tests__/ZestButtonToggle.test.tsx` and
 `__tests__/hooks/useToggleState.test.ts`.
 
@@ -116,6 +118,9 @@ Protected by `__tests__/ZestButtonToggle.test.tsx` and
 - [x] Each menu item runs its own busy, success, failure and confirmation machinery.
 - [x] The control disables while an item is busy.
 - [x] The menu is non-modal, themed independently, and can be given a minimum width.
+- [x] Without an explicit width, the menu follows the width of the split button as it is
+      resized, ignores a reported width of zero, and stops watching when the button is
+      removed.
 
 Protected by `__tests__/ZestButton.test.tsx`, `__tests__/ZestDropdownMenu.test.tsx` and
 `__tests__/ZestDropdownMenuItem.test.tsx`.
@@ -125,6 +130,9 @@ Protected by `__tests__/ZestButton.test.tsx`, `__tests__/ZestDropdownMenu.test.t
 - [x] `react` and `react-dom` peers accept React 18 and React 19 and reject 16.8/17.
 - [x] `rollup.config.mjs` externalizes `react/jsx-runtime` and `react/jsx-dev-runtime`.
 - [x] The published bundle does not inline a React JSX runtime.
+- [ ] `package.json` marks only CSS files as having side effects (`"sideEffects":
+      ["**/*.css"]`) so bundlers can drop unused code. No test checks this yet, and the
+      box stays open until one does.
 
 Protected by `__tests__/packagePeerDependencies.test.ts` and
 `__tests__/buildExternalization.test.ts`. The actual bundle content is checked at release

@@ -1,0 +1,37 @@
+{
+  "findings": [
+    {
+      "cites": "R3",
+      "severity": "advisory",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "line": 326,
+      "evidence": "The disabled-dimming and filled-variant tests assert on CSS source text via regex (and stroke=currentColor) because jest maps CSS to identity-obj-proxy; they would fail if the rules were removed, but not if another rule overrode them.",
+      "description": "Stronger proof would be a computed-style check or a visual check. Not blocking: the tests would notice the CSS rule being deleted or the icon stroke changing."
+    },
+    {
+      "cites": "R4",
+      "severity": "advisory",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "line": 1,
+      "evidence": "The focus-ring test checks the shared CSS rule and class per type; jsdom cannot show a real ring in light and dark themes.",
+      "description": "Real-theme visibility is only checked structurally. Acceptable for a CSS-variable library."
+    },
+    {
+      "cites": "R3",
+      "severity": "advisory",
+      "file": "dist/index.esm.js",
+      "line": 1,
+      "evidence": "The build report says npm run build succeeds but records no dist/index.esm.js size delta. The non-functional requirement asks for the number (15 KB cap) to be recorded in the review. No .size-limit.json exists.",
+      "description": "Measure and record the bundle growth by hand. Advisory because no automated size check exists in this project."
+    },
+    {
+      "cites": "LIB-003",
+      "severity": "advisory",
+      "file": "package.json",
+      "line": 1,
+      "evidence": "Project notes say there is no scripts/consumer-smoke.mjs, so the packed library is never installed and imported under CommonJS and ES modules. The report mentions no npm pack --dry-run.",
+      "description": "The packed-library check did not run, and the scaffolding is not set up. This is not blocking because the request did not ask for it."
+    }
+  ],
+  "verifications": []
+}

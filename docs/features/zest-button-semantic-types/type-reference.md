@@ -1,7 +1,7 @@
 ---
 title: Built-in semantic type reference
 covers: UI/semanticTypeButtonConfigDefaults.tsx, UI/zestIcons.tsx, UI/ZestButton.tsx, Styles/ZestButton.module.css, UI/hooks/useBusyState.ts, UI/hooks/useConfirmation.ts
-covers-hash: 684f2a474bffbd1adad6
+covers-hash: 286050f3def14e1e1cda
 ---
 
 # Built-in semantic type reference

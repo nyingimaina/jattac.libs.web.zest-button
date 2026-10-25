@@ -1,0 +1,13 @@
+{
+  "findings": [
+    {
+      "cites": "USR-003",
+      "severity": "advisory",
+      "file": "UI/hooks/useZestConfig.ts",
+      "line": 37,
+      "evidence": "builtInSemanticDefaults[semanticType] and customSemanticDefaults[semanticType] use plain-object lookup with a consumer-supplied key, so inherited names such as 'constructor' or '__proto__' are truthy. deepMerge only copies enumerable own keys, so these merge nothing and no pollution occurs. This code is unchanged by this feature.",
+      "description": "Not exploitable today. Using Object.prototype.hasOwnProperty.call, as zestIcons.tsx already does, would remove the pattern for good. Optional hardening, not part of this change."
+    }
+  ],
+  "verifications": []
+}

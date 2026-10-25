@@ -1,0 +1,216 @@
+{
+  "summary": "Fixed CHK-coverage: added one test that drives the split-button ResizeObserver callback (positive width, zero width, empty entries, disconnect on unmount), which was the only uncovered code. Line coverage is now 99.51% (baseline 98.97%); 227 tests pass. No production code changed.",
+  "tests": [
+    {
+      "name": "R3: an icon element is created once and the same reference is reused on every lookup",
+      "file": "__tests__/zestIconPerformance.test.tsx",
+      "requirements": [
+        "R3"
+      ]
+    },
+    {
+      "name": "R3: a hundred built-in buttons render one icon each and keep the module-level elements on re-render",
+      "file": "__tests__/zestIconPerformance.test.tsx",
+      "requirements": [
+        "R3"
+      ]
+    },
+    {
+      "name": "R3: every built-in type renders its icon in the shared style",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "requirements": [
+        "R3"
+      ]
+    },
+    {
+      "name": "R3: a disabled button dims the icon with the text instead of leaving it at full strength",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "requirements": [
+        "R3"
+      ]
+    },
+    {
+      "name": "R6: the 19 existing types keep their variant, button style, icon side and options",
+      "file": "__tests__/semanticTypeButtonConfigDefaults.test.tsx",
+      "requirements": [
+        "R6"
+      ]
+    },
+    {
+      "name": "R6: a provider override of a built-in type's iconLeft keeps the app's own icon",
+      "file": "__tests__/hooks/useZestConfig.test.ts",
+      "requirements": [
+        "R6"
+      ]
+    },
+    {
+      "name": "R6 and R8: a new type icon and the toggle check coexist without replacing each other",
+      "file": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": [
+        "R6"
+      ]
+    },
+    {
+      "name": "R7: the features table lists exactly the built-in semantic types",
+      "file": "__tests__/ZestIcon.test.tsx",
+      "requirements": [
+        "R7"
+      ]
+    },
+    {
+      "name": "R7: the docs use the new types and icon component, with no stale type count",
+      "file": "__tests__/ZestIcon.test.tsx",
+      "requirements": [
+        "R7"
+      ]
+    },
+    {
+      "name": "R7: every documentation page links to the previous and next page",
+      "file": "__tests__/ZestIcon.test.tsx",
+      "requirements": [
+        "R7"
+      ]
+    },
+    {
+      "name": "R1: all 47 built-in types render a default icon and keep their children label",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "requirements": [
+        "R1"
+      ]
+    },
+    {
+      "name": "R1: an app that registered a custom configuration for a new name keeps its own configuration",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "requirements": [
+        "R1"
+      ]
+    },
+    {
+      "name": "R1: an unknown semanticType renders a plain button without an icon",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "requirements": [
+        "R1"
+      ]
+    },
+    {
+      "name": "R1: a name in capitals or with spaces is not treated as a built-in type",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "requirements": [
+        "R1"
+      ]
+    },
+    {
+      "name": "R1: lists all 47 built-in names and every one has a defaults entry",
+      "file": "__tests__/semanticTypeButtonConfigDefaults.test.tsx",
+      "requirements": [
+        "R1"
+      ]
+    },
+    {
+      "name": "R2: a developer-supplied iconLeft wins and the default icon is not added twice",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "requirements": [
+        "R2"
+      ]
+    },
+    {
+      "name": "R2: a developer-set variant wins over the built-in default",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "requirements": [
+        "R2"
+      ]
+    },
+    {
+      "name": "R2: no new type asks for confirmation by default",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "requirements": [
+        "R2"
+      ]
+    },
+    {
+      "name": "R2: next places its icon after the label so right-to-left layouts mirror it",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "requirements": [
+        "R2"
+      ]
+    },
+    {
+      "name": "R2: only the eight async new types get a 500 ms busy time and none ask for confirmation",
+      "file": "__tests__/semanticTypeButtonConfigDefaults.test.tsx",
+      "requirements": [
+        "R2"
+      ]
+    },
+    {
+      "name": "R4: every built-in icon is hidden from screen readers and not focusable",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "requirements": [
+        "R4"
+      ]
+    },
+    {
+      "name": "R4: an icon-only button with aria-label announces that label, not the icon",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "requirements": [
+        "R4"
+      ]
+    },
+    {
+      "name": "R4: every built-in type gets the shared keyboard focus ring in light and dark themes",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "requirements": [
+        "R4"
+      ]
+    },
+    {
+      "name": "R5: two ZestIcons on one page do not clash (no shared ids)",
+      "file": "__tests__/ZestIcon.test.tsx",
+      "requirements": [
+        "R5"
+      ]
+    },
+    {
+      "name": "R5: a rem size or a size name scales the icon without px",
+      "file": "__tests__/ZestIcon.test.tsx",
+      "requirements": [
+        "R5"
+      ]
+    },
+    {
+      "name": "R5: renders the named built-in icon in the shared style",
+      "file": "__tests__/ZestIcon.test.tsx",
+      "requirements": [
+        "R5"
+      ]
+    },
+    {
+      "name": "R8: an icon added later without the shared view box or stroke settings fails the style test",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "requirements": [
+        "R8"
+      ]
+    },
+    {
+      "name": "R8: no icon carries a script, event handler, external link, image or raw HTML",
+      "file": "__tests__/semanticTypeIcons.test.tsx",
+      "requirements": [
+        "R8"
+      ]
+    },
+    {
+      "name": "R8: every built-in icon uses the shared view box and stroke settings",
+      "file": "__tests__/ZestIcon.test.tsx",
+      "requirements": [
+        "R8"
+      ]
+    },
+    {
+      "name": "R3: the dropdown width follows the observed size and ignores a zero width",
+      "file": "__tests__/ZestButton.test.tsx",
+      "requirements": [
+        "R3"
+      ]
+    }
+  ],
+  "kickbacks": []
+}

@@ -1,0 +1,72 @@
+{
+  "summary": "Continuation: the earlier run already built the icon layer on this branch (UI/zestIcons.tsx, UI/ZestIcon.tsx, 47 entries in semanticTypeButtonConfigDefaults.tsx, ZestIcon exports in UI/index.ts, .zestIcon CSS, package.json at 1.7.0, docs mentioning ZestIcon, and tests ZestIcon/semanticTypeIcons/zestIconPerformance). Nothing is re-scaffolded or redesigned. This run verifies each requirement against the code and fixes only gaps. Design as built and kept: a module-level map of 47 SVG elements created once at import (aliases share an element), looked up in O(1); ZestIcon renders them aria-hidden and focusable=false, returns null for unknown names, and applies size/className without cloning the shared element; built-in defaults use these elements as iconLeft (iconRight for view, details, next); the 28 new types follow R2 (approve success; reject and warning danger; back start, next end; send, login, logout, export, import, approve, reject, archive have minBusyDurationMs 500 only; none confirm); SemanticType covers 47 names; the existing useZestConfig precedence is untouched so an app's own registration wins over built-ins. Public surface: added ZestIcon, ZestIconProps, ZestIconSize and the widened SemanticType; nothing removed or renamed. Dependencies, peer dependencies, rollup config and dist layout are unchanged (react-icons stays for FaSpinner and the dropdown chevron); package.json stays at 1.7.0 with no further bump. Gap-closing work is limited to: (1) checks that every built-in type has an icon with the shared style, aria-hidden, no dangerouslySetInnerHTML/href/on* attributes, same element reference across re-renders, and the unchanged behaviour of the 19 old names; (2) a manual dist/index.esm.js size check (no more than 15 KB growth, no .size-limit.json exists, recorded in the review); (3) docs accuracy: every page lists 47 types, the icon-only aria-label guidance, the icon change in breaking-changes, how to add an icon in development, and prev/next links on each page; (4) fix any failing test or mismatch found. Cost: 47 small path strings and elements allocated once, constant per-button render work, no listeners, timers, network or storage; 100x more buttons only adds DOM nodes.",
+  "impact": {
+    "touches": [
+      "UI/semanticTypeButtonConfigDefaults.tsx — only if verification finds a default that does not match R2 or an icon missing",
+      "UI/zestIcons.tsx — only to fix an icon that breaks the shared style or R4",
+      "UI/ZestIcon.tsx — only to fix a defect found",
+      "UI/ZestButton.tsx — only if SemanticType does not list all 47 names",
+      "UI/index.ts — only if the ZestIcon exports are incomplete",
+      "Styles/ZestButton.module.css — only for the .zestIcon rules if a defect is found",
+      "package.json and package-lock.json — only to confirm 1.7.0; no dependency change, no further bump",
+      "README.md and documentation/*.md — correct any claim that does not match the code, and complete prev/next links",
+      "Existing tests — extended for gaps found; behavioural expectations of the 19 old names are not weakened"
+    ],
+    "reuses": [
+      "The built icon registry, ZestIcon, the 47-entry defaults map and the useZestConfig precedence chain",
+      "Existing styles.icon slot and currentColor theming; the existing 24-unit SVG convention",
+      "react-icons/fa6 for the spinner and dropdown arrow (out of scope)",
+      "Existing Jest + React Testing Library setup, buildExternalization and packagePeerDependencies tests as guards",
+      "Existing documentation page chain"
+    ],
+    "adds": [
+      "Only missing tests or doc text that verification of R1-R8 shows is absent",
+      "A recorded manual bundle-size measurement in the review"
+    ]
+  },
+  "scope": [
+    "UI/ZestButton.tsx",
+    "UI/ZestIcon.tsx",
+    "UI/zestIcons.tsx",
+    "UI/semanticTypeButtonConfigDefaults.tsx",
+    "UI/index.ts",
+    "Styles/ZestButton.module.css",
+    "__tests__/ZestIcon.test.tsx",
+    "__tests__/semanticTypeIcons.test.tsx",
+    "__tests__/zestIconPerformance.test.tsx",
+    "__tests__/semanticTypeButtonConfigDefaults.test.tsx",
+    "__tests__/ZestButton.test.tsx",
+    "__tests__/ZestButtonToggle.test.tsx",
+    "__tests__/hooks/useZestConfig.test.ts",
+    "README.md",
+    "documentation/features.md",
+    "documentation/api.md",
+    "documentation/examples.md",
+    "documentation/configuration.md",
+    "documentation/development.md",
+    "documentation/breaking-changes.md",
+    "package.json",
+    "package-lock.json"
+  ],
+  "components": [
+    { "name": "SemanticTypeDefaults", "path": "UI/semanticTypeButtonConfigDefaults.tsx", "requirements": ["R1", "R2", "R3", "R6"] },
+    { "name": "SemanticType", "path": "UI/ZestButton.tsx", "requirements": ["R1", "R6"] },
+    { "name": "BuiltInIconRegistry", "path": "UI/zestIcons.tsx", "requirements": ["R3", "R4"] },
+    { "name": "ZestIcon", "path": "UI/ZestIcon.tsx", "requirements": ["R3", "R4", "R5"] },
+    { "name": "PublicExports", "path": "UI/index.ts", "requirements": ["R5"] },
+    { "name": "IconStyles", "path": "Styles/ZestButton.module.css", "requirements": ["R3", "R5"] },
+    { "name": "ReleaseMetadata", "path": "package.json", "requirements": ["R6"] },
+    { "name": "IconAndDefaultsTests", "path": "__tests__/semanticTypeIcons.test.tsx", "requirements": ["R1", "R2", "R3", "R4", "R8"] },
+    { "name": "ZestIconTests", "path": "__tests__/ZestIcon.test.tsx", "requirements": ["R4", "R5", "R8"] },
+    { "name": "IconPerformanceTests", "path": "__tests__/zestIconPerformance.test.tsx", "requirements": ["R3", "R8"] },
+    { "name": "DefaultsCharacterizationTests", "path": "__tests__/semanticTypeButtonConfigDefaults.test.tsx", "requirements": ["R2", "R6", "R8"] },
+    { "name": "ZestButtonTests", "path": "__tests__/ZestButton.test.tsx", "requirements": ["R6", "R8"] },
+    { "name": "ReadmeAndFeaturesDocs", "path": "documentation/features.md", "requirements": ["R7"] },
+    { "name": "ApiDocs", "path": "documentation/api.md", "requirements": ["R5", "R7"] },
+    { "name": "ExamplesDocs", "path": "documentation/examples.md", "requirements": ["R5", "R7"] },
+    { "name": "ConfigurationDocs", "path": "documentation/configuration.md", "requirements": ["R2", "R7"] },
+    { "name": "DevelopmentDocs", "path": "documentation/development.md", "requirements": ["R3", "R7"] },
+    { "name": "BreakingChangesDocs", "path": "documentation/breaking-changes.md", "requirements": ["R6", "R7"] },
+    { "name": "Readme", "path": "README.md", "requirements": ["R7"] }
+  ]
+}

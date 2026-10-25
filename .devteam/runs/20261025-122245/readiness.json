@@ -1,0 +1,43 @@
+{
+  "overall": 2,
+  "headline": "Not fully proven: some parts could not be checked, so they are not counted as passed.",
+  "items": [
+    {
+      "id": "boot",
+      "title": "The packed library installs and imports",
+      "status": 2,
+      "evidence": "This check did not run in this build, so nothing was proven."
+    },
+    {
+      "id": "tests",
+      "title": "Automated tests and checks pass",
+      "status": 0,
+      "evidence": "0 of 0 checks passed. The developer reported 0 tests."
+    },
+    {
+      "id": "requirements",
+      "title": "Every requirement has a test that names it",
+      "status": 2,
+      "evidence": "There are no written requirements to prove."
+    },
+    {
+      "id": "findings",
+      "title": "No problems left open by review, QA or security",
+      "status": 0,
+      "evidence": "None open. 0 fixed along the way, 0 note(s) recorded."
+    },
+    {
+      "id": "coverage-library",
+      "title": "The tests run the code (Library)",
+      "status": 0,
+      "evidence": "99% of lines run by the tests; up 0 points since the last build."
+    },
+    {
+      "id": "skipped",
+      "title": "Nothing was skipped",
+      "status": 0,
+      "evidence": "Every check that applies was run."
+    }
+  ],
+  "notes": []
+}

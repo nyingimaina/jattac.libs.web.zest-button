@@ -1,0 +1,372 @@
+{
+  "runId": "20261025-122245",
+  "options": {
+    "browser": "end",
+    "visible": false,
+    "document": false,
+    "referenceFolders": []
+  },
+  "isVerification": false,
+  "stageSeconds": {
+    "define": 2921.8942452
+  },
+  "timeCapExtensions": {},
+  "stageClockStart": {},
+  "featureRequest": "the toggle buttons on hover do not correctly hand background vs foreground colours meaning foreground is invisible as it appears to match colour with background",
+  "packId": "react-component-library",
+  "status": "stopped",
+  "currentStage": "define",
+  "stages": {
+    "define": "running",
+    "design": "pending",
+    "build": "pending",
+    "challenge": "pending",
+    "prove": "pending"
+  },
+  "defineRound": 2,
+  "designRound": 1,
+  "buildRound": 1,
+  "slicesDone": 0,
+  "sliceReports": [],
+  "revisionsUsed": 0,
+  "requirementKickbacks": 0,
+  "planReviewRounds": 0,
+  "planConflictHashes": [],
+  "sizeApproved": false,
+  "lastPlanConflicts": [],
+  "planRounds": [],
+  "planCheck": "notChecked",
+  "planWaivedRules": [],
+  "setAsideRequirements": [],
+  "reusedChecks": {},
+  "tensionPair": [],
+  "tensionDiagnoses": {},
+  "specialists": [],
+  "specialistsDone": [],
+  "specialistCallbacks": 0,
+  "specialistHashes": {},
+  "ran": [
+    "define"
+  ],
+  "accepted": {},
+  "extraRounds": 0,
+  "reviewPasses": 0,
+  "costUsd": 0,
+  "budgetUsd": 10,
+  "agentCalls": 1,
+  "modelCalls": {},
+  "startedAt": "2026-10-25T12:22:45.8314132+00:00",
+  "updatedAt": "2026-10-25T13:14:27.4781907+00:00",
+  "completedAt": "2026-10-25T13:14:25.9401723+00:00",
+  "findings": [],
+  "lastChecks": [],
+  "baseline": [
+    {
+      "id": "no-secrets",
+      "name": "No secrets in code",
+      "passed": true,
+      "seconds": 0.1557212,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "SEC-001"
+      ]
+    },
+    {
+      "id": "no-debug-leftovers",
+      "name": "No debugging leftovers",
+      "passed": true,
+      "seconds": 0.2024488,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "QUAL-001"
+      ]
+    },
+    {
+      "id": "lib-typecheck",
+      "name": "Type check (library and tests)",
+      "passed": true,
+      "seconds": 17.1207615,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "",
+      "rules": []
+    },
+    {
+      "id": "lib-tests",
+      "name": "Tests, with coverage",
+      "passed": false,
+      "seconds": 110.808589,
+      "notRun": false,
+      "flaky": false,
+      "tier": "full",
+      "output": "Failed twice in a row, so this is not a one-off.\n\u2026\nSummary of all failing tests\r\nFAIL .devteam/runs/20261025-084314/scratch/security/prototype.probe.test.tsx (9.526 s)\r\n  \u25CF prototype-chain lookup probe \u203A getZestIconElement returns inherited prototype members for unknown names\r\n\r\n    expect(received).not.toBeNull()\r\n\r\n    Received: null\r\n\r\n    \u001B[0m \u001B[90m 10 |\u001B[39m       \u001B[90m// eslint-disable-next-line no-console\u001B[39m\r\n     \u001B[90m 11 |\u001B[39m       console\u001B[33m.\u001B[39mlog(name\u001B[33m,\u001B[39m \u001B[36mtypeof\u001B[39m el\u001B[33m,\u001B[39m el \u001B[33m===\u001B[39m \u001B[36mnull\u001B[39m \u001B[33m?\u001B[39m \u001B[32m\u0022null\u0022\u001B[39m \u001B[33m:\u001B[39m \u001B[32m\u0022NOT NULL\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n    \u001B[31m\u001B[1m\u003E\u001B[22m\u001B[39m\u001B[90m 12 |\u001B[39m       expect(el)\u001B[33m.\u001B[39mnot\u001B[33m.\u001B[39mtoBeNull()\u001B[33m;\u001B[39m\r\n     \u001B[90m    |\u001B[39m                      \u001B[31m\u001B[1m^\u001B[22m\u001B[39m\r\n     \u001B[90m 13 |\u001B[39m     }\r\n     \u001B[90m 14 |\u001B[39m   })\u001B[33m;\u001B[39m\r\n     \u001B[90m 15 |\u001B[39m\u001B[0m\r\n\r\n      at Object.\u003Canonymous\u003E (.devteam/runs/20261025-084314/scratch/security/prototype.probe.test.tsx:12:22)\r\n\r\nFAIL .devteam/runs/20261025-084314/scratch/reviewer/basecopy/__tests__/ZestButtonToggle.test.tsx (11.97 s)\r\n  \u25CF ZestButton toggle mode \u203A R8 documentation \u203A R8: the API page documents every ToggleOptions prop and the README shows a toggle example\r\n\r\n    expect(received).toBe(expected) // Object.is equality\r\n\r\n    Expected: \u00221.6.0\u0022\r\n    Received: \u00221.6.1\u0022\r\n\r\n    \u001B[0m \u001B[90m 502 |\u001B[39m       expect(read(\u001B[32m\u0022README.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022toggleOptions\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m 503 |\u001B[39m       expect(read(\u001B[32m\u0022documentation/breaking-changes.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022Version 1.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n    \u001B[31m\u001B[1m\u003E\u001B[22m\u001B[39m\u001B[90m 504 |\u001B[39m       expect(\u001B[33mJSON\u001B[39m\u001B[33m.\u001B[39mparse(read(\u001B[32m\u0022package.json\u0022\u001B[39m))\u001B[33m.\u001B[39mversion)\u001B[33m.\u001B[39mtoBe(\u001B[32m\u00221.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m     |\u001B[39m                                                        \u001B[31m\u001B[1m^\u001B[22m\u001B[39m\r\n     \u001B[90m 505 |\u001B[39m     })\u001B[33m;\u001B[39m\r\n     \u001B[90m 506 |\u001B[39m\r\n     \u001B[90m 507 |\u001B[39m     it(\u001B[32m\u0022R8: the documented examples type-check against the exported types and render\u0022\u001B[39m\u001B[33m,\u001B[39m () \u001B[33m=\u003E\u001B[39m {\u001B[0m\r\n\r\n      at Object.\u003Canonymous\u003E (.devteam/runs/20261025-084314/scratch/reviewer/basecopy/__tests__/ZestButtonToggle.test.tsx:504:56)\r\n\r\nFAIL .devteam/runs/20261025-084314/scratch/reviewer/base/__tests__/ZestButtonToggle.test.tsx (12.163 s)\r\n  \u25CF ZestButton toggle mode \u203A R8 documentation \u203A R8: the API page documents every ToggleOptions prop and the README shows a toggle example\r\n\r\n    expect(received).toBe(expected) // Object.is equality\r\n\r\n    Expected: \u00221.6.0\u0022\r\n    Received: \u00221.6.1\u0022\r\n\r\n    \u001B[0m \u001B[90m 502 |\u001B[39m       expect(read(\u001B[32m\u0022README.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022toggleOptions\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m 503 |\u001B[39m       expect(read(\u001B[32m\u0022documentation/breaking-changes.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022Version 1.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n    \u001B[31m\u001B[1m\u003E\u001B[22m\u001B[39m\u001B[90m 504 |\u001B[39m       expect(\u001B[33mJSON\u001B[39m\u001B[33m.\u001B[39mparse(read(\u001B[32m\u0022package.json\u0022\u001B[39m))\u001B[33m.\u001B[39mversion)\u001B[33m.\u001B[39mtoBe(\u001B[32m\u00221.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m     |\u001B[39m                                                        \u001B[31m\u001B[1m^\u001B[22m\u001B[39m\r\n     \u001B[90m 505 |\u001B[39m     })\u001B[33m;\u001B[39m\r\n     \u001B[90m 506 |\u001B[39m\r\n     \u001B[90m 507 |\u001B[39m     it(\u001B[32m\u0022R8: the documented examples type-check against the exported types and render\u0022\u001B[39m\u001B[33m,\u001B[39m () \u001B[33m=\u003E\u001B[39m {\u001B[0m\r\n\r\n      at Object.\u003Canonymous\u003E (.devteam/runs/20261025-084314/scratch/reviewer/base/__tests__/ZestButtonToggle.test.tsx:504:56)\r\n\r\n\r\nTest Suites: 3 failed, 82 passed, 85 total\r\nTests:       3 failed, 1004 passed, 1007 total\r\nSnapshots:   0 total\r\nTime:        22.93 s, estimated 45 s\r\nRan all test suites.",
+      "rules": []
+    },
+    {
+      "id": "lib-build",
+      "name": "Build (CommonJS, ES modules, type definitions)",
+      "passed": true,
+      "seconds": 17.2935163,
+      "notRun": false,
+      "flaky": false,
+      "tier": "full",
+      "output": "\u003E jattac.libs.web.zest-button@1.7.0 build\r\n\u003E rollup -c rollup.config.mjs\r\n\r\n\n\u001B[36m\r\n\u001B[1mUI/index.ts\u001B[22m \u2192 \u001B[1mdist/index.cjs.js, dist/index.esm.js\u001B[22m...\u001B[39m\r\n\u001B[1m\u001B[33m(!) Mixing named and default exports\u001B[39m\u001B[22m\r\n\u001B[90mhttps://rollupjs.org/configuration-options/#output-exports\u001B[39m\r\n\u001B[1mThe following entry modules are using named and default exports together:\u001B[22m\r\nUI/index.ts\r\n\r\nConsumers of your bundle will have to use chunk.default to access their default export, which may not be what you want. Use \u0060output.exports: \u0022named\u0022\u0060 to disable this warning.\r\n\u001B[32mcreated \u001B[1mdist/index.cjs.js, dist/index.esm.js\u001B[22m in \u001B[1m8.1s\u001B[22m\u001B[39m\r\n\u001B[36m\r\n\u001B[1mUI/index.ts\u001B[22m \u2192 \u001B[1mdist/index.d.ts\u001B[22m...\u001B[39m\r\n\u001B[32mcreated \u001B[1mdist/index.d.ts\u001B[22m in \u001B[1m2.6s\u001B[22m\u001B[39m",
+      "rules": []
+    },
+    {
+      "id": "lib-validate-package",
+      "name": "Package check (attw and publint)",
+      "passed": false,
+      "seconds": 0.1743479,
+      "notRun": true,
+      "flaky": false,
+      "tier": "full",
+      "output": "Not set up in this project: attw and publint are not installed, so nothing checks that the package works for everyone who installs it.",
+      "rules": [
+        "LIB-002"
+      ]
+    },
+    {
+      "id": "lib-pack",
+      "name": "What would be published",
+      "passed": true,
+      "seconds": 2.3390279,
+      "notRun": false,
+      "flaky": false,
+      "tier": "full",
+      "output": "jattac.libs.web.zest-button-1.7.0.tgz\r\n\nnpm notice\r\nnpm notice package: jattac.libs.web.zest-button@1.7.0\r\nnpm notice Tarball Contents\r\nnpm notice 1.1kB LICENSE\r\nnpm notice 5.5kB README.md\r\nnpm notice 696B dist/hooks/useBusyState.d.ts\r\nnpm notice 667B dist/hooks/useConfirmation.d.ts\r\nnpm notice 64B dist/hooks/useThemeDetection.d.ts\r\nnpm notice 547B dist/hooks/useToggleState.d.ts\r\nnpm notice 140B dist/hooks/useZestConfig.d.ts\r\nnpm notice 83.0kB dist/index.cjs.js\r\nnpm notice 99.2kB dist/index.cjs.js.map\r\nnpm notice 4.7kB dist/index.d.ts\r\nnpm notice 80.0kB dist/index.esm.js\r\nnpm notice 99.0kB dist/index.esm.js.map\r\nnpm notice 221B dist/semanticTypeButtonConfigDefaults.d.ts\r\nnpm notice 102B dist/SpinnerIcon.d.ts\r\nnpm notice 3.8kB dist/ZestButton.d.ts\r\nnpm notice 429B dist/ZestButtonConfigContext.d.ts\r\nnpm notice 316B dist/ZestButtonConfigProvider.d.ts\r\nnpm notice 809B dist/ZestDropdownMenu.d.ts\r\nnpm notice 335B dist/ZestDropdownMenuItem.d.ts\r\nnpm notice 275B dist/ZestIcon.d.ts\r\nnpm notice 771B dist/zestIcons.d.ts\r\nnpm notice 12.4kB documentation/api.md\r\nnpm notice 5.7kB documentation/breaking-changes.md\r\nnpm notice 8.6kB documentation/configuration.md\r\nnpm notice 7.1kB documentation/development.md\r\nnpm notice 15.7kB documentation/examples.md\r\nnpm notice 11.2kB documentation/features.md\r\nnpm notice 2.5kB package.json\r\nnpm notice Tarball Details\r\nnpm notice name: jattac.libs.web.zest-button\r\nnpm notice version: 1.7.0\r\nnpm notice filename: jattac.libs.web.zest-button-1.7.0.tgz\r\nnpm notice package size: 94.1 kB\r\nnpm notice unpacked size: 444.7 kB\r\nnpm notice shasum: 27afcfd400bd14cc4c71d87e479ff241116fd144\r\nnpm notice integrity: sha512-UbrArl37\u002B3d\u002B6[...]VQPEjr40fXhMQ==\r\nnpm notice total files: 28\r\nnpm notice",
+      "rules": []
+    },
+    {
+      "id": "lib-publish-dry-run",
+      "name": "Publish dry run (everything npm checks, nothing is uploaded)",
+      "passed": true,
+      "seconds": 2.6995424,
+      "notRun": false,
+      "flaky": false,
+      "tier": "full",
+      "output": "\u002B jattac.libs.web.zest-button@1.7.0\r\n\nnpm notice\r\nnpm notice package: jattac.libs.web.zest-button@1.7.0\r\nnpm notice Tarball Contents\r\nnpm notice 1.1kB LICENSE\r\nnpm notice 5.5kB README.md\r\nnpm notice 696B dist/hooks/useBusyState.d.ts\r\nnpm notice 667B dist/hooks/useConfirmation.d.ts\r\nnpm notice 64B dist/hooks/useThemeDetection.d.ts\r\nnpm notice 547B dist/hooks/useToggleState.d.ts\r\nnpm notice 140B dist/hooks/useZestConfig.d.ts\r\nnpm notice 83.0kB dist/index.cjs.js\r\nnpm notice 99.2kB dist/index.cjs.js.map\r\nnpm notice 4.7kB dist/index.d.ts\r\nnpm notice 80.0kB dist/index.esm.js\r\nnpm notice 99.0kB dist/index.esm.js.map\r\nnpm notice 221B dist/semanticTypeButtonConfigDefaults.d.ts\r\nnpm notice 102B dist/SpinnerIcon.d.ts\r\nnpm notice 3.8kB dist/ZestButton.d.ts\r\nnpm notice 429B dist/ZestButtonConfigContext.d.ts\r\nnpm notice 316B dist/ZestButtonConfigProvider.d.ts\r\nnpm notice 809B dist/ZestDropdownMenu.d.ts\r\nnpm notice 335B dist/ZestDropdownMenuItem.d.ts\r\nnpm notice 275B dist/ZestIcon.d.ts\r\nnpm notice 771B dist/zestIcons.d.ts\r\nnpm notice 12.4kB documentation/api.md\r\nnpm notice 5.7kB documentation/breaking-changes.md\r\nnpm notice 8.6kB documentation/configuration.md\r\nnpm notice 7.1kB documentation/development.md\r\nnpm notice 15.7kB documentation/examples.md\r\nnpm notice 11.2kB documentation/features.md\r\nnpm notice 2.5kB package.json\r\nnpm notice Tarball Details\r\nnpm notice name: jattac.libs.web.zest-button\r\nnpm notice version: 1.7.0\r\nnpm notice filename: jattac.libs.web.zest-button-1.7.0.tgz\r\nnpm notice package size: 94.1 kB\r\nnpm notice unpacked size: 444.7 kB\r\nnpm notice shasum: 27afcfd400bd14cc4c71d87e479ff241116fd144\r\nnpm notice integrity: sha512-UbrArl37\u002B3d\u002B6[...]VQPEjr40fXhMQ==\r\nnpm notice total files: 28\r\nnpm notice\r\nnpm notice Publishing to https://registry.npmjs.org/ with tag latest and default access (dry-run)",
+      "rules": [
+        "LIB-003"
+      ]
+    },
+    {
+      "id": "lib-size",
+      "name": "Size budget",
+      "passed": false,
+      "seconds": 0.1571532,
+      "notRun": true,
+      "flaky": false,
+      "tier": "full",
+      "output": "Not set up in this project: The project has no .size-limit.json, so this check has nothing to run.",
+      "rules": [
+        "EFF-001"
+      ]
+    },
+    {
+      "id": "lib-consumer-smoke",
+      "name": "Install and import the packed library",
+      "passed": false,
+      "seconds": 0.1598062,
+      "notRun": true,
+      "flaky": false,
+      "tier": "full",
+      "output": "Not set up in this project: Nothing installs the packed library into a scratch project and imports it  no scripts/consumer-smoke.mjs .",
+      "rules": [
+        "LIB-003",
+        "LIB-004",
+        "LIB-005"
+      ]
+    },
+    {
+      "id": "lib-docs",
+      "name": "Documentation is complete",
+      "passed": false,
+      "seconds": 0.1551205,
+      "notRun": true,
+      "flaky": false,
+      "tier": "fast",
+      "output": "Not set up in this project: The project has no scripts/check-docs.mjs, so this check has nothing to run.",
+      "rules": [
+        "DOC-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-1",
+      "name": "No native button element",
+      "passed": true,
+      "seconds": 0.1162839,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-2",
+      "name": "No native table element",
+      "passed": true,
+      "seconds": 0.1194459,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-3",
+      "name": "No native text box or text area",
+      "passed": true,
+      "seconds": 0.1275354,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-4",
+      "name": "No native file upload input",
+      "passed": true,
+      "seconds": 0.1392732,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-002-1",
+      "name": "No tiny fixed pixel font sizes",
+      "passed": true,
+      "seconds": 0.310212,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-002"
+      ]
+    },
+    {
+      "id": "rule-USR-002-2",
+      "name": "Do not block pinch-zoom on mobile",
+      "passed": true,
+      "seconds": 0.236665,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-002"
+      ]
+    },
+    {
+      "id": "rule-USR-003-1",
+      "name": "No dynamic code execution (eval / new Function)",
+      "passed": true,
+      "seconds": 0.3395928,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-2",
+      "name": "No raw HTML injection (XSS risk)",
+      "passed": true,
+      "seconds": 0.1973007,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-3",
+      "name": "No string-based timers (hidden eval)",
+      "passed": true,
+      "seconds": 0.1805889,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-4",
+      "name": "No leftover debugger statements or console.log",
+      "passed": true,
+      "seconds": 0.2797575,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-006-1",
+      "name": "No hard-coded colours in component code (use shared design tokens)",
+      "passed": true,
+      "seconds": 0.3534747,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-006"
+      ]
+    }
+  ],
+  "checkPassedOn": {
+    "lib-typecheck": "BCA09B2B21C973884DF2A527F42D79C9082A918E2F5F1C8A4973BB44523FC826",
+    "lib-build": "BD485B7795F51DC1843C83B65839B25DDF4F4DF30BA03F7B93FF175E5787E49B",
+    "lib-pack": "438D4164B7BA3F5855A73101709152EB2A142FC8FC6418D8D76078D387704398",
+    "lib-publish-dry-run": "CA48F43DCFF10E3D30C66B4E8AA245FDB0871EF67457E90AD255028135C8A29F"
+  },
+  "checkFailedOn": {
+    "lib-tests": "142E24B0324CAF9AAFF226CC17D63FB436A21955447F4494C7D785CB80D6C401"
+  },
+  "generatedByChecks": [],
+  "ignoredPaths": [],
+  "acceptedGaps": [],
+  "scopeExtensions": [],
+  "rulings": [],
+  "shortcuts": 0,
+  "routeHistory": [],
+  "amendments": [],
+  "scopeSeen": {},
+  "scopeRequestsMade": 0,
+  "preflightAnswered": false,
+  "analystQuestions": 0,
+  "analysisClosed": false,
+  "youDecided": 0,
+  "requirementsApproved": false,
+  "signOffRounds": 0,
+  "changedFiles": [],
+  "stopReason": "stopped by builder while the analyst was quiet"
+}

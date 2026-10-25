@@ -1,0 +1,29 @@
+{
+  "findings": [
+    {
+      "cites": "LIB-005",
+      "severity": "blocking",
+      "file": "package.json",
+      "line": 1,
+      "evidence": "grep for sideEffects in package.json returns nothing. The change adds a 47-icon registry (UI/zestIcons.tsx) that ZestIcon and the defaults map import at module load.",
+      "description": "The package is not marked \"sideEffects\": false (or a CSS-file list), so bundlers cannot drop unused icon code. This also weakens R5 (an app should not carry icons it never uses). Add the flag, with a CSS list because the CSS is injected."
+    },
+    {
+      "cites": "R5",
+      "severity": "advisory",
+      "file": "UI/zestIcons.tsx",
+      "line": 121,
+      "evidence": "ZEST_ICON_ELEMENTS builds all 47 svg elements at import time in one module; ZestIcon imports it through getZestIconElement.",
+      "description": "Using a single ZestIcon pulls in every icon. This is within the design's accepted bundle cost, but nothing records a measured size delta. The build report says no bundle-size check was run, so the 15 KB limit is unverified (dist/index.esm.js is 79,993 bytes now; no baseline recorded)."
+    },
+    {
+      "cites": "R3",
+      "severity": "advisory",
+      "file": "UI/zestIcons.tsx",
+      "line": 76,
+      "evidence": "approve and confirm share checkIcon, reject/cancel/close share xIcon, export and import reuse download and upload, next and view share rightArrowIcon.",
+      "description": "Several of the 28 new types are visually identical to existing ones. This is acceptable and cheap, but it is not very distinct for an 'exhaustive' set. The icon shapes follow Feather's MIT-licensed icons with no attribution recorded."
+    }
+  ],
+  "verifications": []
+}

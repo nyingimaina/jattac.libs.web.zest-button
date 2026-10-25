@@ -1,7 +1,7 @@
 ---
 title: Using ZestIcon and the standard icons
 covers: UI/ZestIcon.tsx, UI/zestIcons.tsx, Styles/ZestButton.module.css, UI/index.ts
-covers-hash: c72654bb72923aa1568b
+covers-hash: ad7481609254761c6a95
 ---
 
 # Using ZestIcon and the standard icons

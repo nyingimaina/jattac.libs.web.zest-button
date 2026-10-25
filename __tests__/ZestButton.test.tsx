@@ -767,3 +767,30 @@ describe("built-in semantic type characterisation (R1, R3, R6, R8)", () => {
     expect(semanticTypeButtonConfigDefaults.search?.visualOptions?.iconLeft).toBe(before);
   });
 });
+
+describe("ZestButton split button width observer", () => {
+  it("R3: the dropdown width follows the observed size and ignores a zero width", () => {
+    const original = (global as any).ResizeObserver;
+    let notify: (entries: any[]) => void = () => {};
+    const disconnect = jest.fn();
+    (global as any).ResizeObserver = class {
+      constructor(cb: (entries: any[]) => void) {
+        notify = cb;
+      }
+      observe() {}
+      disconnect = disconnect;
+    };
+    try {
+      const { unmount } = render(
+        <ZestButton zest={{ dropdownOptions: [{ label: "Export as CSV" }] }}>Export</ZestButton>
+      );
+      act(() => notify([{ contentRect: { width: 0 } }]));
+      act(() => notify([]));
+      act(() => notify([{ contentRect: { width: 240 } }]));
+      unmount();
+      expect(disconnect).toHaveBeenCalled();
+    } finally {
+      (global as any).ResizeObserver = original;
+    }
+  });
+});

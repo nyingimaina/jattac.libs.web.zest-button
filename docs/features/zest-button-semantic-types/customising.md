@@ -1,7 +1,7 @@
 ---
 title: Customising semantic types and adding your own
 covers: UI/hooks/useZestConfig.ts, UI/ZestButton.tsx, UI/ZestButtonConfigContext.ts, UI/ZestButtonConfigProvider.tsx, UI/semanticTypeButtonConfigDefaults.tsx
-covers-hash: 7418ba3da38a1e346a07
+covers-hash: 9d50ed3c5a617bbeb9e0
 ---
 
 # Customising semantic types and adding your own

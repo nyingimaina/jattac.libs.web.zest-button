@@ -1,0 +1,9 @@
+{
+  "summary": "Refreshed the two stale feature pages against the current code: the critical-paths checklist (split-button width observer, defaults merged without editing the app's config, an open sideEffects item) and the React 19 / packaging BRS (new package.json sideEffects field). The semantic-type and toggle pages from earlier rounds were left as they are.",
+  "pages": ["docs/e2e/critical-paths.md", "docs/features/react-19-support/BRS.md"],
+  "notes": [
+    "The 12 docs/guidelines/AI_*.md pages are marked stale but cover only AGENTS.md and themselves. Neither changed in git and this feature does not touch them. They are mandatory repository policy, so I did not rewrite them.",
+    "I could not confirm from the code whether package.json sideEffects [\"**/*.css\"] keeps the CSS the bundle injects from JavaScript (rollup inject: true) in every consumer bundler. No test checks it; the docs say so and leave the checklist box open.",
+    "I did not re-read every line of the semantic-type pages (47 types, icons); I relied on the developer report and tests for the 47 count."
+  ]
+}

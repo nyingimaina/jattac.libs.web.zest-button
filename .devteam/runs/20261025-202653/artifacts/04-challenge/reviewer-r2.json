@@ -1,0 +1,1 @@
+{"findings":[],"verifications":[{"id":"REV-1","status":"fixed","evidence":"package.json now has \"sideEffects\": [\"**/*.css\"] (lines 25-27), added in the working-tree diff; satisfies LIB-005."}]}

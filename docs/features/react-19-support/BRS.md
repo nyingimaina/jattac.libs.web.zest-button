@@ -1,7 +1,7 @@
 ---
 title: BRS — React 19, onwards, and Vite support
 covers: package.json, UI/index.ts
-covers-hash: c48f460b6eae5cf3389d
+covers-hash: 912dd7900df0d4966fb4
 ---
 
 # BRS — React 19, onwards, and Vite support
@@ -29,6 +29,15 @@ the externalized `react/jsx-runtime` / `react/jsx-dev-runtime` entries are uncha
 `UI/index.ts` now also re-exports `ZestIcon`, `ZestIconProps` and `ZestIconSize`; that is
 additive and does not change module resolution. React 18 and React 19 remain the tested
 majors.
+
+`package.json` also declares `"sideEffects": ["**/*.css"]`. This is a hint to bundlers
+(Vite, webpack, Rollup): only CSS files may do work just by being imported, so every other
+file in the package can be dropped when the app does not use what it exports. That lets an
+app that imports only `ZestButton` leave out unused code. The library's own build injects
+its styles from JavaScript (`rollup.config.mjs` uses `inject: true`); this page does not
+cover whether that injected style code survives tree-shaking in every bundler, and no test
+in this repository checks it. If a consumer sees unstyled buttons after a production
+build, check this field first.
 
 ---
 

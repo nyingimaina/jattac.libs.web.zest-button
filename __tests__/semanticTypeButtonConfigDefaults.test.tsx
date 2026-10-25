@@ -1,3 +1,7 @@
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import ZestButton from "../UI/ZestButton";
+import ZestButtonConfigProvider from "../UI/ZestButtonConfigProvider";
 import { semanticTypeButtonConfigDefaults } from "../UI/semanticTypeButtonConfigDefaults";
 import { ZEST_ICON_NAMES } from "../UI/zestIcons";
 import type { SemanticType } from "../UI/ZestButton";
@@ -253,5 +257,31 @@ describe("semanticTypeButtonConfigDefaults", () => {
       displayLabel: "Are you sure?",
       timeoutSecs: 5,
     });
+  });
+});
+
+describe("defaults are merged without editing the app's configuration", () => {
+  it("R2: a frozen provider config and the built-in defaults are left untouched after rendering", () => {
+    const config = Object.freeze({
+      semanticTypeDefaults: Object.freeze({
+        search: Object.freeze({
+          visualOptions: Object.freeze({ variant: "danger" as const }),
+        }),
+      }),
+    });
+    const builtInVariant = semanticTypeButtonConfigDefaults.search?.visualOptions?.variant;
+
+    render(
+      <ZestButtonConfigProvider config={config}>
+        <ZestButton zest={{ semanticType: "search" }}>Find</ZestButton>
+        <ZestButton zest={{ semanticType: "copy" }}>Duplicate</ZestButton>
+      </ZestButtonConfigProvider>
+    );
+
+    expect(screen.getByRole("button", { name: "Find" })).toHaveClass("danger");
+    expect(screen.getByRole("button", { name: "Duplicate" })).toHaveClass("standard");
+    expect(Object.keys(config.semanticTypeDefaults)).toEqual(["search"]);
+    expect(Object.keys(config.semanticTypeDefaults.search.visualOptions)).toEqual(["variant"]);
+    expect(semanticTypeButtonConfigDefaults.search?.visualOptions?.variant).toBe(builtInVariant);
   });
 });

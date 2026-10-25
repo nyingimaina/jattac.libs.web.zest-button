@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 0,
+  "runId": "20261025-122245",
+  "at": "2026-10-25T13:14:25.9401723+00:00",
+  "status": "Stopped",
+  "feature": "the toggle buttons on hover do not correctly hand background vs foreground colours meaning foreground is invisible as it appears to match colour with background",
+  "testsReported": 0,
+  "checksPassed": 0,
+  "checksTotal": 0,
+  "checksNotRun": 0,
+  "bootPassed": 0,
+  "bootTotal": 0,
+  "findingsOpen": 0,
+  "findingsAdvisory": 0,
+  "findingsFixed": 0,
+  "requirementsTotal": 0,
+  "requirementsWithTests": 0,
+  "costUsd": 0,
+  "seconds": 3100.1087591,
+  "coverage": [
+    {
+      "name": "Library",
+      "linePercent": 99,
+      "branchPercent": 95.5,
+      "changedLinePercent": null,
+      "filesCovered": 69,
+      "functionPercent": 98.5
+    }
+  ],
+  "testsExecuted": 0,
+  "testsFailed": 0,
+  "testsSkipped": 0,
+  "verification": false
+}

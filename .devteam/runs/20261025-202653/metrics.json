@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 0,
+  "runId": "20261025-202653",
+  "at": "2026-10-25T20:50:53.863334+00:00",
+  "status": "Completed",
+  "feature": "Continue an earlier feature that was stopped before it was finished. Do not start over.",
+  "testsReported": 30,
+  "checksPassed": 17,
+  "checksTotal": 22,
+  "checksNotRun": 4,
+  "bootPassed": 0,
+  "bootTotal": 0,
+  "findingsOpen": 0,
+  "findingsAdvisory": 12,
+  "findingsFixed": 2,
+  "requirementsTotal": 8,
+  "requirementsWithTests": 8,
+  "costUsd": 4.2506184,
+  "seconds": 1440.5787481,
+  "coverage": [
+    {
+      "name": "Library",
+      "linePercent": 99.1,
+      "branchPercent": 95.8,
+      "changedLinePercent": null,
+      "filesCovered": 69,
+      "functionPercent": 98.8
+    }
+  ],
+  "testsExecuted": 0,
+  "testsFailed": 0,
+  "testsSkipped": 0,
+  "verification": false
+}

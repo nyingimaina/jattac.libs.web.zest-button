@@ -1,0 +1,556 @@
+{
+  "stamps": {
+    ".gitignore": [
+      237,
+      639208124209243952
+    ],
+    "agents.md": [
+      955,
+      639208124209314029
+    ],
+    "ai-policy.yaml": [
+      4143,
+      639208124209324054
+    ],
+    "BRS.md": [
+      12927,
+      639208124209253955
+    ],
+    "DIRECTIVES.md": [
+      1849,
+      638952520038432875
+    ],
+    "global.d.ts": [
+      104,
+      639208115079128687
+    ],
+    "how-to-document.md": [
+      10499,
+      639068211011668166
+    ],
+    "jest.config.js": [
+      448,
+      639208124209469163
+    ],
+    "jest.setup.js": [
+      2348,
+      639208184849758976
+    ],
+    "LICENSE": [
+      1063,
+      639236923096246049
+    ],
+    "package-lock.json": [
+      315810,
+      639285276856462663
+    ],
+    "package.json": [
+      2477,
+      639285276856472645
+    ],
+    "README.md": [
+      5500,
+      639285276856091694
+    ],
+    "rollup.config.mjs": [
+      1662,
+      639285124047119244
+    ],
+    "tsconfig.jest.json": [
+      231,
+      639208124209614327
+    ],
+    "tsconfig.json": [
+      509,
+      639055321670249952
+    ],
+    "WORKPLAN.md": [
+      1089,
+      638952481523887657
+    ],
+    ".githooks/commit-msg": [
+      1156,
+      639208124209223963
+    ],
+    ".githooks/pre-commit": [
+      1115,
+      639208124209223963
+    ],
+    ".githooks/pre-merge-commit": [
+      358,
+      639208124209233943
+    ],
+    ".githooks/pre-push": [
+      1839,
+      639208124209233943
+    ],
+    "docs/index.md": [
+      1675,
+      639285276856357430
+    ],
+    "docs/_sidebar.md": [
+      1669,
+      639285276856242158
+    ],
+    "documentation/api.md": [
+      12399,
+      639285276856382503
+    ],
+    "documentation/breaking-changes.md": [
+      5657,
+      639285276856392597
+    ],
+    "documentation/configuration.md": [
+      8601,
+      639285276856402634
+    ],
+    "documentation/development.md": [
+      7072,
+      639285276856412632
+    ],
+    "documentation/examples.md": [
+      15662,
+      639285276856422629
+    ],
+    "documentation/features.md": [
+      11203,
+      639285276856432614
+    ],
+    "scripts/bootstrap.ps1": [
+      1661,
+      639208124209529170
+    ],
+    "scripts/bootstrap.sh": [
+      1561,
+      639208124209539169
+    ],
+    "scripts/verify-post.ps1": [
+      34430,
+      639208184849818941
+    ],
+    "scripts/verify-pre.ps1": [
+      31851,
+      639208184849828953
+    ],
+    "Styles/ZestButton.module.css": [
+      23979,
+      639285276856111719
+    ],
+    "test-reports/CHANGE_MANIFEST_dropdown-options.md": [
+      8808,
+      639208184849838951
+    ],
+    "test-reports/CHANGE_MANIFEST_jest-wiring.md": [
+      2927,
+      639208124209564245
+    ],
+    "test-reports/CHANGE_MANIFEST_react-19-vite.md": [
+      6595,
+      639285124047129235
+    ],
+    "test-reports/coverage-baseline.json": [
+      245,
+      639285124047139260
+    ],
+    "test-reports/post-verify-2026-07-28_073035.html": [
+      6733,
+      639208124209574339
+    ],
+    "test-reports/post-verify-2026-07-28_074031.html": [
+      9522,
+      639208124209584340
+    ],
+    "test-reports/post-verify-2026-07-28_080448.html": [
+      8625,
+      639208124209594333
+    ],
+    "test-reports/post-verify-2026-07-28_093120.html": [
+      8980,
+      639208184849858976
+    ],
+    "test-reports/post-verify-2026-07-28_093739.html": [
+      8580,
+      639208184849868938
+    ],
+    "test-reports/post-verify-2026-07-28_094329.html": [
+      9024,
+      639208184849868938
+    ],
+    "test-reports/post-verify-2026-07-28_094444.html": [
+      8800,
+      639208184849878956
+    ],
+    "test-reports/post-verify-2026-07-28_095001.html": [
+      8800,
+      639208184849888989
+    ],
+    "test-reports/post-verify-2026-09-23_215049.html": [
+      8783,
+      639285124047139260
+    ],
+    "test-reports/pre-verify-2026-07-28_073020.html": [
+      9789,
+      639208124209594333
+    ],
+    "test-reports/pre-verify-2026-07-28_074014.html": [
+      9811,
+      639208124209604359
+    ],
+    "test-reports/pre-verify-2026-07-28_080430.html": [
+      9727,
+      639208124209604359
+    ],
+    "test-reports/pre-verify-2026-07-28_093100.html": [
+      9826,
+      639208184849898939
+    ],
+    "test-reports/pre-verify-2026-07-28_094525.html": [
+      10143,
+      639208184849908952
+    ],
+    "test-reports/pre-verify-2026-07-28_094600.html": [
+      9826,
+      639208184849908952
+    ],
+    "test-reports/pre-verify-2026-07-28_094946.html": [
+      9826,
+      639208184849918952
+    ],
+    "UI/index.ts": [
+      283,
+      639285276856131724
+    ],
+    "UI/semanticTypeButtonConfigDefaults.tsx": [
+      7945,
+      639285276856141699
+    ],
+    "UI/SpinnerIcon.tsx": [
+      156,
+      638917196195381298
+    ],
+    "UI/ZestButton.tsx": [
+      14779,
+      639285276856121696
+    ],
+    "UI/ZestButtonConfigContext.ts": [
+      1055,
+      639068188051554642
+    ],
+    "UI/ZestButtonConfigProvider.tsx": [
+      508,
+      639068187896443277
+    ],
+    "UI/ZestDropdownMenu.tsx": [
+      3662,
+      639241027372549027
+    ],
+    "UI/ZestDropdownMenuItem.tsx": [
+      5238,
+      639243875825868872
+    ],
+    "UI/ZestIcon.tsx": [
+      1245,
+      639285276856131724
+    ],
+    "UI/zestIcons.tsx": [
+      8193,
+      639285276856151696
+    ],
+    "__tests__/buildExternalization.test.ts": [
+      1145,
+      639285124046993873
+    ],
+    "__tests__/packagePeerDependencies.test.ts": [
+      3815,
+      639285124047013847
+    ],
+    "__tests__/semanticTypeButtonConfigDefaults.test.tsx": [
+      8515,
+      639285276856222135
+    ],
+    "__tests__/semanticTypeIcons.test.tsx": [
+      17166,
+      639285276856232160
+    ],
+    "__tests__/SpinnerIcon.test.tsx": [
+      418,
+      639208124209253955
+    ],
+    "__tests__/ZestButton.test.tsx": [
+      26542,
+      639285276856166780
+    ],
+    "__tests__/ZestButtonConfigContext.test.tsx": [
+      980,
+      639208124209273945
+    ],
+    "__tests__/ZestButtonConfigProvider.test.tsx": [
+      1037,
+      639208124209273945
+    ],
+    "__tests__/ZestButtonToggle.test.tsx": [
+      23487,
+      639285276856186901
+    ],
+    "__tests__/ZestDropdownMenu.test.tsx": [
+      8217,
+      639243876164411746
+    ],
+    "__tests__/ZestDropdownMenuItem.test.tsx": [
+      6397,
+      639243875598374075
+    ],
+    "__tests__/ZestIcon.test.tsx": [
+      9480,
+      639285276856202128
+    ],
+    "__tests__/zestIconPerformance.test.tsx": [
+      2650,
+      639285276856242158
+    ],
+    "docs/e2e/critical-paths.md": [
+      7820,
+      639285276856252120
+    ],
+    "docs/guidelines/ai-knowledge.md": [
+      16886,
+      639285276856327241
+    ],
+    "docs/guidelines/AI_ARCHITECTURE.md": [
+      13316,
+      639285143173808282
+    ],
+    "docs/guidelines/AI_BRS.md": [
+      9314,
+      639285143173808282
+    ],
+    "docs/guidelines/AI_CODE_REVIEW.md": [
+      3518,
+      639285143173823503
+    ],
+    "docs/guidelines/AI_E2E_TESTING.md": [
+      5377,
+      639285143173833604
+    ],
+    "docs/guidelines/AI_GIT_WORKFLOW.md": [
+      8918,
+      639285143173843638
+    ],
+    "docs/guidelines/AI_KNOWLEDGE.md": [
+      3554,
+      639285143173853620
+    ],
+    "docs/guidelines/AI_PITFALLS.md": [
+      4962,
+      639285143173863625
+    ],
+    "docs/guidelines/AI_STYLE_GUIDE.md": [
+      3599,
+      639285143173873609
+    ],
+    "docs/guidelines/AI_TESTING.md": [
+      4744,
+      639285143173873609
+    ],
+    "docs/guidelines/AI_TEST_CONFIGURATION.md": [
+      13029,
+      639285143173883612
+    ],
+    "docs/guidelines/AI_WORKFLOW.md": [
+      8640,
+      639285143173893593
+    ],
+    "docs/guidelines/AI_WORKFLOW_TRIGGERS.md": [
+      5897,
+      639285143173903607
+    ],
+    "docs/guidelines/decision-log.md": [
+      19075,
+      639285276856347416
+    ],
+    "UI/hooks/useBusyState.ts": [
+      3373,
+      639067434059317383
+    ],
+    "UI/hooks/useConfirmation.ts": [
+      2046,
+      639068156091132480
+    ],
+    "UI/hooks/useThemeDetection.ts": [
+      586,
+      639067435709427238
+    ],
+    "UI/hooks/useToggleState.ts": [
+      1362,
+      639285143173717929
+    ],
+    "UI/hooks/useZestConfig.ts": [
+      2148,
+      639068190285187428
+    ],
+    "__tests__/hooks/useBusyState.test.ts": [
+      6272,
+      639285124047003833
+    ],
+    "__tests__/hooks/useConfirmation.test.ts": [
+      4222,
+      639208124209293952
+    ],
+    "__tests__/hooks/useThemeDetection.test.ts": [
+      1899,
+      639208124209293952
+    ],
+    "__tests__/hooks/useToggleState.test.ts": [
+      2548,
+      639285143173737922
+    ],
+    "__tests__/hooks/useZestConfig.test.ts": [
+      8601,
+      639285276856212162
+    ],
+    "docs/features/react-19-support/BRS.md": [
+      15937,
+      639285276856262147
+    ],
+    "docs/features/zest-button-dropdown-options/BRS.md": [
+      16496,
+      639285276856272118
+    ],
+    "docs/features/zest-button-semantic-types/customising.md": [
+      15271,
+      639285276856282099
+    ],
+    "docs/features/zest-button-semantic-types/guide.md": [
+      14226,
+      639285276856292101
+    ],
+    "docs/features/zest-button-semantic-types/icons.md": [
+      12348,
+      639285276856292101
+    ],
+    "docs/features/zest-button-semantic-types/type-reference.md": [
+      11150,
+      639285276856302142
+    ],
+    "docs/features/zest-button-toggle/BRS.md": [
+      2870,
+      639285276856312152
+    ],
+    "docs/features/zest-button-toggle/guide.md": [
+      10233,
+      639285276856322144
+    ]
+  },
+  "hashes": {
+    ".gitignore": "044C433475D3A77E59E6148268132EAAF82B3340752C70785BDD9E1390CC9915",
+    "agents.md": "80559931BC6FB76768E866BD6DEBE7F4D503E1C119F01FE897EFFD3FE7161207",
+    "ai-policy.yaml": "9D158916BD4F59F6F9503FD10C0C072992055555F16872ABF571B6D37CFA1347",
+    "BRS.md": "092DCA555210E5D8303EA28F9E92DA6E93583B579E7602DD5E7735CD6B4500E8",
+    "DIRECTIVES.md": "C8330E3EA1CCC16BFB1EA380B1C84C6FF72C646B166DA86E9526E0318A0D7C15",
+    "global.d.ts": "1D9FAF540CC286F2DDF8E62708C78D968500ACC12BE31048184BED5D56BE3DA0",
+    "how-to-document.md": "9FC35E4387CEC8AD0DDC1D6773A25F09FB4A24EEBC39E84262EA4C43110DF763",
+    "jest.config.js": "854474C899E43B2690B1F7FBAF549F9ABF01AFB0D2D578DCDFB73B4D2049C2E3",
+    "jest.setup.js": "5949FC088BA9A110E3A4199EBD8A0FD94AA5CE8241C74E9E346F7235A14B008A",
+    "LICENSE": "08151BA9A05EAFD49274865F10F32439DD7A970202749B84685F43AB856CAB69",
+    "package-lock.json": "B3AC4495208DE1D7F6FB3B5DFEE8063797D9074FE634603717E5CE80D4E656D6",
+    "package.json": "13E74871E640D4156F887DC8CC07C8E2AD820E2C5B091CF3A4E1EDB1134128F4",
+    "README.md": "734288BFCB723BFBB34826D075ACEEE399225983BD75F9A8E58680D28E7F409E",
+    "rollup.config.mjs": "FF7F134537C4963F534E28E6ED7FD06E8BE4F5E7CD38964A4ADABFD79373116C",
+    "tsconfig.jest.json": "848E60C8C76F4C774E4D28A4851ADD16323278FDABE9D70A2C8D066C5C73DCCE",
+    "tsconfig.json": "735EDB1550F7783B68D92EF200791D922C8012056D4E98D439C8B8027828BF0C",
+    "WORKPLAN.md": "CB2547B1141E54AF4137D1C3743C8B1DB7A97BBF0DEAAE058CD5A046E9456E40",
+    ".githooks/commit-msg": "C4D5DB442CD3B40EEA3D0288D917AEA4FCB5B03811E4FAE5A2A834D23E70CF81",
+    ".githooks/pre-commit": "408D3315AA24D64B4BCAAAA9F9842C4711CA66B8015FD0B2E3BF79B750170F3D",
+    ".githooks/pre-merge-commit": "76C0C147F25E8F95E652A6ED8420CDAE2FEBA74BE343923A9848E9D58AB0FBD1",
+    ".githooks/pre-push": "FE693EF26BD583B3A7DDE0257883206297D064E93DB4BAA8B9176CE37667EE7F",
+    "docs/index.md": "428FA68C4E44DAB24C07B18F3813ED5BCE10E677957562CE968CF92C881686EB",
+    "docs/_sidebar.md": "F29B689D8A03C858B2ADD00D18B44B4A0063500DE466A74BD8B47D851799CE47",
+    "documentation/api.md": "677A709A9F6412858A6D2B77D79A977CB22D1461ED2FF6EF4C9206EF68C63309",
+    "documentation/breaking-changes.md": "A548DA8C44887452845000CDEFEE8C97C8F8E946C00B4D674F08B82E9E1613BE",
+    "documentation/configuration.md": "FDECFCD78B367A2A69638922945FBFACD9BC77CE99E7A74B46334679A21493EC",
+    "documentation/development.md": "FF3C8725D27BA3066DF34975C51C5794F5E4BE52BBB7E9EA608EFED5D7551011",
+    "documentation/examples.md": "5CF2A50CC20FBC6123C9198F29718C9AD48153085E52F79B04507A933CF1F9FD",
+    "documentation/features.md": "5FDDBE4EA9A85A3A32A13BE4E21795F7F9E11755C83B784C3DDDF741174DFE74",
+    "scripts/bootstrap.ps1": "01CAFBFDBA59A81014472E10F3C5F495D6CE0C4A79BFDAE7E4304FA19D28EFD1",
+    "scripts/bootstrap.sh": "C434BA23F606D08FCE11AF5AECFA1873A946DEEADA5532B5C8EB038A9D5604E0",
+    "scripts/verify-post.ps1": "E125C01D875BA80D3D027104F1E67BB5BF3AE3DA76B97887357650F238F470B4",
+    "scripts/verify-pre.ps1": "2E475BA32094BF1AA494E363226EE14F0C3C8B96EA3B186F0509AD8D158514AB",
+    "Styles/ZestButton.module.css": "F8F012306783E07723A64134DDFF26B9E3ED07A5A0161B82ED9D1137EB42C1B7",
+    "test-reports/CHANGE_MANIFEST_dropdown-options.md": "61DD8B52CEB5FEDA218A46CE1D5989659A215BF3D0021C4D5CC3673A3CD99341",
+    "test-reports/CHANGE_MANIFEST_jest-wiring.md": "A05828526DB217324AECF778A86E5066B1EED904B0D18BD786940F4C45D5F6E6",
+    "test-reports/CHANGE_MANIFEST_react-19-vite.md": "A99F4767D0B39424C5AB769839ACBEAC7652ADB4FEB590380AA46AFBFE4ED924",
+    "test-reports/coverage-baseline.json": "9D06C2E27FA26B073C81BB58179829753150A5A9198E4B67E31F9357AB63B97A",
+    "test-reports/post-verify-2026-07-28_073035.html": "22FAC5AD3A198D42B65EF1B310357417239A4B9432BFB63831132D3950C580BF",
+    "test-reports/post-verify-2026-07-28_074031.html": "77302A7C4FE96EF2EE746A7C86CBAE19614574497CC225C79E5E11F5F92FBD8D",
+    "test-reports/post-verify-2026-07-28_080448.html": "67AAE87B7D2C1A6EDAE95432C56B68B63DF443A92D5FE1DAFC5213427F4D5A38",
+    "test-reports/post-verify-2026-07-28_093120.html": "28C4DE62F9DCDC9DA51F93B92EE0E025E07227D245C4EF9BAA74BC248523F7CB",
+    "test-reports/post-verify-2026-07-28_093739.html": "54D290941C4B5438E009528F8D4399FAA92E80305D433268C18D29087F3D2D34",
+    "test-reports/post-verify-2026-07-28_094329.html": "99568DB108FCB8FBCD02B5A3C0E7E782AF309D67848ABD7B0643AC5C2F689D7C",
+    "test-reports/post-verify-2026-07-28_094444.html": "482DC911898BDC917C6118EFDF53FD2CFD2D913A93389A4305D8F32BF023DEFB",
+    "test-reports/post-verify-2026-07-28_095001.html": "EE679022780469B0B31968570434B1B000A7E1D98A09B1B05F7CEDA022C8E8B3",
+    "test-reports/post-verify-2026-09-23_215049.html": "F0DE9469CF6D5C8A68EAEE363A77FA2FF477A2E0153AC11076FC5D750DC4BCDB",
+    "test-reports/pre-verify-2026-07-28_073020.html": "10F2133D23D97799104E7E45E7D4AB79972B1DC0D13FDE40D5880E11DA9B225C",
+    "test-reports/pre-verify-2026-07-28_074014.html": "FE34CB02BA5A054186D15D2D6E810C140E3508FE7941EA9EB6F1266C663374C4",
+    "test-reports/pre-verify-2026-07-28_080430.html": "F32032A317C6BA1046803E96B72EA603139A2C775B73A1A25C5450FD16A64124",
+    "test-reports/pre-verify-2026-07-28_093100.html": "2C600317D36C7F7FA8ED6C55D74361C60418315A800F0DA3839DC0704ACF05B3",
+    "test-reports/pre-verify-2026-07-28_094525.html": "8B9E0A28DD97289BECB10580993DC0A84E6DB3DB2139E845821D47189D4769EC",
+    "test-reports/pre-verify-2026-07-28_094600.html": "D4F161AD2F8BD0B21D0114A8832272251E9D4926DD6AE320E6E9AEEAFB829F32",
+    "test-reports/pre-verify-2026-07-28_094946.html": "85A97D058FD744E198F942EB9BAB5CF55447B002FFAC245E0F67AEBE2B8884E3",
+    "UI/index.ts": "72747BFB6885AC1083B4A3EEC8B510258C0A2854BD1CD4C04FBC5B16D52599E7",
+    "UI/semanticTypeButtonConfigDefaults.tsx": "2D12B653B9141D88DE6367A0B86CDE44422F2D04C9856E0799D3D8DD08615CC9",
+    "UI/SpinnerIcon.tsx": "3022D51FA5CC7A06CB39CBC52796FF7DE95DC81E6635164B854EC6DC1EC1175D",
+    "UI/ZestButton.tsx": "9E171998B1620E8CFA8331FE442A7AD87202C001636E82C951FB3AB6B2EBDFC4",
+    "UI/ZestButtonConfigContext.ts": "6D144BF476709C6C2A1683C14C586AD55CDF4346DF66872A4580494808E24DC9",
+    "UI/ZestButtonConfigProvider.tsx": "65D966D019E5ACEC6A9A6D379D100AB15BC70BC62DB7BBD83E58FA80C3542FB2",
+    "UI/ZestDropdownMenu.tsx": "279EDE6F900A3FEE6B6294A2AA9699CC53ADFEDEE7E207B3E574433648FAA7E1",
+    "UI/ZestDropdownMenuItem.tsx": "A7323CE7792BDEAC4EB894A068FC2B3A0E26D91AAC1316905B754073966AD708",
+    "UI/ZestIcon.tsx": "8157E13FB9132AF98C69E954951451B4AB5E52505A885A01B618390A175CC4B2",
+    "UI/zestIcons.tsx": "21699B9A74084C9AA59364192B784A8E3DC3416DE33B00909ED3CA0DAAB22AD2",
+    "__tests__/buildExternalization.test.ts": "E2F6174C4BFB12BE74276788F91E1186DE11F2094F23850BADC54F033AE910B4",
+    "__tests__/packagePeerDependencies.test.ts": "5ED4EC3ECD8CAE08F355D98FBC79B23E0E41335546288F6265997F833832CC90",
+    "__tests__/semanticTypeButtonConfigDefaults.test.tsx": "440A8FD4B04A99E3EB8160F55F830B3899F7EF7CEB2F1A8C72D9D3B8AF63C0B5",
+    "__tests__/semanticTypeIcons.test.tsx": "ECA89E013A57AB2CD3B75784142DDD83AA648EE5E9ACCECA8F8BF131AA56A9F4",
+    "__tests__/SpinnerIcon.test.tsx": "C89025A06FBCFCE8E89B6A6CAC436F82775C2685ECF39416356E4C54087E4AA3",
+    "__tests__/ZestButton.test.tsx": "1B7EBB2EF79E98145E956FBE91660A67084FFAE72A4FA01DC10CAB3B94228198",
+    "__tests__/ZestButtonConfigContext.test.tsx": "367804D7AFFE4D1C3EF3A1E40C8B4783A99ECC71BD4F8771F9F6FC66FB910D53",
+    "__tests__/ZestButtonConfigProvider.test.tsx": "9A58FB1A3342D010F9971560D39A4215176ABC260D4FF58AC91FA60A9AF8F12B",
+    "__tests__/ZestButtonToggle.test.tsx": "B00B13077E75063548F64EE3DA33D4270AB400F7F408BEC4E2431AD9F2556105",
+    "__tests__/ZestDropdownMenu.test.tsx": "D7E4102673DA31F525C136AB4FDAB9E83AE00EB31733B9688F6A7077E82105A2",
+    "__tests__/ZestDropdownMenuItem.test.tsx": "1914763F53F3EC50A86BC46EF0A0A690D6C27E06EC91A4CE2A479334C99AA7EC",
+    "__tests__/ZestIcon.test.tsx": "1AEC832A0CA0D37C3751F7635A77BF170C215F21F8A9A5405C3FA8BAE32524BA",
+    "__tests__/zestIconPerformance.test.tsx": "5143F041E81FF12E85699D535893FBAD556B7DF47AB3346E32C9652CFBDBF500",
+    "docs/e2e/critical-paths.md": "85281E8CBE4AAF7FB733266D28B9F4784D30DB16EBFCD753111CFF0DE1F6BC49",
+    "docs/guidelines/ai-knowledge.md": "D41528AE5D2831A3FF51AD3232F29A7E28481FABED6735C8258B29A0F40CBE17",
+    "docs/guidelines/AI_ARCHITECTURE.md": "74529F72CD55FE062093D8C6C0CD84CEE42A842BE19BDF0690D050D79F6C2EF6",
+    "docs/guidelines/AI_BRS.md": "376AFB3BE28307FC4F7369569DDA65B8F260FED0C1944B13663DA5C30EE56A46",
+    "docs/guidelines/AI_CODE_REVIEW.md": "1BBA0B633F145285BB326E8D20BE20B8547608782829A10AFCA9E2D322157240",
+    "docs/guidelines/AI_E2E_TESTING.md": "B5DC8BCE5CCDFC3E7CC4052EE1170C87F35B5C3C24142D32E272ADDCA62EB42F",
+    "docs/guidelines/AI_GIT_WORKFLOW.md": "917ED641884ECDEA50335D16ECFF0AF897475145CF2935C2B04E94D23D50F050",
+    "docs/guidelines/AI_KNOWLEDGE.md": "AC25FD7CC26B2879749AA5776C7B0B06398028FF51015CCEB5E7F40534603528",
+    "docs/guidelines/AI_PITFALLS.md": "50E0E01B0357E4C1D5ADC027FD86499A525CCF4A3B9DDF3712E3018612FE1463",
+    "docs/guidelines/AI_STYLE_GUIDE.md": "4FB69E8E07A7332762AC69C7D548E148C625F925816F3885C1FF2C9CFEC092D5",
+    "docs/guidelines/AI_TESTING.md": "593F447DAEC1811FDCCB7C654EEA2DE3F53ED4F4669A50EFBB5AD220E4A482E0",
+    "docs/guidelines/AI_TEST_CONFIGURATION.md": "45343949F2BB86809C15DBC353E5C58793B501AF8689C609B1CBD4BC92E6717E",
+    "docs/guidelines/AI_WORKFLOW.md": "876A83F881AE13FCA4F45FA486854E41C13AE11D60F400E7477C5DA0DCFBC542",
+    "docs/guidelines/AI_WORKFLOW_TRIGGERS.md": "474248703A08200E176D84AEE4089EAB851A1CEED3D1598ED21FDE85A23641E1",
+    "docs/guidelines/decision-log.md": "254CC348A27AA4977B60F67B1A52ED34D418B6252B26F704DDC4F08C2FED1B24",
+    "UI/hooks/useBusyState.ts": "36A9C4FB2DF30FB7ED2E60FE6718366BBD86B04E02E6A22B0DB1396FF25BDC11",
+    "UI/hooks/useConfirmation.ts": "85FAB956E94589F5D03B987F9232A4F753CCFDA2E2C89042E449A6240DC50BC5",
+    "UI/hooks/useThemeDetection.ts": "50BE4166BBD89CDF5D36731476D09F59E674ADC77290153BF219FDEB0D180DCE",
+    "UI/hooks/useToggleState.ts": "4D1C38B51EB6A22AB592E6BA223CC478B3B76848D2600C09E56A6A23D6FBE379",
+    "UI/hooks/useZestConfig.ts": "71F295AB302429194A596162AF88760F062950D2FF58398D63E16A45B0013F59",
+    "__tests__/hooks/useBusyState.test.ts": "01DB72AC7EC45D05E73390ECFAA6C3F70CF2D95A839ACDA30B2BB393A73B4AE5",
+    "__tests__/hooks/useConfirmation.test.ts": "4C9CA297AC8C86CDC2BE75D9FC80347472EEAB857250B9E4DE12A9FD9EBC725A",
+    "__tests__/hooks/useThemeDetection.test.ts": "E4949A42E0DD95C834169B82D4D14118E5632BFF5C63390DFC86C64572C51ECB",
+    "__tests__/hooks/useToggleState.test.ts": "6199D7CDD19166CB44787CAFD11FB24BA82DBC42E29925F39C6B131A5E798965",
+    "__tests__/hooks/useZestConfig.test.ts": "44459E0B7CF181BAF679B70CAF61C621B40A49E575FB803A086427F5600B4C67",
+    "docs/features/react-19-support/BRS.md": "7A472022F953765CCB086E4FAAB34AD3957594A2377D0D2C2A554E37648C931D",
+    "docs/features/zest-button-dropdown-options/BRS.md": "E4452F75D19AC3425891B5BBFEF1549075DCA53AC1A0C5D95F2C491F407AC702",
+    "docs/features/zest-button-semantic-types/customising.md": "87CAB93BDC6BE8238C00D3576EE90B4D77206F2ACF797664A5FF9D3EA2ACA8D4",
+    "docs/features/zest-button-semantic-types/guide.md": "ED728521E0A1BB3CDF97A5B291F625BB7284E5F5CAF91BD497198BB8589E6905",
+    "docs/features/zest-button-semantic-types/icons.md": "043F747FA4B8B826562050047BCB6EE338B785CC0FF7C563E3175C56438ACCA0",
+    "docs/features/zest-button-semantic-types/type-reference.md": "B9405C9D5D02BDAD5F92F0A250CC8D9AEE62E7012A1317B8A47D85F42099F7F9",
+    "docs/features/zest-button-toggle/BRS.md": "AF15BE7A563CE0F395083483511213E9D626AFC0E7FFBA477C180EBD4718FB01",
+    "docs/features/zest-button-toggle/guide.md": "A85F4D96C7D27339F313FF2C3C424ED0AD9B25307B5EA24D5A3934D8172DFC9D"
+  }
+}

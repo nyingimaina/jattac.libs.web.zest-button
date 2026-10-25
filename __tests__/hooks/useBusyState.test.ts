@@ -155,4 +155,55 @@ describe("useBusyState", () => {
     });
     expect(result.current.wasFailed).toBe(false);
   });
+
+  it("warns in development when minBusyDurationMs or autoResetAfterMs is very short", () => {
+    const originalNodeEnv = process.env.NODE_ENV;
+    process.env.NODE_ENV = "development";
+    const warn = jest.spyOn(console, "warn").mockImplementation(() => {});
+
+    try {
+      renderHook(() =>
+        useBusyState({
+          busyOptions: { minBusyDurationMs: 50 },
+          successOptions: { autoResetAfterMs: 50 },
+        })
+      );
+
+      expect(warn).toHaveBeenCalledWith(
+        expect.stringContaining("'minBusyDurationMs' is set to 50ms")
+      );
+      expect(warn).toHaveBeenCalledWith(
+        expect.stringContaining("'autoResetAfterMs' is set to 50ms")
+      );
+    } finally {
+      process.env.NODE_ENV = originalNodeEnv;
+      warn.mockRestore();
+    }
+  });
+
+  it("auto-reset clears a still-pending fail timeout so the fail flag cannot resurface", () => {
+    const { result } = renderHook(() =>
+      useBusyState({
+        busyOptions: {},
+        successOptions: { showFailIcon: true, autoResetAfterMs: 50 },
+      })
+    );
+
+    act(() => {
+      result.current.endBusy(false);
+    });
+    expect(result.current.wasFailed).toBe(true);
+
+    // autoResetAfterMs (50ms) fires before the 400ms fail timeout, so the
+    // auto-reset path must clear the still-pending fail timeout.
+    act(() => {
+      jest.advanceTimersByTime(50);
+    });
+    expect(result.current.wasFailed).toBe(false);
+
+    act(() => {
+      jest.advanceTimersByTime(400);
+    });
+    expect(result.current.wasFailed).toBe(false);
+  });
 });

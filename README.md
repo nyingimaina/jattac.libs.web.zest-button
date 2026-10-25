@@ -17,6 +17,10 @@ npm install jattac.libs.web.zest-button react-icons @radix-ui/react-dropdown-men
 ```
 *Note: `react`, `react-dom`, `react-icons`, and `@radix-ui/react-dropdown-menu` are peer dependencies and must be installed in your project.*
 
+**Supported React versions:** `react`/`react-dom` `>=18.0.0` (tested against React 18 and React 19; open-ended for future majors).
+
+**Bundlers:** the published package ships ESM and CJS with a modern `"exports"` map and treats React (including `react/jsx-runtime`) as external, so it works out of the box with Vite, Next.js, webpack, and Rollup — the consumer's React version is always used.
+
 ### Basic Usage (The "Hello World")
 
 Here's the simplest way to get `ZestButton` up and running:

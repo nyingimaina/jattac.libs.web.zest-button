@@ -86,7 +86,19 @@ declare module 'jattac.libs.web.zest-button' {
 
 Once augmented, these new semantic types (`'archive'`, `'publish'`) will be available for autocompletion and type-checking when using the `semanticType` prop on your `ZestButton` instances.
 
-*(Note: Currently, there are no dedicated test scripts defined in `package.json`. Testing is typically done manually in a consuming project during development, or through dedicated test runners that would be added in the future.)*
+*(Note: This package supports `react`/`react-dom` `>=18.0.0`. It is tested against React 18 (the default `devDependency`) and React 19, and the published bundles treat React — including `react/jsx-runtime` — as external so the consumer's React version is used. See [Breaking Changes](./breaking-changes.md).)*
+
+---
+
+### Testing
+
+The project uses Jest with `ts-jest` and React Testing Library. Tests live in `__tests__/`, mirroring the `UI/` structure, and are run with:
+
+```bash
+npm test
+```
+
+`npm test` runs `jest --coverage`; coverage is written to `coverage/` (gitignored). The suite currently runs on React 18; React 19 compatibility is verified by temporarily installing `react@19`/`react-dom@19` and re-running the suite (see `docs/features/react-19-support/BRS.md`).
 
 ---
 

@@ -33,7 +33,7 @@ export default [
         use: [],
       }),
     ],
-    external: ['react', 'react-dom', 'react-icons/fa', 'react-icons/fa6', '@radix-ui/react-dropdown-menu'],
+    external: ['react', 'react/jsx-runtime', 'react/jsx-dev-runtime', 'react-dom', 'react-icons/fa', 'react-icons/fa6', '@radix-ui/react-dropdown-menu'],
   },
   {
     input: 'UI/index.ts', // Use the main TypeScript entry file
@@ -43,6 +43,6 @@ export default [
       // and external modules are resolved.
       respectExternal: true,
     })],
-    external: ['react', 'react-dom', /^react-icons/, /\.css$/, '@radix-ui/react-dropdown-menu'], // Exclude React, ReactDOM, react-icons, Radix dropdown-menu, and CSS files from the DTS bundle
+    external: ['react', 'react/jsx-runtime', 'react/jsx-dev-runtime', 'react-dom', /^react-icons/, /\.css$/, '@radix-ui/react-dropdown-menu'], // Exclude React, React's JSX runtimes, ReactDOM, react-icons, Radix dropdown-menu, and CSS files from the DTS bundle
   },
 ];

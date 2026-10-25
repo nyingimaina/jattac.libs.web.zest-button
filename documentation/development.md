@@ -14,6 +14,7 @@ This guide provides an overview of the project's internal structure and instruct
 - [Scripts](#scripts)
 - [Extending Semantic Types](#extending-semantic-types)
 - [Toggle Mode Internals](#toggle-mode-internals)
+- [Toggle Styling Internals](#toggle-styling-internals)
 
 ---
 
@@ -96,6 +97,12 @@ Once augmented, these new semantic types (`'publish'`, `'pin'`) will be availabl
 ### Toggle Mode Internals
 
 Toggle mode lives in `UI/hooks/useToggleState.ts` (controlled when `pressed` is given, otherwise self-managed from `defaultPressed`), the `handleToggleClick` handler and `ToggleCheck` mark in `UI/ZestButton.tsx`, and the `.toggleOn` / `.toggleCheck` rules in `Styles/ZestButton.module.css`. It uses no timers or listeners. Tests: `__tests__/ZestButtonToggle.test.tsx` and `__tests__/hooks/useToggleState.test.ts`. Feature notes: `docs/features/zest-button-toggle/`.
+
+---
+
+### Toggle Styling Internals
+
+`UI/toggleStyle/types.ts` holds the public types. `compileToggleStyle.ts` sanitises values (one property per declaration), merges layers by precedence and generates CSS keyed by a content hash, memoised so equal settings are processed once. `toggleStyleSheet.ts` keeps one shared `<style data-zest-toggle-styles>` element with ref-counted rules. `UI/hooks/useToggleStyle.ts` connects them to the button, which carries a `data-zest-toggle-style` attribute. No timers or listeners are added. Tests: `__tests__/toggleStyle/`, `__tests__/hooks/useToggleStyle.test.tsx`, `__tests__/ZestButtonToggleStyle.test.tsx`.
 
 ---
 

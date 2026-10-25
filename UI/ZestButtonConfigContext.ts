@@ -1,10 +1,13 @@
 import React, { useContext } from 'react';
-import { ZestCustomProps } from './ZestButton'; // Assuming ZestCustomProps is exported from ZestButton.tsx
+import type { ZestButtonStyles } from './toggleStyle/types';
+import { ZestCustomProps } from './ZestButton';// Assuming ZestCustomProps is exported from ZestButton.tsx
 
 // Define the shape of the global Zest configuration
 export interface ZestGlobalConfig {
   defaultProps?: ZestCustomProps;
   semanticTypeDefaults?: Partial<Record<string, Partial<ZestCustomProps>>>;
+  /** App-wide looks, organised by button kind. Only `toggle` exists today. */
+  styles?: ZestButtonStyles;
   // Add other global settings here in the future if needed
 }
 

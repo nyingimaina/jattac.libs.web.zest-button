@@ -1,7 +1,7 @@
 ---
 title: BRS — ZestButton on/off toggle mode
-covers: UI/ZestButton.tsx, UI/hooks/useToggleState.ts, Styles/ZestButton.module.css, __tests__/ZestButtonToggle.test.tsx
-covers-hash: 2eaea46b284c18005e3f
+covers: UI/ZestButton.tsx, UI/hooks/useToggleState.ts, UI/hooks/useToggleStyle.ts, Styles/ZestButton.module.css, __tests__/ZestButtonToggle.test.tsx
+covers-hash: a2ac1f906c9b4fd5b3f2
 ---
 
 # BRS — ZestButton on/off toggle mode
@@ -12,7 +12,7 @@ covers-hash: 2eaea46b284c18005e3f
 |-------|-------|
 | Status | Complete |
 | Task Type | Feature (additive) |
-| Version | 1.6.0 (unchanged in 1.7.0) |
+| Version | 1.6.0 (behaviour unchanged in 1.7.0 and 1.8.0) |
 
 ## Summary
 
@@ -42,6 +42,16 @@ does not replace the icon. `__tests__/ZestButtonToggle.test.tsx` and the semanti
 icon tests cover the combined case, and the guide shows it under "A toggle with a semantic
 type".
 
+## Current state in 1.8.0
+
+`ToggleOptions` gained one optional field, `style` (a `ZestToggleStyle`), and
+`ZestButton.tsx` now calls the `useToggleStyle` hook. When a toggle has a generated look,
+the button carries a `data-zest-toggle-style` attribute and the check mark SVG carries
+`data-zest-toggle-check`; a toggle with no provider styles and no `style` renders as
+before. Nothing about `aria-pressed`, `pressed` / `defaultPressed`, `onPressedChange`,
+`checkPosition` or the keyboard handling changed. The new behaviour has its own record:
+[Styling toggle buttons from one place](../zest-button-toggle-style/guide.md).
+
 ## Out of scope
 
 Sliding switch control, exclusive toggle groups, custom on/off icons, persisting the value.
@@ -49,6 +59,8 @@ Sliding switch control, exclusive toggle groups, custom on/off icons, persisting
 ## See also
 
 - [Using the ZestButton on/off toggle](./guide.md) — the developer guide for this record.
+- [Styling toggle buttons from one place](../zest-button-toggle-style/guide.md) — set the
+  exact look of every toggle from `ZestButtonConfigProvider`.
 - [Using ZestButton semantic types](../zest-button-semantic-types/guide.md) — combine a
   toggle with a built-in icon and colour.
 - [Built-in semantic type reference](../zest-button-semantic-types/type-reference.md) —

@@ -19,6 +19,7 @@ This document explains how to configure `ZestButton` on a component and global l
 - [Advanced: Customizing Semantic Defaults](#advanced-customizing-semantic-defaults)
   - [Example: Defining a Custom 'publish' Type](#example-defining-a-custom-publish-type)
   - [Example: Overriding a Built-in 'delete' Default](#example-overriding-a-built-in-delete-default)
+- [Toggle Styling](#toggle-styling)
 
 ---
 
@@ -219,6 +220,42 @@ const App = () => (
 >
   <ZestButton zest={{ semanticType: 'confirm' }}>Agree</ZestButton>
 </ZestButtonConfigProvider>
+```
+
+---
+
+### Toggle Styling
+
+`styles.toggle` on the provider sets the look of every toggle (`zest.toggleOptions`) in scope. Plain, danger and other non-toggle buttons are never styled by it.
+
+```tsx
+<ZestButtonConfigProvider
+  config={{
+    styles: {
+      toggle: {
+        off: { background: 'transparent', borderRadius: '0.5rem' },
+        on: { background: '#0a7', color: '#fff', checkColor: '#fff' },
+        hoverOn: { background: '#086' },
+        dark: { on: { background: '#0c9' } },
+        sizes: { lg: { off: { fontSize: '1.25rem' } } },
+        variants: { danger: { on: { background: '#c00' } } },
+      },
+    },
+  }}
+>
+  <ZestButton zest={{ toggleOptions: {} }}>Bold</ZestButton>
+</ZestButtonConfigProvider>
+```
+
+- **Any CSS property** works, in camelCase (`letterSpacing`) or kebab-case (`letter-spacing`); values are used exactly as written, so `px` is allowed.
+- **Precedence** (lowest to highest): built-in look, all toggles, `sizes`, `variants`, then the per-button `zest.toggleOptions.style`. A size and a variant that set different properties are both applied.
+- **Themes:** `light` and `dark` apply only in that theme (`theme="system"` follows the operating system live). A light-only colour leaves the dark theme at the built-in look.
+- **Nested providers:** the inner provider's settings apply; anything it omits falls back to the built-in look, not the outer provider's.
+- **Safety:** a value can only set its own property. Semicolons, braces and `url()` strings cannot add rules or properties.
+- **Unchanged behaviour:** `aria-pressed`, keyboard operation, the focus indicator and the check-mark animation are not affected by styling.
+
+```tsx
+<ZestButton zest={{ toggleOptions: { style: { on: { background: 'rebeccapurple' } } } }}>Pin</ZestButton>
 ```
 
 ---

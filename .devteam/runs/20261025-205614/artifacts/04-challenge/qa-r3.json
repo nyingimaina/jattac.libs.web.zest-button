@@ -1,0 +1,45 @@
+{
+  "findings": [
+    {
+      "cites": "R7",
+      "severity": "advisory",
+      "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+      "line": 152,
+      "evidence": "The R7 test only asserts the generated sheet has no 'focus-visible' rule. Nothing asserts the built-in focus ring exists on the toggle in both off and on states (jsdom cannot compute CSS-module styles).",
+      "description": "Stronger proof would be a test that the built-in toggle focus class or rule is present for on and off. The pre-existing toggle tests and the no-override assertion cover the main risk, so this is not blocking."
+    },
+    {
+      "cites": "R8",
+      "severity": "advisory",
+      "file": "__tests__/hooks/useToggleStyle.test.tsx",
+      "line": 1,
+      "evidence": "The R8 acceptance line 'No console error is produced for an ignored setting' has no console.error spy in any listed test. The hostile-config tests only check that nothing throws or unmounts.",
+      "description": "Add a console.error/console.warn spy to one ignored-setting test. Behaviour is otherwise covered (null returned, button stays mounted)."
+    },
+    {
+      "cites": "R9",
+      "severity": "advisory",
+      "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+      "line": 236,
+      "evidence": "The R9 edge case (React 18 and 19, Next.js App Router client components) has no test beyond the existing peer-dependency and build-externalization suites. The hook and sheet use no React 19-only API, but no test renders under both versions or checks SSR safety (document access at render).",
+      "description": "Consider an SSR test (renderToString with a styled provider, no document access during render) and a note that React 19 is covered only by the peer-dependency range. Advisory."
+    },
+    {
+      "cites": "R3",
+      "severity": "advisory",
+      "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+      "line": 75,
+      "evidence": "The on+disabled edge case ('disabled look layered on the on look') is proven only by selector order (indexOf of the on rule is below the disabled rule). No test renders an on and disabled toggle and checks that both rules apply.",
+      "description": "Ordering is a reasonable proxy and the integration test keeps the pressed state on a disabled toggle, so this is not blocking."
+    },
+    {
+      "cites": "R2",
+      "severity": "advisory",
+      "file": "package.json",
+      "line": 3,
+      "evidence": "The NFR bundle-growth check (no more than 5 KB gzipped) and the check that the library's own CSS adds no new px sizes have no automated test. The project has no .size-limit.json and no size script. package.json dependencies are unchanged. The suite re-runs of R9 and R10 pass.",
+      "description": "Not provable in this project's setup, so it is recorded as advisory. Run a one-off gzip size comparison of dist before release. Also not run: the packed-library install and import under CommonJS and ES modules (no scripts/consumer-smoke.mjs)."
+    }
+  ],
+  "verifications": []
+}

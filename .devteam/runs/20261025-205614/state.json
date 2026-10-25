@@ -1,0 +1,1690 @@
+{
+  "runId": "20261025-205614",
+  "options": {
+    "browser": "end",
+    "visible": false,
+    "document": true,
+    "referenceFolders": []
+  },
+  "browser": {
+    "ran": false,
+    "passed": false,
+    "visible": false,
+    "document": false,
+    "seconds": 0,
+    "treeHash": "0CA7E93558286CE2A1095F393484F6C2C79066214C644E2020A434E3EABFCE94",
+    "reason": "this stack has no browser journeys",
+    "output": ""
+  },
+  "isVerification": false,
+  "stageSeconds": {
+    "define": 178.5673366,
+    "design": 217.2768044,
+    "build": 902.4331507,
+    "challenge": 177.84291919999998,
+    "prove": 207.4351988
+  },
+  "timeCapExtensions": {},
+  "stageClockStart": {
+    "design": 131.6283071,
+    "define": 119.52405830000001,
+    "build": 854.7797881,
+    "challenge": 38.0463073,
+    "prove": 0
+  },
+  "featureRequest": "just like D:\\work\\nyingi\\code\\systems\\Jattac.Libs.Web.ZestTextbox has a provider that allows for a unitary point where configs can be done and then apply system wide. LEt\u0027s leverage the same for zestbutton with first configurable thing being styling, such that for example we can specify to the pixel the look and feel of toggle buttons meaning colours, variations, sizes, hover effects, ideally anything supported by css",
+  "packId": "react-component-library",
+  "status": "completed",
+  "currentStage": "prove",
+  "stages": {
+    "define": "done",
+    "design": "done",
+    "build": "done",
+    "challenge": "done",
+    "prove": "done"
+  },
+  "defineRound": 5,
+  "designRound": 3,
+  "buildRound": 3,
+  "sliceHash": "075DCD6F0A6DCEF4",
+  "slicesDone": 2,
+  "sliceReports": [
+    {
+      "summary": "Round 2: applied the minor version bump 1.7.0 -\u003E 1.8.0 in package.json and package-lock.json, and updated the pinned version assertion in __tests__/ZestButtonToggle.test.tsx (allowed by the engine decision). Slice 1 parts (types, compileToggleStyle, toggleStyleSheet, useToggleStyle, ZestGlobalConfig.styles, ZestButton toggle wiring, exports) were already in place. Build passes; all project test suites pass (failures only in stale .devteam scratch copies, outside the project). Docs are left for the next slice.",
+      "tests": [
+        {
+          "name": "R1: a toggle outside any provider has no generated style hook and keeps aria-pressed",
+          "file": "__tests__/ZestButtonToggleStyleCharacterization.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R1: provider defaultProps keep applying to buttons",
+          "file": "__tests__/ZestButtonToggleStyleCharacterization.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R1: empty or missing settings compile to nothing",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R2: any CSS property is applied exactly as written, including px",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R2: kebab-case and camelCase are the same property and are emitted once",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R2/R8: an unknown property is passed through but bad values drop only themselves",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R2",
+            "R8"
+          ]
+        },
+        {
+          "name": "R2: injection value is dropped and cannot add rules (12 cases)",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R2: a property name that tries to break out is dropped",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R3: each state gets its own selector; disabled and busy come after on/off",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R3"
+          ]
+        },
+        {
+          "name": "R3: hover looks sit inside a hover-capable media query and exclude disabled",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R3"
+          ]
+        },
+        {
+          "name": "R3: no hover rule is emitted for an off look, so disabled toggles are not affected",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R3"
+          ]
+        },
+        {
+          "name": "R3/R7: check-mark colour and size style the check element, not the button",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R3",
+            "R7"
+          ]
+        },
+        {
+          "name": "R4: size, variant and base layer, variant beats size beats base, other properties merge",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R4"
+          ]
+        },
+        {
+          "name": "R4: size and variant looks do not leak onto other sizes or variants",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R4"
+          ]
+        },
+        {
+          "name": "R4/R8: unknown variant or size names in the config are ignored",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R4",
+            "R8"
+          ]
+        },
+        {
+          "name": "R5: theme looks beat theme-less looks and only the active theme applies",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R5"
+          ]
+        },
+        {
+          "name": "R5: a light-only colour leaves the dark theme at the built-in look",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R5"
+          ]
+        },
+        {
+          "name": "R6: the per-button look beats every provider layer for the properties it gives",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R6"
+          ]
+        },
+        {
+          "name": "R6: a per-button style alone works without a provider",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R6"
+          ]
+        },
+        {
+          "name": "R7: no focus rule is generated unless a focus look is given",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R7"
+          ]
+        },
+        {
+          "name": "R8: equal contents give the same id; different contents give a different id",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R8"
+          ]
+        },
+        {
+          "name": "R8: non-object input never throws",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R8"
+          ]
+        },
+        {
+          "name": "R8: a throwing getter in the settings returns null instead of throwing",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R8"
+          ]
+        },
+        {
+          "name": "R8: the same settings object is compiled once per theme, variant and size",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R8"
+          ]
+        },
+        {
+          "name": "R8: equal ids share one rule and it is removed only after the last release",
+          "file": "__tests__/toggleStyle/toggleStyleSheet.test.ts",
+          "requirements": [
+            "R8"
+          ]
+        },
+        {
+          "name": "R8: different ids add and remove their own rules in one shared style element",
+          "file": "__tests__/toggleStyle/toggleStyleSheet.test.ts",
+          "requirements": [
+            "R8"
+          ]
+        },
+        {
+          "name": "R8: releasing twice does not drop a rule another toggle still uses",
+          "file": "__tests__/toggleStyle/toggleStyleSheet.test.ts",
+          "requirements": [
+            "R8"
+          ]
+        },
+        {
+          "name": "R3: the sheet is written as text, so a hostile value cannot create elements",
+          "file": "__tests__/toggleStyle/toggleStyleSheet.test.ts",
+          "requirements": [
+            "R3",
+            "R2"
+          ]
+        },
+        {
+          "name": "R1: without a provider or style there is no id and no style element",
+          "file": "__tests__/hooks/useToggleStyle.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R1: a provider with an empty styles section changes nothing",
+          "file": "__tests__/hooks/useToggleStyle.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R1: a disabled hook (plain button) never styles even inside a styled provider",
+          "file": "__tests__/hooks/useToggleStyle.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R1: nested providers use only the inner settings",
+          "file": "__tests__/hooks/useToggleStyle.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R4: variant and size feed the lookup",
+          "file": "__tests__/hooks/useToggleStyle.test.tsx",
+          "requirements": [
+            "R4"
+          ]
+        },
+        {
+          "name": "R5: a theme change restyles with the other theme\u0027s look",
+          "file": "__tests__/hooks/useToggleStyle.test.tsx",
+          "requirements": [
+            "R5"
+          ]
+        },
+        {
+          "name": "R6: changing the per-button style on re-render updates the rules",
+          "file": "__tests__/hooks/useToggleStyle.test.tsx",
+          "requirements": [
+            "R6"
+          ]
+        },
+        {
+          "name": "R8: a recreated but identical config keeps the same id and one rule",
+          "file": "__tests__/hooks/useToggleStyle.test.tsx",
+          "requirements": [
+            "R8"
+          ]
+        },
+        {
+          "name": "R8: unmount releases the rules",
+          "file": "__tests__/hooks/useToggleStyle.test.tsx",
+          "requirements": [
+            "R8"
+          ]
+        },
+        {
+          "name": "R8: a hostile config does not throw from the hook",
+          "file": "__tests__/hooks/useToggleStyle.test.tsx",
+          "requirements": [
+            "R8"
+          ]
+        },
+        {
+          "name": "R1: a toggle inside the provider gets the configured look through a data attribute",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R1",
+            "R2"
+          ]
+        },
+        {
+          "name": "R1: a plain button inside a styled provider is not styled",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R1: an empty styles section or empty toggle renders exactly as today",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R1: defaultProps and semanticTypeDefaults keep working next to styles",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R1: toggles outside the provider are untouched while another toggle is styled",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R4: a toggle whose semantic type supplies the danger variant uses the danger look",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R4"
+          ]
+        },
+        {
+          "name": "R4: default size and variant (md, standard) are used for the lookup",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R4"
+          ]
+        },
+        {
+          "name": "R5: theme \u0027system\u0027 follows the operating system theme live",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R5"
+          ]
+        },
+        {
+          "name": "R5: explicit light and dark themes ignore the operating system",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R5"
+          ]
+        },
+        {
+          "name": "R6: a per-button style changes only that toggle and updates on re-render",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R6"
+          ]
+        },
+        {
+          "name": "R7: heavy styling keeps aria-pressed, click, Space/Enter, the aria-hidden check and no focus override",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R7"
+          ]
+        },
+        {
+          "name": "R7: check position is unaffected by styling",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R7"
+          ]
+        },
+        {
+          "name": "R7: a disabled styled toggle is still not operable and keeps its state",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R7",
+            "R3"
+          ]
+        },
+        {
+          "name": "R8: a hostile config does not unmount the button",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R8"
+          ]
+        },
+        {
+          "name": "R8: a replaced config restyles on the next render",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R8"
+          ]
+        },
+        {
+          "name": "R8: a config recreated every render keeps the same id (no flicker)",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R8"
+          ]
+        },
+        {
+          "name": "R2: injection values never reach the page as extra rules, elements or properties",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R3/R8: 100 styled toggles share one rule set and leave no style element or timers behind",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R3",
+            "R8"
+          ]
+        },
+        {
+          "name": "R9: the new types and the existing exports are available from the package entry",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R9"
+          ]
+        },
+        {
+          "name": "R9: package version is the additive minor bump 1.8.0",
+          "file": "__tests__/ZestButtonToggle.test.tsx",
+          "requirements": [
+            "R9"
+          ]
+        }
+      ],
+      "kickbacks": []
+    },
+    {
+      "summary": "Finished slice 2: documentation for toggle styling (README example, api.md ZestToggleStyle and ToggleOptions.style, configuration.md Toggle Styling, features.md, examples.md Recipe 9, development.md internals, breaking-changes.md 1.8.0 additive) and a documentation test for R10. The earlier attempt\u0027s code and tests (types, compile, sheet, hook, button wiring, exports, version 1.8.0) were checked and left unchanged. Build succeeds, tsc is clean, and all 24 suites / 300 tests under __tests__ pass. A repo-wide jest run also picks up stale copies under .devteam/runs/*/scratch which fail on old version asserts; those are not project tests.",
+      "tests": [
+        {
+          "name": "R1: empty or missing settings compile to nothing",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R1: a provider with an empty styles section changes nothing",
+          "file": "__tests__/hooks/useToggleStyle.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R1: nested providers use only the inner settings",
+          "file": "__tests__/hooks/useToggleStyle.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R1: a plain button inside a styled provider is not styled",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R1: a toggle outside any provider has no generated style hook and keeps aria-pressed",
+          "file": "__tests__/ZestButtonToggleStyleCharacterization.test.tsx",
+          "requirements": [
+            "R1"
+          ]
+        },
+        {
+          "name": "R2: kebab-case and camelCase are the same property and are emitted once",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R2/R8: an unknown property is passed through but bad values drop only themselves",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R2",
+            "R8"
+          ]
+        },
+        {
+          "name": "R2: injection values never reach the page as extra rules, elements or properties",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R2"
+          ]
+        },
+        {
+          "name": "R3: hover looks sit inside a hover-capable media query and exclude disabled",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R3"
+          ]
+        },
+        {
+          "name": "R3: each state gets its own selector; disabled and busy come after on/off",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R3"
+          ]
+        },
+        {
+          "name": "R3/R8: 100 styled toggles share one rule set and leave no style element or timers behind",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R3",
+            "R8"
+          ]
+        },
+        {
+          "name": "R4: size, variant and base layer, variant beats size beats base, other properties merge",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R4"
+          ]
+        },
+        {
+          "name": "R4: a toggle whose semantic type supplies the danger variant uses the danger look",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R4"
+          ]
+        },
+        {
+          "name": "R5: theme \u0027system\u0027 follows the operating system theme live",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R5"
+          ]
+        },
+        {
+          "name": "R5: a light-only colour leaves the dark theme at the built-in look",
+          "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+          "requirements": [
+            "R5"
+          ]
+        },
+        {
+          "name": "R6: a per-button style changes only that toggle and updates on re-render",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R6"
+          ]
+        },
+        {
+          "name": "R7: heavy styling keeps aria-pressed, click, Space/Enter, the aria-hidden check and no focus override",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R7"
+          ]
+        },
+        {
+          "name": "R8: a replaced config restyles on the next render",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R8"
+          ]
+        },
+        {
+          "name": "R8: a config recreated every render keeps the same id (no flicker)",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R8"
+          ]
+        },
+        {
+          "name": "R8: a hostile config does not unmount the button",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R8"
+          ]
+        },
+        {
+          "name": "R8: equal ids share one rule and it is removed only after the last release",
+          "file": "__tests__/toggleStyle/toggleStyleSheet.test.ts",
+          "requirements": [
+            "R8"
+          ]
+        },
+        {
+          "name": "R9: the new types and the existing exports are available from the package entry",
+          "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+          "requirements": [
+            "R9"
+          ]
+        },
+        {
+          "name": "R10: the documented example uses settings that exist and produces every documented look",
+          "file": "__tests__/toggleStyle/documentation.test.ts",
+          "requirements": [
+            "R10"
+          ]
+        },
+        {
+          "name": "R10: every page that shows the feature links to the toggle styling reference and names the real settings",
+          "file": "__tests__/toggleStyle/documentation.test.ts",
+          "requirements": [
+            "R10"
+          ]
+        },
+        {
+          "name": "R10: breaking-changes documents the current package version as additive",
+          "file": "__tests__/toggleStyle/documentation.test.ts",
+          "requirements": [
+            "R10"
+          ]
+        }
+      ],
+      "kickbacks": []
+    }
+  ],
+  "documentedRound": 3,
+  "revisionsUsed": 1,
+  "requirementKickbacks": 0,
+  "planReviewRounds": 1,
+  "planConflictHashes": [
+    "84B11E575016898A",
+    "C60F71F01170B1E8"
+  ],
+  "sizeApproved": false,
+  "lastPlanConflicts": [],
+  "planRounds": [
+    {
+      "number": 1,
+      "at": "2026-10-25T21:03:26.9068149+00:00",
+      "outcome": "conflicts",
+      "conflicts": [
+        {
+          "requirement": "R1",
+          "against": "design",
+          "kind": "scope",
+          "owner": "design",
+          "why": "The design says it adds UI/hooks/useToggleStyle.ts:, which its own scope does not allow.",
+          "evidence": "its impact (adds) names UI/hooks/useToggleStyle.ts:; the scope is UI/ZestButton.tsx, UI/ZestButtonConfigContext.ts, UI/index.ts, UI/toggleStyle/**, UI/hooks/useToggleStyle.ts, __tests__/toggleStyle/**, __tests__/hooks/useToggleStyle.test.tsx, __tests__/ZestButtonToggleStyle.test.tsx, __tests__/ZestButtonToggleStyleCharacterization.test.tsx, README.md, documentation/api.md, documentation/configuration.md, documentation/features.md, documentation/examples.md, documentation/breaking-changes.md, documentation/development.md, package.json, package-lock.json."
+        },
+        {
+          "requirement": "R1",
+          "against": "design",
+          "kind": "scope",
+          "owner": "design",
+          "why": "The design says it touches UI/ZestButtonConfigContext.ts:, which its own scope does not allow.",
+          "evidence": "its impact (touches) names UI/ZestButtonConfigContext.ts:; the scope is UI/ZestButton.tsx, UI/ZestButtonConfigContext.ts, UI/index.ts, UI/toggleStyle/**, UI/hooks/useToggleStyle.ts, __tests__/toggleStyle/**, __tests__/hooks/useToggleStyle.test.tsx, __tests__/ZestButtonToggleStyle.test.tsx, __tests__/ZestButtonToggleStyleCharacterization.test.tsx, README.md, documentation/api.md, documentation/configuration.md, documentation/features.md, documentation/examples.md, documentation/breaking-changes.md, documentation/development.md, package.json, package-lock.json."
+        },
+        {
+          "requirement": "R1",
+          "against": "design",
+          "kind": "scope",
+          "owner": "design",
+          "why": "The design says it touches UI/ZestButton.tsx:, which its own scope does not allow.",
+          "evidence": "its impact (touches) names UI/ZestButton.tsx:; the scope is UI/ZestButton.tsx, UI/ZestButtonConfigContext.ts, UI/index.ts, UI/toggleStyle/**, UI/hooks/useToggleStyle.ts, __tests__/toggleStyle/**, __tests__/hooks/useToggleStyle.test.tsx, __tests__/ZestButtonToggleStyle.test.tsx, __tests__/ZestButtonToggleStyleCharacterization.test.tsx, README.md, documentation/api.md, documentation/configuration.md, documentation/features.md, documentation/examples.md, documentation/breaking-changes.md, documentation/development.md, package.json, package-lock.json."
+        },
+        {
+          "requirement": "R1",
+          "against": "design",
+          "kind": "scope",
+          "owner": "design",
+          "why": "The design says it touches UI/hooks/useZestConfig.ts:, which its own scope does not allow.",
+          "evidence": "its impact (touches) names UI/hooks/useZestConfig.ts:; the scope is UI/ZestButton.tsx, UI/ZestButtonConfigContext.ts, UI/index.ts, UI/toggleStyle/**, UI/hooks/useToggleStyle.ts, __tests__/toggleStyle/**, __tests__/hooks/useToggleStyle.test.tsx, __tests__/ZestButtonToggleStyle.test.tsx, __tests__/ZestButtonToggleStyleCharacterization.test.tsx, README.md, documentation/api.md, documentation/configuration.md, documentation/features.md, documentation/examples.md, documentation/breaking-changes.md, documentation/development.md, package.json, package-lock.json."
+        },
+        {
+          "requirement": "R1",
+          "against": "design",
+          "kind": "scope",
+          "owner": "design",
+          "why": "The design says it touches UI/index.ts:, which its own scope does not allow.",
+          "evidence": "its impact (touches) names UI/index.ts:; the scope is UI/ZestButton.tsx, UI/ZestButtonConfigContext.ts, UI/index.ts, UI/toggleStyle/**, UI/hooks/useToggleStyle.ts, __tests__/toggleStyle/**, __tests__/hooks/useToggleStyle.test.tsx, __tests__/ZestButtonToggleStyle.test.tsx, __tests__/ZestButtonToggleStyleCharacterization.test.tsx, README.md, documentation/api.md, documentation/configuration.md, documentation/features.md, documentation/examples.md, documentation/breaking-changes.md, documentation/development.md, package.json, package-lock.json."
+        },
+        {
+          "requirement": "R1",
+          "against": "design",
+          "kind": "scope",
+          "owner": "design",
+          "why": "The design says it touches __tests__/:, which its own scope does not allow.",
+          "evidence": "its impact (touches) names __tests__/:; the scope is UI/ZestButton.tsx, UI/ZestButtonConfigContext.ts, UI/index.ts, UI/toggleStyle/**, UI/hooks/useToggleStyle.ts, __tests__/toggleStyle/**, __tests__/hooks/useToggleStyle.test.tsx, __tests__/ZestButtonToggleStyle.test.tsx, __tests__/ZestButtonToggleStyleCharacterization.test.tsx, README.md, documentation/api.md, documentation/configuration.md, documentation/features.md, documentation/examples.md, documentation/breaking-changes.md, documentation/development.md, package.json, package-lock.json."
+        }
+      ],
+      "resolution": "Sent back to the architect, who revised the design to settle it."
+    },
+    {
+      "number": 2,
+      "at": "2026-10-25T21:04:41.3738703+00:00",
+      "outcome": "conflicts",
+      "conflicts": [
+        {
+          "requirement": "R4",
+          "against": "design",
+          "kind": "design",
+          "owner": "design",
+          "why": "The design merges looks in an order where the variant look beats the size look, but R4 requires the size look to beat the variant look. A toggle with a variant and a size that set the same property would get the wrong value, and the R4 acceptance test could never pass as designed.",
+          "evidence": "R4 acceptance: \u0027the size look wins over the variant look, and the variant look wins over the all-toggles look\u0027 (fact: \u0027built-in look, all toggles, variant, size, per-button override\u0027, lowest to highest). Design summary: \u0027using the precedence all-toggles \u003C size \u003C variant \u003C provider theme \u003C per-button (R4, R5, R6)\u0027, which puts variant above size."
+        }
+      ],
+      "resolution": "You chose: Change the requirement to fit The next check found the plan consistent."
+    },
+    {
+      "number": 3,
+      "at": "2026-10-25T21:08:16.9751891+00:00",
+      "outcome": "consistent",
+      "conflicts": [],
+      "resolution": ""
+    }
+  ],
+  "planCheck": "consistent",
+  "planWaivedRules": [],
+  "setAsideRequirements": [],
+  "reusedChecks": {},
+  "tensionPair": [],
+  "tensionDiagnoses": {},
+  "specialists": [],
+  "specialistsDone": [],
+  "specialistCallbacks": 0,
+  "specialistHashes": {},
+  "ran": [
+    "define",
+    "design",
+    "build",
+    "challenge",
+    "prove"
+  ],
+  "accepted": {
+    "define/analyst": "artifacts/01-define/analyst-r4.json",
+    "design/architect": "artifacts/02-design/architect-r3.json",
+    "design/planchecker": "artifacts/02-design/planchecker-r3.json",
+    "build/developer": "artifacts/03-build/developer-r3.json",
+    "challenge/security": "artifacts/04-challenge/security-r3.json",
+    "challenge/qa": "artifacts/04-challenge/qa-r3.json",
+    "challenge/reviewer": "artifacts/04-challenge/reviewer-r3.json",
+    "prove/documenter": "artifacts/05-prove/documenter-r3.json"
+  },
+  "extraRounds": 0,
+  "reviewPasses": 1,
+  "costUsd": 5.809059099999999,
+  "budgetUsd": 10,
+  "agentCalls": 17,
+  "modelCalls": {
+    "claude-sonnet-5-5": 17
+  },
+  "startedAt": "2026-10-25T20:56:14.8085414+00:00",
+  "updatedAt": "2026-10-25T21:29:50.0332917+00:00",
+  "completedAt": "2026-10-25T21:29:47.9152255+00:00",
+  "findings": [
+    {
+      "id": "CHK-lib-validate-package",
+      "source": "check:lib-validate-package",
+      "cites": "LIB-002",
+      "severity": "advisory",
+      "description": "Check \u0027Package check (attw and publint)\u0027 is failing.",
+      "file": "",
+      "evidence": "Not set up in this project: attw and publint are not installed, so nothing checks that the package works for everyone who installs it.",
+      "status": "advisory",
+      "raisedRound": 2,
+      "note": "It could not be run, so nothing was checked here; it does not block this feature.",
+      "repeats": 0
+    },
+    {
+      "id": "CHK-lib-size",
+      "source": "check:lib-size",
+      "cites": "EFF-001",
+      "severity": "advisory",
+      "description": "Check \u0027Size budget\u0027 is failing.",
+      "file": "",
+      "evidence": "Not set up in this project: The project has no .size-limit.json, so this check has nothing to run.",
+      "status": "advisory",
+      "raisedRound": 2,
+      "note": "It could not be run, so nothing was checked here; it does not block this feature.",
+      "repeats": 0
+    },
+    {
+      "id": "CHK-lib-consumer-smoke",
+      "source": "check:lib-consumer-smoke",
+      "cites": "LIB-003",
+      "severity": "advisory",
+      "description": "Check \u0027Install and import the packed library\u0027 is failing.",
+      "file": "",
+      "evidence": "Not set up in this project: Nothing installs the packed library into a scratch project and imports it  no scripts/consumer-smoke.mjs .",
+      "status": "advisory",
+      "raisedRound": 2,
+      "note": "It could not be run, so nothing was checked here; it does not block this feature.",
+      "repeats": 0
+    },
+    {
+      "id": "CHK-lib-docs",
+      "source": "check:lib-docs",
+      "cites": "DOC-001",
+      "severity": "advisory",
+      "description": "Check \u0027Documentation is complete\u0027 is failing.",
+      "file": "",
+      "evidence": "Not set up in this project: The project has no scripts/check-docs.mjs, so this check has nothing to run.",
+      "status": "advisory",
+      "raisedRound": 2,
+      "note": "It could not be run, so nothing was checked here; it does not block this feature.",
+      "repeats": 0
+    },
+    {
+      "id": "CHK-rule-USR-006-1",
+      "source": "check:rule-USR-006-1",
+      "cites": "USR-006",
+      "severity": "blocking",
+      "description": "Automated check \u0027No hard-coded colours in component code (use shared design tokens)\u0027 failed.",
+      "file": "",
+      "evidence": "1 match(es):\nUI/toggleStyle/types.ts:3: /** A CSS value written exactly as it should appear (\u0060\u00220.5rem\u0022\u0060, \u0060\u0022#0a7\u0022\u0060, \u00600.8\u0060). */",
+      "status": "fixed",
+      "raisedRound": 2,
+      "fixedRound": 3,
+      "note": "check now passes",
+      "repeats": 0
+    },
+    {
+      "id": "REV-1",
+      "source": "reviewer",
+      "cites": "R2",
+      "severity": "advisory",
+      "description": "Resource-fetching string forms get through the value filter. Only matters if style values ever come from untrusted input. Consider also rejecting image-set( and src( .",
+      "file": "UI/toggleStyle/compileToggleStyle.ts",
+      "line": 29,
+      "evidence": "FORBIDDEN_VALUE blocks url( but not CSS functions that take a quoted string and fetch it, e.g. background-image: image-set(\u0022https://host/x.png\u0022 1x). Values stay confined to one property, so no rule, selector or script can be added.",
+      "status": "advisory",
+      "raisedRound": 3,
+      "repeats": 0
+    },
+    {
+      "id": "REV-2",
+      "source": "reviewer",
+      "cites": "PERF-001",
+      "severity": "advisory",
+      "description": "Check styleElement.isConnected before reuse and re-append when it is detached.",
+      "file": "UI/toggleStyle/toggleStyleSheet.ts",
+      "line": 21,
+      "evidence": "styleElement is cached at module level. If something else removes it from document.head, styleElement stays non-null but detached, so later rules are appended to a detached element and never apply.",
+      "status": "advisory",
+      "raisedRound": 3,
+      "repeats": 0
+    },
+    {
+      "id": "REV-3",
+      "source": "reviewer",
+      "cites": "PERF-001",
+      "severity": "advisory",
+      "description": "Documentation should recommend a stable (module-level or memoised) style object for large lists.",
+      "file": "UI/hooks/useToggleStyle.ts",
+      "line": 29,
+      "evidence": "Compiles are memoised by object identity (WeakMap). A per-button inline toggleOptions.style, or an inline provider config, is a new object on each parent render and is recompiled and rehashed each time. The rule is still shared by id, so only CPU cost, not leaks.",
+      "status": "advisory",
+      "raisedRound": 3,
+      "repeats": 0
+    },
+    {
+      "id": "REV-4",
+      "source": "reviewer",
+      "cites": "UI-001",
+      "severity": "advisory",
+      "description": "Configured looks are missing before hydration, so a toggle may briefly show the built-in look. This is a known trade-off of the design. Mention it in the docs.",
+      "file": "UI/hooks/useToggleStyle.ts",
+      "line": 9,
+      "evidence": "Rules are inserted in an effect only. In server-rendered HTML (Next.js) the button carries data-zest-toggle-style but no rule exists until hydration.",
+      "status": "advisory",
+      "raisedRound": 3,
+      "repeats": 0
+    },
+    {
+      "id": "REV-5",
+      "source": "reviewer",
+      "cites": "R9",
+      "severity": "advisory",
+      "description": "Unrelated whitespace change on an existing line; the repo policy asks for minimal diffs. No behaviour change.",
+      "file": "UI/ZestButtonConfigContext.ts",
+      "line": 2,
+      "evidence": "The existing import line was edited as part of the diff: \u0060from \u0027./ZestButton\u0027;// Assuming ...\u0060 lost the space before the trailing comment.",
+      "status": "advisory",
+      "raisedRound": 3,
+      "repeats": 0
+    },
+    {
+      "id": "REV-6",
+      "source": "reviewer",
+      "cites": "R8",
+      "severity": "advisory",
+      "description": "Collision is very unlikely, but a longer hash or a body-keyed registry would remove the risk.",
+      "file": "UI/toggleStyle/compileToggleStyle.ts",
+      "line": 117,
+      "evidence": "The id is a 32-bit djb2 hash plus the length. Two different rule bodies could in theory map to the same id, and the second would then reuse the first one\u0027s rules.",
+      "status": "advisory",
+      "raisedRound": 3,
+      "repeats": 0
+    },
+    {
+      "id": "QA-1",
+      "source": "qa",
+      "cites": "R7",
+      "severity": "advisory",
+      "description": "Stronger proof would be a test that the built-in toggle focus class or rule is present for on and off. The pre-existing toggle tests and the no-override assertion cover the main risk, so this is not blocking.",
+      "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+      "line": 152,
+      "evidence": "The R7 test only asserts the generated sheet has no \u0027focus-visible\u0027 rule. Nothing asserts the built-in focus ring exists on the toggle in both off and on states (jsdom cannot compute CSS-module styles).",
+      "status": "advisory",
+      "raisedRound": 3,
+      "repeats": 0
+    },
+    {
+      "id": "QA-2",
+      "source": "qa",
+      "cites": "R8",
+      "severity": "advisory",
+      "description": "Add a console.error/console.warn spy to one ignored-setting test. Behaviour is otherwise covered (null returned, button stays mounted).",
+      "file": "__tests__/hooks/useToggleStyle.test.tsx",
+      "line": 1,
+      "evidence": "The R8 acceptance line \u0027No console error is produced for an ignored setting\u0027 has no console.error spy in any listed test. The hostile-config tests only check that nothing throws or unmounts.",
+      "status": "advisory",
+      "raisedRound": 3,
+      "repeats": 0
+    },
+    {
+      "id": "QA-3",
+      "source": "qa",
+      "cites": "R9",
+      "severity": "advisory",
+      "description": "Consider an SSR test (renderToString with a styled provider, no document access during render) and a note that React 19 is covered only by the peer-dependency range. Advisory.",
+      "file": "__tests__/ZestButtonToggleStyle.test.tsx",
+      "line": 236,
+      "evidence": "The R9 edge case (React 18 and 19, Next.js App Router client components) has no test beyond the existing peer-dependency and build-externalization suites. The hook and sheet use no React 19-only API, but no test renders under both versions or checks SSR safety (document access at render).",
+      "status": "advisory",
+      "raisedRound": 3,
+      "repeats": 0
+    },
+    {
+      "id": "QA-4",
+      "source": "qa",
+      "cites": "R3",
+      "severity": "advisory",
+      "description": "Ordering is a reasonable proxy and the integration test keeps the pressed state on a disabled toggle, so this is not blocking.",
+      "file": "__tests__/toggleStyle/compileToggleStyle.test.ts",
+      "line": 75,
+      "evidence": "The on\u002Bdisabled edge case (\u0027disabled look layered on the on look\u0027) is proven only by selector order (indexOf of the on rule is below the disabled rule). No test renders an on and disabled toggle and checks that both rules apply.",
+      "status": "advisory",
+      "raisedRound": 3,
+      "repeats": 0
+    },
+    {
+      "id": "QA-5",
+      "source": "qa",
+      "cites": "R2",
+      "severity": "advisory",
+      "description": "Not provable in this project\u0027s setup, so it is recorded as advisory. Run a one-off gzip size comparison of dist before release. Also not run: the packed-library install and import under CommonJS and ES modules (no scripts/consumer-smoke.mjs).",
+      "file": "package.json",
+      "line": 3,
+      "evidence": "The NFR bundle-growth check (no more than 5 KB gzipped) and the check that the library\u0027s own CSS adds no new px sizes have no automated test. The project has no .size-limit.json and no size script. package.json dependencies are unchanged. The suite re-runs of R9 and R10 pass.",
+      "status": "advisory",
+      "raisedRound": 3,
+      "repeats": 0
+    },
+    {
+      "id": "SEC-1",
+      "source": "security",
+      "cites": "USR-003",
+      "severity": "advisory",
+      "description": "A value can still make the browser request an external URL (tracking beacon) without writing url(). This does not add rules or scripts, so R-security (single property only) holds; the values come from the app developer, not end users. Consider also rejecting image-set(, image(, src(, cross-fade(, element( or documenting that values are trusted.",
+      "file": "UI/toggleStyle/compileToggleStyle.ts",
+      "line": 30,
+      "evidence": "FORBIDDEN_VALUE blocks url( but not other CSS functions that fetch resources from a string, e.g. image-set(\u0022https://host/x.png\u0022 1x), cross-fade(), image(), src(). They contain no ; { } \\ or url( so sanitizeValue accepts them for background-image, border-image, content, list-style-image, cursor.",
+      "status": "advisory",
+      "raisedRound": 3,
+      "repeats": 0
+    },
+    {
+      "id": "SEC-2",
+      "source": "security",
+      "cites": "USR-003",
+      "severity": "advisory",
+      "description": "Unbounded input is a low-severity DoS/memory risk if a very large or dynamically generated style object is supplied. Consider a cap on properties per state, or document that the config must be static.",
+      "file": "UI/toggleStyle/compileToggleStyle.ts",
+      "line": 78,
+      "evidence": "collectStates iterates Object.keys(look) with no cap on the number of properties, and sizes/variants maps are unbounded; only each value is capped at 500 chars. The cache key includes the variant and size strings.",
+      "status": "advisory",
+      "raisedRound": 3,
+      "repeats": 0
+    },
+    {
+      "id": "SEC-3",
+      "source": "security",
+      "cites": "USR-003",
+      "severity": "advisory",
+      "description": "Two different style bodies that collide would share the first one\u0027s CSS. This is a correctness risk rather than a vulnerability; accidental collision is unlikely and an attacker would already control the developer config. Consider keying the registry by the full css string, or comparing css on reuse.",
+      "file": "UI/toggleStyle/compileToggleStyle.ts",
+      "line": 107,
+      "evidence": "The rule id is a 32-bit djb2 hash plus text length, and toggleStyleSheet.acquireToggleStyle reuses the first entry registered for an id without comparing css.",
+      "status": "advisory",
+      "raisedRound": 3,
+      "repeats": 0
+    },
+    {
+      "id": "SEC-4",
+      "source": "security",
+      "cites": "USR-003",
+      "severity": "advisory",
+      "description": "Under a strict CSP (style-src without \u0027unsafe-inline\u0027) the injected rules are blocked and toggles fall back to the library defaults. The library already injects CSS at runtime (rollup inject: true), so this is consistent with the existing behaviour. Worth a documentation note.",
+      "file": "UI/toggleStyle/toggleStyleSheet.ts",
+      "line": 23,
+      "evidence": "The shared \u003Cstyle\u003E element is created without a nonce.",
+      "status": "advisory",
+      "raisedRound": 3,
+      "repeats": 0
+    },
+    {
+      "id": "SEC-5",
+      "source": "security",
+      "cites": "USR-003",
+      "severity": "advisory",
+      "description": "Each render of such a button recompiles its style and adds a throwaway cache entry (garbage-collected via WeakMap). The work is bounded by one button\u0027s style and does not leak, so this is only a note; the docs should recommend hoisting style objects.",
+      "file": "UI/hooks/useToggleStyle.ts",
+      "line": 27,
+      "evidence": "compileToggleStyle is memoised in a WeakMap keyed by the provider and per-button style objects. An inline zest.toggleOptions.style object is new on every render.",
+      "status": "advisory",
+      "raisedRound": 3,
+      "repeats": 0
+    },
+    {
+      "id": "CHK-lib-tests",
+      "source": "check:lib-tests",
+      "cites": "CHK-lib-tests",
+      "severity": "advisory",
+      "description": "Check \u0027Tests, with coverage\u0027 is failing.",
+      "file": "",
+      "evidence": "\u2026\nSummary of all failing tests\r\nFAIL .devteam/runs/20261025-084314/scratch/security/prototype.probe.test.tsx (8.709 s)\r\n  \u25CF prototype-chain lookup probe \u203A getZestIconElement returns inherited prototype members for unknown names\r\n\r\n    expect(received).not.toBeNull()\r\n\r\n    Received: null\r\n\r\n    \u001B[0m \u001B[90m 10 |\u001B[39m       \u001B[90m// eslint-disable-next-line no-console\u001B[39m\r\n     \u001B[90m 11 |\u001B[39m       console\u001B[33m.\u001B[39mlog(name\u001B[33m,\u001B[39m \u001B[36mtypeof\u001B[39m el\u001B[33m,\u001B[39m el \u001B[33m===\u001B[39m \u001B[36mnull\u001B[39m \u001B[33m?\u001B[39m \u001B[32m\u0022null\u0022\u001B[39m \u001B[33m:\u001B[39m \u001B[32m\u0022NOT NULL\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n    \u001B[31m\u001B[1m\u003E\u001B[22m\u001B[39m\u001B[90m 12 |\u001B[39m       expect(el)\u001B[33m.\u001B[39mnot\u001B[33m.\u001B[39mtoBeNull()\u001B[33m;\u001B[39m\r\n     \u001B[90m    |\u001B[39m                      \u001B[31m\u001B[1m^\u001B[22m\u001B[39m\r\n     \u001B[90m 13 |\u001B[39m     }\r\n     \u001B[90m 14 |\u001B[39m   })\u001B[33m;\u001B[39m\r\n     \u001B[90m 15 |\u001B[39m\u001B[0m\r\n\r\n      at Object.\u003Canonymous\u003E (.devteam/runs/20261025-084314/scratch/security/prototype.probe.test.tsx:12:22)\r\n\r\nFAIL .devteam/runs/20261025-084314/scratch/reviewer/basecopy/__tests__/ZestButtonToggle.test.tsx (11.518 s)\r\n  \u25CF ZestButton toggle mode \u203A R8 documentation \u203A R8: the API page documents every ToggleOptions prop and the README shows a toggle example\r\n\r\n    expect(received).toBe(expected) // Object.is equality\r\n\r\n    Expected: \u00221.6.0\u0022\r\n    Received: \u00221.6.1\u0022\r\n\r\n    \u001B[0m \u001B[90m 502 |\u001B[39m       expect(read(\u001B[32m\u0022README.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022toggleOptions\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m 503 |\u001B[39m       expect(read(\u001B[32m\u0022documentation/breaking-changes.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022Version 1.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n    \u001B[31m\u001B[1m\u003E\u001B[22m\u001B[39m\u001B[90m 504 |\u001B[39m       expect(\u001B[33mJSON\u001B[39m\u001B[33m.\u001B[39mparse(read(\u001B[32m\u0022package.json\u0022\u001B[39m))\u001B[33m.\u001B[39mversion)\u001B[33m.\u001B[39mtoBe(\u001B[32m\u00221.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m     |\u001B[39m                                                        \u001B[31m\u001B[1m^\u001B[22m\u001B[39m\r\n     \u001B[90m 505 |\u001B[39m     })\u001B[33m;\u001B[39m\r\n     \u001B[90m 506 |\u001B[39m\r\n     \u001B[90m 507 |\u001B[39m     it(\u001B[32m\u0022R8: the documented examples type-check against the exported types and render\u0022\u001B[39m\u001B[33m,\u001B[39m () \u001B[33m=\u003E\u001B[39m {\u001B[0m\r\n\r\n      at Object.\u003Canonymous\u003E (.devteam/runs/20261025-084314/scratch/reviewer/basecopy/__tests__/ZestButtonToggle.test.tsx:504:56)\r\n\r\nFAIL .devteam/runs/20261025-084314/scratch/reviewer/base/__tests__/ZestButtonToggle.test.tsx (12.206 s)\r\n  \u25CF ZestButton toggle mode \u203A R8 documentation \u203A R8: the API page documents every ToggleOptions prop and the README shows a toggle example\r\n\r\n    expect(received).toBe(expected) // Object.is equality\r\n\r\n    Expected: \u00221.6.0\u0022\r\n    Received: \u00221.6.1\u0022\r\n\r\n    \u001B[0m \u001B[90m 502 |\u001B[39m       expect(read(\u001B[32m\u0022README.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022toggleOptions\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m 503 |\u001B[39m       expect(read(\u001B[32m\u0022documentation/breaking-changes.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022Version 1.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n    \u001B[31m\u001B[1m\u003E\u001B[22m\u001B[39m\u001B[90m 504 |\u001B[39m       expect(\u001B[33mJSON\u001B[39m\u001B[33m.\u001B[39mparse(read(\u001B[32m\u0022package.json\u0022\u001B[39m))\u001B[33m.\u001B[39mversion)\u001B[33m.\u001B[39mtoBe(\u001B[32m\u00221.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m     |\u001B[39m                                                        \u001B[31m\u001B[1m^\u001B[22m\u001B[39m\r\n     \u001B[90m 505 |\u001B[39m     })\u001B[33m;\u001B[39m\r\n     \u001B[90m 506 |\u001B[39m\r\n     \u001B[90m 507 |\u001B[39m     it(\u001B[32m\u0022R8: the documented examples type-check against the exported types and render\u0022\u001B[39m\u001B[33m,\u001B[39m () \u001B[33m=\u003E\u001B[39m {\u001B[0m\r\n\r\n      at Object.\u003Canonymous\u003E (.devteam/runs/20261025-084314/scratch/reviewer/base/__tests__/ZestButtonToggle.test.tsx:504:56)\r\n\r\n\r\nTest Suites: 3 failed, 88 passed, 91 total\r\nTests:       3 failed, 1079 passed, 1082 total\r\nSnapshots:   0 total\r\nTime:        33.588 s\r\nRan all test suites.",
+      "status": "advisory",
+      "raisedRound": 3,
+      "note": "It was already failing before this run started, so it does not block this feature.",
+      "repeats": 0
+    }
+  ],
+  "lastChecks": [
+    {
+      "id": "no-secrets",
+      "name": "No secrets in code",
+      "passed": true,
+      "seconds": 0.0690423,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "SEC-001"
+      ]
+    },
+    {
+      "id": "no-debug-leftovers",
+      "name": "No debugging leftovers",
+      "passed": true,
+      "seconds": 0.0358401,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "QUAL-001"
+      ]
+    },
+    {
+      "id": "lib-typecheck",
+      "name": "Type check (library and tests)",
+      "passed": true,
+      "seconds": 4.6908923,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "",
+      "rules": []
+    },
+    {
+      "id": "lib-build",
+      "name": "Build (CommonJS, ES modules, type definitions)",
+      "passed": true,
+      "seconds": 8.8930853,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "\u003E jattac.libs.web.zest-button@1.8.0 build\r\n\u003E rollup -c rollup.config.mjs\r\n\r\n\n\u001B[36m\r\n\u001B[1mUI/index.ts\u001B[22m \u2192 \u001B[1mdist/index.cjs.js, dist/index.esm.js\u001B[22m...\u001B[39m\r\n\u001B[1m\u001B[33m(!) Mixing named and default exports\u001B[39m\u001B[22m\r\n\u001B[90mhttps://rollupjs.org/configuration-options/#output-exports\u001B[39m\r\n\u001B[1mThe following entry modules are using named and default exports together:\u001B[22m\r\nUI/index.ts\r\n\r\nConsumers of your bundle will have to use chunk.default to access their default export, which may not be what you want. Use \u0060output.exports: \u0022named\u0022\u0060 to disable this warning.\r\n\u001B[32mcreated \u001B[1mdist/index.cjs.js, dist/index.esm.js\u001B[22m in \u001B[1m4.9s\u001B[22m\u001B[39m\r\n\u001B[36m\r\n\u001B[1mUI/index.ts\u001B[22m \u2192 \u001B[1mdist/index.d.ts\u001B[22m...\u001B[39m\r\n\u001B[32mcreated \u001B[1mdist/index.d.ts\u001B[22m in \u001B[1m2.1s\u001B[22m\u001B[39m",
+      "rules": []
+    },
+    {
+      "id": "lib-validate-package",
+      "name": "Package check (attw and publint)",
+      "passed": false,
+      "seconds": 0.0952059,
+      "notRun": true,
+      "flaky": false,
+      "tier": "fast",
+      "output": "Not set up in this project: attw and publint are not installed, so nothing checks that the package works for everyone who installs it.",
+      "rules": [
+        "LIB-002"
+      ]
+    },
+    {
+      "id": "lib-pack",
+      "name": "What would be published",
+      "passed": true,
+      "seconds": 1.7488433,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "jattac.libs.web.zest-button-1.8.0.tgz\r\n\nnpm notice\r\nnpm notice package: jattac.libs.web.zest-button@1.8.0\r\nnpm notice Tarball Contents\r\nnpm notice 1.1kB LICENSE\r\nnpm notice 6.6kB README.md\r\nnpm notice 696B dist/hooks/useBusyState.d.ts\r\nnpm notice 667B dist/hooks/useConfirmation.d.ts\r\nnpm notice 64B dist/hooks/useThemeDetection.d.ts\r\nnpm notice 547B dist/hooks/useToggleState.d.ts\r\nnpm notice 581B dist/hooks/useToggleStyle.d.ts\r\nnpm notice 140B dist/hooks/useZestConfig.d.ts\r\nnpm notice 92.4kB dist/index.cjs.js\r\nnpm notice 119.8kB dist/index.cjs.js.map\r\nnpm notice 6.5kB dist/index.d.ts\r\nnpm notice 89.5kB dist/index.esm.js\r\nnpm notice 119.5kB dist/index.esm.js.map\r\nnpm notice 221B dist/semanticTypeButtonConfigDefaults.d.ts\r\nnpm notice 102B dist/SpinnerIcon.d.ts\r\nnpm notice 651B dist/toggleStyle/compileToggleStyle.d.ts\r\nnpm notice 379B dist/toggleStyle/toggleStyleSheet.d.ts\r\nnpm notice 1.6kB dist/toggleStyle/types.d.ts\r\nnpm notice 4.0kB dist/ZestButton.d.ts\r\nnpm notice 602B dist/ZestButtonConfigContext.d.ts\r\nnpm notice 316B dist/ZestButtonConfigProvider.d.ts\r\nnpm notice 809B dist/ZestDropdownMenu.d.ts\r\nnpm notice 335B dist/ZestDropdownMenuItem.d.ts\r\nnpm notice 275B dist/ZestIcon.d.ts\r\nnpm notice 771B dist/zestIcons.d.ts\r\nnpm notice 14.1kB documentation/api.md\r\nnpm notice 6.2kB documentation/breaking-changes.md\r\nnpm notice 10.5kB documentation/configuration.md\r\nnpm notice 7.8kB documentation/development.md\r\nnpm notice 16.8kB documentation/examples.md\r\nnpm notice 12.0kB documentation/features.md\r\nnpm notice 2.5kB package.json\r\nnpm notice Tarball Details\r\nnpm notice name: jattac.libs.web.zest-button\r\nnpm notice version: 1.8.0\r\nnpm notice filename: jattac.libs.web.zest-button-1.8.0.tgz\r\nnpm notice package size: 114.4 kB\r\nnpm notice unpacked size: 518.2 kB\r\nnpm notice shasum: 8aede971ef05fb3102afe23726829afde62b5e67\r\nnpm notice integrity: sha512-fTH9J5bp2qPsI[...]sZqDoL24DNGdw==\r\nnpm notice total files: 32\r\nnpm notice",
+      "rules": []
+    },
+    {
+      "id": "lib-publish-dry-run",
+      "name": "Publish dry run (everything npm checks, nothing is uploaded)",
+      "passed": true,
+      "seconds": 1.8977635,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "\u002B jattac.libs.web.zest-button@1.8.0\r\n\nnpm notice\r\nnpm notice package: jattac.libs.web.zest-button@1.8.0\r\nnpm notice Tarball Contents\r\nnpm notice 1.1kB LICENSE\r\nnpm notice 6.6kB README.md\r\nnpm notice 696B dist/hooks/useBusyState.d.ts\r\nnpm notice 667B dist/hooks/useConfirmation.d.ts\r\nnpm notice 64B dist/hooks/useThemeDetection.d.ts\r\nnpm notice 547B dist/hooks/useToggleState.d.ts\r\nnpm notice 581B dist/hooks/useToggleStyle.d.ts\r\nnpm notice 140B dist/hooks/useZestConfig.d.ts\r\nnpm notice 92.4kB dist/index.cjs.js\r\nnpm notice 119.8kB dist/index.cjs.js.map\r\nnpm notice 6.5kB dist/index.d.ts\r\nnpm notice 89.5kB dist/index.esm.js\r\nnpm notice 119.5kB dist/index.esm.js.map\r\nnpm notice 221B dist/semanticTypeButtonConfigDefaults.d.ts\r\nnpm notice 102B dist/SpinnerIcon.d.ts\r\nnpm notice 651B dist/toggleStyle/compileToggleStyle.d.ts\r\nnpm notice 379B dist/toggleStyle/toggleStyleSheet.d.ts\r\nnpm notice 1.6kB dist/toggleStyle/types.d.ts\r\nnpm notice 4.0kB dist/ZestButton.d.ts\r\nnpm notice 602B dist/ZestButtonConfigContext.d.ts\r\nnpm notice 316B dist/ZestButtonConfigProvider.d.ts\r\nnpm notice 809B dist/ZestDropdownMenu.d.ts\r\nnpm notice 335B dist/ZestDropdownMenuItem.d.ts\r\nnpm notice 275B dist/ZestIcon.d.ts\r\nnpm notice 771B dist/zestIcons.d.ts\r\nnpm notice 14.1kB documentation/api.md\r\nnpm notice 6.2kB documentation/breaking-changes.md\r\nnpm notice 10.5kB documentation/configuration.md\r\nnpm notice 7.8kB documentation/development.md\r\nnpm notice 16.8kB documentation/examples.md\r\nnpm notice 12.0kB documentation/features.md\r\nnpm notice 2.5kB package.json\r\nnpm notice Tarball Details\r\nnpm notice name: jattac.libs.web.zest-button\r\nnpm notice version: 1.8.0\r\nnpm notice filename: jattac.libs.web.zest-button-1.8.0.tgz\r\nnpm notice package size: 114.4 kB\r\nnpm notice unpacked size: 518.2 kB\r\nnpm notice shasum: 8aede971ef05fb3102afe23726829afde62b5e67\r\nnpm notice integrity: sha512-fTH9J5bp2qPsI[...]sZqDoL24DNGdw==\r\nnpm notice total files: 32\r\nnpm notice\r\nnpm notice Publishing to https://registry.npmjs.org/ with tag latest and default access (dry-run)",
+      "rules": [
+        "LIB-003"
+      ]
+    },
+    {
+      "id": "lib-size",
+      "name": "Size budget",
+      "passed": false,
+      "seconds": 0.081211,
+      "notRun": true,
+      "flaky": false,
+      "tier": "fast",
+      "output": "Not set up in this project: The project has no .size-limit.json, so this check has nothing to run.",
+      "rules": [
+        "EFF-001"
+      ]
+    },
+    {
+      "id": "lib-consumer-smoke",
+      "name": "Install and import the packed library",
+      "passed": false,
+      "seconds": 0.0725645,
+      "notRun": true,
+      "flaky": false,
+      "tier": "fast",
+      "output": "Not set up in this project: Nothing installs the packed library into a scratch project and imports it  no scripts/consumer-smoke.mjs .",
+      "rules": [
+        "LIB-003",
+        "LIB-004",
+        "LIB-005"
+      ]
+    },
+    {
+      "id": "lib-docs",
+      "name": "Documentation is complete",
+      "passed": false,
+      "seconds": 0.0705099,
+      "notRun": true,
+      "flaky": false,
+      "tier": "fast",
+      "output": "Not set up in this project: The project has no scripts/check-docs.mjs, so this check has nothing to run.",
+      "rules": [
+        "DOC-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-1",
+      "name": "No native button element",
+      "passed": true,
+      "seconds": 0.0478435,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-2",
+      "name": "No native table element",
+      "passed": true,
+      "seconds": 0.0358984,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-3",
+      "name": "No native text box or text area",
+      "passed": true,
+      "seconds": 0.0356926,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-4",
+      "name": "No native file upload input",
+      "passed": true,
+      "seconds": 0.0355664,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-002-1",
+      "name": "No tiny fixed pixel font sizes",
+      "passed": true,
+      "seconds": 0.0508559,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-002"
+      ]
+    },
+    {
+      "id": "rule-USR-002-2",
+      "name": "Do not block pinch-zoom on mobile",
+      "passed": true,
+      "seconds": 0.0452619,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-002"
+      ]
+    },
+    {
+      "id": "rule-USR-003-1",
+      "name": "No dynamic code execution (eval / new Function)",
+      "passed": true,
+      "seconds": 0.0496007,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-2",
+      "name": "No raw HTML injection (XSS risk)",
+      "passed": true,
+      "seconds": 0.0398854,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-3",
+      "name": "No string-based timers (hidden eval)",
+      "passed": true,
+      "seconds": 0.0422421,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-4",
+      "name": "No leftover debugger statements or console.log",
+      "passed": true,
+      "seconds": 0.0528419,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-006-1",
+      "name": "No hard-coded colours in component code (use shared design tokens)",
+      "passed": true,
+      "seconds": 0.0501237,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-006"
+      ]
+    },
+    {
+      "id": "lib-tests",
+      "name": "Tests, with coverage",
+      "passed": false,
+      "seconds": 35.9472331,
+      "notRun": false,
+      "flaky": false,
+      "tier": "full",
+      "output": "\u2026\nSummary of all failing tests\r\nFAIL .devteam/runs/20261025-084314/scratch/security/prototype.probe.test.tsx (8.709 s)\r\n  \u25CF prototype-chain lookup probe \u203A getZestIconElement returns inherited prototype members for unknown names\r\n\r\n    expect(received).not.toBeNull()\r\n\r\n    Received: null\r\n\r\n    \u001B[0m \u001B[90m 10 |\u001B[39m       \u001B[90m// eslint-disable-next-line no-console\u001B[39m\r\n     \u001B[90m 11 |\u001B[39m       console\u001B[33m.\u001B[39mlog(name\u001B[33m,\u001B[39m \u001B[36mtypeof\u001B[39m el\u001B[33m,\u001B[39m el \u001B[33m===\u001B[39m \u001B[36mnull\u001B[39m \u001B[33m?\u001B[39m \u001B[32m\u0022null\u0022\u001B[39m \u001B[33m:\u001B[39m \u001B[32m\u0022NOT NULL\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n    \u001B[31m\u001B[1m\u003E\u001B[22m\u001B[39m\u001B[90m 12 |\u001B[39m       expect(el)\u001B[33m.\u001B[39mnot\u001B[33m.\u001B[39mtoBeNull()\u001B[33m;\u001B[39m\r\n     \u001B[90m    |\u001B[39m                      \u001B[31m\u001B[1m^\u001B[22m\u001B[39m\r\n     \u001B[90m 13 |\u001B[39m     }\r\n     \u001B[90m 14 |\u001B[39m   })\u001B[33m;\u001B[39m\r\n     \u001B[90m 15 |\u001B[39m\u001B[0m\r\n\r\n      at Object.\u003Canonymous\u003E (.devteam/runs/20261025-084314/scratch/security/prototype.probe.test.tsx:12:22)\r\n\r\nFAIL .devteam/runs/20261025-084314/scratch/reviewer/basecopy/__tests__/ZestButtonToggle.test.tsx (11.518 s)\r\n  \u25CF ZestButton toggle mode \u203A R8 documentation \u203A R8: the API page documents every ToggleOptions prop and the README shows a toggle example\r\n\r\n    expect(received).toBe(expected) // Object.is equality\r\n\r\n    Expected: \u00221.6.0\u0022\r\n    Received: \u00221.6.1\u0022\r\n\r\n    \u001B[0m \u001B[90m 502 |\u001B[39m       expect(read(\u001B[32m\u0022README.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022toggleOptions\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m 503 |\u001B[39m       expect(read(\u001B[32m\u0022documentation/breaking-changes.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022Version 1.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n    \u001B[31m\u001B[1m\u003E\u001B[22m\u001B[39m\u001B[90m 504 |\u001B[39m       expect(\u001B[33mJSON\u001B[39m\u001B[33m.\u001B[39mparse(read(\u001B[32m\u0022package.json\u0022\u001B[39m))\u001B[33m.\u001B[39mversion)\u001B[33m.\u001B[39mtoBe(\u001B[32m\u00221.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m     |\u001B[39m                                                        \u001B[31m\u001B[1m^\u001B[22m\u001B[39m\r\n     \u001B[90m 505 |\u001B[39m     })\u001B[33m;\u001B[39m\r\n     \u001B[90m 506 |\u001B[39m\r\n     \u001B[90m 507 |\u001B[39m     it(\u001B[32m\u0022R8: the documented examples type-check against the exported types and render\u0022\u001B[39m\u001B[33m,\u001B[39m () \u001B[33m=\u003E\u001B[39m {\u001B[0m\r\n\r\n      at Object.\u003Canonymous\u003E (.devteam/runs/20261025-084314/scratch/reviewer/basecopy/__tests__/ZestButtonToggle.test.tsx:504:56)\r\n\r\nFAIL .devteam/runs/20261025-084314/scratch/reviewer/base/__tests__/ZestButtonToggle.test.tsx (12.206 s)\r\n  \u25CF ZestButton toggle mode \u203A R8 documentation \u203A R8: the API page documents every ToggleOptions prop and the README shows a toggle example\r\n\r\n    expect(received).toBe(expected) // Object.is equality\r\n\r\n    Expected: \u00221.6.0\u0022\r\n    Received: \u00221.6.1\u0022\r\n\r\n    \u001B[0m \u001B[90m 502 |\u001B[39m       expect(read(\u001B[32m\u0022README.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022toggleOptions\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m 503 |\u001B[39m       expect(read(\u001B[32m\u0022documentation/breaking-changes.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022Version 1.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n    \u001B[31m\u001B[1m\u003E\u001B[22m\u001B[39m\u001B[90m 504 |\u001B[39m       expect(\u001B[33mJSON\u001B[39m\u001B[33m.\u001B[39mparse(read(\u001B[32m\u0022package.json\u0022\u001B[39m))\u001B[33m.\u001B[39mversion)\u001B[33m.\u001B[39mtoBe(\u001B[32m\u00221.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m     |\u001B[39m                                                        \u001B[31m\u001B[1m^\u001B[22m\u001B[39m\r\n     \u001B[90m 505 |\u001B[39m     })\u001B[33m;\u001B[39m\r\n     \u001B[90m 506 |\u001B[39m\r\n     \u001B[90m 507 |\u001B[39m     it(\u001B[32m\u0022R8: the documented examples type-check against the exported types and render\u0022\u001B[39m\u001B[33m,\u001B[39m () \u001B[33m=\u003E\u001B[39m {\u001B[0m\r\n\r\n      at Object.\u003Canonymous\u003E (.devteam/runs/20261025-084314/scratch/reviewer/base/__tests__/ZestButtonToggle.test.tsx:504:56)\r\n\r\n\r\nTest Suites: 3 failed, 88 passed, 91 total\r\nTests:       3 failed, 1079 passed, 1082 total\r\nSnapshots:   0 total\r\nTime:        33.588 s\r\nRan all test suites.",
+      "rules": []
+    }
+  ],
+  "fullGreenHash": "46BFE14926FFE4D96CBF9E33C7C04283AD0807BC4396FC09C09C5F21D0ECA504",
+  "baseline": [
+    {
+      "id": "no-secrets",
+      "name": "No secrets in code",
+      "passed": true,
+      "seconds": 0.2961134,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "SEC-001"
+      ]
+    },
+    {
+      "id": "no-debug-leftovers",
+      "name": "No debugging leftovers",
+      "passed": true,
+      "seconds": 0.3199869,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "QUAL-001"
+      ]
+    },
+    {
+      "id": "lib-typecheck",
+      "name": "Type check (library and tests)",
+      "passed": true,
+      "seconds": 13.8095547,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "",
+      "rules": []
+    },
+    {
+      "id": "lib-tests",
+      "name": "Tests, with coverage",
+      "passed": false,
+      "seconds": 67.5605528,
+      "notRun": false,
+      "flaky": false,
+      "tier": "full",
+      "output": "Failed twice in a row, so this is not a one-off.\n\u2026\nSummary of all failing tests\r\nFAIL .devteam/runs/20261025-084314/scratch/security/prototype.probe.test.tsx (7.772 s)\r\n  \u25CF prototype-chain lookup probe \u203A getZestIconElement returns inherited prototype members for unknown names\r\n\r\n    expect(received).not.toBeNull()\r\n\r\n    Received: null\r\n\r\n    \u001B[0m \u001B[90m 10 |\u001B[39m       \u001B[90m// eslint-disable-next-line no-console\u001B[39m\r\n     \u001B[90m 11 |\u001B[39m       console\u001B[33m.\u001B[39mlog(name\u001B[33m,\u001B[39m \u001B[36mtypeof\u001B[39m el\u001B[33m,\u001B[39m el \u001B[33m===\u001B[39m \u001B[36mnull\u001B[39m \u001B[33m?\u001B[39m \u001B[32m\u0022null\u0022\u001B[39m \u001B[33m:\u001B[39m \u001B[32m\u0022NOT NULL\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n    \u001B[31m\u001B[1m\u003E\u001B[22m\u001B[39m\u001B[90m 12 |\u001B[39m       expect(el)\u001B[33m.\u001B[39mnot\u001B[33m.\u001B[39mtoBeNull()\u001B[33m;\u001B[39m\r\n     \u001B[90m    |\u001B[39m                      \u001B[31m\u001B[1m^\u001B[22m\u001B[39m\r\n     \u001B[90m 13 |\u001B[39m     }\r\n     \u001B[90m 14 |\u001B[39m   })\u001B[33m;\u001B[39m\r\n     \u001B[90m 15 |\u001B[39m\u001B[0m\r\n\r\n      at Object.\u003Canonymous\u003E (.devteam/runs/20261025-084314/scratch/security/prototype.probe.test.tsx:12:22)\r\n\r\nFAIL .devteam/runs/20261025-084314/scratch/reviewer/base/__tests__/ZestButtonToggle.test.tsx (10.275 s)\r\n  \u25CF ZestButton toggle mode \u203A R8 documentation \u203A R8: the API page documents every ToggleOptions prop and the README shows a toggle example\r\n\r\n    expect(received).toBe(expected) // Object.is equality\r\n\r\n    Expected: \u00221.6.0\u0022\r\n    Received: \u00221.6.1\u0022\r\n\r\n    \u001B[0m \u001B[90m 502 |\u001B[39m       expect(read(\u001B[32m\u0022README.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022toggleOptions\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m 503 |\u001B[39m       expect(read(\u001B[32m\u0022documentation/breaking-changes.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022Version 1.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n    \u001B[31m\u001B[1m\u003E\u001B[22m\u001B[39m\u001B[90m 504 |\u001B[39m       expect(\u001B[33mJSON\u001B[39m\u001B[33m.\u001B[39mparse(read(\u001B[32m\u0022package.json\u0022\u001B[39m))\u001B[33m.\u001B[39mversion)\u001B[33m.\u001B[39mtoBe(\u001B[32m\u00221.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m     |\u001B[39m                                                        \u001B[31m\u001B[1m^\u001B[22m\u001B[39m\r\n     \u001B[90m 505 |\u001B[39m     })\u001B[33m;\u001B[39m\r\n     \u001B[90m 506 |\u001B[39m\r\n     \u001B[90m 507 |\u001B[39m     it(\u001B[32m\u0022R8: the documented examples type-check against the exported types and render\u0022\u001B[39m\u001B[33m,\u001B[39m () \u001B[33m=\u003E\u001B[39m {\u001B[0m\r\n\r\n      at Object.\u003Canonymous\u003E (.devteam/runs/20261025-084314/scratch/reviewer/base/__tests__/ZestButtonToggle.test.tsx:504:56)\r\n\r\nFAIL .devteam/runs/20261025-084314/scratch/reviewer/basecopy/__tests__/ZestButtonToggle.test.tsx (10.447 s)\r\n  \u25CF ZestButton toggle mode \u203A R8 documentation \u203A R8: the API page documents every ToggleOptions prop and the README shows a toggle example\r\n\r\n    expect(received).toBe(expected) // Object.is equality\r\n\r\n    Expected: \u00221.6.0\u0022\r\n    Received: \u00221.6.1\u0022\r\n\r\n    \u001B[0m \u001B[90m 502 |\u001B[39m       expect(read(\u001B[32m\u0022README.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022toggleOptions\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m 503 |\u001B[39m       expect(read(\u001B[32m\u0022documentation/breaking-changes.md\u0022\u001B[39m))\u001B[33m.\u001B[39mtoContain(\u001B[32m\u0022Version 1.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n    \u001B[31m\u001B[1m\u003E\u001B[22m\u001B[39m\u001B[90m 504 |\u001B[39m       expect(\u001B[33mJSON\u001B[39m\u001B[33m.\u001B[39mparse(read(\u001B[32m\u0022package.json\u0022\u001B[39m))\u001B[33m.\u001B[39mversion)\u001B[33m.\u001B[39mtoBe(\u001B[32m\u00221.6.0\u0022\u001B[39m)\u001B[33m;\u001B[39m\r\n     \u001B[90m     |\u001B[39m                                                        \u001B[31m\u001B[1m^\u001B[22m\u001B[39m\r\n     \u001B[90m 505 |\u001B[39m     })\u001B[33m;\u001B[39m\r\n     \u001B[90m 506 |\u001B[39m\r\n     \u001B[90m 507 |\u001B[39m     it(\u001B[32m\u0022R8: the documented examples type-check against the exported types and render\u0022\u001B[39m\u001B[33m,\u001B[39m () \u001B[33m=\u003E\u001B[39m {\u001B[0m\r\n\r\n      at Object.\u003Canonymous\u003E (.devteam/runs/20261025-084314/scratch/reviewer/basecopy/__tests__/ZestButtonToggle.test.tsx:504:56)\r\n\r\n\r\nTest Suites: 3 failed, 82 passed, 85 total\r\nTests:       3 failed, 1006 passed, 1009 total\r\nSnapshots:   0 total\r\nTime:        19.714 s, estimated 29 s\r\nRan all test suites.",
+      "rules": []
+    },
+    {
+      "id": "lib-build",
+      "name": "Build (CommonJS, ES modules, type definitions)",
+      "passed": true,
+      "seconds": 10.2111695,
+      "notRun": false,
+      "flaky": false,
+      "tier": "full",
+      "output": "\u003E jattac.libs.web.zest-button@1.7.0 build\r\n\u003E rollup -c rollup.config.mjs\r\n\r\n\n\u001B[36m\r\n\u001B[1mUI/index.ts\u001B[22m \u2192 \u001B[1mdist/index.cjs.js, dist/index.esm.js\u001B[22m...\u001B[39m\r\n\u001B[1m\u001B[33m(!) Mixing named and default exports\u001B[39m\u001B[22m\r\n\u001B[90mhttps://rollupjs.org/configuration-options/#output-exports\u001B[39m\r\n\u001B[1mThe following entry modules are using named and default exports together:\u001B[22m\r\nUI/index.ts\r\n\r\nConsumers of your bundle will have to use chunk.default to access their default export, which may not be what you want. Use \u0060output.exports: \u0022named\u0022\u0060 to disable this warning.\r\n\u001B[32mcreated \u001B[1mdist/index.cjs.js, dist/index.esm.js\u001B[22m in \u001B[1m5.3s\u001B[22m\u001B[39m\r\n\u001B[36m\r\n\u001B[1mUI/index.ts\u001B[22m \u2192 \u001B[1mdist/index.d.ts\u001B[22m...\u001B[39m\r\n\u001B[32mcreated \u001B[1mdist/index.d.ts\u001B[22m in \u001B[1m2.5s\u001B[22m\u001B[39m",
+      "rules": []
+    },
+    {
+      "id": "lib-validate-package",
+      "name": "Package check (attw and publint)",
+      "passed": false,
+      "seconds": 0.1609904,
+      "notRun": true,
+      "flaky": false,
+      "tier": "full",
+      "output": "Not set up in this project: attw and publint are not installed, so nothing checks that the package works for everyone who installs it.",
+      "rules": [
+        "LIB-002"
+      ]
+    },
+    {
+      "id": "lib-pack",
+      "name": "What would be published",
+      "passed": true,
+      "seconds": 2.3129635,
+      "notRun": false,
+      "flaky": false,
+      "tier": "full",
+      "output": "jattac.libs.web.zest-button-1.7.0.tgz\r\n\nnpm notice\r\nnpm notice package: jattac.libs.web.zest-button@1.7.0\r\nnpm notice Tarball Contents\r\nnpm notice 1.1kB LICENSE\r\nnpm notice 5.5kB README.md\r\nnpm notice 696B dist/hooks/useBusyState.d.ts\r\nnpm notice 667B dist/hooks/useConfirmation.d.ts\r\nnpm notice 64B dist/hooks/useThemeDetection.d.ts\r\nnpm notice 547B dist/hooks/useToggleState.d.ts\r\nnpm notice 140B dist/hooks/useZestConfig.d.ts\r\nnpm notice 83.0kB dist/index.cjs.js\r\nnpm notice 99.2kB dist/index.cjs.js.map\r\nnpm notice 4.7kB dist/index.d.ts\r\nnpm notice 80.0kB dist/index.esm.js\r\nnpm notice 99.0kB dist/index.esm.js.map\r\nnpm notice 221B dist/semanticTypeButtonConfigDefaults.d.ts\r\nnpm notice 102B dist/SpinnerIcon.d.ts\r\nnpm notice 3.8kB dist/ZestButton.d.ts\r\nnpm notice 429B dist/ZestButtonConfigContext.d.ts\r\nnpm notice 316B dist/ZestButtonConfigProvider.d.ts\r\nnpm notice 809B dist/ZestDropdownMenu.d.ts\r\nnpm notice 335B dist/ZestDropdownMenuItem.d.ts\r\nnpm notice 275B dist/ZestIcon.d.ts\r\nnpm notice 771B dist/zestIcons.d.ts\r\nnpm notice 12.4kB documentation/api.md\r\nnpm notice 5.7kB documentation/breaking-changes.md\r\nnpm notice 8.6kB documentation/configuration.md\r\nnpm notice 7.1kB documentation/development.md\r\nnpm notice 15.7kB documentation/examples.md\r\nnpm notice 11.2kB documentation/features.md\r\nnpm notice 2.5kB package.json\r\nnpm notice Tarball Details\r\nnpm notice name: jattac.libs.web.zest-button\r\nnpm notice version: 1.7.0\r\nnpm notice filename: jattac.libs.web.zest-button-1.7.0.tgz\r\nnpm notice package size: 94.1 kB\r\nnpm notice unpacked size: 444.7 kB\r\nnpm notice shasum: 65e6c605274a5e7a2a269bdf72a00798f7b3b60b\r\nnpm notice integrity: sha512-vN/k\u002BYKifGmfa[...]n6TS\u002BgsV7R3Eg==\r\nnpm notice total files: 28\r\nnpm notice",
+      "rules": []
+    },
+    {
+      "id": "lib-publish-dry-run",
+      "name": "Publish dry run (everything npm checks, nothing is uploaded)",
+      "passed": true,
+      "seconds": 2.0702184,
+      "notRun": false,
+      "flaky": false,
+      "tier": "full",
+      "output": "\u002B jattac.libs.web.zest-button@1.7.0\r\n\nnpm notice\r\nnpm notice package: jattac.libs.web.zest-button@1.7.0\r\nnpm notice Tarball Contents\r\nnpm notice 1.1kB LICENSE\r\nnpm notice 5.5kB README.md\r\nnpm notice 696B dist/hooks/useBusyState.d.ts\r\nnpm notice 667B dist/hooks/useConfirmation.d.ts\r\nnpm notice 64B dist/hooks/useThemeDetection.d.ts\r\nnpm notice 547B dist/hooks/useToggleState.d.ts\r\nnpm notice 140B dist/hooks/useZestConfig.d.ts\r\nnpm notice 83.0kB dist/index.cjs.js\r\nnpm notice 99.2kB dist/index.cjs.js.map\r\nnpm notice 4.7kB dist/index.d.ts\r\nnpm notice 80.0kB dist/index.esm.js\r\nnpm notice 99.0kB dist/index.esm.js.map\r\nnpm notice 221B dist/semanticTypeButtonConfigDefaults.d.ts\r\nnpm notice 102B dist/SpinnerIcon.d.ts\r\nnpm notice 3.8kB dist/ZestButton.d.ts\r\nnpm notice 429B dist/ZestButtonConfigContext.d.ts\r\nnpm notice 316B dist/ZestButtonConfigProvider.d.ts\r\nnpm notice 809B dist/ZestDropdownMenu.d.ts\r\nnpm notice 335B dist/ZestDropdownMenuItem.d.ts\r\nnpm notice 275B dist/ZestIcon.d.ts\r\nnpm notice 771B dist/zestIcons.d.ts\r\nnpm notice 12.4kB documentation/api.md\r\nnpm notice 5.7kB documentation/breaking-changes.md\r\nnpm notice 8.6kB documentation/configuration.md\r\nnpm notice 7.1kB documentation/development.md\r\nnpm notice 15.7kB documentation/examples.md\r\nnpm notice 11.2kB documentation/features.md\r\nnpm notice 2.5kB package.json\r\nnpm notice Tarball Details\r\nnpm notice name: jattac.libs.web.zest-button\r\nnpm notice version: 1.7.0\r\nnpm notice filename: jattac.libs.web.zest-button-1.7.0.tgz\r\nnpm notice package size: 94.1 kB\r\nnpm notice unpacked size: 444.7 kB\r\nnpm notice shasum: 65e6c605274a5e7a2a269bdf72a00798f7b3b60b\r\nnpm notice integrity: sha512-vN/k\u002BYKifGmfa[...]n6TS\u002BgsV7R3Eg==\r\nnpm notice total files: 28\r\nnpm notice\r\nnpm notice Publishing to https://registry.npmjs.org/ with tag latest and default access (dry-run)",
+      "rules": [
+        "LIB-003"
+      ]
+    },
+    {
+      "id": "lib-size",
+      "name": "Size budget",
+      "passed": false,
+      "seconds": 0.1776985,
+      "notRun": true,
+      "flaky": false,
+      "tier": "full",
+      "output": "Not set up in this project: The project has no .size-limit.json, so this check has nothing to run.",
+      "rules": [
+        "EFF-001"
+      ]
+    },
+    {
+      "id": "lib-consumer-smoke",
+      "name": "Install and import the packed library",
+      "passed": false,
+      "seconds": 0.151465,
+      "notRun": true,
+      "flaky": false,
+      "tier": "full",
+      "output": "Not set up in this project: Nothing installs the packed library into a scratch project and imports it  no scripts/consumer-smoke.mjs .",
+      "rules": [
+        "LIB-003",
+        "LIB-004",
+        "LIB-005"
+      ]
+    },
+    {
+      "id": "lib-docs",
+      "name": "Documentation is complete",
+      "passed": false,
+      "seconds": 0.1820021,
+      "notRun": true,
+      "flaky": false,
+      "tier": "fast",
+      "output": "Not set up in this project: The project has no scripts/check-docs.mjs, so this check has nothing to run.",
+      "rules": [
+        "DOC-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-1",
+      "name": "No native button element",
+      "passed": true,
+      "seconds": 0.329609,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-2",
+      "name": "No native table element",
+      "passed": true,
+      "seconds": 0.2744555,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-3",
+      "name": "No native text box or text area",
+      "passed": true,
+      "seconds": 0.2604115,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-4",
+      "name": "No native file upload input",
+      "passed": true,
+      "seconds": 0.2943834,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-002-1",
+      "name": "No tiny fixed pixel font sizes",
+      "passed": true,
+      "seconds": 0.2886733,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-002"
+      ]
+    },
+    {
+      "id": "rule-USR-002-2",
+      "name": "Do not block pinch-zoom on mobile",
+      "passed": true,
+      "seconds": 0.5633688,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-002"
+      ]
+    },
+    {
+      "id": "rule-USR-003-1",
+      "name": "No dynamic code execution (eval / new Function)",
+      "passed": true,
+      "seconds": 0.4705874,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-2",
+      "name": "No raw HTML injection (XSS risk)",
+      "passed": true,
+      "seconds": 0.4723182,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-3",
+      "name": "No string-based timers (hidden eval)",
+      "passed": true,
+      "seconds": 0.3329588,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-4",
+      "name": "No leftover debugger statements or console.log",
+      "passed": true,
+      "seconds": 0.552248,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-006-1",
+      "name": "No hard-coded colours in component code (use shared design tokens)",
+      "passed": true,
+      "seconds": 0.377662,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-006"
+      ]
+    }
+  ],
+  "checkPassedOn": {
+    "lib-typecheck": "891C15E88E8D94A6A39801877295F6B91B45CE43C3A1B8C362E8347BA329B227",
+    "lib-build": "632A2D6CF840E9E05B9B79214157D36D83F300AD7A8AA581B854362EAE2445D6",
+    "lib-pack": "0D461BBC583D8B712A2A5F1AE2EBECE65EF636CBCB2A55B19F0D3ED6FCE68A7B",
+    "lib-publish-dry-run": "8E629A2CC4BA97C3AB0782E198B7334562B63725BE07065FC52155986C95463C"
+  },
+  "checkFailedOn": {
+    "lib-tests": "0510A85D62A606A31827DAC1DD34249CE8A6BE8848D113BBC873BB0FC75BF989"
+  },
+  "generatedByChecks": [],
+  "ignoredPaths": [],
+  "acceptedGaps": [],
+  "scopeExtensions": [
+    "__tests__/ZestButtonToggle.test.tsx"
+  ],
+  "rulings": [],
+  "shortcuts": 0,
+  "routeHistory": [],
+  "amendments": [],
+  "scopeSeen": {},
+  "scopeRequestsMade": 0,
+  "preflightAnswered": false,
+  "analystQuestions": 1,
+  "analysisClosed": false,
+  "youDecided": 0,
+  "requirementsApproved": true,
+  "signOffRounds": 2,
+  "changedFiles": [
+    "documentation/api.md",
+    "documentation/breaking-changes.md",
+    "documentation/configuration.md",
+    "documentation/development.md",
+    "documentation/examples.md",
+    "documentation/features.md",
+    "package-lock.json",
+    "package.json",
+    "README.md",
+    "UI/hooks/useToggleStyle.ts",
+    "UI/index.ts",
+    "UI/toggleStyle/compileToggleStyle.ts",
+    "UI/toggleStyle/toggleStyleSheet.ts",
+    "UI/toggleStyle/types.ts",
+    "UI/ZestButton.tsx",
+    "UI/ZestButtonConfigContext.ts",
+    "__tests__/hooks/useToggleStyle.test.tsx",
+    "__tests__/toggleStyle/compileToggleStyle.test.ts",
+    "__tests__/toggleStyle/documentation.test.ts",
+    "__tests__/toggleStyle/toggleStyleSheet.test.ts",
+    "__tests__/ZestButtonToggle.test.tsx",
+    "__tests__/ZestButtonToggleStyle.test.tsx",
+    "__tests__/ZestButtonToggleStyleCharacterization.test.tsx"
+  ]
+}

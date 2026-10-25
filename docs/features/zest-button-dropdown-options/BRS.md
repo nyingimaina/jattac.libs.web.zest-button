@@ -1,7 +1,7 @@
 ---
 title: BRS — ZestButton dropdown options (split button)
 covers: UI/ZestButton.tsx, UI/ZestDropdownMenu.tsx, UI/ZestDropdownMenuItem.tsx
-covers-hash: 1d5a3c45d32756291c59
+covers-hash: 7da902295b720fcfa0e0
 ---
 
 # BRS — ZestButton dropdown options (split button)
@@ -28,8 +28,15 @@ built-in names and replaced the built-in types' Font Awesome icons with library-
 inline SVG. Dropdown behaviour is unchanged: the split control, the Radix menu, per-item
 busy/confirm/success feedback and the independent menu theme all work as described here.
 A `ZestDropdownOption` may use any `semanticType` (built-in or custom); its default icon
-and behaviour come from the same defaults map as the main button. The full suite at this
-revision is 18 suites / 225 tests, all passing.
+and behaviour come from the same defaults map as the main button.
+
+### Current state in 1.8.0
+
+The 1.8.0 toggle styling feature added a `useToggleStyle` call and one optional
+`toggleOptions.style` field to `ZestButton.tsx`. It only affects buttons that have
+`toggleOptions`. The split control, the menu and its theme are unchanged. I did not find
+code or a test that styles the dropdown menu or its items from `styles.toggle`, so do not
+expect it to. See [Styling toggle buttons from one place](../zest-button-toggle-style/guide.md).
 
 ---
 
@@ -236,5 +243,7 @@ Styles/ZestButton.module.css    — extended (not replaced) with chevron/menu/di
   the names and icons available to the main button and its items.
 - [Using the ZestButton on/off toggle](../zest-button-toggle/guide.md) — the toggle is
   independent of the dropdown.
+- [Styling toggle buttons from one place](../zest-button-toggle-style/guide.md) — the
+  provider look applies to toggles only.
 - [Recipe 5: a split button with overflow actions](../../../documentation/examples.md#recipe-5-a-split-button-with-overflow-actions)
   — the consumer cookbook.

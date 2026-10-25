@@ -1,0 +1,4 @@
+{
+  "summary": "Consistent: the design covers R1-R10 within its declared scope, and no requirement contradicts a blocking rule, a check, an earlier feature's requirement or another requirement.",
+  "conflicts": []
+}

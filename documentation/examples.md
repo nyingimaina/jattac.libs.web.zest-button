@@ -14,6 +14,7 @@ Welcome to the ZestButton Cookbook! This is the core learning path for mastering
 - [Recipe 6: An On/Off Toggle Button](#recipe-6-an-onoff-toggle-button)
 - [Recipe 7: Reusing the Standard Icons](#recipe-7-reusing-the-standard-icons)
 - [Recipe 8: Swapping a Built-in Icon](#recipe-8-swapping-a-built-in-icon)
+- [Recipe 9: Styling All Toggles in One Place](#recipe-9-styling-all-toggles-in-one-place)
 
 ---
 
@@ -399,6 +400,38 @@ For a type whose default icon sits at the end (`next`, `view` and `details`), ov
 ```
 
 Overriding an icon never hides the button text: the label always comes from `children`. You can also set the override once for a built-in type through the provider — see [Recipe 4](#recipe-4-creating-a-custom-semantic-type) and the [Configuration Guide](./configuration.md).
+
+---
+
+### Recipe 9: Styling All Toggles in One Place
+
+**Problem:** You want every toggle in the app to match your brand, to the pixel, without repeating styles.
+
+**Solution:** Put the looks in the provider's `styles.toggle`, and override a single toggle with `zest.toggleOptions.style`.
+
+```tsx
+import ZestButton, { ZestButtonConfigProvider } from 'jattac.libs.web.zest-button';
+
+const config = {
+  styles: {
+    toggle: {
+      off: { background: 'transparent', borderRadius: '0.5rem' },
+      on: { background: '#0a7', color: '#fff', checkColor: '#fff' },
+      hoverOn: { background: '#086' },
+      dark: { on: { background: '#0c9' } },
+      sizes: { lg: { off: { fontSize: '1.25rem' } } },
+      variants: { danger: { on: { background: '#c00' } } },
+    },
+  },
+};
+
+export const App = () => (
+  <ZestButtonConfigProvider config={config}>
+    <ZestButton zest={{ toggleOptions: {} }}>Bold</ZestButton>
+    <ZestButton zest={{ toggleOptions: { style: { on: { background: 'rebeccapurple' } } } }}>Pin</ZestButton>
+  </ZestButtonConfigProvider>
+);
+```
 
 ---
 

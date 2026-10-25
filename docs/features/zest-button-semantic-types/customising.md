@@ -1,7 +1,7 @@
 ---
 title: Customising semantic types and adding your own
 covers: UI/hooks/useZestConfig.ts, UI/ZestButton.tsx, UI/ZestButtonConfigContext.ts, UI/ZestButtonConfigProvider.tsx, UI/semanticTypeButtonConfigDefaults.tsx
-covers-hash: 9d50ed3c5a617bbeb9e0
+covers-hash: d1f288438365d6f80456
 ---
 
 # Customising semantic types and adding your own
@@ -22,6 +22,12 @@ in four places, from broadest to narrowest:
 
 This is the order used by `useZestConfig.ts`. It lets you set a house style once, change
 one type for a whole feature, and still make a single button different.
+
+The provider's `config` has a third setting, `styles` (added in 1.8.0). It is not part of
+this order: it sets the **look** of toggle buttons (colours, sizes, hover and so on), not
+their props, icons or behaviour. See
+[Styling toggle buttons from one place](../zest-button-toggle-style/guide.md). It sits
+beside `defaultProps` and `semanticTypeDefaults` without changing them.
 
 You can also add your own type names with TypeScript **module augmentation** (teaching
 TypeScript about a new string) and then give those names defaults in the provider. Both
@@ -412,3 +418,5 @@ enough, and the button keeps its type's icon and behaviour:
   — consumer recipes.
 - [Using the ZestButton on/off toggle](../zest-button-toggle/guide.md) — combining a type
   with toggle options.
+- [Styling toggle buttons from one place](../zest-button-toggle-style/guide.md) — the
+  provider's `styles` setting, which a type's variant can select a look from.

@@ -69,6 +69,7 @@ This is the configuration object passed to the `config` prop of the `ZestButtonC
 | :--- | :--- | :--- | :--- |
 | `defaultProps` | `ZestCustomProps` | `{}` | A set of `ZestCustomProps` that will be applied to all `ZestButton` instances within the provider's scope. |
 | `semanticTypeDefaults` | `Partial<Record<string, Partial<ZestCustomProps>>>` | `{}` | A map of semantic types to `ZestCustomProps`. This allows you to define defaults for custom semantic types or override the library's built-in defaults. |
+| `styles` | `ZestButtonStyles` | `undefined` | App-wide looks, organised by button kind. Only `toggle` exists today. See [`ZestToggleStyle`](#zesttogglestyle). |
 
 ---
 
@@ -198,9 +199,30 @@ Turns the button into an on/off toggle. The button stays a `<button>` (no `role=
 | `pressed` | `boolean` | `undefined` | Controlled value. The button only changes when you pass a new value. Wins over `defaultPressed` if both are given. |
 | `defaultPressed` | `boolean` | `false` | Starting value for a self-managed toggle. |
 | `onPressedChange` | `(pressed: boolean) => void` | `undefined` | Called with the new value on each click or key press of an enabled toggle. |
+| `style` | `ZestToggleStyle` | `undefined` | Looks for this toggle only. Beats the provider's `styles.toggle` for the properties it gives. |
 | `checkPosition` | `'start' \| 'end'` | `'start'` | Which end of the button the check mark sits at. Unknown values fall back to `'start'`. |
 
 *See the [Toggle recipe](./examples.md#recipe-6-an-onoff-toggle-button) for a full example.*
+
+---
+
+#### `ZestToggleStyle`
+
+Exported types: `ZestToggleStyle`, `ZestToggleStyleLayer`, `ZestToggleStateLooks`, `ZestToggleStyleLook`, `ZestToggleStyleValue` and `ZestButtonStyles` (`{ toggle?: ZestToggleStyle }`).
+
+A *look* maps CSS property names (camelCase or kebab-case) to a string or number written exactly as it should appear. The extra keys `checkColor` and `checkSize` style the check mark. A value is only ever used for its own property; a bad value is ignored without affecting the others.
+
+| Key | Type | Description |
+| :--- | :--- | :--- |
+| `off`, `on` | `ZestToggleStyleLook` | The look when the toggle is off or on. |
+| `hoverOff`, `hoverOn` | `ZestToggleStyleLook` | Hover looks. Only where hover exists, and never on a disabled toggle. |
+| `focus` | `ZestToggleStyleLook` | Added to the focus-visible look. |
+| `disabled`, `busy` | `ZestToggleStyleLook` | Layered on top of the on/off look. |
+| `light`, `dark` | `ZestToggleStateLooks` | The same state keys, applied only in that theme. |
+| `sizes` | `Partial<Record<ZestSize, ZestToggleStyleLayer>>` | Looks for one size. |
+| `variants` | `Partial<Record<ZestVariant, ZestToggleStyleLayer>>` | Looks for one variant. |
+
+Precedence, lowest to highest: built-in look, all toggles, `sizes`, `variants`, then `zest.toggleOptions.style`. See [Toggle Styling](./configuration.md#toggle-styling).
 
 ---
 

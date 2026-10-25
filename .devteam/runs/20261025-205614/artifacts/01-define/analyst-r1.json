@@ -1,0 +1,32 @@
+{
+  "summary": "",
+  "requirements": [],
+  "questions": [],
+  "ask": {
+    "text": "When you set the look once in the provider, should it control only toggle buttons (on/off state, check mark), or every ZestButton in the app (plain, danger, outline and so on) as well?",
+    "why": "It decides how many button kinds and states get style settings, and how much existing appearance has to be re-checked so apps already using the library do not change.",
+    "topic": "data",
+    "options": [
+      { "label": "All buttons, with toggle on/off states included (recommended)", "consequence": "One place styles every button kind, size, variant and hover effect, and the toggle's off/on looks too. Biggest scope, but matches 'apply system wide'.", "recommended": true },
+      { "label": "Toggle buttons only for now", "consequence": "Smaller change: only the on/off look, check mark, sizes and hover for toggles are configurable; other buttons stay as they are today." },
+      { "label": "Toggle buttons first, but built so other kinds can be added later", "consequence": "Only toggles are configurable in this release, with a settings shape that other button kinds can join later without breaking anyone." }
+    ]
+  },
+  "coverage": [
+    { "topic": "users", "status": "answered", "note": "Developers who install the library and wrap their app in the provider; end users see the result." },
+    { "topic": "data", "status": "open", "note": "Which buttons the provider styling reaches." },
+    { "topic": "permissions", "status": "not-applicable", "note": "A UI library: no records or ownership." },
+    { "topic": "validation", "status": "assumed", "note": "Unknown or invalid style values are ignored safely and never break rendering." },
+    { "topic": "states", "status": "answered", "note": "Toggle on/off, hover, disabled, busy states already decided; styling must cover them." },
+    { "topic": "duplicates", "status": "not-applicable", "note": "No submissions or shared records in the styling settings." },
+    { "topic": "volume", "status": "not-applicable", "note": "Settings are one small object; render cost is covered under quality." },
+    { "topic": "deletion", "status": "not-applicable", "note": "Nothing is stored or deleted." },
+    { "topic": "privacy", "status": "not-applicable", "note": "No personal data is handled." },
+    { "topic": "quality", "status": "assumed", "note": "Light/dark/system themes, keyboard focus visibility, rem units, no needless re-renders, additive and non-breaking." }
+  ],
+  "assumptions": [
+    "Invalid or unknown style values are ignored without crashing.",
+    "The change is additive: apps that do not use the new styling settings look exactly as they do today.",
+    "Quality: works in light, dark and system themes, keeps a visible keyboard focus indicator, uses rem sizes, and does not re-render buttons when the settings object is unchanged."
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "findings": [
+    {
+      "cites": "R2",
+      "severity": "advisory",
+      "file": "UI/toggleStyle/compileToggleStyle.ts",
+      "line": 29,
+      "evidence": "FORBIDDEN_VALUE blocks url( but not CSS functions that take a quoted string and fetch it, e.g. background-image: image-set(\"https://host/x.png\" 1x). Values stay confined to one property, so no rule, selector or script can be added.",
+      "description": "Resource-fetching string forms get through the value filter. Only matters if style values ever come from untrusted input. Consider also rejecting image-set( and src( ."
+    },
+    {
+      "cites": "PERF-001",
+      "severity": "advisory",
+      "file": "UI/toggleStyle/toggleStyleSheet.ts",
+      "line": 21,
+      "evidence": "styleElement is cached at module level. If something else removes it from document.head, styleElement stays non-null but detached, so later rules are appended to a detached element and never apply.",
+      "description": "Check styleElement.isConnected before reuse and re-append when it is detached."
+    },
+    {
+      "cites": "PERF-001",
+      "severity": "advisory",
+      "file": "UI/hooks/useToggleStyle.ts",
+      "line": 29,
+      "evidence": "Compiles are memoised by object identity (WeakMap). A per-button inline toggleOptions.style, or an inline provider config, is a new object on each parent render and is recompiled and rehashed each time. The rule is still shared by id, so only CPU cost, not leaks.",
+      "description": "Documentation should recommend a stable (module-level or memoised) style object for large lists."
+    },
+    {
+      "cites": "UI-001",
+      "severity": "advisory",
+      "file": "UI/hooks/useToggleStyle.ts",
+      "line": 9,
+      "evidence": "Rules are inserted in an effect only. In server-rendered HTML (Next.js) the button carries data-zest-toggle-style but no rule exists until hydration.",
+      "description": "Configured looks are missing before hydration, so a toggle may briefly show the built-in look. This is a known trade-off of the design. Mention it in the docs."
+    },
+    {
+      "cites": "R9",
+      "severity": "advisory",
+      "file": "UI/ZestButtonConfigContext.ts",
+      "line": 2,
+      "evidence": "The existing import line was edited as part of the diff: `from './ZestButton';// Assuming ...` lost the space before the trailing comment.",
+      "description": "Unrelated whitespace change on an existing line; the repo policy asks for minimal diffs. No behaviour change."
+    },
+    {
+      "cites": "R8",
+      "severity": "advisory",
+      "file": "UI/toggleStyle/compileToggleStyle.ts",
+      "line": 117,
+      "evidence": "The id is a 32-bit djb2 hash plus the length. Two different rule bodies could in theory map to the same id, and the second would then reuse the first one's rules.",
+      "description": "Collision is very unlikely, but a longer hash or a body-keyed registry would remove the risk."
+    }
+  ],
+  "verifications": []
+}

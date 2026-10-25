@@ -1,7 +1,7 @@
 ---
 title: Using ZestButton semantic types
 covers: UI/ZestButton.tsx, UI/semanticTypeButtonConfigDefaults.tsx, UI/hooks/useZestConfig.ts, UI/index.ts
-covers-hash: bbd66c365ea6481035f7
+covers-hash: 4fa17665c454842f5039
 ---
 
 # Using ZestButton semantic types
@@ -186,6 +186,11 @@ check mark appears after the icon. When off, the check mark disappears. See
 [Using the ZestButton on/off toggle](../zest-button-toggle/guide.md) for the toggle
 options.
 
+A toggle's colour variant comes from its type (for example `delete` is `danger`). If you
+style toggles from the provider, the look under `styles.toggle.variants.<variant>` is
+chosen from that variant. See
+[Styling toggle buttons from one place](../zest-button-toggle-style/guide.md).
+
 ## Scenarios
 
 ### Choosing between an alias and its twin
@@ -337,6 +342,8 @@ split-button behaviour.
   button, one type or the whole app.
 - [Using the ZestButton on/off toggle](../zest-button-toggle/guide.md) — combine a toggle
   with a semantic type.
+- [Styling toggle buttons from one place](../zest-button-toggle-style/guide.md) — set the
+  look of toggles, including per variant, from the provider.
 - [Dropdown options feature record](../zest-button-dropdown-options/BRS.md) — split
   buttons and menu items.
 - [Shipped feature guide](../../../documentation/features.md#semantic-types) and

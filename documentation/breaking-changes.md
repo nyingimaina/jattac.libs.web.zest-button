@@ -9,12 +9,21 @@ This document lists significant changes between versions that might require modi
 
 ## Table of Contents
 
+- [Version 1.8.0](#version-180)
 - [Version 1.7.0](#version-170)
 - [Version 1.6.0](#version-160)
 - [Version 2.0.0 (unreleased)](#version-200-unreleased)
 - [Version 1.2.7](#version-127)
 - [Version 1.2.6](#version-126)
 - [Version 1.2.0](#version-120)
+
+---
+
+## Version 1.8.0
+
+### Toggle styling from the provider (additive, no breaking changes)
+
+Adds `styles.toggle` to `ZestGlobalConfig`, `zest.toggleOptions.style`, and the exported types `ZestToggleStyle`, `ZestToggleStyleLayer`, `ZestToggleStateLooks`, `ZestToggleStyleLook`, `ZestToggleStyleValue` and `ZestButtonStyles`. No existing field or export changed. Toggles that do not use the new settings render as before, with one new inert attribute on the check mark. No action is needed to upgrade.
 
 ---
 

@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 0,
+  "runId": "20261025-205614",
+  "at": "2026-10-25T21:29:47.9152255+00:00",
+  "status": "Completed",
+  "feature": "just like D:\\work\\nyingi\\code\\systems\\Jattac.Libs.Web.ZestTextbox has a provider that allows for a unitary point where configs can be done and then apply system wide. LEt\u0027s leverage the same for zestbutton with first configurable thing being styling, such that for example we can specify to the pixel the look and feel of toggle buttons meaning colours, variations, sizes, hover effects, ideally anything supported by css",
+  "testsReported": 61,
+  "checksPassed": 17,
+  "checksTotal": 22,
+  "checksNotRun": 4,
+  "bootPassed": 0,
+  "bootTotal": 0,
+  "findingsOpen": 0,
+  "findingsAdvisory": 21,
+  "findingsFixed": 1,
+  "requirementsTotal": 10,
+  "requirementsWithTests": 10,
+  "costUsd": 5.809059099999999,
+  "seconds": 2013.1066841,
+  "coverage": [
+    {
+      "name": "Library",
+      "linePercent": 99.1,
+      "branchPercent": 95.6,
+      "changedLinePercent": 98.9,
+      "filesCovered": 72,
+      "functionPercent": 98.6
+    }
+  ],
+  "testsExecuted": 0,
+  "testsFailed": 0,
+  "testsSkipped": 0,
+  "verification": false
+}

@@ -1,0 +1,261 @@
+{
+  "summary": "ZestButtonConfigProvider gets one central place to set the exact look of toggle buttons for a whole app: colours, variations, sizes, hover effects and other CSS properties, separately for the off and on states and for light and dark themes. It follows the same idea as the ZestTextbox provider. Only toggle buttons (ZestButton with zest.toggleOptions) are styled in this release, but the settings are organised by button kind so plain, danger, outline and other kinds can be added later without breaking anyone. It is additive: apps that do not pass the new settings look exactly as they do today. It is for developers who install the library and wrap their app in the provider; their end users see the result.",
+  "roles": [
+    "App developer: installs the library, wraps the app in ZestButtonConfigProvider and sets the toggle look once",
+    "End user of that app: sees and operates the styled toggle buttons by pointer, touch or keyboard"
+  ],
+  "requirements": [
+    {
+      "id": "R1",
+      "text": "ZestButtonConfigProvider accepts a new optional styling section in its config, organised by button kind, where the only kind defined in this release is \"toggle\". Example: <ZestButtonConfigProvider config={{ styles: { toggle: { off: { background: '#eee' }, on: { background: '#0a7' } } } }}>.",
+      "rationale": "The builder wants one unitary place to set the look app-wide, like the ZestTextbox provider, with toggles first and other kinds addable later without breaking the settings shape.",
+      "acceptance": [
+        "Every ZestButton with zest.toggleOptions inside the provider uses the configured look without any per-button styling props",
+        "Toggle buttons outside the provider, or inside a provider with no styling section, render exactly as they do today",
+        "Existing provider config (defaultProps, semanticTypeDefaults) keeps working unchanged when the styling section is present",
+        "Adding a future button kind to the styling section would not require changing the meaning of the existing \"toggle\" settings"
+      ],
+      "edgeCases": [
+        "A provider with an empty styling section (styles: {}) or empty toggle settings changes nothing",
+        "Two nested providers: the inner provider's toggle styling applies to buttons inside it, and settings it does not give fall back to the built-in look, not to the outer provider's"
+      ],
+      "pitfalls": [
+        "Styling a plain (non-toggle) button because it sits inside a provider that has toggle settings",
+        "Changing the look of existing apps that never pass the new section"
+      ],
+      "rules": ["LIB-001", "USR-004"],
+      "facts": [
+        { "subject": "toggle styling", "attribute": "button kinds affected", "op": "equals", "value": "toggle only" },
+        { "subject": "toggle styling", "attribute": "change type", "op": "equals", "value": "additive" }
+      ]
+    },
+    {
+      "id": "R2",
+      "text": "The developer can set these looks for a toggle: background, text colour, border (colour, width, style), corner radius, shadow, check-mark colour and size, and opacity, plus any other CSS property the toggle can take, as a map of CSS property names to values (for example { background: '#0a7', boxShadow: 'inset 0 2px 4px rgba(0,0,0,.3)', borderRadius: '0.5rem' }). Values are used exactly as given, so a developer can choose pixel-exact values.",
+      "rationale": "The builder asked to specify the look \"to the pixel\", ideally anything supported by CSS, so a fixed short list of options would fall short.",
+      "acceptance": [
+        "A configured colour, radius, shadow and border appear on every toggle button",
+        "A CSS property outside the named ones (for example letterSpacing or transition) given in the map is applied to the toggle",
+        "A value written in px, rem, em or % is used as written"
+      ],
+      "edgeCases": [
+        "A property the developer gives in kebab-case (letter-spacing) or camelCase (letterSpacing) is applied once and works either way",
+        "A property or value the browser does not understand is ignored without affecting the other properties",
+        "A value that tries to break out of the declaration (for example containing a semicolon followed by another rule, or a closing brace) cannot change any property other than the one it was given for"
+      ],
+      "pitfalls": [
+        "One bad value must not stop the other configured values from applying",
+        "Values must not be able to inject extra rules or scripts into the page"
+      ],
+      "rules": ["UI-001", "USR-003"],
+      "facts": [
+        { "subject": "toggle style value", "attribute": "unit used", "op": "equals", "value": "as written by the developer" }
+      ]
+    },
+    {
+      "id": "R3",
+      "text": "Each look in R2 can be set separately for the toggle's states: off, on, hover while off, hover while on, keyboard focus, disabled and busy.",
+      "rationale": "Hover effects and the pressed look are the heart of a toggle; the builder named hover effects and the on/off colours explicitly.",
+      "acceptance": [
+        "Setting only the on-state background changes the background of a pressed toggle and leaves the off state at its built-in look",
+        "Hovering an off toggle shows the configured off-hover look; hovering an on toggle shows the configured on-hover look",
+        "A disabled toggle shows the configured disabled look and still does not react to clicks",
+        "A toggle that is busy shows the configured busy look"
+      ],
+      "edgeCases": [
+        "A toggle that is on and disabled shows the disabled look layered on the on look, not the off look",
+        "On touch devices without hover, the hover look does not stay stuck on after a tap"
+      ],
+      "pitfalls": [
+        "Hover settings must not apply to a disabled toggle",
+        "Switching on and off must still play the existing check-mark animation"
+      ],
+      "rules": ["UI-001", "USR-002"],
+      "facts": [
+        { "subject": "toggle styling", "attribute": "states settable", "op": "one-of", "value": "off, on, hover-off, hover-on, focus, disabled, busy" }
+      ]
+    },
+    {
+      "id": "R4",
+      "text": "The developer can give different looks to each existing variant (ZestVariant values) and each existing size (ZestSize values) of a toggle, in addition to a look that applies to all toggles. Example: styles.toggle.sizes.large = { minHeight: '3rem', fontSize: '1.125rem' } and styles.toggle.variants.danger = { on: { background: '#c00' } }. When looks conflict, the more specific intent wins: the variant look beats the size look, and the size look beats the all-toggles look.",
+      "rationale": "The builder asked for control of colours, variations and sizes. A variant carries the button's colour intent (for example danger is red), so it must not be overridden by a generic size look that happens to set the same property.",
+      "acceptance": [
+        "A look set for size \"large\" applies only to large toggles",
+        "A look set for a variant applies only to toggles of that variant",
+        "When the all-toggles look, a size look and a variant look all set the same property, the variant look wins over the size look, and the size look wins over the all-toggles look",
+        "A large toggle of variant danger, where the size look and the variant look both set the background, shows the variant's background and still takes the size look's other properties",
+        "A variant or size name the library does not know is ignored without an error"
+      ],
+      "edgeCases": [
+        "A toggle with no explicit size or variant uses the library's default size and variant for these lookups",
+        "A toggle whose semantic type supplies a variant by default (for example danger for delete) uses that variant's configured look",
+        "A size look and a variant look that set different properties are both applied; only the properties they share are decided by precedence"
+      ],
+      "pitfalls": ["Variant and size looks must not leak onto buttons of other variants or sizes"],
+      "rules": ["LIB-001"],
+      "facts": [
+        { "subject": "toggle styling", "attribute": "precedence order (lowest to highest)", "op": "equals", "value": "built-in look, all toggles, size, variant, per-button override" }
+      ]
+    },
+    {
+      "id": "R5",
+      "text": "Looks can be given separately for light and dark themes, and a look given without a theme applies to both. The toggle follows the same light, dark and system theme choice the button already follows.",
+      "rationale": "UI-001 requires every component to work in light, dark and system themes, and a pixel-exact look usually needs different colours in each.",
+      "acceptance": [
+        "With a light-only background configured and the dark theme active, the toggle shows the configured dark value, or the built-in dark look when none is given",
+        "Switching the theme (or the system theme) updates the toggle's configured look without a reload"
+      ],
+      "edgeCases": [
+        "A toggle with a theme setting of \"system\" follows the operating system theme and changes live when it changes"
+      ],
+      "pitfalls": ["A light-only colour must not leave unreadable text on the built-in dark look"],
+      "rules": ["UI-001"],
+      "facts": []
+    },
+    {
+      "id": "R6",
+      "text": "A single toggle can override the app-wide look for itself through the same settings shape on its own props (for example zest.toggleOptions.style). The per-button value beats every app-wide value (all-toggles, size and variant looks) for the properties it gives.",
+      "rationale": "App-wide settings are the default, but one-off buttons need an exception without leaving the provider.",
+      "acceptance": [
+        "A toggle with its own background setting shows it while other toggles show the provider's background",
+        "Properties the toggle does not override still come from the provider",
+        "A per-button property beats a variant or size look that sets the same property"
+      ],
+      "edgeCases": ["Changing the per-button setting later (re-render) updates that button's look"],
+      "pitfalls": ["A per-button override must not change any other toggle"],
+      "rules": ["LIB-001"],
+      "facts": []
+    },
+    {
+      "id": "R7",
+      "text": "The toggle keeps working and stays usable under any configured look: the on/off behaviour, keyboard operation, aria-pressed and check mark are unaffected, and a visible focus indicator remains unless the developer sets the focus look themselves.",
+      "rationale": "Styling must never break the decided toggle behaviour or leave keyboard users unable to see where they are.",
+      "acceptance": [
+        "With heavy styling configured, clicking, Space and Enter still toggle and aria-pressed still reports the state",
+        "With no focus look configured, a keyboard-focused toggle still shows the built-in focus ring in both states",
+        "Configured check-mark position (start or end) is unaffected by styling settings"
+      ],
+      "edgeCases": [
+        "A developer who sets the check-mark colour equal to the on background still gets a working toggle; the screen-reader state is aria-pressed, not colour"
+      ],
+      "pitfalls": ["Style settings must not change what screen readers announce"],
+      "rules": ["UI-001"],
+      "facts": [
+        { "subject": "toggle", "attribute": "visible focus indicator by default", "op": "must", "value": "present in both off and on states" }
+      ]
+    },
+    {
+      "id": "R8",
+      "text": "Invalid or unexpected settings never break rendering: unknown keys, wrong value types, null or undefined values and unknown variant or size names are ignored, and the affected property falls back to the next lower look in the precedence order.",
+      "rationale": "A library used app-wide must not take an app down because of one typo in a config object.",
+      "acceptance": [
+        "A config with an unknown key renders all toggles without throwing",
+        "A numeric or null value where text is expected is ignored for that property only",
+        "No console error is produced for an ignored setting in production use"
+      ],
+      "edgeCases": [
+        "A config that is replaced while the app is running (new object, different values) restyles toggles on the next render",
+        "A config object whose contents are identical but is recreated on every render of the app does not cause visible flicker"
+      ],
+      "pitfalls": ["A thrown error in styling must not unmount the app's buttons"],
+      "rules": ["USR-003"],
+      "facts": []
+    },
+    {
+      "id": "R9",
+      "text": "The new settings are exported with their types from the library entry point (for example a ZestToggleStyle type and the extended ZestGlobalConfig), nothing already exported is removed or changed, and the package version is bumped for an additive release.",
+      "rationale": "Developers need typed, discoverable settings; LIB-001 requires the public surface to change only as designed and be versioned.",
+      "acceptance": [
+        "The new style types can be imported from the package root and a typed config with a misspelled key is a compile-time error for known keys",
+        "All previously exported names, props and types still exist with unchanged meaning",
+        "package.json version is raised by a minor version and docs/breaking-changes.md states that this release has no breaking changes"
+      ],
+      "edgeCases": ["An app on React 18 and an app on React 19 both accept the same config; the provider and styled toggles work in Next.js App Router client components"],
+      "pitfalls": ["Renaming or changing the type of an existing ZestGlobalConfig field"],
+      "rules": ["LIB-001", "DOC-001"],
+      "facts": [
+        { "subject": "release", "attribute": "version bump", "op": "equals", "value": "minor (additive)" }
+      ]
+    },
+    {
+      "id": "R10",
+      "text": "Every new setting is documented with a runnable example: README.md (first working example of styling toggles through the provider), docs/examples.md (recipes: brand colours, dark-theme override, per-size and per-variant looks, hover effect, per-button override), docs/features.md, docs/api.md (settings, states, precedence), docs/configuration.md and docs/breaking-changes.md, each linking to the previous and next page.",
+      "rationale": "DOC-001 and the stack guidance require every visible feature to be explained where readers look.",
+      "acceptance": [
+        "Each listed page mentions the toggle styling settings and contains at least one code example that compiles against the exported types",
+        "The precedence order from R4 and R6 (built-in, all toggles, size, variant, per-button; lowest to highest) is written down once in docs/configuration.md and linked from api.md",
+        "Each documentation page has working links to its previous and next page"
+      ],
+      "edgeCases": ["Documentation examples use only settings that exist, with the same names as the exported types"],
+      "pitfalls": ["Documentation that describes settings for non-toggle buttons, which are out of scope"],
+      "rules": ["DOC-001"],
+      "facts": []
+    }
+  ],
+  "outOfScope": [
+    "Styling plain, danger, outline and other non-toggle buttons from the provider (the settings are shaped so these can be added later)",
+    "A visual theme-builder or preview tool",
+    "Changing the toggle's behaviour, check-mark animation or accessibility semantics already decided",
+    "Automatic contrast checking of developer-chosen colours",
+    "Styling the dropdown menu or the spinner"
+  ],
+  "nonFunctional": [
+    {
+      "area": "performance",
+      "statement": "Applying the styling does not add per-button timers, listeners or repeated identical work; the same settings are processed once per change, not once per button per render, and 100 styled toggles render without noticeable delay on low-spec devices.",
+      "acceptance": "A test renders 100 toggles under one provider with full styling and checks that no extra timers or listeners are left after unmount, and that re-rendering with an unchanged settings object does not recompute the styling for each button."
+    },
+    {
+      "area": "performance",
+      "statement": "The feature does not add runtime dependencies and keeps the bundle growth small.",
+      "acceptance": "package.json dependencies are unchanged and the built bundle size grows by no more than 5 KB gzipped compared with the previous release."
+    },
+    {
+      "area": "accessibility",
+      "statement": "Styling does not remove keyboard operability, aria-pressed or the default visible focus indicator, and the check mark stays hidden from screen readers.",
+      "acceptance": "Tests with heavy styling confirm aria-pressed, Space/Enter operation, the focus indicator and an aria-hidden check mark."
+    },
+    {
+      "area": "security",
+      "statement": "A developer-supplied style value can only set the single property it is given for; it cannot add rules, selectors or scripts.",
+      "acceptance": "A test passes values containing semicolons, braces and url() script-like strings and checks that no other property or rule appears on the page."
+    },
+    {
+      "area": "reliability",
+      "statement": "Works in light, dark and system themes, in React 18 and 19, and in Next.js App Router client components; sizes in the library's own defaults stay in rem (px only for borders).",
+      "acceptance": "Tests cover the three themes; the existing build and peer-dependency tests still pass; the library's own CSS contains no new px sizes other than borders."
+    }
+  ],
+  "risks": [
+    "Because any CSS property can be set, a developer can create a toggle that is hard to read; the library does not check contrast.",
+    "Provider configs created inline on every render could cause extra work if each change is processed per button.",
+    "The README, features and API docs may already be partly out of date, so the new pages must not contradict the toggle documentation written earlier."
+  ],
+  "tensions": [],
+  "glossary": [
+    "Toggle: a ZestButton with zest.toggleOptions; it stays pressed when on and shows a check mark.",
+    "Provider: ZestButtonConfigProvider, the wrapper that sets defaults for every ZestButton below it.",
+    "Look: a map of CSS property names to values for one state of one toggle.",
+    "State: off, on, hover while off, hover while on, focus, disabled or busy."
+  ],
+  "questions": [],
+  "coverage": [
+    { "topic": "users", "status": "answered", "note": "Developers who install the library and wrap the app in the provider; end users see the result." },
+    { "topic": "data", "status": "answered", "note": "Builder decided: toggle buttons first, shaped so other kinds can be added later. Settings shape is described in R1-R6." },
+    { "topic": "permissions", "status": "not-applicable", "note": "A UI library: no records, ownership or sharing." },
+    { "topic": "validation", "status": "assumed", "note": "Invalid or unknown settings are ignored for that property only (R8)." },
+    { "topic": "states", "status": "answered", "note": "Off, on, hover, focus, disabled and busy states are covered in R3." },
+    { "topic": "duplicates", "status": "not-applicable", "note": "No submissions or shared records; only config precedence, covered in R4 and R6." },
+    { "topic": "volume", "status": "assumed", "note": "Up to about 100 toggles on one screen under one provider (NFR performance)." },
+    { "topic": "deletion", "status": "not-applicable", "note": "Nothing is stored or deleted." },
+    { "topic": "privacy", "status": "not-applicable", "note": "No personal data is handled." },
+    { "topic": "quality", "status": "assumed", "note": "Light/dark/system themes, accessibility, security, bundle budget and React 18/19 covered in nonFunctional." }
+  ],
+  "assumptions": [
+    "The setting is named styles.toggle in the provider config and zest.toggleOptions.style on a single button; exact names can be refined at design time as long as the behaviour above holds.",
+    "A per-button override (R6) is included because a central provider without an escape hatch would force wrappers for one-off buttons.",
+    "Developer-supplied values are used exactly as written (px allowed), because the builder asked for pixel-exact control; the library's own defaults stay in rem.",
+    "The release is a minor, additive version bump.",
+    "Where a size look and a variant look set the same property, the variant look wins, because the variant carries the button's colour intent; this matches the design and replaces the earlier size-over-variant wording."
+  ]
+}

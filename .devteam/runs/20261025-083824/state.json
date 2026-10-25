@@ -1,0 +1,381 @@
+{
+  "runId": "20261025-083824",
+  "options": {
+    "browser": "none",
+    "visible": false,
+    "document": false,
+    "referenceFolders": []
+  },
+  "browser": {
+    "ran": false,
+    "passed": false,
+    "visible": false,
+    "document": false,
+    "seconds": 0,
+    "treeHash": "96B9186EA6389F945A3A9D9985E4AB9D1356AB3542546C1CD736F326E7BEFDA5",
+    "reason": "you chose not to run them for this run",
+    "output": ""
+  },
+  "isVerification": true,
+  "stageSeconds": {},
+  "timeCapExtensions": {},
+  "stageClockStart": {},
+  "featureRequest": "Verification: the app as it is, nothing changed",
+  "packId": "react-component-library",
+  "status": "completed",
+  "currentStage": "define",
+  "stages": {
+    "define": "pending",
+    "design": "pending",
+    "build": "pending",
+    "challenge": "pending",
+    "prove": "pending"
+  },
+  "defineRound": 1,
+  "designRound": 1,
+  "buildRound": 1,
+  "slicesDone": 0,
+  "sliceReports": [],
+  "revisionsUsed": 0,
+  "requirementKickbacks": 0,
+  "planReviewRounds": 0,
+  "planConflictHashes": [],
+  "sizeApproved": false,
+  "lastPlanConflicts": [],
+  "planRounds": [],
+  "planCheck": "notChecked",
+  "planWaivedRules": [],
+  "setAsideRequirements": [],
+  "reusedChecks": {
+    "lib-typecheck": "20261025-083546|2026-10-25T08:36:28.3633873\u002B00:00",
+    "lib-tests": "20261025-083546|2026-10-25T08:36:28.3633873\u002B00:00",
+    "lib-build": "20261025-083546|2026-10-25T08:36:28.3633873\u002B00:00",
+    "lib-pack": "20261025-083546|2026-10-25T08:36:28.3633873\u002B00:00",
+    "lib-publish-dry-run": "20261025-083546|2026-10-25T08:36:28.3633873\u002B00:00"
+  },
+  "tensionPair": [],
+  "tensionDiagnoses": {},
+  "specialists": [],
+  "specialistsDone": [],
+  "specialistCallbacks": 0,
+  "specialistHashes": {},
+  "ran": [],
+  "accepted": {},
+  "extraRounds": 0,
+  "reviewPasses": 0,
+  "costUsd": 0,
+  "budgetUsd": 0,
+  "agentCalls": 0,
+  "modelCalls": {},
+  "startedAt": "2026-10-25T08:38:24.126062+00:00",
+  "updatedAt": "2026-10-25T08:38:31.7861709+00:00",
+  "completedAt": "2026-10-25T08:38:31.4400553+00:00",
+  "findings": [],
+  "lastChecks": [
+    {
+      "id": "no-secrets",
+      "name": "No secrets in code",
+      "passed": true,
+      "seconds": 0.1160361,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "SEC-001"
+      ]
+    },
+    {
+      "id": "no-debug-leftovers",
+      "name": "No debugging leftovers",
+      "passed": true,
+      "seconds": 0.0980448,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "QUAL-001"
+      ]
+    },
+    {
+      "id": "lib-typecheck",
+      "name": "Type check (library and tests)",
+      "passed": true,
+      "seconds": 0,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "Not run: its files are exactly as they were when it passed in run 20261025-083546 (2 min ago).",
+      "rules": []
+    },
+    {
+      "id": "lib-tests",
+      "name": "Tests, with coverage",
+      "passed": true,
+      "seconds": 0,
+      "notRun": false,
+      "flaky": false,
+      "tier": "full",
+      "output": "Not run: its files are exactly as they were when it passed in run 20261025-083546 (2 min ago).",
+      "rules": []
+    },
+    {
+      "id": "lib-build",
+      "name": "Build (CommonJS, ES modules, type definitions)",
+      "passed": true,
+      "seconds": 0,
+      "notRun": false,
+      "flaky": false,
+      "tier": "full",
+      "output": "Not run: its files are exactly as they were when it passed in run 20261025-083546 (2 min ago).",
+      "rules": []
+    },
+    {
+      "id": "lib-validate-package",
+      "name": "Package check (attw and publint)",
+      "passed": false,
+      "seconds": 0.1470196,
+      "notRun": true,
+      "flaky": false,
+      "tier": "full",
+      "output": "Not set up in this project: attw and publint are not installed, so nothing checks that the package works for everyone who installs it.",
+      "rules": [
+        "LIB-002"
+      ]
+    },
+    {
+      "id": "lib-pack",
+      "name": "What would be published",
+      "passed": true,
+      "seconds": 0,
+      "notRun": false,
+      "flaky": false,
+      "tier": "full",
+      "output": "Not run: its files are exactly as they were when it passed in run 20261025-083546 (2 min ago).",
+      "rules": []
+    },
+    {
+      "id": "lib-publish-dry-run",
+      "name": "Publish dry run (everything npm checks, nothing is uploaded)",
+      "passed": true,
+      "seconds": 0,
+      "notRun": false,
+      "flaky": false,
+      "tier": "full",
+      "output": "Not run: its files are exactly as they were when it passed in run 20261025-083546 (2 min ago).",
+      "rules": [
+        "LIB-003"
+      ]
+    },
+    {
+      "id": "lib-size",
+      "name": "Size budget",
+      "passed": false,
+      "seconds": 0.3171183,
+      "notRun": true,
+      "flaky": false,
+      "tier": "full",
+      "output": "Not set up in this project: The project has no .size-limit.json, so this check has nothing to run.",
+      "rules": [
+        "EFF-001"
+      ]
+    },
+    {
+      "id": "lib-consumer-smoke",
+      "name": "Install and import the packed library",
+      "passed": false,
+      "seconds": 0.2164173,
+      "notRun": true,
+      "flaky": false,
+      "tier": "full",
+      "output": "Not set up in this project: Nothing installs the packed library into a scratch project and imports it  no scripts/consumer-smoke.mjs .",
+      "rules": [
+        "LIB-003",
+        "LIB-004",
+        "LIB-005"
+      ]
+    },
+    {
+      "id": "lib-docs",
+      "name": "Documentation is complete",
+      "passed": false,
+      "seconds": 0.2199122,
+      "notRun": true,
+      "flaky": false,
+      "tier": "fast",
+      "output": "Not set up in this project: The project has no scripts/check-docs.mjs, so this check has nothing to run.",
+      "rules": [
+        "DOC-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-1",
+      "name": "No native button element",
+      "passed": true,
+      "seconds": 0.0902457,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-2",
+      "name": "No native table element",
+      "passed": true,
+      "seconds": 0.0954093,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-3",
+      "name": "No native text box or text area",
+      "passed": true,
+      "seconds": 0.1718844,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-001-4",
+      "name": "No native file upload input",
+      "passed": true,
+      "seconds": 0.1846708,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-001"
+      ]
+    },
+    {
+      "id": "rule-USR-002-1",
+      "name": "No tiny fixed pixel font sizes",
+      "passed": true,
+      "seconds": 0.0889583,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-002"
+      ]
+    },
+    {
+      "id": "rule-USR-002-2",
+      "name": "Do not block pinch-zoom on mobile",
+      "passed": true,
+      "seconds": 0.0978826,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-002"
+      ]
+    },
+    {
+      "id": "rule-USR-003-1",
+      "name": "No dynamic code execution (eval / new Function)",
+      "passed": true,
+      "seconds": 0.0969459,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-2",
+      "name": "No raw HTML injection (XSS risk)",
+      "passed": true,
+      "seconds": 0.0949695,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-3",
+      "name": "No string-based timers (hidden eval)",
+      "passed": true,
+      "seconds": 0.0969123,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-003-4",
+      "name": "No leftover debugger statements or console.log",
+      "passed": true,
+      "seconds": 0.0932826,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-003"
+      ]
+    },
+    {
+      "id": "rule-USR-006-1",
+      "name": "No hard-coded colours in component code (use shared design tokens)",
+      "passed": true,
+      "seconds": 0.0985582,
+      "notRun": false,
+      "flaky": false,
+      "tier": "fast",
+      "output": "No forbidden pattern found.",
+      "rules": [
+        "USR-006"
+      ]
+    }
+  ],
+  "checkPassedOn": {
+    "lib-typecheck": "CC26A61E17A1089162BC7F6069D4F6A41EBBBEE31521AB19BC3A64BDEB2DB266",
+    "lib-tests": "0BF635B8271AF3C208B19A1FC33152EFD30D57E3F5E95E587571C47B9197001E",
+    "lib-build": "38536558BB109A7FF8E57427F737B208CCF9030641C108A10CD78E48ACA0DDD3",
+    "lib-pack": "5D18ABF65D84BD0BC15F04B18DB76BA9458AF9929126126A610D26A8AF59AC8F",
+    "lib-publish-dry-run": "E51DB9C2B8348C5D8207CC0C221CE02C1D4F6AA07160280601550D1ABA4ACDB3"
+  },
+  "checkFailedOn": {},
+  "generatedByChecks": [],
+  "ignoredPaths": [],
+  "acceptedGaps": [],
+  "scopeExtensions": [],
+  "rulings": [],
+  "shortcuts": 0,
+  "routeHistory": [],
+  "amendments": [],
+  "scopeSeen": {},
+  "scopeRequestsMade": 0,
+  "preflightAnswered": false,
+  "analystQuestions": 0,
+  "analysisClosed": false,
+  "youDecided": 0,
+  "requirementsApproved": false,
+  "signOffRounds": 0,
+  "changedFiles": []
+}

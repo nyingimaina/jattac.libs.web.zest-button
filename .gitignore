@@ -17,3 +17,12 @@ out/
 .turbo/
 dist/
 coverage/
+# Added by DevTeam: test results are made fresh by every check and must never be saved with the work.
+.coverage/
+TestResults/
+.nyc_output/
+*.trx
+*.cobertura.xml
+# Added by DevTeam: its own check and run records are bookkeeping, not the person's work; never let them block a merge.
+.devteam/lessons/checks.json
+.devteam/runs-index.json

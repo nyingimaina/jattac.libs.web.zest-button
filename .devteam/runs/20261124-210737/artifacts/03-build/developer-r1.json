@@ -1,0 +1,41 @@
+{
+  "summary": "Finished slice 2 of revision 1 (R1, A4). README.md gained a focus-streak key-feature bullet and an 'Opt-in Keyboard Focus Streak' section with regular and split examples that links the new guide. documentation/configuration.md gained a 'Focus Streak Defaults' section plus TOC entry, showing how the provider's defaultProps sets focusSheen app-wide and how a single button opts out. Extended the A4 coverage in __tests__/ZestButtonFocusSheen.test.tsx to assert the configuration page (defaultProps, reduced motion, guide link) and the README (focusSheen, dropdownOptions, guide link). Verified the slice-1 artifacts (focusSheen prop, focus-streak CSS, focus-sheen and characterization tests, guide, api/features/examples docs) are present and untouched. All checks run: tsc typecheck, focused jest (32/32), npm run build, and full npm test (26 suites, 332 tests pass).",
+  "tests": [
+    {
+      "name": "R1: focusSheen is off by default and opts in per button without leaking",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": ["R1"]
+    },
+    {
+      "name": "R1: focusSheen={false} renders no streak layer",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": ["R1"]
+    },
+    {
+      "name": "R1: turning focusSheen off at runtime removes the streak layer from a regular button and a split control",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": ["R1"]
+    },
+    {
+      "name": "R1: a split button opts in with one whole-control layer and no per-segment layer",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": ["R1"]
+    },
+    {
+      "name": "R1: opting in leaves the accessible name, role and pressed state alone",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": ["R1"]
+    },
+    {
+      "name": "A4: the API, features and examples pages document focusSheen for regular and split buttons",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": ["A4"]
+    },
+    {
+      "name": "A4: the configuration page sets focusSheen app-wide through defaultProps and the README links the guide",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": ["A4"]
+    }
+  ],
+  "kickbacks": []
+}

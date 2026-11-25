@@ -1,0 +1,4 @@
+{
+  "summary": "Consistent: R10-R13 are covered by the design's test files, documentation note and version bump, and nothing in the design demands what a blocking rule forbids or leaves a requirement unprovable.",
+  "conflicts": []
+}

@@ -1,7 +1,7 @@
 ---
 title: AI Code Review
-covers: AGENTS.md, docs/guidelines/AI_CODE_REVIEW.md
-covers-hash: 056540fd8b8f9a01779d
+covers: agents.md
+covers-hash: fe01860d678e208df487
 ---
 
 # AI Code Review

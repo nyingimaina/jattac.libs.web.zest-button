@@ -1,0 +1,17 @@
+{"at":"2026-11-24T21:08:22.2475536+00:00","event":"spawned","runId":"20261124-210737","args":"resume","pid":0,"exitCode":null,"note":""}
+{"at":"2026-11-24T21:08:27.4050634+00:00","event":"spawned","runId":"20261124-210737","args":"resume","pid":0,"exitCode":null,"note":""}
+{"at":"2026-11-24T21:08:48.597004+00:00","event":"spawned","runId":"20261124-210737","args":"resume","pid":0,"exitCode":null,"note":""}
+{"at":"2026-11-24T21:09:11.4234658+00:00","event":"spawned","runId":"20261124-210737","args":"resume","pid":0,"exitCode":null,"note":""}
+{"at":"2026-11-24T21:09:50.1958083+00:00","event":"spawned","runId":"20261124-210737","args":"resume","pid":0,"exitCode":null,"note":""}
+{"at":"2026-11-24T21:19:56.9616669+00:00","event":"spawned","runId":"20261124-210737","args":"resume","pid":0,"exitCode":null,"note":""}
+{"at":"2026-11-24T21:19:57.4557925+00:00","event":"started","runId":"20261124-210737","args":"resume","pid":49232,"exitCode":null,"note":"the run was running"}
+{"at":"2026-11-24T21:19:59.2537809+00:00","event":"exited","runId":"20261124-210737","args":"resume","pid":49232,"exitCode":2,"note":"ended with the run awaitingdecision"}
+{"at":"2026-11-24T21:20:06.9470737+00:00","event":"spawned","runId":"20261124-210737","args":"resume","pid":0,"exitCode":null,"note":""}
+{"at":"2026-11-24T21:20:07.4083404+00:00","event":"started","runId":"20261124-210737","args":"resume","pid":1692,"exitCode":null,"note":"the run was running"}
+{"at":"2026-11-24T22:46:08.9511232+00:00","event":"exited","runId":"20261124-210737","args":"resume","pid":1692,"exitCode":0,"note":"ended with the run completed"}
+{"at":"2026-11-25T03:54:42.5111968+00:00","event":"spawned","runId":"20261124-233901","args":"resume","pid":0,"exitCode":null,"note":""}
+{"at":"2026-11-25T03:54:43.209282+00:00","event":"started","runId":"20261124-233901","args":"resume","pid":48084,"exitCode":null,"note":"the run was running"}
+{"at":"2026-11-25T03:55:01.4876011+00:00","event":"exited","runId":"20261124-233901","args":"resume","pid":48084,"exitCode":0,"note":"ended with the run completed"}
+{"at":"2026-11-25T03:55:33.3324272+00:00","event":"spawned","runId":"20261124-233901","args":"resume","pid":0,"exitCode":null,"note":""}
+{"at":"2026-11-25T03:55:33.7777453+00:00","event":"started","runId":"20261124-233901","args":"resume","pid":47296,"exitCode":null,"note":"the run was completed"}
+{"at":"2026-11-25T03:55:47.6031539+00:00","event":"exited","runId":"20261124-233901","args":"resume","pid":47296,"exitCode":0,"note":"nothing to resume: run 20261124-233901 is completed"}

@@ -1,0 +1,27 @@
+{
+  "findings": [
+    {
+      "cites": "R4",
+      "severity": "advisory",
+      "file": "Styles/ZestButton.module.css",
+      "line": 668,
+      "evidence": "The non-solid regular band falls back to `currentColor` at --zest-focus-sheen-peak: 0.7 (gradient line 660, peak line 668), and the non-solid split band uses the variant border token at the same 0.7 peak (`--zest-focus-sheen-color: var(--zest-color-success-border)` line 717, peak line 741). For light-theme success that token is #059669 (lines 13/87), so alpha-blending 0.7 over a white page gives rgb(80,182,150) = 2.49:1, below R4's required 3:1 at the band's brightest point. This affects outline.success, text.success and dashed.success in the light theme on both regular and split buttons (six combinations). The only contrast test (__tests__/ZestButtonFocusSheen.test.tsx:329-378) computes solid fills only, so nothing fails if these bands are too faint. R4's edge case 'A text-style button with no fill behind it must still show a band against the page' is therefore not met at the stated threshold for success in the light theme.",
+      "description": "Non-solid light-theme success bands are 2.49:1 against a white page, below R4's 3:1 acceptance, and no test covers non-solid contrast."
+    },
+    {
+      "cites": "R5",
+      "severity": "advisory",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "line": 431,
+      "evidence": "The only split-control focus test fires focus on the main button then the trigger (lines 436-437) and asserts a single .focusSheenSplit overlay; it never blurs the whole control and re-focuses to prove a fresh sweep on return. The only blur/re-focus replay test (lines 158-171) is for a regular button, not a split control. R5's edge case 'leaving the control and returning does [start a new sweep]' has no test that would fail if the split sweep failed to restart.",
+      "description": "Split-control leave-and-return replay is not proven by any test; only regular-button replay is covered."
+    }
+  ],
+  "verifications": [
+    {
+      "id": "REV-2",
+      "status": "open",
+      "evidence": "package.json:28-33 still publishes only dist, README.md, LICENSE and documentation (unchanged by this round). `npm pack --dry-run` lists 32 files, all under dist/README/documentation, and no docs/ entry. The change still links to the unpublished guide at README.md:145, documentation/api.md:220, documentation/configuration.md:136, documentation/examples.md:477 and documentation/features.md:264, so all five guide links are dead in the shipped npm package. The developer's round-3 report only disputes REV-1 and says the rest is unchanged, so REV-2 was not addressed."
+    }
+  ]
+}

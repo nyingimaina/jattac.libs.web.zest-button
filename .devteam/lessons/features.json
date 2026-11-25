@@ -1,0 +1,82 @@
+{
+  "runs": [
+    {
+      "runId": "20261025-080947",
+      "feature": "add a toggle on/off state that beautifully render and clearly communicate state",
+      "areas": [
+        "documentation",
+        "(project root)",
+        "__tests__",
+        "docs/features/zest-button-toggle",
+        "Styles",
+        "UI/hooks"
+      ]
+    },
+    {
+      "runId": "20261025-084314",
+      "feature": "exhaustive semantic types and standardized icons (svg?)",
+      "areas": [
+        "documentation",
+        "__tests__",
+        "UI",
+        "(project root)",
+        "Styles",
+        "__tests__/hooks"
+      ]
+    },
+    {
+      "runId": "20261025-202653",
+      "feature": "Continue an earlier feature that was stopped before it was finished. Do not start over.",
+      "areas": [
+        "__tests__",
+        "(project root)"
+      ]
+    },
+    {
+      "runId": "20261025-205614",
+      "feature": "just like D:\\work\\nyingi\\code\\systems\\Jattac.Libs.Web.ZestTextbox has a provider that\u2026",
+      "areas": [
+        "documentation",
+        "(project root)",
+        "UI",
+        "UI/toggleStyle",
+        "__tests__/toggleStyle",
+        "__tests__"
+      ]
+    },
+    {
+      "runId": "20261124-210737",
+      "feature": "A host turns the focus streak on per button with an optional boolean\u2026 (and 4 more)",
+      "areas": [
+        "documentation",
+        "__tests__",
+        "docs/features/zest-button-focus-sheen",
+        "(project root)",
+        "Styles",
+        "UI"
+      ]
+    },
+    {
+      "runId": "20261124-224802",
+      "feature": "On a split button where the sheen is in use (\u0060focusSheen\u0060 on or \u0060sheenTrigger\u0060\u2026 (and 3 more)",
+      "areas": [
+        "documentation",
+        "__tests__",
+        "docs/features/zest-button-focus-sheen",
+        "(project root)",
+        "Styles",
+        "UI/hooks"
+      ]
+    },
+    {
+      "runId": "20261124-233901",
+      "feature": "The streak is decoration only: it never intercepts pointer input, never changes\u2026 (and 3 more)",
+      "areas": [
+        "__tests__",
+        "(project root)",
+        "docs/features/zest-button-focus-sheen",
+        "documentation"
+      ]
+    }
+  ]
+}

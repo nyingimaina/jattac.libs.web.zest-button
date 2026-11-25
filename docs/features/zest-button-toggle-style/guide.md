@@ -1,7 +1,7 @@
 ---
 title: Styling toggle buttons from one place
 covers: UI/toggleStyle/, UI/hooks/useToggleStyle.ts, UI/ZestButtonConfigContext.ts, UI/ZestButtonConfigProvider.tsx, UI/ZestButton.tsx, UI/index.ts
-covers-hash: f52e1bbfd417b809c6ad
+covers-hash: 41e4cbf3c844457d4600
 ---
 
 # Styling toggle buttons from one place
@@ -165,5 +165,7 @@ What you should see: when on, only this button is purple. Its other properties s
 
 - [Using the ZestButton on/off toggle](../zest-button-toggle/guide.md)
 - [Using ZestButton semantic types](../zest-button-semantic-types/guide.md)
+- [The opt-in keyboard-focus streak](../zest-button-focus-sheen/guide.md) — a per-button
+  focus cue that a toggle can opt into without changing its toggle look.
 - [Configuration: Toggle Styling](../../../documentation/configuration.md#toggle-styling)
 - [Breaking changes: version 1.8.0](../../../documentation/breaking-changes.md)

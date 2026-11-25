@@ -1,7 +1,7 @@
 ---
 title: AI BRS (Business Requirements Specification)
-covers: AGENTS.md, docs/guidelines/AI_BRS.md
-covers-hash: b2808deb3ac33ea3843d
+covers: agents.md
+covers-hash: fe01860d678e208df487
 ---
 
 # AI BRS (Business Requirements Specification)

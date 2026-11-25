@@ -1,0 +1,4 @@
+{
+  "summary": "Consistent: the design builds R6 to R9 on the existing focus-sheen CSS and markers, with tests, docs and scope that satisfy every stated rule and check.",
+  "conflicts": []
+}

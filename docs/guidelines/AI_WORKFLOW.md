@@ -1,7 +1,7 @@
 ---
 title: AI Workflow
-covers: AGENTS.md, docs/guidelines/AI_WORKFLOW.md
-covers-hash: c3b32b65f52e29361af6
+covers: agents.md
+covers-hash: fe01860d678e208df487
 ---
 
 # AI Workflow

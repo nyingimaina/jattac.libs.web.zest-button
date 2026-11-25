@@ -1,0 +1,10 @@
+{
+  "findings": [],
+  "verifications": [
+    {
+      "id": "QA-2",
+      "status": "fixed",
+      "evidence": "The R8 split-control test (__tests__/ZestButtonFocusSheen.test.tsx:675-708) now asserts the wrapper carries a sheenTriggerOdd/Even parity class (lines 686-690), that a later trigger change swaps that parity (lines 696-698), and that the split overlay rules .focusSheenSplit.sheenProgrammatic.sheenTriggerOdd::before and .focusSheenSplit.sheenProgrammatic.sheenTriggerEven::before run the alternating zestFocusSheenSweep / zestFocusSheenSweepAlt keyframes (lines 702-707). Those CSS rules exist at Styles/ZestButton.module.css:884-890 and are keyed off the wrapper, so the whole-control sweep is proven to actually play and restart rather than relying on a bare marker class. Test run: 72 passed across ZestButtonFocusSheen, useSheenTrigger and ZestButtonFocusSheenCharacterization suites."
+    }
+  ]
+}

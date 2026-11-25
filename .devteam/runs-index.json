@@ -1,0 +1,82 @@
+[
+  {
+    "id": "20261025-080947",
+    "startedAt": "2026-10-25T08:09:47.4079526+00:00",
+    "status": "Completed",
+    "snippet": "add a toggle on/off state that beautifully render and clearly communicate state",
+    "costUsd": 4.1261181,
+    "final": true
+  },
+  {
+    "id": "20261025-083546",
+    "startedAt": "2026-10-25T08:35:46.4297442+00:00",
+    "status": "Completed",
+    "snippet": "Verification: the app as it is, nothing changed",
+    "costUsd": 0,
+    "final": true
+  },
+  {
+    "id": "20261025-083824",
+    "startedAt": "2026-10-25T08:38:24.126062+00:00",
+    "status": "Completed",
+    "snippet": "Verification: the app as it is, nothing changed",
+    "costUsd": 0,
+    "final": true
+  },
+  {
+    "id": "20261025-084314",
+    "startedAt": "2026-10-25T08:43:14.2646633+00:00",
+    "status": "Stopped",
+    "snippet": "exhaustive semantic types and standardized icons (svg?)",
+    "costUsd": 0.9270403,
+    "final": true
+  },
+  {
+    "id": "20261025-122245",
+    "startedAt": "2026-10-25T12:22:45.8314132+00:00",
+    "status": "Stopped",
+    "snippet": "the toggle buttons on hover do not correctly hand background vs foreground colours meaning\u2026",
+    "costUsd": 0,
+    "final": true
+  },
+  {
+    "id": "20261025-202653",
+    "startedAt": "2026-10-25T20:26:53.2845859+00:00",
+    "status": "Completed",
+    "snippet": "Continue an earlier feature that was stopped before it was finished. Do not start over.",
+    "costUsd": 4.2506184,
+    "final": true
+  },
+  {
+    "id": "20261025-205614",
+    "startedAt": "2026-10-25T20:56:14.8085414+00:00",
+    "status": "Completed",
+    "snippet": "just like D:\\work\\nyingi\\code\\systems\\Jattac.Libs.Web.ZestTextbox has a provider that\u2026",
+    "costUsd": 5.809059099999999,
+    "final": true
+  },
+  {
+    "id": "20261124-210737",
+    "startedAt": "2026-11-24T21:07:37.0131424+00:00",
+    "status": "Completed",
+    "snippet": "A host turns the focus streak on per button with an optional boolean\u2026 (and 4 more)",
+    "costUsd": 0.593690406,
+    "final": true
+  },
+  {
+    "id": "20261124-224802",
+    "startedAt": "2026-11-24T22:48:02.6084996+00:00",
+    "status": "Completed",
+    "snippet": "On a split button where the sheen is in use (\u0060focusSheen\u0060 on or \u0060sheenTrigger\u0060\u2026 (and 3 mor\u2026",
+    "costUsd": 0.33061635000000006,
+    "final": true
+  },
+  {
+    "id": "20261124-233901",
+    "startedAt": "2026-11-24T23:39:01.377722+00:00",
+    "status": "Completed",
+    "snippet": "The streak is decoration only: it never intercepts pointer input, never changes\u2026 (and 3 mo\u2026",
+    "costUsd": 0.26390772599999995,
+    "final": true
+  }
+]

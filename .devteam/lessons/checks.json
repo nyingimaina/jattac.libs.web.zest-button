@@ -1,0 +1,292 @@
+{
+  "checks": [
+    {
+      "checkId": "no-secrets",
+      "name": "No secrets in code",
+      "failures": 0,
+      "secondsLost": 0,
+      "runsRun": [
+        "20261124-210737",
+        "20261124-224802",
+        "20261124-233901"
+      ],
+      "runsFailed": [],
+      "lastTail": "",
+      "lastAt": "0001-01-01T00:00:00+00:00",
+      "fixed": 0,
+      "fixFiles": {}
+    },
+    {
+      "checkId": "no-debug-leftovers",
+      "name": "No debugging leftovers",
+      "failures": 0,
+      "secondsLost": 0,
+      "runsRun": [
+        "20261124-210737",
+        "20261124-224802",
+        "20261124-233901"
+      ],
+      "runsFailed": [],
+      "lastTail": "",
+      "lastAt": "0001-01-01T00:00:00+00:00",
+      "fixed": 0,
+      "fixFiles": {}
+    },
+    {
+      "checkId": "rule-USR-001-1",
+      "name": "No native button element",
+      "failures": 0,
+      "secondsLost": 0,
+      "runsRun": [
+        "20261124-210737",
+        "20261124-224802",
+        "20261124-233901"
+      ],
+      "runsFailed": [],
+      "lastTail": "",
+      "lastAt": "0001-01-01T00:00:00+00:00",
+      "fixed": 0,
+      "fixFiles": {}
+    },
+    {
+      "checkId": "rule-USR-001-2",
+      "name": "No native table element",
+      "failures": 0,
+      "secondsLost": 0,
+      "runsRun": [
+        "20261124-210737",
+        "20261124-224802",
+        "20261124-233901"
+      ],
+      "runsFailed": [],
+      "lastTail": "",
+      "lastAt": "0001-01-01T00:00:00+00:00",
+      "fixed": 0,
+      "fixFiles": {}
+    },
+    {
+      "checkId": "rule-USR-001-3",
+      "name": "No native text box or text area",
+      "failures": 0,
+      "secondsLost": 0,
+      "runsRun": [
+        "20261124-210737",
+        "20261124-224802",
+        "20261124-233901"
+      ],
+      "runsFailed": [],
+      "lastTail": "",
+      "lastAt": "0001-01-01T00:00:00+00:00",
+      "fixed": 0,
+      "fixFiles": {}
+    },
+    {
+      "checkId": "rule-USR-001-4",
+      "name": "No native file upload input",
+      "failures": 0,
+      "secondsLost": 0,
+      "runsRun": [
+        "20261124-210737",
+        "20261124-224802",
+        "20261124-233901"
+      ],
+      "runsFailed": [],
+      "lastTail": "",
+      "lastAt": "0001-01-01T00:00:00+00:00",
+      "fixed": 0,
+      "fixFiles": {}
+    },
+    {
+      "checkId": "rule-USR-002-1",
+      "name": "No tiny fixed pixel font sizes",
+      "failures": 0,
+      "secondsLost": 0,
+      "runsRun": [
+        "20261124-210737",
+        "20261124-224802",
+        "20261124-233901"
+      ],
+      "runsFailed": [],
+      "lastTail": "",
+      "lastAt": "0001-01-01T00:00:00+00:00",
+      "fixed": 0,
+      "fixFiles": {}
+    },
+    {
+      "checkId": "rule-USR-002-2",
+      "name": "Do not block pinch-zoom on mobile",
+      "failures": 0,
+      "secondsLost": 0,
+      "runsRun": [
+        "20261124-210737",
+        "20261124-224802",
+        "20261124-233901"
+      ],
+      "runsFailed": [],
+      "lastTail": "",
+      "lastAt": "0001-01-01T00:00:00+00:00",
+      "fixed": 0,
+      "fixFiles": {}
+    },
+    {
+      "checkId": "rule-USR-003-1",
+      "name": "No dynamic code execution (eval / new Function)",
+      "failures": 0,
+      "secondsLost": 0,
+      "runsRun": [
+        "20261124-210737",
+        "20261124-224802",
+        "20261124-233901"
+      ],
+      "runsFailed": [],
+      "lastTail": "",
+      "lastAt": "0001-01-01T00:00:00+00:00",
+      "fixed": 0,
+      "fixFiles": {}
+    },
+    {
+      "checkId": "rule-USR-003-2",
+      "name": "No raw HTML injection (XSS risk)",
+      "failures": 0,
+      "secondsLost": 0,
+      "runsRun": [
+        "20261124-210737",
+        "20261124-224802",
+        "20261124-233901"
+      ],
+      "runsFailed": [],
+      "lastTail": "",
+      "lastAt": "0001-01-01T00:00:00+00:00",
+      "fixed": 0,
+      "fixFiles": {}
+    },
+    {
+      "checkId": "rule-USR-003-3",
+      "name": "No string-based timers (hidden eval)",
+      "failures": 0,
+      "secondsLost": 0,
+      "runsRun": [
+        "20261124-210737",
+        "20261124-224802",
+        "20261124-233901"
+      ],
+      "runsFailed": [],
+      "lastTail": "",
+      "lastAt": "0001-01-01T00:00:00+00:00",
+      "fixed": 0,
+      "fixFiles": {}
+    },
+    {
+      "checkId": "rule-USR-003-4",
+      "name": "No leftover debugger statements or console.log",
+      "failures": 0,
+      "secondsLost": 0,
+      "runsRun": [
+        "20261124-210737",
+        "20261124-224802",
+        "20261124-233901"
+      ],
+      "runsFailed": [],
+      "lastTail": "",
+      "lastAt": "0001-01-01T00:00:00+00:00",
+      "fixed": 0,
+      "fixFiles": {}
+    },
+    {
+      "checkId": "rule-USR-006-1",
+      "name": "No hard-coded colours in component code (use shared design tokens)",
+      "failures": 0,
+      "secondsLost": 0,
+      "runsRun": [
+        "20261124-210737",
+        "20261124-224802",
+        "20261124-233901"
+      ],
+      "runsFailed": [],
+      "lastTail": "",
+      "lastAt": "0001-01-01T00:00:00+00:00",
+      "fixed": 0,
+      "fixFiles": {}
+    },
+    {
+      "checkId": "lib-typecheck",
+      "name": "Type check (library and tests)",
+      "failures": 0,
+      "secondsLost": 0,
+      "runsRun": [
+        "20261124-210737",
+        "20261124-224802",
+        "20261124-233901"
+      ],
+      "runsFailed": [],
+      "lastTail": "",
+      "lastAt": "0001-01-01T00:00:00+00:00",
+      "fixed": 0,
+      "fixFiles": {}
+    },
+    {
+      "checkId": "lib-tests",
+      "name": "Tests, with coverage",
+      "failures": 0,
+      "secondsLost": 0,
+      "runsRun": [
+        "20261124-210737",
+        "20261124-224802",
+        "20261124-233901"
+      ],
+      "runsFailed": [],
+      "lastTail": "",
+      "lastAt": "0001-01-01T00:00:00+00:00",
+      "fixed": 0,
+      "fixFiles": {}
+    },
+    {
+      "checkId": "lib-build",
+      "name": "Build (CommonJS, ES modules, type definitions)",
+      "failures": 0,
+      "secondsLost": 0,
+      "runsRun": [
+        "20261124-210737",
+        "20261124-224802",
+        "20261124-233901"
+      ],
+      "runsFailed": [],
+      "lastTail": "",
+      "lastAt": "0001-01-01T00:00:00+00:00",
+      "fixed": 0,
+      "fixFiles": {}
+    },
+    {
+      "checkId": "lib-pack",
+      "name": "What would be published",
+      "failures": 0,
+      "secondsLost": 0,
+      "runsRun": [
+        "20261124-210737",
+        "20261124-224802",
+        "20261124-233901"
+      ],
+      "runsFailed": [],
+      "lastTail": "",
+      "lastAt": "0001-01-01T00:00:00+00:00",
+      "fixed": 0,
+      "fixFiles": {}
+    },
+    {
+      "checkId": "lib-publish-dry-run",
+      "name": "Publish dry run (everything npm checks, nothing is uploaded)",
+      "failures": 0,
+      "secondsLost": 0,
+      "runsRun": [
+        "20261124-210737",
+        "20261124-224802",
+        "20261124-233901"
+      ],
+      "runsFailed": [],
+      "lastTail": "",
+      "lastAt": "0001-01-01T00:00:00+00:00",
+      "fixed": 0,
+      "fixFiles": {}
+    }
+  ]
+}

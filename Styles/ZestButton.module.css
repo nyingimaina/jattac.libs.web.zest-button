@@ -642,6 +642,272 @@
   to { opacity: 0; transform: scale(0.96); }
 }
 
+/* ------------------------------------------------------------------ */
+/* Opt-in focus streak (zest.focusSheen)                              */
+/* ------------------------------------------------------------------ */
+/* Decorative keyboard-focus cue. A regular button uses an ::after layer
+   clipped by `.button`'s own position/overflow/radius; a split control
+   uses one overlay on the wrapper, clipped by the overlay's own radius so
+   neither segment's outer focus ring is cut. No layout properties change. */
+
+.button.focusSheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+    45deg,
+    transparent 35%,
+    var(--zest-focus-sheen-color, currentColor) 50%,
+    transparent 65%
+  );
+  background-repeat: no-repeat;
+  background-size: 250% 250%;
+  background-position: -120% 120%;
+  opacity: 0;
+  pointer-events: none;
+  --zest-focus-sheen-peak: 0.7;
+}
+
+/* Solid fills range from deep blue to bright mint/red, so the band has to
+   reach 3:1 against each one's own colour (R4). White at this peak clears
+   every fill except the bright dark-theme success green, which switches to
+   a dark band below. */
+.button.focusSheen.solid::after {
+  --zest-focus-sheen-color: #ffffff;
+  --zest-focus-sheen-peak: 0.9;
+}
+
+.button.focusSheen.solid.force-dark.success::after {
+  --zest-focus-sheen-color: #064e3b;
+}
+
+/* Keep the label above the translucent band so it stays readable. */
+.button.focusSheen > .inner {
+  position: relative;
+  z-index: 1;
+}
+
+.button.focusSheen:focus-visible::after {
+  animation: zestFocusSheenSweep 0.6s var(--zest-ease-standard) 1 both;
+}
+
+.splitButtonContainer.focusSheenSplit {
+  position: relative;
+}
+
+/* Band colour per style and variant; the force-light/force-dark classes on
+   the wrapper make these follow the button's own theme, not only the OS. */
+.focusSheenSplit.sheenSolid {
+  --zest-focus-sheen-color: #ffffff;
+}
+
+/* Bright dark-theme success fill: a white band cannot reach 3:1 on it, so
+   the whole-control sweep uses a dark contrasting band there (R4). */
+.focusSheenSplit.sheenSolid.force-dark.sheenSuccess {
+  --zest-focus-sheen-color: #064e3b;
+}
+.focusSheenSplit.sheenOutline.sheenStandard,
+.focusSheenSplit.sheenText.sheenStandard,
+.focusSheenSplit.sheenDashed.sheenStandard {
+  --zest-focus-sheen-color: var(--zest-color-standard-border);
+}
+.focusSheenSplit.sheenOutline.sheenSuccess,
+.focusSheenSplit.sheenText.sheenSuccess,
+.focusSheenSplit.sheenDashed.sheenSuccess {
+  --zest-focus-sheen-color: var(--zest-color-success-border);
+}
+.focusSheenSplit.sheenOutline.sheenDanger,
+.focusSheenSplit.sheenText.sheenDanger,
+.focusSheenSplit.sheenDashed.sheenDanger {
+  --zest-focus-sheen-color: var(--zest-color-danger-border);
+}
+
+.focusSheenSplit::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--zest-radius-md);
+  background-image: linear-gradient(
+    45deg,
+    transparent 35%,
+    var(--zest-focus-sheen-color, #ffffff) 50%,
+    transparent 65%
+  );
+  background-repeat: no-repeat;
+  background-size: 250% 250%;
+  background-position: -120% 120%;
+  opacity: 0;
+  pointer-events: none;
+  --zest-focus-sheen-peak: 0.7;
+}
+
+.focusSheenSplit.sheenSolid::after {
+  --zest-focus-sheen-peak: 0.9;
+}
+
+.focusSheenSplit .button > .inner {
+  position: relative;
+  z-index: 1;
+}
+
+.focusSheenSplit:has(:focus-visible)::after {
+  animation: zestFocusSheenSweep 0.6s var(--zest-ease-standard) 1 both;
+}
+
+/* Two streaks on one split control would collide; opting in replaces the
+   chevron's one-time mount streak for that control only. */
+.focusSheenSplit .dropdownTrigger::before {
+  animation: none;
+  content: none;
+}
+
+@keyframes zestFocusSheenSweep {
+  0% {
+    background-position: -120% 120%;
+    opacity: 0;
+  }
+  15% {
+    opacity: var(--zest-focus-sheen-peak, 0.65);
+  }
+  85% {
+    opacity: var(--zest-focus-sheen-peak, 0.65);
+  }
+  100% {
+    background-position: 120% -120%;
+    opacity: 0;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Programmatic streak (zest.sheenTrigger)                            */
+/* ------------------------------------------------------------------ */
+/* Drawn on ::before because ::after belongs to the keyboard-focus
+   streak, so the two can never overwrite each other. A plain class-driven
+   animation (no :focus/:disabled dependency) means it plays on an
+   unfocused, disabled or busy button and changes no button state. */
+
+.button.focusSheen.sheenProgrammatic::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+    45deg,
+    transparent 35%,
+    var(--zest-focus-sheen-color, currentColor) 50%,
+    transparent 65%
+  );
+  background-repeat: no-repeat;
+  background-size: 250% 250%;
+  background-position: -120% 120%;
+  opacity: 0;
+  pointer-events: none;
+  --zest-focus-sheen-peak: 0.7;
+}
+
+/* The focus layer sets these on its own ::after, which ::before cannot
+   inherit; set the solid overrides on the element so ::before reads them. */
+.button.focusSheen.sheenProgrammatic.solid {
+  --zest-focus-sheen-color: #ffffff;
+  --zest-focus-sheen-peak: 0.9;
+}
+
+.button.focusSheen.sheenProgrammatic.solid.force-dark.success {
+  --zest-focus-sheen-color: #064e3b;
+}
+
+/* Disabled solid fills are a flat grey; a white band disappears on the
+   light grey, so the disabled band is dark there and light on the dark
+   grey. R8 requires the band on every disabled style. */
+.button.focusSheen.sheenProgrammatic.solid.disabled {
+  --zest-focus-sheen-color: #1f2937;
+  --zest-focus-sheen-peak: 0.9;
+}
+
+.button.focusSheen.sheenProgrammatic.solid.force-dark.disabled {
+  --zest-focus-sheen-color: #ffffff;
+}
+
+.focusSheenSplit.sheenProgrammatic::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--zest-radius-md);
+  background-image: linear-gradient(
+    45deg,
+    transparent 35%,
+    var(--zest-focus-sheen-color, #ffffff) 50%,
+    transparent 65%
+  );
+  background-repeat: no-repeat;
+  background-size: 250% 250%;
+  background-position: -120% 120%;
+  opacity: 0;
+  pointer-events: none;
+  --zest-focus-sheen-peak: 0.7;
+  /* Above the two segment backgrounds, below the labels' z-index: 1. */
+  z-index: 1;
+}
+
+.focusSheenSplit.sheenProgrammatic.sheenSolid {
+  --zest-focus-sheen-peak: 0.9;
+}
+
+.focusSheenSplit.sheenProgrammatic.sheenSolid:has(.button:disabled) {
+  --zest-focus-sheen-color: #1f2937;
+  --zest-focus-sheen-peak: 0.9;
+}
+
+.focusSheenSplit.sheenProgrammatic.sheenSolid.force-dark:has(.button:disabled) {
+  --zest-focus-sheen-color: #ffffff;
+}
+
+/* A trigger-only button (focusSheen off) still shows nothing on focus;
+   the programmatic layer is untouched. */
+.button.focusSheen.sheenFocusOff:focus-visible::after {
+  animation: none;
+  content: none;
+}
+
+.focusSheenSplit.sheenFocusOff:has(:focus-visible)::after {
+  animation: none;
+  content: none;
+}
+
+.button.focusSheen.sheenProgrammatic.sheenTriggerOdd::before {
+  animation: zestFocusSheenSweep 0.6s var(--zest-ease-standard) 1 both;
+}
+
+.button.focusSheen.sheenProgrammatic.sheenTriggerEven::before {
+  animation: zestFocusSheenSweepAlt 0.6s var(--zest-ease-standard) 1 both;
+}
+
+.focusSheenSplit.sheenProgrammatic.sheenTriggerOdd::before {
+  animation: zestFocusSheenSweep 0.6s var(--zest-ease-standard) 1 both;
+}
+
+.focusSheenSplit.sheenProgrammatic.sheenTriggerEven::before {
+  animation: zestFocusSheenSweepAlt 0.6s var(--zest-ease-standard) 1 both;
+}
+
+/* Identical to zestFocusSheenSweep; alternating the name restarts a
+   finished animation in one render (A2). */
+@keyframes zestFocusSheenSweepAlt {
+  0% {
+    background-position: -120% 120%;
+    opacity: 0;
+  }
+  15% {
+    opacity: var(--zest-focus-sheen-peak, 0.65);
+  }
+  85% {
+    opacity: var(--zest-focus-sheen-peak, 0.65);
+  }
+  100% {
+    background-position: 120% -120%;
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .dropdownMenuContent[data-state="open"],
   .dropdownMenuContent[data-state="closed"] {
@@ -651,6 +917,16 @@
     transition: none;
   }
   .dropdownTrigger::before {
+    animation: none;
+    content: none;
+  }
+  .button.focusSheen::after,
+  .focusSheenSplit::after {
+    animation: none;
+    content: none;
+  }
+  .button.focusSheen.sheenProgrammatic::before,
+  .focusSheenSplit.sheenProgrammatic::before {
     animation: none;
     content: none;
   }

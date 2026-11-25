@@ -1,0 +1,45 @@
+{
+  "summary": "No code change was needed for REV-1 (R4). The finding describes the pre-round-2 stylesheet: it cites a currentColor/white band at peak 0.65 and tests that only regex-match. The current working tree already contains the QA-1 fix from round 2: solid bands are #ffffff at peak 0.9 (Styles/ZestButton.module.css:675-678), dark-theme success uses a #064e3b band (lines 680-682 and 706-708), the split solid peak is 0.9 (lines 744-746), and __tests__/ZestButtonFocusSheen.test.tsx:329-378 parses those tokens, performs WCAG sRGB alpha blending and asserts >=3:1 for all six solid style/variant/theme combinations on both regular and split buttons. Independent recomputation at the current values gives light standard 7.38, light success 3.34, light danger 4.14, dark standard 3.28, dark success 4.19 and dark danger 3.30; the test fails if the peak drops to 0.80. System-dark is covered because theme 'system' is resolved to effectiveTheme and force-dark is always applied (UI/ZestButton.tsx:241,446). The two focus-sheen suites pass 33/33. I am disputing REV-1 rather than editing code that already meets it; the feature and tests are otherwise reported unchanged from round 2.",
+  "tests": [
+    { "name": "R1: focusSheen is off by default and opts in per button without leaking", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["R1"] },
+    { "name": "R1: focusSheen={false} renders no streak layer", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["R1"] },
+    { "name": "R1: turning focusSheen off at runtime removes the streak layer from a regular button and a split control", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["R1"] },
+    { "name": "R1: a split button opts in with one whole-control layer and no per-segment layer", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["R1"] },
+    { "name": "R1: opting in leaves the accessible name, role and pressed state alone", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["R1"] },
+    { "name": "R2: plain focus or a mouse click adds no JS state; only :focus-visible starts the sweep", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["R2"] },
+    { "name": "R2: each focus arrival plays exactly one sweep and a re-focus replays it", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["R2"] },
+    { "name": "R2: the existing focus ring remains the primary focus signal", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["R2"] },
+    { "name": "R2: a toggle in its on state keeps its pressed look and focus ring while the streak plays", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["R2"] },
+    { "name": "R3: the band is a 45-degree diagonal that travels top-right to bottom-left over 0.6 seconds", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["R3"] },
+    { "name": "R3: the band is clipped by the button's rounded overflow and never changes its layout", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["R3"] },
+    { "name": "R3: the band ends transparent and is not left stuck or tinted", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["R3"] },
+    { "name": "R3: very small and very large buttons share one continuous sweep with no stacked layers", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["R3"] },
+    { "name": "R4: every style, variant and forced theme gets the streak layer on a regular button", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["R4"] },
+    { "name": "R4: every style, variant and forced theme gets the whole-control layer on a split button", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["R4"] },
+    { "name": "R4: the band colour follows currentColor and the button's own theme tokens so it reads on every style", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["R4"] },
+    { "name": "R4: every solid style, variant and theme band reaches 3:1 contrast against its own background at its brightest point", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["R4"] },
+    { "name": "R4: the label sits above the translucent band so it stays readable", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["R4"] },
+    { "name": "R5: a split control plays one whole-control sweep from either segment", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["R5"] },
+    { "name": "R5: the split band is clipped to the rounded outer corners without clipping either focus ring", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["R5"] },
+    { "name": "R5: the open menu is rendered outside the clipping wrapper and stays visible", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["R5"] },
+    { "name": "R5: moving focus from the main segment to the chevron keeps one overlay for the whole visit", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["R5"] },
+    { "name": "A1: reduced motion disables the focus streak for regular and split buttons", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["A1"] },
+    { "name": "A1: without the preference the streak keeps its animation on both button kinds", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["A1"] },
+    { "name": "A2: an opted-in split control suppresses the chevron mount streak", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["A2"] },
+    { "name": "A2: a split control that is not opted in keeps its chevron mount streak", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["A2"] },
+    { "name": "A4: the API, features and examples pages document focusSheen for regular and split buttons", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["A4"] },
+    { "name": "A4: the configuration page sets focusSheen app-wide through defaultProps and the README links the guide", "file": "__tests__/ZestButtonFocusSheen.test.tsx", "requirements": ["A4"] },
+    { "name": "A3: a plain regular button keeps its current wrapper element, classes and DOM", "file": "__tests__/ZestButtonFocusSheenCharacterization.test.tsx", "requirements": ["A3"] },
+    { "name": "A3: a split wrapper and its two segments keep their current classes and gain no sheen classes", "file": "__tests__/ZestButtonFocusSheenCharacterization.test.tsx", "requirements": ["A3"] },
+    { "name": "A3: the existing focus-ring rule is still the focus indicator", "file": "__tests__/ZestButtonFocusSheenCharacterization.test.tsx", "requirements": ["A3"] },
+    { "name": "A3: the existing chevron mount-streak rule and keyframes are unchanged", "file": "__tests__/ZestButtonFocusSheenCharacterization.test.tsx", "requirements": ["A3"] },
+    { "name": "A3: a button that does not opt in keeps its click behaviour and adds no extra elements", "file": "__tests__/ZestButtonFocusSheenCharacterization.test.tsx", "requirements": ["A3"] }
+  ],
+  "kickbacks": [
+    {
+      "type": "dispute",
+      "cites": ["REV-1"],
+      "reason": "REV-1's evidence describes the pre-round-2 stylesheet and is no longer true: Styles/ZestButton.module.css:675-678 now sets the solid band to #ffffff at peak 0.9 (not currentColor at 0.65), lines 680-682 and 706-708 switch dark-theme success to #064e3b, and lines 744-746 give the split solid band peak 0.9, so the six solid combinations recompute to light standard 7.38, light success 3.34, light danger 4.14, dark standard 3.28, dark success 4.19 and dark danger 3.30, all at or above 3:1. The test is not regex-only: __tests__/ZestButtonFocusSheen.test.tsx:329-378 parses those colour/peak tokens, alpha-blends them over the variant/theme background tokens in sRGB and asserts >=3:1 for every regular and split solid combination, and it fails if the peak is lowered to 0.80. The OS-dark case is also covered because UI/ZestButton.tsx:241 resolves theme 'system' to effectiveTheme and line 446 always applies force-dark, so the dark-success band applies under prefers-color-scheme dark too; QA-1 was already fixed in round 2 and REV-1 is a stale duplicate of that finding."
+    }
+  ]
+}

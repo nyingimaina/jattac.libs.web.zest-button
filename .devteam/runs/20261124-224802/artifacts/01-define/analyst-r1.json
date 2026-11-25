@@ -1,0 +1,183 @@
+{
+  "summary": "This is revision 2 of 3 of a larger feature (R6 to R9). ZestButton gains two opt-in options on its existing \u0060zest\u0060 configuration object. \u0060focusSheen\u0060 (default off) plays the split button\u0027s diagonal light streak across the whole button when the button receives keyboard focus, and \u0060sheenTrigger\u0060 (a changing string or number) lets the host play the same streak from code, with or without focus. The effect is decorative: clipped to the button, shown on every button style and theme, one sweep per focus arrival or per trigger change, and switched off under prefers-reduced-motion. It exists so keyboard users can spot which button has focus on screens full of controls.",
+  "requirements": [
+    {
+      "id": "R6",
+      "text": "On a split button where the sheen is in use (\u0060focusSheen\u0060 on or \u0060sheenTrigger\u0060 supplied), the chevron\u0027s existing one-time mount streak does not play, so two streaks never overlap; on split buttons without the sheen the mount streak is unchanged.",
+      "acceptance": [
+        "A split button with \u0060focusSheen: true\u0060 shows no chevron mount streak on first paint; focusing it shows only the whole-control sweep.",
+        "A split button given a \u0060sheenTrigger\u0060 value shows no chevron mount streak on first paint.",
+        "A split button with neither option still shows the existing chevron mount streak once when it mounts."
+      ],
+      "rationale": "Two different streaks at once would look like a glitch, and the existing cue must keep working for everyone who does not opt in.",
+      "derivedFrom": "",
+      "edgeCases": [
+        "A split button mounted and then immediately focused shows only the new whole-control sweep.",
+        "A trigger change within the old mount-streak window does not produce a second streak on the chevron.",
+        "Regular buttons have no mount streak, so nothing changes for them."
+      ],
+      "pitfalls": [
+        "The mount streak must not be removed for split buttons that do not use the sheen.",
+        "Suppressing it must not leave an empty layer that changes layout."
+      ],
+      "rules": [
+        "USR-004",
+        "LIB-001"
+      ],
+      "facts": [
+        {
+          "subject": "chevron mount streak",
+          "attribute": "state",
+          "op": "equals",
+          "value": "off on split buttons with focusSheen on or sheenTrigger supplied",
+          "unit": "",
+          "scope": ""
+        }
+      ]
+    },
+    {
+      "id": "R7",
+      "text": "A host plays the streak from code with an optional \u0060sheenTrigger\u0060 value (a string or a number): every change of the value plays one sweep on a button that need not be focused, while the first value on mount plays nothing; it works whether or not \u0060focusSheen\u0060 is on.",
+      "acceptance": [
+        "Mounting with \u0060sheenTrigger={0}\u0060 plays no sweep; changing the value to \u00601\u0060 plays one sweep on the unfocused button.",
+        "Changing the value while a sweep is still playing restarts a full sweep from the beginning instead of ignoring it.",
+        "Setting the same value again plays nothing, and a change between a number and a string (for example \u00601\u0060 to \u0060\u00221\u0022\u0060) counts as a change.",
+        "The trigger works with \u0060focusSheen\u0060 omitted, \u0060false\u0060 or \u0060true\u0060."
+      ],
+      "rationale": "Hosts need to draw attention to a button after their own event (for example when a background task finishes); a changing value is the agreed mechanism because the component exposes no ref.",
+      "derivedFrom": "",
+      "edgeCases": [
+        "Several changes in quick succession each play (restart) the sweep; no queue builds up and the last change wins.",
+        "A change while the button is focused plays the sweep in addition to any focus sweep already played.",
+        "Repeated triggers after the animation has ended still replay; the second and later sweeps are not lost."
+      ],
+      "pitfalls": [
+        "The first value on mount must not play, including after server-side rendering and hydration.",
+        "Replaying must genuinely restart the animation rather than leave it finished.",
+        "A host must not need a ref, an imperative handle or a boolean reset to play it again."
+      ],
+      "rules": [
+        "LIB-001"
+      ],
+      "facts": [
+        {
+          "subject": "programmatic streak trigger",
+          "attribute": "value type",
+          "op": "one-of",
+          "value": "string, number",
+          "unit": "",
+          "scope": ""
+        },
+        {
+          "subject": "programmatic streak trigger",
+          "attribute": "first value on mount",
+          "op": "must-not",
+          "value": "play a sweep",
+          "unit": "",
+          "scope": ""
+        },
+        {
+          "subject": "programmatic streak trigger",
+          "attribute": "each value change",
+          "op": "must",
+          "value": "play one sweep",
+          "unit": "",
+          "scope": ""
+        },
+        {
+          "subject": "programmatic streak trigger",
+          "attribute": "focus sheen required",
+          "op": "must-not",
+          "value": "be required",
+          "unit": "",
+          "scope": ""
+        }
+      ]
+    },
+    {
+      "id": "R8",
+      "text": "The programmatic trigger also works on a split control (one sweep across the whole control) and on disabled and busy buttons, while the focus trigger never applies to disabled buttons.",
+      "acceptance": [
+        "Changing \u0060sheenTrigger\u0060 on a split button plays one sweep across the whole split control.",
+        "Changing \u0060sheenTrigger\u0060 on a disabled button plays one sweep without making the button usable and without running its click handler.",
+        "Changing \u0060sheenTrigger\u0060 while the button is busy (via \u0060aria-busy\u0060 or the button\u0027s own busy state) plays one sweep; the busy spinner and state are unchanged.",
+        "A disabled button never shows a focus streak."
+      ],
+      "rationale": "A host may want the streak to mark a result that arrives while the button is disabled or busy; disabled buttons cannot take keyboard focus, so that case is programmatic only.",
+      "derivedFrom": "",
+      "edgeCases": [
+        "A button that is both disabled and busy still plays exactly one sweep per trigger change.",
+        "The sweep finishes normally when the busy state ends part-way through.",
+        "The band is visible on the disabled colours of every button style (see R4)."
+      ],
+      "pitfalls": [
+        "The trigger must not toggle \u0060disabled\u0060 or \u0060aria-busy\u0060, add \u0060tabindex\u0060, or make a disabled button focusable.",
+        "The trigger must not fire the button\u0027s click, confirmation or toggle behaviour.",
+        "Suppressing the focus streak on disabled buttons must not suppress the programmatic one."
+      ],
+      "rules": [
+        "UI-001"
+      ],
+      "facts": [
+        {
+          "subject": "programmatic streak trigger",
+          "attribute": "disabled button",
+          "op": "must",
+          "value": "play a sweep",
+          "unit": "",
+          "scope": ""
+        },
+        {
+          "subject": "programmatic streak trigger",
+          "attribute": "busy button",
+          "op": "must",
+          "value": "play a sweep",
+          "unit": "",
+          "scope": ""
+        }
+      ]
+    },
+    {
+      "id": "R9",
+      "text": "When the user\u0027s system asks for reduced motion (\u0060prefers-reduced-motion: reduce\u0060), neither the focus streak nor the programmatic trigger shows a sweep, and there is no override.",
+      "acceptance": [
+        "With reduced motion on, focusing an opted-in button shows no band and the focus ring still appears.",
+        "With reduced motion on, changing \u0060sheenTrigger\u0060 shows no band and causes no error or warning.",
+        "Switching the system setting while the app is open stops the effect without a reload, and no prop can force it back on."
+      ],
+      "rationale": "People who ask their device for less motion must not get an animation because a developer opted in; the focus ring still tells them where focus is.",
+      "derivedFrom": "",
+      "edgeCases": [
+        "Reduced motion is already on when the button mounts.",
+        "The setting changes while a sweep is playing; the band disappears.",
+        "The rule applies equally to regular buttons, split controls and every trigger."
+      ],
+      "pitfalls": [
+        "Shortening the sweep is not enough; there must be no visible band at all.",
+        "Disabling it must not disable the focus ring or any other button feedback."
+      ],
+      "rules": [
+        "UI-001"
+      ],
+      "facts": [
+        {
+          "subject": "sheen",
+          "attribute": "reduced motion",
+          "op": "must-not",
+          "value": "show a sweep",
+          "unit": "",
+          "scope": ""
+        }
+      ]
+    }
+  ],
+  "questions": [],
+  "coverage": [],
+  "assumptions": [],
+  "roles": [],
+  "outOfScope": [],
+  "nonFunctional": [],
+  "risks": [],
+  "tensions": [],
+  "glossary": []
+}

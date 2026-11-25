@@ -20,6 +20,8 @@ This document provides an exhaustive reference for all `ZestButton` props and ty
   - [SemanticType](#semantictype)
   - [ZestIcon](#zesticon)
   - [ZestDropdownOption](#zestdropdownoption)
+  - [focusSheen](#focussheen)
+  - [sheenTrigger](#sheentrigger)
   - [ToggleOptions](#toggleoptions)
 
 ---
@@ -53,6 +55,8 @@ This is the main configuration object passed to the `zest` prop.
 | `isDefault` | `boolean` | `false` | If true, the button can be triggered by the `Enter` key. |
 | `theme` | `'light' \| 'dark' \| 'system'` | `'system'` | Overrides the automatic theme detection. |
 | `buttonStyle` | `'solid' \| 'outline' \| 'text' \| 'dashed'`| `'solid'` | Defines the visual style of the button. |
+| `focusSheen` | `boolean` | `false` | Opt-in keyboard-focus cue. When true, one diagonal light streak sweeps across the whole button (or the whole split control) when it receives keyboard focus. The existing focus ring stays the primary focus signal. |
+| `sheenTrigger` | `string \| number` | `undefined` | Programmatic cue. Every change of this value plays one diagonal light streak across the whole button (or the whole split control) without needing focus. The value present on mount plays nothing. Works with or without `focusSheen`, including on disabled and busy buttons, and is switched off under `prefers-reduced-motion: reduce`. |
 | `semanticType` | `SemanticType` | `undefined` | Defines the semantic type of the button, providing default visuals and behaviors. Extensible via module augmentation. |
 | `dropdownOptions` | `ZestDropdownOption[]` | `undefined` | If provided (non-empty), renders the button as a split button: the main action on the left, and a chevron on the right that opens a menu of these options. See [`ZestDropdownOption`](#zestdropdownoption). |
 | `dropdownAriaLabel` | `string` | `'More options'` | Accessible name for the chevron trigger button (it has no visible text). |
@@ -187,6 +191,56 @@ Describes a single secondary action in a split button's dropdown menu (see [`dro
 | `confirmOptions` | `ConfirmOptions` | `undefined` | Same shape as the main button's `confirmOptions`, scoped to this item. |
 
 *See the [Split Button with Overflow Actions recipe](./examples.md#recipe-5-a-split-button-with-overflow-actions) for a full example.*
+
+---
+
+#### `focusSheen`
+
+`boolean`, default `false`. Opt-in only: a button that does not pass it renders and behaves exactly as before.
+
+When true, one diagonal light band (about 45 degrees, top-right to bottom-left) sweeps across the button in about 0.6 seconds when it receives **keyboard** focus. A mouse click does not play it, it plays once per focus arrival, and it is clipped to the button's rounded shape. The existing focus ring remains the visible primary focus signal; the band is decoration only. It works on all four `buttonStyle` values, all three `variant` values and in both light and dark themes (including forced themes).
+
+On a split button, focusing either the main action or the chevron plays a single sweep across the whole split control, clipped to its rounded outer corners. The open menu is unaffected (it renders in a portal), and the chevron's one-time mount streak is suppressed for that opted-in control.
+
+```tsx
+// A regular button
+<ZestButton zest={{ focusSheen: true }}>Save</ZestButton>
+
+// A split button: one sweep across the main action and chevron together
+<ZestButton
+  zest={{
+    focusSheen: true,
+    dropdownOptions: [{ label: 'Export as PDF' }],
+  }}
+>
+  Export as CSV
+</ZestButton>
+```
+
+Users who set `prefers-reduced-motion: reduce` get no streak at all. To opt every button in scope in, put `focusSheen: true` in the provider's `defaultProps`.
+
+*See the [focus streak guide](https://github.com/nyingimaina/jattac.libs.web.zest-button/blob/master/docs/features/zest-button-focus-sheen/guide.md) for the full behaviour.*
+
+---
+
+#### `sheenTrigger`
+
+`string | number`, default absent (`undefined`). Plays the same diagonal light streak from code, so a host can draw attention to a button after its own event (for example when a background task finishes). The button does not need focus.
+
+- **The first value on mount plays nothing.** The value present on the first render — including after server-side rendering and hydration — is only the baseline.
+- **Every later change plays one sweep** on a button that is not focused. A change between a number and the same-looking string (for example `1` to `"1"`) counts as a change.
+- **Changes replay.** Changing the value while a sweep is playing restarts a full sweep from the beginning; several changes in quick succession each restart it and no queue builds up.
+- **Works with or without `focusSheen`.** It also works on a split control (one sweep across the whole control) and on disabled or busy buttons, without enabling the button, changing `aria-busy`, adding `tabindex`, or firing its click, confirmation or toggle behaviour. The focus streak still never applies to a disabled button.
+- **Reduced motion wins.** When the user's system asks for `prefers-reduced-motion: reduce`, neither the focus streak nor the programmatic sweep is shown, and no prop overrides it. The focus ring and other button feedback are unaffected.
+
+```tsx
+const [syncToken, setSyncToken] = useState(0);
+
+<ZestButton zest={{ sheenTrigger: syncToken }}>Sync now</ZestButton>
+<button onClick={() => setSyncToken((token) => token + 1)}>Trigger the streak</button>
+```
+
+The trigger plays on its own, so it can be used with `focusSheen` omitted, `false` or `true`.
 
 ---
 

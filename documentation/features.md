@@ -14,6 +14,7 @@ This document provides a high-level showcase of what's possible with `ZestButton
 - [Global Configuration](#global-configuration)
 - [Rich Styling](#rich-styling)
 - [Split Buttons & Overflow Menus](#split-buttons--overflow-menus)
+- [Keyboard Focus Streak](#keyboard-focus-streak)
 - [On/Off Toggle Mode](#onoff-toggle-mode)
 - [Styling Toggles App-Wide](#styling-toggles-app-wide)
 
@@ -232,6 +233,46 @@ const MyComponent = () => (
 );
 ```
 *__Learn more in the [Split Button with Overflow Actions recipe](./examples.md#recipe-5-a-split-button-with-overflow-actions).__*
+
+---
+
+### Keyboard Focus Streak
+
+**What it does:** Plays one diagonal light band across a button when a keyboard user focuses it, so the focused control stands out on screens with many buttons. It is off by default; turn it on per button with `focusSheen`.
+
+```tsx
+const MyComponent = () => (
+  <div style={{ display: 'flex', gap: '1rem' }}>
+    {/* A regular button: one sweep across the button */}
+    <ZestButton zest={{ focusSheen: true }}>Save draft</ZestButton>
+
+    {/* A split button: one sweep across the main action and chevron together */}
+    <ZestButton
+      zest={{
+        focusSheen: true,
+        dropdownOptions: [{ label: 'Export as PDF' }],
+      }}
+    >
+      Export as CSV
+    </ZestButton>
+  </div>
+);
+```
+
+The band is about 45 degrees, travels from the top-right to the bottom-left in about 0.6 seconds, and is clipped to the button's rounded shape. It only plays on keyboard focus (`:focus-visible`), not on a mouse click, and it ends transparent so nothing is left behind. The existing focus ring stays the primary focus signal. It is visible on every `buttonStyle`, every `variant` and in light and dark themes without hiding the label. On a split button it is one whole-control sweep, the open menu is not clipped or covered, and the chevron's one-time mount streak is suppressed for that control. Reduced-motion users get no streak.
+
+A host can also play the streak from code with `sheenTrigger` (a string or a number). Every change of the value plays one sweep on a button that need not be focused, while the value present on mount plays nothing. It works with or without `focusSheen` (omitted, `false` or `true`), on a split control, and on disabled or busy buttons, without enabling the button or firing its click handler.
+
+```tsx
+const [syncToken, setSyncToken] = useState(0);
+
+<ZestButton zest={{ sheenTrigger: syncToken }}>Sync now</ZestButton>
+<button onClick={() => setSyncToken((token) => token + 1)}>Play the streak</button>
+```
+
+People who set `prefers-reduced-motion: reduce` get no streak from either the focus or the programmatic trigger, and no prop overrides that.
+
+*__See the [focus streak guide](https://github.com/nyingimaina/jattac.libs.web.zest-button/blob/master/docs/features/zest-button-focus-sheen/guide.md) and [Recipe 10](./examples.md#recipe-10-an-opt-in-keyboard-focus-streak).__*
 
 ---
 

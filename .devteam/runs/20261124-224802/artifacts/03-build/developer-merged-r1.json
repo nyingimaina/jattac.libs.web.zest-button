@@ -1,0 +1,266 @@
+{
+  "summary": "Implemented the programmatic sheen trigger and the split-control mount-streak suppression. Added a private useSheenTrigger hook (mount baseline plus alternating parity), an optional sheenTrigger: string | number on ZestCustomProps, sheen marker classes on the button/wrapper, a CSS ::before sweep layer with alternating keyframe names for genuine replay, a focus-suppression marker for trigger-only buttons, disabled/busy-safe band colours and reduced-motion coverage. Documented sheenTrigger in the focus-sheen guide and the API reference. Added R6-R9, A1 and A2 tests. Finished slice 2 (documentation) of revision 2. Added the programmatic streak (\u0060sheenTrigger\u0060) to documentation/features.md, documentation/examples.md, documentation/configuration.md, README.md and documentation/development.md, each with a working example and the rules that it works with or without \u0060focusSheen\u0060, on split/disabled/busy buttons, and that reduced motion disables both triggers with no override. Strengthened the reduced-motion wording in docs/features/zest-button-focus-sheen/guide.md and added three A3 documentation tests to __tests__/ZestButtonFocusSheen.test.tsx. The code, CSS, hook, api.md and guide parts from the earlier attempt were already present and verified unchanged. Ran the build and the full suite (371 tests, all passing).",
+  "tests": [
+    {
+      "name": "A1: the value on the first render is inactive and plays nothing",
+      "file": "__tests__/hooks/useSheenTrigger.test.ts",
+      "requirements": [
+        "A1"
+      ]
+    },
+    {
+      "name": "A1: each later value change returns an alternating active result, including number to string",
+      "file": "__tests__/hooks/useSheenTrigger.test.ts",
+      "requirements": [
+        "A1"
+      ]
+    },
+    {
+      "name": "A1: setting the same value again returns the same result and does not replay",
+      "file": "__tests__/hooks/useSheenTrigger.test.ts",
+      "requirements": [
+        "A1"
+      ]
+    },
+    {
+      "name": "A1: React Strict Mode double effects still play each change exactly once",
+      "file": "__tests__/hooks/useSheenTrigger.test.ts",
+      "requirements": [
+        "A1"
+      ]
+    },
+    {
+      "name": "A1: it uses no listener, timer or storage and leaves no timer behind",
+      "file": "__tests__/hooks/useSheenTrigger.test.ts",
+      "requirements": [
+        "A1"
+      ]
+    },
+    {
+      "name": "R6: a split button with focusSheen suppresses the chevron mount streak and shows only the whole-control layer",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R6"
+      ]
+    },
+    {
+      "name": "R6: a split button given a sheenTrigger suppresses the chevron mount streak",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R6"
+      ]
+    },
+    {
+      "name": "R6: regular buttons have no mount streak and gain no extra chevron layer",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R6"
+      ]
+    },
+    {
+      "name": "R6: a split button mounted and then immediately focused shows only the whole-control layer",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R6"
+      ]
+    },
+    {
+      "name": "R6: a trigger change inside the old mount-streak window adds no second chevron streak",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R6"
+      ]
+    },
+    {
+      "name": "R6: suppressing the mount streak leaves no empty layout layer",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R6"
+      ]
+    },
+    {
+      "name": "R6: a split button that does not use the sheen keeps its one-time chevron mount streak",
+      "file": "__tests__/ZestButtonFocusSheenCharacterization.test.tsx",
+      "requirements": [
+        "R6"
+      ]
+    },
+    {
+      "name": "R6: a regular button has no chevron mount streak to suppress and gains no sheen class",
+      "file": "__tests__/ZestButtonFocusSheenCharacterization.test.tsx",
+      "requirements": [
+        "R6"
+      ]
+    },
+    {
+      "name": "R7: the value on mount plays nothing and the first change plays one sweep on an unfocused button",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R7"
+      ]
+    },
+    {
+      "name": "R7: changing while a sweep is playing restarts it (parity flips)",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R7"
+      ]
+    },
+    {
+      "name": "R7: setting the same value again plays nothing, but a number-to-string change counts",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R7"
+      ]
+    },
+    {
+      "name": "R7: works with focusSheen omitted, false and true",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R7"
+      ]
+    },
+    {
+      "name": "R7: several quick changes each restart and no queue builds up",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R7"
+      ]
+    },
+    {
+      "name": "R7: a trigger while focused plays the programmatic layer as well as the focus layer",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R7"
+      ]
+    },
+    {
+      "name": "R7: repeated triggers after the animation has ended still replay",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R7"
+      ]
+    },
+    {
+      "name": "R7: the first value never plays on mount",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R7"
+      ]
+    },
+    {
+      "name": "R8: a split control sweeps once across the whole control per trigger change",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R8"
+      ]
+    },
+    {
+      "name": "R8: a disabled button plays one sweep without becoming usable or firing its click handler",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R8"
+      ]
+    },
+    {
+      "name": "R8: a busy button plays a sweep and keeps its aria-busy and spinner state",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R8"
+      ]
+    },
+    {
+      "name": "R8: a disabled button never shows a focus streak",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R8"
+      ]
+    },
+    {
+      "name": "R8: a button that is both disabled and busy plays exactly one sweep per change",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R8"
+      ]
+    },
+    {
+      "name": "R8: the sweep is not restarted when the busy state ends part-way",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R8"
+      ]
+    },
+    {
+      "name": "R8: the band is visible on the disabled colours of every style",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R8"
+      ]
+    },
+    {
+      "name": "R9: reduced motion removes both bands entirely, with no override",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R9"
+      ]
+    },
+    {
+      "name": "R9: the rule is a live media query applied to regular, split and both triggers",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R9"
+      ]
+    },
+    {
+      "name": "R9: reduced motion leaves the focus ring and other feedback alone",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R9"
+      ]
+    },
+    {
+      "name": "A2: two identical keyframes exist and odd/even reference a different one",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "A2"
+      ]
+    },
+    {
+      "name": "A2: each trigger change swaps the parity class in a single render",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "A2"
+      ]
+    },
+    {
+      "name": "A2: replay uses no timeout, animation frame, extra element or DOM re-key",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "A2"
+      ]
+    },
+    {
+      "name": "A3: the API page lists sheenTrigger, its string|number type, absent default and first-value-on-mount rule",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "A3"
+      ]
+    },
+    {
+      "name": "A3: features, examples, configuration, README and the guide show a sheenTrigger example and say it works with or without focusSheen",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "A3"
+      ]
+    },
+    {
+      "name": "A3: the pages say reduced motion disables both triggers and that no prop overrides it",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "A3",
+        "R9"
+      ]
+    }
+  ],
+  "kickbacks": []
+}

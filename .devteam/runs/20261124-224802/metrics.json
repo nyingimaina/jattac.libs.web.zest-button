@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 0,
+  "runId": "20261124-224802",
+  "at": "2026-11-24T23:36:58.9172571+00:00",
+  "status": "Completed",
+  "feature": "On a split button where the sheen is in use (\u0060focusSheen\u0060 on or \u0060sheenTrigger\u0060\u2026 (and 3 more)",
+  "testsReported": 31,
+  "checksPassed": 18,
+  "checksTotal": 22,
+  "checksNotRun": 4,
+  "bootPassed": 0,
+  "bootTotal": 0,
+  "findingsOpen": 0,
+  "findingsAdvisory": 7,
+  "findingsFixed": 2,
+  "requirementsTotal": 7,
+  "requirementsWithTests": 7,
+  "costUsd": 0.33061635000000006,
+  "seconds": 2936.3087575,
+  "coverage": [
+    {
+      "name": "Library",
+      "linePercent": 99.6,
+      "branchPercent": 96.5,
+      "changedLinePercent": 100,
+      "filesCovered": 19,
+      "functionPercent": 98.9
+    }
+  ],
+  "testsExecuted": 0,
+  "testsFailed": 0,
+  "testsSkipped": 0,
+  "verification": false
+}

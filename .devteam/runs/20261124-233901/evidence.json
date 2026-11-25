@@ -1,0 +1,159 @@
+{
+  "checks": [
+    {
+      "id": "no-secrets",
+      "name": "No secrets in code",
+      "status": "passed",
+      "seconds": 0.4214993,
+      "output": ""
+    },
+    {
+      "id": "no-debug-leftovers",
+      "name": "No debugging leftovers",
+      "status": "passed",
+      "seconds": 0.0693239,
+      "output": ""
+    },
+    {
+      "id": "lib-typecheck",
+      "name": "Type check (library and tests)",
+      "status": "passed",
+      "seconds": 5.9468101,
+      "output": ""
+    },
+    {
+      "id": "lib-tests",
+      "name": "Tests, with coverage",
+      "status": "passed",
+      "seconds": 19.2314772,
+      "output": ""
+    },
+    {
+      "id": "lib-build",
+      "name": "Build (CommonJS, ES modules, type definitions)",
+      "status": "passed",
+      "seconds": 10.9998186,
+      "output": ""
+    },
+    {
+      "id": "lib-validate-package",
+      "name": "Package check (attw and publint)",
+      "status": "notrun",
+      "seconds": 0.1421638,
+      "output": "Not set up in this project: attw and publint are not installed, so nothing checks that the package works for everyone who installs it."
+    },
+    {
+      "id": "lib-pack",
+      "name": "What would be published",
+      "status": "passed",
+      "seconds": 2.0429399,
+      "output": ""
+    },
+    {
+      "id": "lib-publish-dry-run",
+      "name": "Publish dry run (everything npm checks, nothing is uploaded)",
+      "status": "passed",
+      "seconds": 2.1105177,
+      "output": ""
+    },
+    {
+      "id": "lib-size",
+      "name": "Size budget",
+      "status": "notrun",
+      "seconds": 0.1329996,
+      "output": "Not set up in this project: The project has no .size-limit.json, so this check has nothing to run."
+    },
+    {
+      "id": "lib-consumer-smoke",
+      "name": "Install and import the packed library",
+      "status": "notrun",
+      "seconds": 0.1419259,
+      "output": "Not set up in this project: Nothing installs the packed library into a scratch project and imports it  no scripts/consumer-smoke.mjs ."
+    },
+    {
+      "id": "lib-docs",
+      "name": "Documentation is complete",
+      "status": "notrun",
+      "seconds": 0.1273262,
+      "output": "Not set up in this project: The project has no scripts/check-docs.mjs, so this check has nothing to run."
+    },
+    {
+      "id": "rule-USR-001-1",
+      "name": "No native button element",
+      "status": "passed",
+      "seconds": 0.0660776,
+      "output": ""
+    },
+    {
+      "id": "rule-USR-001-2",
+      "name": "No native table element",
+      "status": "passed",
+      "seconds": 0.0773513,
+      "output": ""
+    },
+    {
+      "id": "rule-USR-001-3",
+      "name": "No native text box or text area",
+      "status": "passed",
+      "seconds": 0.0736669,
+      "output": ""
+    },
+    {
+      "id": "rule-USR-001-4",
+      "name": "No native file upload input",
+      "status": "passed",
+      "seconds": 0.0675816,
+      "output": ""
+    },
+    {
+      "id": "rule-USR-002-1",
+      "name": "No tiny fixed pixel font sizes",
+      "status": "passed",
+      "seconds": 0.0649167,
+      "output": ""
+    },
+    {
+      "id": "rule-USR-002-2",
+      "name": "Do not block pinch-zoom on mobile",
+      "status": "passed",
+      "seconds": 0.0686352,
+      "output": ""
+    },
+    {
+      "id": "rule-USR-003-1",
+      "name": "No dynamic code execution (eval / new Function)",
+      "status": "passed",
+      "seconds": 0.0790978,
+      "output": ""
+    },
+    {
+      "id": "rule-USR-003-2",
+      "name": "No raw HTML injection (XSS risk)",
+      "status": "passed",
+      "seconds": 0.0782721,
+      "output": ""
+    },
+    {
+      "id": "rule-USR-003-3",
+      "name": "No string-based timers (hidden eval)",
+      "status": "passed",
+      "seconds": 0.0704113,
+      "output": ""
+    },
+    {
+      "id": "rule-USR-003-4",
+      "name": "No leftover debugger statements or console.log",
+      "status": "passed",
+      "seconds": 0.0718733,
+      "output": ""
+    },
+    {
+      "id": "rule-USR-006-1",
+      "name": "No hard-coded colours in component code (use shared design tokens)",
+      "status": "passed",
+      "seconds": 0.0722133,
+      "output": ""
+    }
+  ],
+  "tests": []
+}

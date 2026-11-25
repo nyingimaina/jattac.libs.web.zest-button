@@ -1,7 +1,7 @@
 ---
 title: Using the ZestButton on/off toggle
 covers: UI/ZestButton.tsx, UI/hooks/useToggleState.ts, Styles/ZestButton.module.css, UI/index.ts
-covers-hash: 5f3cfb116a38d0881b15
+covers-hash: bf05f9bb01485eb3823d
 ---
 
 # Using the ZestButton on/off toggle
@@ -164,6 +164,14 @@ If you also set `confirmOptions`, the **first click only starts the confirmation
 
 If the button has an `onClick` and `busyOptions.handleInternally` is on, the toggle flips on the click, then the busy spinner runs as usual. While the button is busy it is disabled, so extra clicks are ignored.
 
+### Works with the keyboard-focus streak
+
+A toggle can opt into the [focus streak](../zest-button-focus-sheen/guide.md) with `focusSheen: true`. When it plays, the toggle keeps its pressed look and its focus ring; the streak is an extra cue only. A toggle that does not opt in is unchanged.
+
+```tsx
+<ZestButton zest={{ toggleOptions: {}, focusSheen: true }}>Bold</ZestButton>
+```
+
 ### Setting shared defaults
 
 `toggleOptions` merges with the rest of your `ZestButtonConfigProvider` settings, like other `zest` options. Setting it for a type also makes that type a toggle. For example, to make every `favorite` button a toggle with the check mark at the end:
@@ -209,6 +217,8 @@ These are outside this feature: a sliding switch control, groups where only one 
 ## See also
 
 - [Feature record (BRS) for the toggle](./BRS.md)
+- [The opt-in keyboard-focus streak](../zest-button-focus-sheen/guide.md) — the extra
+  keyboard-focus cue a toggle can opt into.
 - [Styling toggle buttons from one place](../zest-button-toggle-style/guide.md) — set the
   look of every toggle centrally.
 - [Using ZestButton semantic types](../zest-button-semantic-types/guide.md) — combine a

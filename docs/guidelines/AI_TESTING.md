@@ -1,7 +1,7 @@
 ---
 title: Testing Policy
-covers: AGENTS.md, docs/guidelines/AI_TESTING.md
-covers-hash: cbd6465ff88987eaddf9
+covers: agents.md
+covers-hash: fe01860d678e208df487
 ---
 
 # Testing Policy

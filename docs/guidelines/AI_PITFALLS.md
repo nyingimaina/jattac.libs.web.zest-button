@@ -1,7 +1,7 @@
 ---
 title: Common AI Failure Modes
-covers: AGENTS.md, docs/guidelines/AI_PITFALLS.md
-covers-hash: 49b5eb5197a00781e791
+covers: agents.md
+covers-hash: fe01860d678e208df487
 ---
 
 # Common AI Failure Modes

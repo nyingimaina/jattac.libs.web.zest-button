@@ -1,7 +1,7 @@
 ---
 title: BRS — ZestButton dropdown options (split button)
-covers: UI/ZestButton.tsx, UI/ZestDropdownMenu.tsx, UI/ZestDropdownMenuItem.tsx
-covers-hash: 7da902295b720fcfa0e0
+covers: UI/ZestButton.tsx, UI/ZestDropdownMenu.tsx, UI/ZestDropdownMenuItem.tsx, Styles/ZestButton.module.css
+covers-hash: 13df1b418badb88fe13e
 ---
 
 # BRS — ZestButton dropdown options (split button)
@@ -37,6 +37,18 @@ The 1.8.0 toggle styling feature added a `useToggleStyle` call and one optional
 `toggleOptions`. The split control, the menu and its theme are unchanged. I did not find
 code or a test that styles the dropdown menu or its items from `styles.toggle`, so do not
 expect it to. See [Styling toggle buttons from one place](../zest-button-toggle-style/guide.md).
+
+### Current state: the opt-in focus streak
+
+The focus-streak feature changes the split control only when `zest.focusSheen` is `true`.
+The wrapper gains `position: relative` and a single overlay; focusing either the main
+segment or the chevron plays one sweep across the whole control (`:has(:focus-visible)`),
+clipped by the overlay's own rounded corners so neither segment's focus ring is cut. The
+chevron's one-time mount streak is suppressed for that opted-in control, so two streaks
+never collide. The menu is unchanged: `ZestDropdownMenu` renders it in
+`DropdownMenu.Portal`, outside the wrapper, so it is not clipped, covered or hidden. A
+split button that does not opt in is unchanged. See
+[The opt-in keyboard-focus streak](../zest-button-focus-sheen/guide.md).
 
 ---
 
@@ -243,6 +255,8 @@ Styles/ZestButton.module.css    — extended (not replaced) with chevron/menu/di
   the names and icons available to the main button and its items.
 - [Using the ZestButton on/off toggle](../zest-button-toggle/guide.md) — the toggle is
   independent of the dropdown.
+- [The opt-in keyboard-focus streak](../zest-button-focus-sheen/guide.md) — one
+  whole-control sweep when an opted-in split button receives keyboard focus.
 - [Styling toggle buttons from one place](../zest-button-toggle-style/guide.md) — the
   provider look applies to toggles only.
 - [Recipe 5: a split button with overflow actions](../../../documentation/examples.md#recipe-5-a-split-button-with-overflow-actions)

@@ -1,0 +1,7 @@
+{
+  "ruling": "resolved",
+  "reason": "REV-1 describes the pre-round-2 stylesheet. R4 requires the streak to be visible on all three variants in both themes, and the code now meets that: Styles/ZestButton.module.css:675-678 sets the solid band to #ffffff at peak 0.9, :680-682 and :706-708 switch dark-theme success to #064e3b, and :744-746 gives the split solid band peak 0.9. Recomputing the six solid combinations gives light standard 7.38, light success 3.34, light danger 4.14, dark standard 3.28, dark success 4.19 and dark danger 3.30, all >=3:1. The claim that the test only regex-matches is also wrong: __tests__/ZestButtonFocusSheen.test.tsx:329-378 parses the colour/peak tokens, alpha-blends them over the theme background tokens in sRGB and asserts >=3:1 for every regular and split solid combination (it drops below 3 at peak 0.80). OS dark is covered because UI/ZestButton.tsx:241 resolves 'system' to the detected theme and :446 always applies force-light/force-dark. QA-1 was fixed in round 2 and REV-1 is a stale duplicate.",
+  "route": "challenge",
+  "findingIds": ["REV-1"],
+  "amendments": []
+}

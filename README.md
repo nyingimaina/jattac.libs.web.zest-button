@@ -13,6 +13,8 @@ A highly customizable and interactive React button component designed for modern
 
 *   **On/Off Toggle Mode**: Pass `toggleOptions` to turn the button into a toggle (like a Bold button in an editor). When on it looks pressed and shows an animated check mark; screen readers hear "pressed".
 
+*   **Opt-in Keyboard Focus Streak**: Pass `focusSheen: true` to play one diagonal light band across the button (or the whole split control) when it receives keyboard focus, so the focused control stands out. It is off by default, never fires on a mouse click, and leaves the existing focus ring as the primary focus signal.
+
 ### Installation
 
 ```bash
@@ -114,6 +116,55 @@ const App = () => (
 ```
 
 A single toggle can override the provider with `zest.toggleOptions.style`. See [Configuration](./documentation/configuration.md#toggle-styling).
+
+### Opt-in Keyboard Focus Streak
+
+Turn the focus streak on with the optional `focusSheen` field. It is off by default, so every existing button renders and behaves exactly as before. When on, a diagonal band (about 45 degrees, top-right to bottom-left) sweeps the button once in about 0.6 seconds when it receives **keyboard** focus; a mouse click does not play it. The band is clipped to the button's rounded shape and the focus ring stays fully visible.
+
+```tsx
+import ZestButton from 'jattac.libs.web.zest-button';
+
+const Actions = () => (
+  <div style={{ display: 'flex', gap: '0.5rem' }}>
+    {/* Regular button: one sweep per keyboard focus arrival */}
+    <ZestButton zest={{ focusSheen: true }}>Save draft</ZestButton>
+
+    {/* Split button: one sweep across the whole control, main action and chevron together */}
+    <ZestButton
+      zest={{
+        focusSheen: true,
+        dropdownOptions: [{ label: 'Export as PDF' }],
+      }}
+    >
+      Export as CSV
+    </ZestButton>
+  </div>
+);
+```
+
+It works on every `buttonStyle` (`solid`, `outline`, `text`, `dashed`), every variant (`standard`, `success`, `danger`) and in both light and dark themes. People who set `prefers-reduced-motion: reduce` get no streak. To opt every button in scope in, set `focusSheen: true` in the provider's `defaultProps` (see [Configuration](./documentation/configuration.md#focus-streak-defaults)). Read the full [focus streak guide](https://github.com/nyingimaina/jattac.libs.web.zest-button/blob/master/docs/features/zest-button-focus-sheen/guide.md) for clipping, colours per style and theme, and reduced motion.
+
+A host can also play the streak from code with `sheenTrigger` (a string or a number). Each change plays one sweep on a button that need not be focused, while the first value on mount plays nothing. It works with or without `focusSheen` (omitted, `false` or `true`), on a split control, and on disabled or busy buttons without firing their click handler.
+
+```tsx
+import { useState } from 'react';
+import ZestButton from 'jattac.libs.web.zest-button';
+
+const Sync = () => {
+  const [syncToken, setSyncToken] = useState(0);
+
+  return (
+    <>
+      <ZestButton zest={{ sheenTrigger: syncToken }} onClick={() => alert('Synced!')}>
+        Sync now
+      </ZestButton>
+      <button onClick={() => setSyncToken((token) => token + 1)}>Play the streak</button>
+    </>
+  );
+};
+```
+
+People who set `prefers-reduced-motion: reduce` get no streak from either the focus or the programmatic trigger, and no prop overrides it.
 
 ### Documentation
 

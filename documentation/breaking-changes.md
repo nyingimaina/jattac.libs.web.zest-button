@@ -9,6 +9,7 @@ This document lists significant changes between versions that might require modi
 
 ## Table of Contents
 
+- [Version 1.9.0](#version-190)
 - [Version 1.8.0](#version-180)
 - [Version 1.7.0](#version-170)
 - [Version 1.6.0](#version-160)
@@ -16,6 +17,14 @@ This document lists significant changes between versions that might require modi
 - [Version 1.2.7](#version-127)
 - [Version 1.2.6](#version-126)
 - [Version 1.2.0](#version-120)
+
+---
+
+## Version 1.9.0
+
+### Opt-in keyboard-focus streak (additive, no breaking changes)
+
+Adds two optional fields to the existing `zest` object: `focusSheen` (default `false`) plays one diagonal light band across the button, or across the whole split control, when it receives keyboard focus, and `sheenTrigger` (a `string` or a `number`) plays the same band from code on every change of the value. Nothing was removed or renamed: buttons that do not pass either field render with exactly the same markup, classes and behaviour as before, no export changed, and no runtime dependency was added. The streak is decoration only, so it never intercepts pointer input, changes the accessible name, role or state, adds a focusable element or shifts layout, and it is removed entirely under `prefers-reduced-motion: reduce`. No action is needed to upgrade.
 
 ---
 

@@ -1,0 +1,45 @@
+{
+  "findings": [
+    {
+      "cites": "R8",
+      "severity": "blocking",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "line": 767,
+      "evidence": "The edge case R8 'the band is visible on the disabled colours of every button style' is proven only for the solid style: the test reads cssBlock(\".button.focusSheen.sheenProgrammatic.solid.disabled\") and the force-dark twin. There is no outline, text or dashed disabled case in this test (or anywhere in the suite), so a band that vanishes on those disabled styles would pass.",
+      "description": "R8's disabled-band edge case covers one of the four button styles; outline, text and dashed disabled buttons have no test that the programmatic band is visible on them."
+    },
+    {
+      "cites": "R8",
+      "severity": "blocking",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "line": 686,
+      "evidence": "The split programmatic test only asserts the wrapper has class sheenProgrammatic (and the segments do not). It never asserts the wrapper's sheenTriggerOdd/Even parity class, and no test asserts the split animation rules .focusSheenSplit.sheenProgrammatic.sheenTriggerOdd/Even::before (Styles/ZestButton.module.css:884-890); A2's parity checks (test lines 823-847) target only the regular .button selectors. sheenProgrammatic alone renders an opacity:0 ::before with no animation, so the split sweep could be removed entirely and every test would still pass.",
+      "description": "R8's 'one sweep across the whole split control' is not proven: only the marker class is checked, not the parity/keyframe wiring that makes a sweep actually play on the split overlay."
+    },
+    {
+      "cites": "R7",
+      "severity": "advisory",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "line": 607,
+      "evidence": "The focusSheen:false case only asserts that sheenProgrammatic appears. Nothing focuses a sheenTrigger-only button to prove the new sheenFocusOff markers (Styles/ZestButton.module.css:866-874) keep the focus streak off; sheenFocusOff is never asserted in any test.",
+      "description": "The R7 'works with focusSheen false' path leaves the new focus-suppression behaviour unverified, so focusing a trigger-only button could start showing a focus streak without a failing test."
+    },
+    {
+      "cites": "A1",
+      "severity": "advisory",
+      "file": "__tests__/hooks/useSheenTrigger.test.ts",
+      "line": 65,
+      "evidence": "This test covers 'no listener, timer or storage', but nothing counts renders; the A1 clause 'renders once per value change' has no assertion.",
+      "description": "A double render on each trigger change (or a redundant re-render) would not be caught, though A1 requires exactly one render per value change."
+    },
+    {
+      "cites": "R9",
+      "severity": "advisory",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "line": 797,
+      "evidence": "Reduced-motion proof is only regex over the CSS source. No test renders under prefers-reduced-motion at mount or mid-sweep, and R9 acceptance 2's 'causes no error or warning' when changing sheenTrigger is not asserted.",
+      "description": "R9's live-setting and error-free-trigger behaviour rest on CSS-text assertions; the runtime states named in the requirement are not exercised (jsdom cannot evaluate the media query, so this is advisory rather than blocking)."
+    }
+  ],
+  "verifications": []
+}

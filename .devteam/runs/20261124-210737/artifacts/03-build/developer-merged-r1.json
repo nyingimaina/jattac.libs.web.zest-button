@@ -1,0 +1,233 @@
+{
+  "summary": "Revision 1 slice 1: added the optional boolean \u0060focusSheen\u0060 field to ZestCustomProps (off by default, no new export or plumbing) and the CSS focus streak in the shared stylesheet. A regular opted-in button gets one \u0060::after\u0060 band clipped by its existing rounded overflow; an opted-in split control gets one whole-control overlay on the split wrapper, keyed to :has(:focus-visible), clipped by its own radius so neither segment\u0027s focus ring is cut, and with the chevron mount streak suppressed for that control. The band is a 45-degree gradient travelling top-right to bottom-left over 0.6s, uses currentColor on regular buttons and style\u002Bvariant\u002Bforced-theme markers on split controls, ends transparent, keeps the label above it, and is disabled under prefers-reduced-motion. Wrote focused behavioural and characterisation tests, and documented the option in documentation/api.md, documentation/features.md, documentation/examples.md and the new docs/features/zest-button-focus-sheen/guide.md. README.md and documentation/configuration.md are left for the other slice as instructed. Verified with npx tsc --noEmit, npm run build and the full npm test suite (26 suites, 331 tests, all passing). Finished slice 2 of revision 1 (R1, A4). README.md gained a focus-streak key-feature bullet and an \u0027Opt-in Keyboard Focus Streak\u0027 section with regular and split examples that links the new guide. documentation/configuration.md gained a \u0027Focus Streak Defaults\u0027 section plus TOC entry, showing how the provider\u0027s defaultProps sets focusSheen app-wide and how a single button opts out. Extended the A4 coverage in __tests__/ZestButtonFocusSheen.test.tsx to assert the configuration page (defaultProps, reduced motion, guide link) and the README (focusSheen, dropdownOptions, guide link). Verified the slice-1 artifacts (focusSheen prop, focus-streak CSS, focus-sheen and characterization tests, guide, api/features/examples docs) are present and untouched. All checks run: tsc typecheck, focused jest (32/32), npm run build, and full npm test (26 suites, 332 tests pass).",
+  "tests": [
+    {
+      "name": "R1: focusSheen is off by default and opts in per button without leaking",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R1"
+      ]
+    },
+    {
+      "name": "R1: focusSheen={false} renders no streak layer",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R1"
+      ]
+    },
+    {
+      "name": "R1: turning focusSheen off at runtime removes the streak layer from a regular button and a split control",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R1"
+      ]
+    },
+    {
+      "name": "R1: a split button opts in with one whole-control layer and no per-segment layer",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R1",
+        "R5"
+      ]
+    },
+    {
+      "name": "R1: opting in leaves the accessible name, role and pressed state alone",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R1"
+      ]
+    },
+    {
+      "name": "R2: plain focus or a mouse click adds no JS state; only :focus-visible starts the sweep",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R2"
+      ]
+    },
+    {
+      "name": "R2: each focus arrival plays exactly one sweep and a re-focus replays it",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R2"
+      ]
+    },
+    {
+      "name": "R2: the existing focus ring remains the primary focus signal",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R2",
+        "R3"
+      ]
+    },
+    {
+      "name": "R2: a toggle in its on state keeps its pressed look and focus ring while the streak plays",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R2"
+      ]
+    },
+    {
+      "name": "R3: the band is a 45-degree diagonal that travels top-right to bottom-left over 0.6 seconds",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R3"
+      ]
+    },
+    {
+      "name": "R3: the band is clipped by the button\u0027s rounded overflow and never changes its layout",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R3"
+      ]
+    },
+    {
+      "name": "R3: the band ends transparent and is not left stuck or tinted",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R3"
+      ]
+    },
+    {
+      "name": "R3: very small and very large buttons share one continuous sweep with no stacked layers",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R3"
+      ]
+    },
+    {
+      "name": "R4: every style, variant and forced theme gets the streak layer on a regular button",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R4"
+      ]
+    },
+    {
+      "name": "R4: every style, variant and forced theme gets the whole-control layer on a split button",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R4",
+        "R5"
+      ]
+    },
+    {
+      "name": "R4: the band colour follows currentColor and the button\u0027s own theme tokens so it reads on every style",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R4"
+      ]
+    },
+    {
+      "name": "R4: the label sits above the translucent band so it stays readable",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R4"
+      ]
+    },
+    {
+      "name": "R5: a split control plays one whole-control sweep from either segment",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R5"
+      ]
+    },
+    {
+      "name": "R5: the split band is clipped to the rounded outer corners without clipping either focus ring",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R5"
+      ]
+    },
+    {
+      "name": "R5: the open menu is rendered outside the clipping wrapper and stays visible",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R5"
+      ]
+    },
+    {
+      "name": "R5: moving focus from the main segment to the chevron keeps one overlay for the whole visit",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "R5"
+      ]
+    },
+    {
+      "name": "A1: reduced motion disables the focus streak for regular and split buttons",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "A1"
+      ]
+    },
+    {
+      "name": "A1: without the preference the streak keeps its animation on both button kinds",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "A1"
+      ]
+    },
+    {
+      "name": "A2: an opted-in split control suppresses the chevron mount streak",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "A2"
+      ]
+    },
+    {
+      "name": "A2: a split control that is not opted in keeps its chevron mount streak",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "A2"
+      ]
+    },
+    {
+      "name": "A4: the API, features and examples pages document focusSheen for regular and split buttons",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "A4"
+      ]
+    },
+    {
+      "name": "A3: a plain regular button keeps its current wrapper element, classes and DOM",
+      "file": "__tests__/ZestButtonFocusSheenCharacterization.test.tsx",
+      "requirements": [
+        "A3"
+      ]
+    },
+    {
+      "name": "A3: a split wrapper and its two segments keep their current classes and gain no sheen classes",
+      "file": "__tests__/ZestButtonFocusSheenCharacterization.test.tsx",
+      "requirements": [
+        "A3"
+      ]
+    },
+    {
+      "name": "A3: the existing focus-ring rule is still the focus indicator",
+      "file": "__tests__/ZestButtonFocusSheenCharacterization.test.tsx",
+      "requirements": [
+        "A3"
+      ]
+    },
+    {
+      "name": "A3: the existing chevron mount-streak rule and keyframes are unchanged",
+      "file": "__tests__/ZestButtonFocusSheenCharacterization.test.tsx",
+      "requirements": [
+        "A3"
+      ]
+    },
+    {
+      "name": "A3: a button that does not opt in keeps its click behaviour and adds no extra elements",
+      "file": "__tests__/ZestButtonFocusSheenCharacterization.test.tsx",
+      "requirements": [
+        "A3"
+      ]
+    },
+    {
+      "name": "A4: the configuration page sets focusSheen app-wide through defaultProps and the README links the guide",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": [
+        "A4"
+      ]
+    }
+  ],
+  "kickbacks": []
+}

@@ -1,0 +1,4 @@
+{
+  "summary": "Consistent: this revision's design (focusSheen only) covers R1-R5 with files that are all in its own scope, its colour/clipping/reduced-motion choices serve R3/R4/R5 without contradicting the earlier toggle or icon requirements, and no house rule or automated check blocks it as written.",
+  "conflicts": []
+}

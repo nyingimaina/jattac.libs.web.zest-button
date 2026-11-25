@@ -1,0 +1,155 @@
+{
+  "rules": [
+    {
+      "rule": "EFF-001",
+      "count": 1,
+      "runs": [
+        "20261025-084314"
+      ],
+      "lastDescription": "The feature\u0027s non-functional performance requirement is that the built ESM bundle grow by no more than 15 KB; it grew by 15,912 bytes, exceeding the agreed size budget. Trim the icon additions (remove the unused duplicate icons, share one e",
+      "lastFile": "dist/index.esm.js"
+    },
+    {
+      "rule": "DOC-001",
+      "count": 2,
+      "runs": [
+        "20261025-084314"
+      ],
+      "lastDescription": "The documented recipe for overriding a built-in type\u0027s default icon is missing from examples.md, so the feature\u0027s override path that R6/R7 promise is not shown where readers look.",
+      "lastFile": "documentation/examples.md"
+    },
+    {
+      "rule": "USR-003",
+      "count": 1,
+      "runs": [
+        "20261025-084314"
+      ],
+      "lastDescription": "This introduces dead, duplicated icon definitions that are constructed at module load and shipped in the unminified bundle, plus debugging commentary - the code duplication and technical debt USR-003 forbids. Delete the two unused constants",
+      "lastFile": "UI/zestIcons.tsx"
+    },
+    {
+      "rule": "LIB-005",
+      "count": 1,
+      "runs": [
+        "20261025-202653"
+      ],
+      "lastDescription": "The package is not marked \u0022sideEffects\u0022: false (or a CSS-file list), so bundlers cannot drop unused icon code. This also weakens R5 (an app should not carry icons it never uses). Add the flag, with a CSS list because the CSS is injected.",
+      "lastFile": "package.json"
+    },
+    {
+      "rule": "A4",
+      "count": 1,
+      "runs": [
+        "20261124-210737"
+      ],
+      "lastDescription": "A4 exists so the new prop can be found and read; the new guide links resolve in the git repo but 404 in the shipped package because \u0060docs/\u0060 is not in \u0060files\u0060. Ship the guide inside \u0060documentation/\u0060 (or \u0060files\u0060) or link to an always-availabl",
+      "lastFile": "package.json"
+    }
+  ],
+  "files": [
+    {
+      "path": "__tests__/ZestButtonToggle.test.tsx",
+      "count": 1,
+      "runs": [
+        "20261025-080947"
+      ],
+      "lastDescription": "System theme has no test for toggle mode. Add a test that renders the toggle on without a theme (or with theme \u0027system\u0027) and checks the on state under both a light and a dark matchMedia result. Include a change of the OS setting while on, a",
+      "lastRule": ""
+    },
+    {
+      "path": "UI/zestIcons.tsx",
+      "count": 4,
+      "runs": [
+        "20261025-084314"
+      ],
+      "lastDescription": "R5 requires an unknown icon name to render nothing and not throw, but names that collide with Object.prototype (__proto__, constructor, toString, valueOf, hasOwnProperty) are treated as built-in icons. A library consumer that passes an untr",
+      "lastRule": "USR-003"
+    },
+    {
+      "path": "dist/index.esm.js",
+      "count": 1,
+      "runs": [
+        "20261025-084314"
+      ],
+      "lastDescription": "The feature\u0027s non-functional performance requirement is that the built ESM bundle grow by no more than 15 KB; it grew by 15,912 bytes, exceeding the agreed size budget. Trim the icon additions (remove the unused duplicate icons, share one e",
+      "lastRule": "EFF-001"
+    },
+    {
+      "path": "documentation/features.md",
+      "count": 1,
+      "runs": [
+        "20261025-084314"
+      ],
+      "lastDescription": "The documentation\u0027s Icon column does not match the icon the code ships: a reader looking for the sliders glyph gets a target. Either draw sliders for \u0060settings\u0060 or correct the documentation so the table describes the shipped icon.",
+      "lastRule": "DOC-001"
+    },
+    {
+      "path": "documentation/examples.md",
+      "count": 2,
+      "runs": [
+        "20261025-084314"
+      ],
+      "lastDescription": "The documented recipe for overriding a built-in type\u0027s default icon is missing from examples.md, so the feature\u0027s override path that R6/R7 promise is not shown where readers look.",
+      "lastRule": "DOC-001"
+    },
+    {
+      "path": "__tests__/ZestIcon.test.tsx",
+      "count": 1,
+      "runs": [
+        "20261025-084314"
+      ],
+      "lastDescription": "Add one consumer-style test that imports ZestIcon, ZestIconProps, ZestIconSize, the default ZestButton, ZestButtonConfigProvider and useZestButtonConfig from \u0022../UI\u0022, then renders a ZestIcon as a ZestButton iconLeft. This is blocking becaus",
+      "lastRule": ""
+    },
+    {
+      "path": "package.json",
+      "count": 2,
+      "runs": [
+        "20261025-202653",
+        "20261124-210737"
+      ],
+      "lastDescription": "A4 exists so the new prop can be found and read; the new guide links resolve in the git repo but 404 in the shipped package because \u0060docs/\u0060 is not in \u0060files\u0060. Ship the guide inside \u0060documentation/\u0060 (or \u0060files\u0060) or link to an always-availabl",
+      "lastRule": "A4"
+    },
+    {
+      "path": "Styles/ZestButton.module.css",
+      "count": 2,
+      "runs": [
+        "20261124-210737"
+      ],
+      "lastDescription": "R4 requires each style/variant/theme band to be distinguishable from its own background at \u003E= 3:1 at its brightest point; solid success and danger in both themes (and dark standard) fall below 3:1 and no test would fail if the band were mad",
+      "lastRule": ""
+    },
+    {
+      "path": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "count": 2,
+      "runs": [
+        "20261124-224802"
+      ],
+      "lastDescription": "R8\u0027s \u0027one sweep across the whole split control\u0027 is not proven: only the marker class is checked, not the parity/keyframe wiring that makes a sweep actually play on the split overlay.",
+      "lastRule": ""
+    },
+    {
+      "path": "__tests__/ZestButtonFocusSheenPerformance.test.tsx",
+      "count": 1,
+      "runs": [
+        "20261124-233901"
+      ],
+      "lastDescription": "R13\u0027s scale scenario for keyboard tabbing through many buttons is unproven; only programmatic and mount scenarios are tested.",
+      "lastRule": ""
+    }
+  ],
+  "absorbed": [
+    "20261025-080947",
+    "20261025-083546",
+    "20261025-083824",
+    "20261025-084314",
+    "20261025-122245",
+    "20261025-202653",
+    "20261025-205614",
+    "20261124-210737",
+    "20261124-224802",
+    "20261124-233901"
+  ],
+  "promotionAsked": {}
+}

@@ -1,0 +1,10 @@
+{
+  "findings": [],
+  "verifications": [
+    {
+      "id": "REV-1",
+      "status": "fixed",
+      "evidence": "Solid band now uses #ffffff at peak 0.9 (Styles/ZestButton.module.css:675-678), dark-theme success switches to #064e3b (:680-682 regular, :706-708 split), and the split solid band peaks at 0.9 (:744-746). __tests__/ZestButtonFocusSheen.test.tsx:329-378 parses the colour/peak tokens, alpha-blends each band over its own --zest-color-*-bg token and asserts >=3:1 for all six solid combinations (regular and split); the two focus-sheen suites pass 34/34 under npx jest, so the claim that coverage is only regex-matching no longer holds. No security surface was introduced: the change is a boolean prop plus CSS and docs, with no dangerouslySetInnerHTML, no consumer-supplied URL in href/src, no eval/dynamic import, no new dependency, no install-time script, no secret, and the overlay is pointer-events:none so it cannot intercept input."
+    }
+  ]
+}

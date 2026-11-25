@@ -1,7 +1,7 @@
 ---
 title: Critical Paths
-covers: docs/guidelines/AI_E2E_TESTING.md, __tests__/, UI/toggleStyle/, UI/hooks/useToggleStyle.ts
-covers-hash: 65667fe77d792e7ce3f5
+covers: docs/guidelines/AI_E2E_TESTING.md, __tests__/, UI/ZestButton.tsx, Styles/ZestButton.module.css, UI/toggleStyle/, UI/hooks/useToggleStyle.ts
+covers-hash: 8cfb87be3aa82f417437
 ---
 
 # Critical Paths
@@ -169,6 +169,30 @@ Protected by `__tests__/packagePeerDependencies.test.ts` and
 `__tests__/buildExternalization.test.ts`. The actual bundle content is checked at release
 time, because the tests read the configuration rather than build the package.
 
+### 9. Keyboard-focus streak (opt-in)
+
+The opt-in `zest.focusSheen` streak is decoration, but it must never weaken keyboard focus
+or change a button that did not opt in.
+
+- [x] A button without `focusSheen` (or with `focusSheen: false`) has no streak layer and
+      renders unchanged.
+- [x] A regular opted-in button gets the `focusSheen` class; the sweep runs only on
+      `:focus-visible`, not on plain focus or a mouse click.
+- [x] A split control gets one whole-control overlay on the wrapper; focusing either
+      segment plays one sweep, clipped to the rounded outer corners without cutting either
+      focus ring.
+- [x] The open menu is rendered outside the wrapper (in a portal) and stays visible.
+- [x] An opted-in split control suppresses the chevron mount streak; a control that does
+      not opt in keeps it.
+- [x] Reduced motion (`prefers-reduced-motion: reduce`) disables the streak for regular and
+      split buttons.
+- [x] The label stays above the translucent band, and the solid bands reach at least 3:1
+      contrast against their own fill.
+- [x] Opting in does not change the accessible name, role or pressed state.
+
+Protected by `__tests__/ZestButtonFocusSheen.test.tsx` and
+`__tests__/ZestButtonFocusSheenCharacterization.test.tsx`.
+
 ## Adding a new path
 
 1. Add the scenario above, with the outcome a user expects.
@@ -203,5 +227,7 @@ time, because the tests read the configuration rather than build the package.
   behaviour behind path 5.
 - [Styling toggle buttons from one place](../features/zest-button-toggle-style/guide.md) —
   the behaviour behind path 6.
+- [The opt-in keyboard-focus streak](../features/zest-button-focus-sheen/guide.md) — the
+  behaviour behind path 9.
 - [Dropdown options feature record](../features/zest-button-dropdown-options/BRS.md) — the
   behaviour behind path 7.

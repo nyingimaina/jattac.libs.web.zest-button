@@ -1,0 +1,2215 @@
+{
+  "facts": [
+    {
+      "text": "every custom option is a field on the exported \u0060ZestCustomProps\u0060 interface passed as the \u0060zest\u0060 prop; no custom prop is top-level on ZestButtonProps.",
+      "role": "analyst",
+      "stage": "Define",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/ZestButton.tsx",
+          "hash": "dbadd969bd1c2dc30260"
+        }
+      ],
+      "at": "2026-11-24T21:19:33.4008788+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "split mode is a plain \u0060\u003Cdiv className={styles.splitButtonContainer}\u003E\u0060 wrapping the main \u0060\u003Cbutton\u003E\u0060 plus \u0060ZestDropdownMenu\u0060; the wrapper has no role, tabindex or aria attributes.",
+      "role": "analyst",
+      "stage": "Define",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/ZestButton.tsx",
+          "hash": "dbadd969bd1c2dc30260"
+        }
+      ],
+      "at": "2026-11-24T21:19:33.422423+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "the main button always carries \u0060styles.button\u0060 (position:relative; overflow:hidden) and split mode adds \u0060styles.splitButtonMain\u0060 (right radii 0, border-right none).",
+      "role": "analyst",
+      "stage": "Define",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/ZestButton.tsx",
+          "hash": "dbadd969bd1c2dc30260"
+        }
+      ],
+      "at": "2026-11-24T21:19:33.4368062+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "disabled/busy state is \u0060isDisabled\u0060 (disabled || effectiveBusy || rage-click || anyDropdownItemBusy), applied as the real \u0060disabled\u0060 attribute plus \u0060styles.disabled\u0060.",
+      "role": "analyst",
+      "stage": "Define",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/ZestButton.tsx",
+          "hash": "dbadd969bd1c2dc30260"
+        }
+      ],
+      "at": "2026-11-24T21:19:33.4501939+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "focus ring is \u0060.button:focus-visible { box-shadow: var(--zest-shadow-resting), var(--zest-focus-ring) }\u0060 (line 179); the ring is an outer box-shadow, so a clipping ancestor can cut it.",
+      "role": "analyst",
+      "stage": "Define",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "f8f012306783e07723a6"
+        }
+      ],
+      "at": "2026-11-24T21:19:33.4656264+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "chevron mount streak is \u0060.dropdownTrigger::before\u0060 (lines 572-586, 115deg, 1.3s, 0.4s delay) and is switched off under \u0060prefers-reduced-motion\u0060 at lines 645-667.",
+      "role": "analyst",
+      "stage": "Define",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "f8f012306783e07723a6"
+        }
+      ],
+      "at": "2026-11-24T21:19:33.4789238+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "\u0060.splitButtonContainer\u0060 (line 495) is only \u0060display:inline-flex; align-items:stretch\u0060 today \u2014 no position, overflow or border-radius; \u0060--zest-radius-md\u0060 (8px) is the button corner radius.",
+      "role": "analyst",
+      "stage": "Define",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "f8f012306783e07723a6"
+        }
+      ],
+      "at": "2026-11-24T21:19:33.494068+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "menu content is inside \u0060DropdownMenu.Portal\u0060 (line 85), so a clipping/positioned split wrapper does not clip the open menu.",
+      "role": "analyst",
+      "stage": "Define",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/ZestDropdownMenu.tsx",
+          "hash": "279ede6f900a3fee6b62"
+        }
+      ],
+      "at": "2026-11-24T21:19:33.5083452+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "\u0060ZestGlobalConfig.defaultProps?: ZestCustomProps\u0060, so any new ZestCustomProps field can also be supplied app-wide through the provider\u0027s generic defaultProps.",
+      "role": "analyst",
+      "stage": "Define",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/ZestButtonConfigContext.ts",
+          "hash": "96a0e0a43662c4c96582"
+        }
+      ],
+      "at": "2026-11-24T21:19:33.5241392+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "CSS Modules are mapped to identity-obj-proxy (jest.setup/jsdom), so class-name and DOM assertions work but computed styles/animations do not; existing tests parse CSS/config source text where needed.",
+      "role": "analyst",
+      "stage": "Define",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "jest.config.js",
+          "hash": "854474c899e43b2690b1"
+        }
+      ],
+      "at": "2026-11-24T21:19:33.5375178+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "custom options are fields on ZestCustomProps, merged by useZestConfig (provider defaultProps -\u003E semantic defaults -\u003E local zest), so a new \u0060focusSheen\u0060 field needs no extra plumbing.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/ZestButton.tsx",
+          "hash": "dbadd969bd1c2dc30260"
+        }
+      ],
+      "at": "2026-11-24T21:24:13.7548313+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "hasDropdown is \u0060dropdownOptions \u0026\u0026 length \u003E 0\u0060; split mode renders \u0060\u003Cdiv className={styles.splitButtonContainer}\u003E\u0060 wrapping the main \u0060\u003Cbutton\u003E\u0060 plus ZestDropdownMenu.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/ZestButton.tsx",
+          "hash": "dbadd969bd1c2dc30260"
+        }
+      ],
+      "at": "2026-11-24T21:24:13.773684+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "button className already includes styles[buttonStyle], styles[variant], styles[size] and force-light/force-dark; effectiveTheme and variant/buttonStyle are available when rendering the split wrapper.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/ZestButton.tsx",
+          "hash": "dbadd969bd1c2dc30260"
+        }
+      ],
+      "at": "2026-11-24T21:24:13.7888167+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "\u0060.button\u0060 already has position:relative, overflow:hidden and border-radius:var(--zest-radius-md), so a \u0060::after\u0060 streak on it is clipped to the rounded shape.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "f8f012306783e07723a6"
+        }
+      ],
+      "at": "2026-11-24T21:24:13.8053599+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "the focus ring is an outer box-shadow on \u0060.button:focus-visible\u0060 (line 179), so a clipping ancestor/wrapper would cut it; the split wrapper must not use overflow:hidden.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "f8f012306783e07723a6"
+        }
+      ],
+      "at": "2026-11-24T21:24:13.8198229+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "\u0060.splitButtonContainer\u0060 (line 495) is only display:inline-flex;align-items:stretch \u2014 it has no position, overflow or border-radius.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "f8f012306783e07723a6"
+        }
+      ],
+      "at": "2026-11-24T21:24:13.8367266+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "chevron mount streak is \u0060.dropdownTrigger::before\u0060 \u002B keyframes dropdownTriggerDiscoverySheen (115deg, 1.3s, 0.4s delay); suppress it with a wrapper class, no JS.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "f8f012306783e07723a6"
+        }
+      ],
+      "at": "2026-11-24T21:24:13.8504104+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "existing reduced-motion block (line 645) already sets \u0060.dropdownTrigger::before { animation:none; content:none }\u0060, so new streak rules can join that media query.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "f8f012306783e07723a6"
+        }
+      ],
+      "at": "2026-11-24T21:24:13.8653006+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "\u0060color-mix(in srgb, ...)\u0060 is already used (toggleOn, line 785/847) with a static fallback, so colour-mix is an accepted pattern here.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "f8f012306783e07723a6"
+        }
+      ],
+      "at": "2026-11-24T21:24:13.880118+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "there is no \u0060::after\u0060 rule anywhere in the file today, so \u0060.button::after\u0060 and \u0060.splitButtonContainer::after\u0060 are free.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "f8f012306783e07723a6"
+        }
+      ],
+      "at": "2026-11-24T21:24:13.8960262+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "the chevron trigger is a \u0060.button .dropdownTrigger\u0060 and the menu is inside DropdownMenu.Portal, so clipping/clipping-like wrapper changes cannot affect the open menu.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/ZestDropdownMenu.tsx",
+          "hash": "279ede6f900a3fee6b62"
+        }
+      ],
+      "at": "2026-11-24T21:24:13.918793+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "tests read Styles/ZestButton.module.css as text and assert on selector/source strings because CSS Modules map to identity-obj-proxy in jsdom.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonToggle.test.tsx",
+          "hash": "d97c213067e8f0008009"
+        }
+      ],
+      "at": "2026-11-24T21:24:13.9342636+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "\u0060export * from \u0022./ZestButton\u0022\u0060 already re-exports ZestCustomProps, so adding an optional field needs no index.ts change and is non-breaking.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/index.ts",
+          "hash": "c869894c0653ae052a22"
+        }
+      ],
+      "at": "2026-11-24T21:24:13.9500665+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "The design puts ZestButtonFocusSheenProp at UI/ZestButton.tsx.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "UI/ZestButton.tsx",
+          "hash": "dbadd969bd1c2dc30260"
+        }
+      ],
+      "at": "2026-11-24T21:26:51.6149485+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "The design puts ZestButtonFocusSheenStyles at Styles/ZestButton.module.css.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "f8f012306783e07723a6"
+        }
+      ],
+      "at": "2026-11-24T21:26:51.6327503+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "The design puts FocusSheenApiDocs at documentation/api.md.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "documentation/api.md",
+          "hash": "6c5742a277a4abc295ba"
+        }
+      ],
+      "at": "2026-11-24T21:26:51.7007772+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "The design puts FocusSheenFeaturesDocs at documentation/features.md.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "documentation/features.md",
+          "hash": "4839e877b932c0f552d0"
+        }
+      ],
+      "at": "2026-11-24T21:26:51.7186862+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "The design puts FocusSheenExamplesDocs at documentation/examples.md.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "documentation/examples.md",
+          "hash": "e545b1396e98f876b611"
+        }
+      ],
+      "at": "2026-11-24T21:26:51.7354784+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "The design puts FocusSheenConfigurationDocs at documentation/configuration.md.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "documentation/configuration.md",
+          "hash": "c3edb5c67acf8d8d95de"
+        }
+      ],
+      "at": "2026-11-24T21:26:51.7528557+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "The design puts FocusSheenReadme at README.md.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "README.md",
+          "hash": "17171518095e76881453"
+        }
+      ],
+      "at": "2026-11-24T23:46:14.999433+00:00",
+      "runs": [
+        "20261124-210737",
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "there is no \u0060typecheck\u0060 or \u0060test:coverage\u0060 script; use \u0060npx tsc --noEmit -p tsconfig.json\u0060 and \u0060npm test\u0060 (jest --coverage).",
+      "role": "developer",
+      "stage": "Build",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "package.json",
+          "hash": "89f9f01bf32f755524ae"
+        }
+      ],
+      "at": "2026-11-24T21:43:19.9954089+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "the focus streak is a single \u0060::after\u0060; regular buttons inherit the clip from \u0060.button\u0060 (overflow:hidden \u002B --zest-radius-md), split controls use a wrapper overlay with its own radius so segment focus rings are not clipped.",
+      "role": "developer",
+      "stage": "Build",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "827e7569071486d6285e"
+        }
+      ],
+      "at": "2026-11-24T21:43:20.0143958+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "the split focus-streak marker classes are built only on the wrapper (\u0060focusSheenSplit\u0060 \u002B \u0060sheen\u003CStyle\u003E\u0060 \u002B \u0060sheen\u003CVariant\u003E\u0060 \u002B force theme); the main/chevron buttons deliberately get no \u0060focusSheen\u0060 class.",
+      "role": "developer",
+      "stage": "Build",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/ZestButton.tsx",
+          "hash": "dd87b1ac1c385b4bfbbb"
+        }
+      ],
+      "at": "2026-11-24T21:43:20.0344553+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "npm \u0060files\u0060 publishes only dist, README.md, LICENSE and documentation; new docs/features guide, __tests__ and .devteam are never shipped in the tarball (npm pack --dry-run confirmed 32 files, no secrets).",
+      "role": "security",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "package.json",
+          "hash": "89f9f01bf32f755524ae"
+        }
+      ],
+      "at": "2026-11-24T21:49:09.5969421+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "focusSheen only ever selects a hardcoded class list ([styles.focusSheenSplit, styles.sheen\u003CStyle\u003E, styles.sheen\u003CVariant\u003E, force-light/force-dark]); the consumer value is never interpolated into className, so there is no class-name injection path.",
+      "role": "security",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/ZestButton.tsx",
+          "hash": "dd87b1ac1c385b4bfbbb"
+        }
+      ],
+      "at": "2026-11-24T21:49:09.6109116+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "the split focus-streak overlay is \u0060inset:0\u0060 with its own border-radius and \u0060pointer-events:none\u0060, and the dropdown menu renders inside DropdownMenu.Portal, so the overlay cannot intercept clicks or clip the open menu.",
+      "role": "security",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "827e7569071486d6285e"
+        }
+      ],
+      "at": "2026-11-24T21:49:09.6265562+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "no dangerouslySetInnerHTML / innerHTML / eval / new Function / dynamic import and no URL-from-prop usage was added; the change is one optional boolean plus CSS.",
+      "role": "security",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/ZestButton.tsx",
+          "hash": "dd87b1ac1c385b4bfbbb"
+        }
+      ],
+      "at": "2026-11-24T21:49:09.6428477+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "solid focus-sheen band is currentColor (#fff) at opacity 0.65, so its peak is ~2.4:1 on dark standard and ~1.5-2.7:1 on success/danger (below R4\u0027s 3:1); non-solid uses the variant border token at 0.7.",
+      "role": "qa",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "827e7569071486d6285e"
+        }
+      ],
+      "at": "2026-11-24T21:54:27.8774004+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "R4 colour test (lines 271-288) asserts token names and peak\u003C1 only, never a contrast ratio; split animation assertion (line 301) omits the \u00271 both\u0027 iteration count.",
+      "role": "qa",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonFocusSheen.test.tsx",
+          "hash": "a0af60f6e674fe25ae8a"
+        }
+      ],
+      "at": "2026-11-24T21:54:27.8932538+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "focus-sheen band uses currentColor for regular buttons (peak 0.65 solid, 0.7 others) and hardcoded #ffffff for split solid; dark-theme solid success bg is #34d399 so white band is only ~1.9:1 opaque / ~1.5:1 at 0.65 opacity.",
+      "role": "reviewer",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "827e7569071486d6285e"
+        }
+      ],
+      "at": "2026-11-24T21:55:01.0232282+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "\u0022files\u0022 ships only dist, README.md, LICENSE and documentation, so links from README/documentation to docs/features/zest-button-focus-sheen/guide.md are dead in the published npm package.",
+      "role": "reviewer",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "package.json",
+          "hash": "89f9f01bf32f755524ae"
+        }
+      ],
+      "at": "2026-11-24T21:55:01.0392844+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "tests assert CSS source text (regex) rather than computed styles, so real contrast/visibility failures are not covered.",
+      "role": "reviewer",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonFocusSheen.test.tsx",
+          "hash": "a0af60f6e674fe25ae8a"
+        }
+      ],
+      "at": "2026-11-24T21:55:01.0530985+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "solid focus-sheen bands use --zest-focus-sheen-color #ffffff at peak 0.9 for every variant/theme except dark-theme success, which uses #064e3b so every band reaches \u003E=3:1 against its own fill (R4); regular (::after) and split (wrapper) share the same choice.",
+      "role": "developer",
+      "stage": "Build",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "2923c09ab10a88508365"
+        }
+      ],
+      "at": "2026-11-24T22:04:33.4542472+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "solid focus-sheen band is #ffffff at peak 0.9 (line 675-678), except dark success which uses #064e3b (line 680); QA-1 contrast now clears 3:1 (light std 7.4, light success 3.34, light danger 4.14, dark std 3.28, dark success 4.19, dark danger 3.30).",
+      "role": "qa",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "2923c09ab10a88508365"
+        }
+      ],
+      "at": "2026-11-24T22:10:11.2662853+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "R4 contrast test parses band colour/peak and force-light/force-dark bg tokens, alpha-blends and asserts \u003E=3 for all six solid combos (regular\u002Bsplit); it drops below 3 at peak 0.80, so it is sensitive.",
+      "role": "qa",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonFocusSheen.test.tsx",
+          "hash": "c8cc9d81c238b58ec581"
+        }
+      ],
+      "at": "2026-11-24T22:10:11.2832486+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "non-solid regular band is currentColor at peak 0.7 (line 660/668); split non-solid uses the variant border token at 0.7 (lines 709-722/741) \u2014 text.success light blends to 2.49:1 over white, below R4\u0027s 3:1, and no test computes non-solid contrast.",
+      "role": "qa",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "2923c09ab10a88508365"
+        }
+      ],
+      "at": "2026-11-24T22:10:11.2996263+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "R5 \u0022moving focus\u0022 test only checks main-\u003Echevron keeps one overlay; no test blurs the whole split control and re-focuses to prove a second sweep on return.",
+      "role": "qa",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonFocusSheen.test.tsx",
+          "hash": "c8cc9d81c238b58ec581"
+        }
+      ],
+      "at": "2026-11-24T22:10:11.3140519+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "returns only \u0027light\u0027|\u0027dark\u0027 from matchMedia, and ZestButton.tsx:241,446 resolves theme \u0027system\u0027 to that and always applies force-light/force-dark, so the dark-success band also covers prefers-color-scheme dark (no OS-only gap).",
+      "role": "developer",
+      "stage": "Build",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/hooks/useThemeDetection.ts",
+          "hash": "50be4166bbd89cdf5d36"
+        }
+      ],
+      "at": "2026-11-24T22:14:36.5214772+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "solid focus-sheen band is #ffffff at peak 0.9 (675-678), dark success #064e3b (680-682); split solid peak 0.9 at 744-746.",
+      "role": "arbiter",
+      "stage": "Build",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "2923c09ab10a88508365"
+        }
+      ],
+      "at": "2026-11-24T22:15:33.6763594+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "\u0022files\u0022 ships only dist, README.md, LICENSE and documentation; docs/ is not published (npm pack --dry-run = 32 files, no docs/), so README/documentation links to docs/features/zest-button-focus-sheen/guide.md are dead in the npm package.",
+      "role": "reviewer",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "package.json",
+          "hash": "89f9f01bf32f755524ae"
+        }
+      ],
+      "at": "2026-11-24T22:20:26.0103211+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "focus-sheen rules live at 653-778; regular solid band is #ffffff peak 0.9 (675-678) with dark-success #064e3b (680-682), split solid peak 0.9 (744-745) with dark-success #064e3b (706-708).",
+      "role": "reviewer",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "2923c09ab10a88508365"
+        }
+      ],
+      "at": "2026-11-24T22:20:26.0246525+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "non-solid bands use currentColor (regular, line 660) or variant border tokens (split, 712-722) at peak 0.7 (668/741); light success #059669 blends to 2.49:1 over white, below R4\u0027s 3:1, and no test computes non-solid contrast.",
+      "role": "reviewer",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "2923c09ab10a88508365"
+        }
+      ],
+      "at": "2026-11-24T22:20:26.0396073+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "329-378 computes 3:1 for solid combos only; the R5 test at 431 only moves main-\u003Echevron and never blurs then re-focuses the split control.",
+      "role": "reviewer",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonFocusSheen.test.tsx",
+          "hash": "c8cc9d81c238b58ec581"
+        }
+      ],
+      "at": "2026-11-24T22:20:26.0547419+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "split focus-sheen marker classes are only on the wrapper (focusSheenSplit \u002B sheen\u003CStyle\u003E \u002B sheen\u003CVariant\u003E \u002B force-*); main and chevron buttons deliberately get no focusSheen class.",
+      "role": "reviewer",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/ZestButton.tsx",
+          "hash": "dd87b1ac1c385b4bfbbb"
+        }
+      ],
+      "at": "2026-11-24T22:20:26.0683746+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "\u0022files\u0022 publishes dist, README.md, LICENSE, documentation only; docs/ is never shipped, so shipped docs link the focus-streak guide via the public GitHub blob URL (default branch master).",
+      "role": "developer",
+      "stage": "Build",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "package.json",
+          "hash": "89f9f01bf32f755524ae"
+        }
+      ],
+      "at": "2026-11-24T22:24:07.4426334+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "focusSheen builds only a hardcoded class list; regular buttons get styles.focusSheen (line 448), split wrappers get splitFocusSheenClassName (line 477); main/chevron get no focusSheen class.",
+      "role": "documenter",
+      "stage": "Prove",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/ZestButton.tsx",
+          "hash": "dd87b1ac1c385b4bfbbb"
+        }
+      ],
+      "at": "2026-11-24T22:37:08.2760338+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "focus-sheen rules are at 645-808; regular uses \u0060.button.focusSheen:focus-visible::after\u0060, split uses \u0060.focusSheenSplit:has(:focus-visible)::after\u0060; split overlay is clipped by its own border-radius (no wrapper overflow); reduced motion sets animation/content none for both.",
+      "role": "documenter",
+      "stage": "Prove",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "2923c09ab10a88508365"
+        }
+      ],
+      "at": "2026-11-24T22:37:08.2968156+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "split opted-in chevron mount streak is suppressed by \u0060.focusSheenSplit .dropdownTrigger::before { animation: none; content: none; }\u0060 (759-762).",
+      "role": "documenter",
+      "stage": "Prove",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "2923c09ab10a88508365"
+        }
+      ],
+      "at": "2026-11-24T22:37:08.3138924+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "documents focusSheen; links the toggle guide, dropdown BRS, semantic-types guide, documentation/ and critical paths.",
+      "role": "documenter",
+      "stage": "Prove",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "docs/features/zest-button-focus-sheen/guide.md",
+          "hash": "af9f00e137e0a714e2b6"
+        }
+      ],
+      "at": "2026-11-24T22:37:08.3291628+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "focus streak is critical path 9, protected by __tests__/ZestButtonFocusSheen.test.tsx and __tests__/ZestButtonFocusSheenCharacterization.test.tsx.",
+      "role": "documenter",
+      "stage": "Prove",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "docs/e2e/critical-paths.md",
+          "hash": "a0c9f1d0f928a35b8855"
+        }
+      ],
+      "at": "2026-11-24T22:37:08.3449838+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "re-checked against current code; content unchanged, covers-hash removed (engine adds) and See also now links the focus-streak guide.",
+      "role": "documenter",
+      "stage": "Prove",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "docs/features/zest-button-toggle-style/guide.md",
+          "hash": "b51ba9761cf88b9a1cda"
+        }
+      ],
+      "at": "2026-11-24T22:45:49.200985+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "47 quoted semantic-type keys; UI/zestIcons.tsx maps them to 35 distinct drawings (icon names are quoted keys).",
+      "role": "documenter",
+      "stage": "Prove",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/semanticTypeButtonConfigDefaults.tsx",
+          "hash": "2d12b653b9141d88de63"
+        }
+      ],
+      "at": "2026-11-24T22:45:49.2177776+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "left current; its claims match Styles/ZestButton.module.css:645-808 (45deg, 0.6s, split :has, reduced-motion off, dark-success #064e3b).",
+      "role": "documenter",
+      "stage": "Prove",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "docs/features/zest-button-focus-sheen/guide.md",
+          "hash": "35e9fe9f59694bbd6c87"
+        }
+      ],
+      "at": "2026-11-24T22:45:49.2351405+00:00",
+      "runs": [
+        "20261124-210737"
+      ]
+    },
+    {
+      "text": "classes focusSheen (regular only, when focusSheen) or focusSheenSplit\u002Bsheen\u003CStyle\u003E\u002Bsheen\u003CVariant\u003E\u002Bforce-* (wrapper only) are computed at render; split main button deliberately never gets focusSheen; no sheenTrigger exists yet.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/ZestButton.tsx",
+          "hash": "dd87b1ac1c385b4bfbbb"
+        }
+      ],
+      "at": "2026-11-24T22:54:06.845852+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "focus-sheen rules are 645-808; regular layer .button.focusSheen::after, split layer .focusSheenSplit::after, colours on .button.focusSheen.solid::after and .focusSheenSplit.sheen*, mount-streak suppression .focusSheenSplit .dropdownTrigger::before at 759, reduced-motion block at 781.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "2923c09ab10a88508365"
+        }
+      ],
+      "at": "2026-11-24T22:54:06.8628715+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": ".button::before is unused (only .dropdownTrigger::before is the mount streak) and .splitButtonContainer has no ::before/::after today, so ::before is free for a programmatic sweep.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "2923c09ab10a88508365"
+        }
+      ],
+      "at": "2026-11-24T22:54:06.8746007+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "wrapper ::before paints behind the child buttons unless given z-index (buttons are position:relative z-index auto), while ::after already paints above them; the focus overlay is ::after.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "2923c09ab10a88508365"
+        }
+      ],
+      "at": "2026-11-24T22:54:06.8889768+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "{...props} is spread after className/disabled/onClick on the button and again after {...toggleButtonProps}, so an inline style passed by a host would override a computed style.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/ZestButton.tsx",
+          "hash": "dd87b1ac1c385b4bfbbb"
+        }
+      ],
+      "at": "2026-11-24T22:54:06.9004927+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "pins exact CSS selectors via regex/cssBlock (e.g. .button.focusSheen::after, .focusSheenSplit:has(:focus-visible)::after, 0.6s, 45deg, peak values), so those selectors must not be renamed.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonFocusSheen.test.tsx",
+          "hash": "aad8807ab80f871bf3db"
+        }
+      ],
+      "at": "2026-11-24T22:54:06.9130701+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "slices the sheen CSS from /* Opt-in focus streak to the first @media (prefers-reduced-motion: reduce) after it and asserts no px and no width/height/margin/padding/font-size inside that slice.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonFocusSheen.test.tsx",
+          "hash": "aad8807ab80f871bf3db"
+        }
+      ],
+      "at": "2026-11-24T22:54:06.9280681+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "a non-opted regular/split button must have zero classes matching /sheen/i, no extra DOM node, and the .dropdownTrigger::before mount streak rule/keyframes must stay verbatim.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonFocusSheenCharacterization.test.tsx",
+          "hash": "28a70d92e1a70cbf6e72"
+        }
+      ],
+      "at": "2026-11-24T22:54:06.9412377+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "deepMerge treats non-objects (string/number) as values, so a new scalar sheenTrigger propagates from provider defaultProps and semantic defaults without changes.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/hooks/useZestConfig.ts",
+          "hash": "71f295ab302429194a59"
+        }
+      ],
+      "at": "2026-11-24T22:54:06.9577658+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "exports ./ZestButton and ./toggleStyle/types only; a new optional ZestCustomProps field needs no index change, and a private hook must not be exported.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/index.ts",
+          "hash": "c869894c0653ae052a22"
+        }
+      ],
+      "at": "2026-11-24T22:54:06.9715936+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "The design puts ZestButtonSheenTrigger at UI/ZestButton.tsx.",
+      "role": "planchecker",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "UI/ZestButton.tsx",
+          "hash": "dd87b1ac1c385b4bfbbb"
+        }
+      ],
+      "at": "2026-11-24T22:58:11.3521205+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "The design puts FocusSheenStyles at Styles/ZestButton.module.css.",
+      "role": "planchecker",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "2923c09ab10a88508365"
+        }
+      ],
+      "at": "2026-11-24T22:58:11.3835489+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "The design puts FocusSheenTests at __tests__/ZestButtonFocusSheen.test.tsx.",
+      "role": "planchecker",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonFocusSheen.test.tsx",
+          "hash": "aad8807ab80f871bf3db"
+        }
+      ],
+      "at": "2026-11-24T22:58:11.3999995+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "The design puts FocusSheenCharacterizationTests at __tests__/ZestButtonFocusSheenCharacterization.test.tsx.",
+      "role": "planchecker",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonFocusSheenCharacterization.test.tsx",
+          "hash": "3f715e8faac2d4320201"
+        }
+      ],
+      "at": "2026-11-24T23:46:14.9240139+00:00",
+      "runs": [
+        "20261124-224802",
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "The design puts FocusSheenGuide at docs/features/zest-button-focus-sheen/guide.md.",
+      "role": "planchecker",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "docs/features/zest-button-focus-sheen/guide.md",
+          "hash": "a730ca86ad7579c24d92"
+        }
+      ],
+      "at": "2026-11-24T23:46:15.103732+00:00",
+      "runs": [
+        "20261124-224802",
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "The design puts ApiReference at documentation/api.md.",
+      "role": "planchecker",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "documentation/api.md",
+          "hash": "43393b51d45853c5a541"
+        }
+      ],
+      "at": "2026-11-24T22:58:11.4554584+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "The design puts FeatureList at documentation/features.md.",
+      "role": "planchecker",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "documentation/features.md",
+          "hash": "6cc46fcb53a88758da20"
+        }
+      ],
+      "at": "2026-11-24T22:58:11.474586+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "The design puts Examples at documentation/examples.md.",
+      "role": "planchecker",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "documentation/examples.md",
+          "hash": "4e7aeed48430a119fe0d"
+        }
+      ],
+      "at": "2026-11-24T22:58:11.4874289+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "The design puts ConfigurationGuide at documentation/configuration.md.",
+      "role": "planchecker",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "documentation/configuration.md",
+          "hash": "10cb2294ca9c43bceba3"
+        }
+      ],
+      "at": "2026-11-24T22:58:11.5053915+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "The design puts Readme at README.md.",
+      "role": "planchecker",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "README.md",
+          "hash": "ba240da6ef304cb4d322"
+        }
+      ],
+      "at": "2026-11-24T22:58:11.5211779+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "The design puts DevelopmentGuide at documentation/development.md.",
+      "role": "planchecker",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "documentation/development.md",
+          "hash": "19a878891c1788dc773f"
+        }
+      ],
+      "at": "2026-11-24T22:58:11.536124+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "R8 split programmatic test asserts only wrapper sheenProgrammatic; split parity class and CSS rules Styles/ZestButton.module.css:884-890 are untested.",
+      "role": "qa",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonFocusSheen.test.tsx",
+          "hash": "8a818d91f24d2c5fc5cf"
+        }
+      ],
+      "at": "2026-11-24T23:19:57.510864+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "sheenFocusOff rules (866-874) are referenced by no test; programmatic disabled band overrides exist only for solid (821-828), non-solid relies on currentColor and is untested.",
+      "role": "qa",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "e221e65b22f4dd367e79"
+        }
+      ],
+      "at": "2026-11-24T23:19:57.5284697+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "compares value with === against a ref seeded on first render; no listener, timer, storage or network.",
+      "role": "security",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/hooks/useSheenTrigger.ts",
+          "hash": "9d163e1d5d521b3e7f90"
+        }
+      ],
+      "at": "2026-11-24T23:20:44.4424604+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "the prefers-reduced-motion block (lines 911-943) sets animation:none and content:none on both sheen layers, so reduced motion has no JS override.",
+      "role": "security",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "e221e65b22f4dd367e79"
+        }
+      ],
+      "at": "2026-11-24T23:20:44.4574655+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "programmatic sweep is on ::before; the keyboard-focus sweep is on ::after, so they cannot overwrite each other.",
+      "role": "security",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "e221e65b22f4dd367e79"
+        }
+      ],
+      "at": "2026-11-24T23:20:44.4716458+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "sheenInUse = focusSheen === true || sheenTrigger !== undefined; the programmatic classes are only applied when active and are purely class names (no consumer value reaches the DOM).",
+      "role": "security",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/ZestButton.tsx",
+          "hash": "b2cc13da45fcb66ca631"
+        }
+      ],
+      "at": "2026-11-24T23:20:44.4867817+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "no install-time scripts and the files whitelist is dist/README.md/LICENSE/documentation; .devteam, tests and docs/ are never packed.",
+      "role": "security",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "package.json",
+          "hash": "89f9f01bf32f755524ae"
+        }
+      ],
+      "at": "2026-11-24T23:20:44.5022477+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "sheenInUse = focusSheen === true || sheenTrigger !== undefined; regular buttons get focusSheen/sheenFocusOff/sheenProgrammatic(\u002Bparity) classes, a split wrapper gets focusSheenSplit plus the existing sheen\u003CStyle\u003E/sheen\u003CVariant\u003E/force-light|dark markers (lines 255-289, 449-513).",
+      "role": "reviewer",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/ZestButton.tsx",
+          "hash": "b2cc13da45fcb66ca631"
+        }
+      ],
+      "at": "2026-11-24T23:22:37.4819166+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "keeps last value in useRef, sets active=true forever on the first change and flips parity odd/even (strict === so 1 vs \u00221\u0022 counts); no cleanup, timer or listener; called unconditionally for every button.",
+      "role": "reviewer",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/hooks/useSheenTrigger.ts",
+          "hash": "9d163e1d5d521b3e7f90"
+        }
+      ],
+      "at": "2026-11-24T23:22:37.4955914+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "focus sweep is on the button/wrapper ::after (:focus-visible / :has(:focus-visible)); programmatic sweep is on ::before via .sheenProgrammatic plus .sheenTriggerOdd/.sheenTriggerEven using zestFocusSheenSweep vs identical zestFocusSheenSweepAlt to restart. Mount-streak suppression is \u0060.focusSheenSp\u2026",
+      "role": "reviewer",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "e221e65b22f4dd367e79"
+        }
+      ],
+      "at": "2026-11-24T23:22:37.5109374+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "the single first \u0060@media (prefers-reduced-motion: reduce)\u0060 block (line 911) sets content:none on both ::after focus layers and both ::before programmatic layers; there is no prop override.",
+      "role": "reviewer",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "e221e65b22f4dd367e79"
+        }
+      ],
+      "at": "2026-11-24T23:22:37.5260441+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "split programmatic sweep is keyed off the wrapper via .focusSheenSplit.sheenProgrammatic.sheenTriggerOdd/Even::before (lines 884-890), separate from the regular .button selectors.",
+      "role": "developer",
+      "stage": "Build",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "e221e65b22f4dd367e79"
+        }
+      ],
+      "at": "2026-11-24T23:33:15.0661644+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "sweep gradients use fixed hex / internal CSS variables only; no consumer-supplied value is interpolated into any stylesheet (no CSS-injection surface).",
+      "role": "security",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "e221e65b22f4dd367e79"
+        }
+      ],
+      "at": "2026-11-24T23:36:44.6856673+00:00",
+      "runs": [
+        "20261124-224802"
+      ]
+    },
+    {
+      "text": "has no focusSheen/sheenTrigger note today; newest section is Version 1.8.0 (toggle styling) and footer keeps Previous/Next links.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "documentation/breaking-changes.md",
+          "hash": "62de3ace55aa72cc90b7"
+        }
+      ],
+      "at": "2026-11-24T23:44:33.2198315+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "version is 1.8.0; focus sheen is the next additive release, so R12 needs a 1.9.0 bump here.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "package.json",
+          "hash": "89f9f01bf32f755524ae"
+        }
+      ],
+      "at": "2026-11-24T23:44:33.2385956+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "root version appears at lines 3 and 9 (other 1.8.0 hits are @floating-ui deps); update only the two root entries.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "package-lock.json",
+          "hash": "21b96dd82b415eb9ea0d"
+        }
+      ],
+      "at": "2026-11-24T23:44:33.2576324+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "every sheen layer already sets pointer-events:none, uses absolute inset:0, and animates \u00601 both\u0060 ending at opacity 0; reduced-motion sets animation:none and content:none.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "e221e65b22f4dd367e79"
+        }
+      ],
+      "at": "2026-11-24T23:44:33.3163252+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "already pins the plain regular button, split wrapper classes, focus ring and chevron mount streak for non-opted-in buttons.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonFocusSheenCharacterization.test.tsx",
+          "hash": "3f715e8faac2d4320201"
+        }
+      ],
+      "at": "2026-11-24T23:44:33.3278571+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "parses Styles/ZestButton.module.css as text and already covers R1-R9 plus A3/A4 doc checks (README/api/features/examples/configuration/guide).",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonFocusSheen.test.tsx",
+          "hash": "0203f81ac629be876871"
+        }
+      ],
+      "at": "2026-11-24T23:44:33.3412295+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "already has a \u0022Focus Streak Internals\u0022 section naming useSheenTrigger and the existing focus-sheen tests.",
+      "role": "architect",
+      "stage": "Design",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "documentation/development.md",
+          "hash": "a3f8f59fbdd27b3f8661"
+        }
+      ],
+      "at": "2026-11-24T23:44:33.3531219+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "The design puts BreakingChangesAdditiveNote at documentation/breaking-changes.md.",
+      "role": "planchecker",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "documentation/breaking-changes.md",
+          "hash": "62de3ace55aa72cc90b7"
+        }
+      ],
+      "at": "2026-11-24T23:46:14.9330224+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "The design puts PackageReleaseVersion at package.json.",
+      "role": "planchecker",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "package.json",
+          "hash": "89f9f01bf32f755524ae"
+        }
+      ],
+      "at": "2026-11-24T23:46:14.9479455+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "The design puts PackageLockReleaseVersion at package-lock.json.",
+      "role": "planchecker",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "package-lock.json",
+          "hash": "21b96dd82b415eb9ea0d"
+        }
+      ],
+      "at": "2026-11-24T23:46:14.964684+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "The design puts ToggleReleaseVersionTest at __tests__/ZestButtonToggle.test.tsx.",
+      "role": "planchecker",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonToggle.test.tsx",
+          "hash": "d97c213067e8f0008009"
+        }
+      ],
+      "at": "2026-11-24T23:46:14.9802329+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "The design puts FocusSheenApiReference at documentation/api.md.",
+      "role": "planchecker",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "documentation/api.md",
+          "hash": "59bb2263bba74edbf048"
+        }
+      ],
+      "at": "2026-11-24T23:46:15.0079338+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "The design puts FocusSheenFeaturesPage at documentation/features.md.",
+      "role": "planchecker",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "documentation/features.md",
+          "hash": "e27ce4686106a7362fd4"
+        }
+      ],
+      "at": "2026-11-24T23:46:15.0211569+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "The design puts FocusSheenExamplesRecipe at documentation/examples.md.",
+      "role": "planchecker",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "documentation/examples.md",
+          "hash": "847f087481a050f09f7b"
+        }
+      ],
+      "at": "2026-11-24T23:46:15.0369244+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "The design puts FocusSheenConfigurationPage at documentation/configuration.md.",
+      "role": "planchecker",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "documentation/configuration.md",
+          "hash": "41804ce0488a10120625"
+        }
+      ],
+      "at": "2026-11-24T23:46:15.0579718+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "The design puts FocusSheenDevelopmentPage at documentation/development.md.",
+      "role": "planchecker",
+      "stage": "Design",
+      "source": "engine",
+      "anchors": [
+        {
+          "path": "documentation/development.md",
+          "hash": "a3f8f59fbdd27b3f8661"
+        }
+      ],
+      "at": "2026-11-24T23:46:15.0746091+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "focusSheen/sheenTrigger, sheenInUse and the split wrapper marker classes already exist; no production logic was needed for R10/R13.",
+      "role": "developer",
+      "stage": "Build",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/ZestButton.tsx",
+          "hash": "b2cc13da45fcb66ca631"
+        }
+      ],
+      "at": "2026-11-24T23:55:48.919054+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "the sheen section starts at \u0022/* Opt-in focus streak\u0022 and ends at the first \u0022@media (prefers-reduced-motion: reduce)\u0022 block; all sheen layers are position:absolute/inset:0/pointer-events:none.",
+      "role": "developer",
+      "stage": "Build",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "e221e65b22f4dd367e79"
+        }
+      ],
+      "at": "2026-11-24T23:55:48.9339833+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "the two root version entries are at lines 3 and 9; @floating-ui/core and @floating-ui/dom also use 1.8.0, so never bulk-replace 1.8.0 there.",
+      "role": "developer",
+      "stage": "Build",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "package-lock.json",
+          "hash": "a9530360e0bb2a9383ce"
+        }
+      ],
+      "at": "2026-11-24T23:55:48.9499189+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "the release version assertion is at line 520 and had to move to 1.9.0 for A1/R12.",
+      "role": "developer",
+      "stage": "Build",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonToggle.test.tsx",
+          "hash": "07c2b268aa9a60ebfeb2"
+        }
+      ],
+      "at": "2026-11-24T23:55:48.9654189+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "React adds one \u0022selectionchange\u0022 document listener per root; listener-count tests must filter it out.",
+      "role": "developer",
+      "stage": "Build",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "jest.setup.js",
+          "hash": "5949fc088ba9a110e3a4"
+        }
+      ],
+      "at": "2026-11-24T23:55:48.9804714+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "Version 1.9.0 additive focus-streak note added above 1.8.0; TOC entry added.",
+      "role": "developer",
+      "stage": "Build",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "documentation/breaking-changes.md",
+          "hash": "9a8c8e4bf6ec33fd1526"
+        }
+      ],
+      "at": "2026-11-24T23:55:48.996521+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "says \u0022It is off by default; turn it on per button with \u0060focusSheen\u0060.\u0022 - the default phrase precedes the prop name.",
+      "role": "developer",
+      "stage": "Build",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "documentation/features.md",
+          "hash": "e27ce4686106a7362fd4"
+        }
+      ],
+      "at": "2026-11-24T23:55:49.0107722+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "files allowlist is dist, README.md, LICENSE, documentation only; \u0060npm pack --dry-run\u0060 reports 33 files and excludes tests, docs/ (incl. the guide), .devteam, .npmrc and any tgz, so no repo internals are published.",
+      "role": "security",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "package.json",
+          "hash": "d57c0b9fec6cc46313f6"
+        }
+      ],
+      "at": "2026-11-25T00:04:09.2370891+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "programmatic sheen is the ::after/::before layers guarded by pointer-events:none, inset:0, opacity ending 0, and all four sheen layers get animation:none/content:none in the single prefers-reduced-motion block.",
+      "role": "security",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "Styles/ZestButton.module.css",
+          "hash": "e221e65b22f4dd367e79"
+        }
+      ],
+      "at": "2026-11-25T00:04:09.2696655+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "one useState plus one useEffect doing a strict-equality compare; no timer, listener, observer or subscription, and it is not re-exported from UI/index.ts.",
+      "role": "security",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/hooks/useSheenTrigger.ts",
+          "hash": "9d163e1d5d521b3e7f90"
+        }
+      ],
+      "at": "2026-11-25T00:04:09.5336155+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "the only diff from HEAD is the two root 1.8.0 -\u003E 1.9.0 version entries; every dependency entry is untouched.",
+      "role": "security",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "package-lock.json",
+          "hash": "a9530360e0bb2a9383ce"
+        }
+      ],
+      "at": "2026-11-25T00:04:09.661979+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "7 R13/A3 tests (100-button mount, listeners, ResizeObserver, unmount, rapid programmatic, animation); no test tabs focus across many buttons or checks a leftover streak on unfocused buttons.",
+      "role": "qa",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonFocusSheenPerformance.test.tsx",
+          "hash": "f410aec8b25202478f64"
+        }
+      ],
+      "at": "2026-11-25T00:05:19.2166307+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "R10/A2 tests; the keyboard test covers Enter only and manually fires fireEvent.click, so it does not prove native Space activation.",
+      "role": "qa",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonFocusSheenDecoration.test.tsx",
+          "hash": "e4eb94db7ffebc066564"
+        }
+      ],
+      "at": "2026-11-25T00:05:19.2335508+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "guards 1.9.0 (package.json \u002B both package-lock root entries), additive breaking-changes section, and the updated ZestButtonToggle assertion.",
+      "role": "qa",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonFocusSheenRelease.test.ts",
+          "hash": "ebab1596d81bfbfff57d"
+        }
+      ],
+      "at": "2026-11-25T00:05:19.2654469+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "R13/A3 guard renders 100 opted-in buttons under fake timers, counts document/window addEventListener calls (filtering React\u0027s single \u0022selectionchange\u0022 listener), and expects 0 timers plus one ResizeObserver per split button only.",
+      "role": "reviewer",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonFocusSheenPerformance.test.tsx",
+          "hash": "f410aec8b25202478f64"
+        }
+      ],
+      "at": "2026-11-25T00:09:17.2461547+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "R10/A2 guard parses the \u0022/* Opt-in focus streak\u0022 CSS section and asserts pointer-events:none \u002B inset:0 on all four sheen layers, identical role/aria/tabindex/disabled on opted-in vs plain, and no size/spacing declarations in the sheen rules.",
+      "role": "reviewer",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonFocusSheenDecoration.test.tsx",
+          "hash": "e4eb94db7ffebc066564"
+        }
+      ],
+      "at": "2026-11-25T00:09:17.2614113+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "pins package.json and both package-lock root versions to 1.9.0, checks the UI/index.ts export lines, and asserts only optional focusSheen/sheenTrigger fields were added to ZestCustomProps.",
+      "role": "reviewer",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonFocusSheenRelease.test.ts",
+          "hash": "ebab1596d81bfbfff57d"
+        }
+      ],
+      "at": "2026-11-25T00:09:17.2752555+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "Version 1.9.0 additive section sits above 1.8.0 with its TOC entry and the file\u0027s existing Previous (development.md) / Next (README) links intact.",
+      "role": "reviewer",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "documentation/breaking-changes.md",
+          "hash": "9a8c8e4bf6ec33fd1526"
+        }
+      ],
+      "at": "2026-11-25T00:09:17.2906213+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "version 1.9.0; files publishes dist/README/LICENSE/documentation only, so the focus-sheen guide is linked from README/API/features/examples/configuration via the absolute GitHub master URL rather than the unpublished docs/ path.",
+      "role": "reviewer",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "package.json",
+          "hash": "d57c0b9fec6cc46313f6"
+        }
+      ],
+      "at": "2026-11-25T00:09:17.304016+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "rejects consumer CSS values containing ; { } \u003C \u003E backslash, url(), expression(), @import, javascript:, -moz-binding, behavior:, control chars, \u003E500 chars, then writes them as a \u003Cstyle\u003E text node, so no CSS or script injection.",
+      "role": "security",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "UI/toggleStyle/compileToggleStyle.ts",
+          "hash": "b2180b801dccc8003275"
+        }
+      ],
+      "at": "2026-11-25T00:15:48.3125458+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "the new native \u003Cbutton\u003E is documentation only; USR-001\u0027s pattern check globs are src/app/components/pages/web/src **/*.tsx, so docs are not scanned (the library source is deliberately excluded too).",
+      "role": "security",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "README.md",
+          "hash": "46b59a5ce4ffc2e5a019"
+        }
+      ],
+      "at": "2026-11-25T00:15:48.3298716+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "1.9.0 section is additive prose with no secrets, tokens, links to internal files or consumer-action required.",
+      "role": "security",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "documentation/breaking-changes.md",
+          "hash": "9a8c8e4bf6ec33fd1526"
+        }
+      ],
+      "at": "2026-11-25T00:15:48.3453986+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "scripts are build/dev/test only (no preinstall/postinstall) and dependencies/peerDependencies are unchanged from HEAD.",
+      "role": "security",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "package.json",
+          "hash": "d57c0b9fec6cc46313f6"
+        }
+      ],
+      "at": "2026-11-25T00:15:48.3638662+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "8 R13/A3 tests; the tabbing test at line 200 focuses 100 opted-in buttons and asserts one :focus, no lingering sheen classes, 0 timers before/after 700ms, no added listeners and 0 timers after unmount (QA-1 fixed).",
+      "role": "qa",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonFocusSheenPerformance.test.tsx",
+          "hash": "3e783e01f80265aa4e7f"
+        }
+      ],
+      "at": "2026-11-25T00:16:36.9767205+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    },
+    {
+      "text": "R10/A2 tests; the keyboard test (line 57) covers Enter only and manually fires fireEvent.click, so it does not prove native Space activation; stateOf (lines 27-35) omits the accessible name from the opted-vs-plain comparison.",
+      "role": "qa",
+      "stage": "Challenge",
+      "source": "agent",
+      "anchors": [
+        {
+          "path": "__tests__/ZestButtonFocusSheenDecoration.test.tsx",
+          "hash": "e4eb94db7ffebc066564"
+        }
+      ],
+      "at": "2026-11-25T00:16:36.9919848+00:00",
+      "runs": [
+        "20261124-233901"
+      ]
+    }
+  ]
+}

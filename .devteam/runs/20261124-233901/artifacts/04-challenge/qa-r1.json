@@ -1,0 +1,37 @@
+{
+  "findings": [
+    {
+      "cites": "R13",
+      "severity": "blocking",
+      "file": "__tests__/ZestButtonFocusSheenPerformance.test.tsx",
+      "line": 182,
+      "evidence": "The R13 acceptance line 'Tabbing quickly through 100 buttons does not accumulate work or leave streaks on unfocused buttons' has no test. The seven tests in this file cover a 100-button mount (line 87), listener counts (107), ResizeObserver counts (132), the split width observer (155), unmount during a sweep (166), rapid programmatic sheenTrigger changes (182) and the one-shot animation (200). None moves focus/tab across many buttons, and the only focus tests (__tests__/ZestButtonFocusSheen.test.tsx:172, :445) use a single button and never assert that an unfocused button has no active/leftover streak. The full suite (404 tests) passes without any test that would fail if tabbing left a streak on an unfocused button.",
+      "description": "R13's scale scenario for keyboard tabbing through many buttons is unproven; only programmatic and mount scenarios are tested."
+    },
+    {
+      "cites": "R10",
+      "severity": "advisory",
+      "file": "__tests__/ZestButtonFocusSheenDecoration.test.tsx",
+      "line": 57,
+      "evidence": "The R10 edge case says 'Keyboard activation (Enter or Space) during a sweep still works once'. The test only fires keyDown/keyUp with Enter and then manually calls fireEvent.click(button), so it never exercises Space and would pass even if native keyboard activation were intercepted, because the click is fired directly. The separate pointer-events:none assertions (line 74) are the real proof that the layer is click-through.",
+      "description": "Space activation is untested and the keyboard test's manual click means it cannot detect broken keyboard activation; add a Space case or assert keydown does not double-fire."
+    },
+    {
+      "cites": "A2",
+      "severity": "advisory",
+      "file": "__tests__/ZestButtonFocusSheenDecoration.test.tsx",
+      "line": 90,
+      "evidence": "The A2 acceptance asks that the accessible name be shown identical between an opted-in and a plain button. stateOf() (lines 27-35) captures role, tagName, aria-pressed, aria-busy, aria-live, tabindex and disabled, but not the accessible name, so the toEqual at line 114 does not compare names. Names are only asserted for opted-in buttons via getByRole({ name }) in other tests, which would catch an aria-label regression but is not the explicit opted-vs-plain name comparison the acceptance describes.",
+      "description": "The opted-vs-plain accessibility comparison omits the accessible name; add name to the compared state for a direct proof."
+    },
+    {
+      "cites": "R12",
+      "severity": "advisory",
+      "file": "package.json",
+      "line": 1,
+      "evidence": "No packed-library consumer check ran: the project has no scripts/consumer-smoke.mjs and no attw/publint, so nothing installs the built tarball into a scratch project and imports it under both CommonJS and ES modules. The build report only states that build/type-check/tests pass. This is a pre-existing project gap, not introduced by this revision.",
+      "description": "The packed package was not installed and imported by a consumer under CJS and ESM, so the published entry point is unverified."
+    }
+  ],
+  "verifications": []
+}

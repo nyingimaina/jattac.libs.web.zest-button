@@ -1,7 +1,7 @@
 ---
 title: Customising semantic types and adding your own
 covers: UI/hooks/useZestConfig.ts, UI/ZestButton.tsx, UI/ZestButtonConfigContext.ts, UI/ZestButtonConfigProvider.tsx, UI/semanticTypeButtonConfigDefaults.tsx
-covers-hash: d1f288438365d6f80456
+covers-hash: a7695508f8bbb5988e18
 ---
 
 # Customising semantic types and adding your own
@@ -420,3 +420,5 @@ enough, and the button keeps its type's icon and behaviour:
   with toggle options.
 - [Styling toggle buttons from one place](../zest-button-toggle-style/guide.md) — the
   provider's `styles` setting, which a type's variant can select a look from.
+- [The opt-in keyboard-focus streak](../zest-button-focus-sheen/guide.md) — another
+  `zest` field, `focusSheen`, that `defaultProps` can set for the whole app.

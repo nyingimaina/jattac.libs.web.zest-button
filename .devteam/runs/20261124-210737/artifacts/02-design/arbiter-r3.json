@@ -1,0 +1,14 @@
+{
+  "rulings": [
+    {
+      "id": "A1",
+      "ruling": "allow",
+      "reason": "People who ask their device to reduce motion should not get a fast sweeping band, and the existing streak is already switched off for them, so this follows an agreed accessibility setting rather than adding a new feature."
+    },
+    {
+      "id": "A2",
+      "ruling": "allow",
+      "reason": "The request already says the focus sweep should replace the chevron's one-time entrance streak on opted-in split buttons so two streaks do not collide, so this is the agreed behaviour and leaves every other button unchanged."
+    }
+  ]
+}

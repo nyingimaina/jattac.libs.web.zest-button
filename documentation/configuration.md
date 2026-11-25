@@ -16,6 +16,7 @@ This document explains how to configure `ZestButton` on a component and global l
 - [Global Configuration with ZestButtonConfigProvider](#global-configuration-with-zestbuttonconfigprovider)
   - [Usage](#usage)
   - [Precedence with the ZestButtonConfigProvider](#precedence-with-the-zestbuttonconfigprovider)
+  - [Focus Streak Defaults](#focus-streak-defaults)
 - [Advanced: Customizing Semantic Defaults](#advanced-customizing-semantic-defaults)
   - [Example: Defining a Custom 'publish' Type](#example-defining-a-custom-publish-type)
   - [Example: Overriding a Built-in 'delete' Default](#example-overriding-a-built-in-delete-default)
@@ -107,6 +108,45 @@ Property configurations are merged in a "deep merge" fashion with the following 
 2.  **Built-in Semantic Defaults**: The library's own defaults for a given `semanticType` (e.g., the `success` variant for `save`).
 3.  **Custom Semantic Defaults**: **(New!)** Defaults for a `semanticType` that you provide in the `ZestButtonConfigProvider`'s `config.semanticTypeDefaults` object. This allows you to override the library's defaults or create new ones.
 4.  **Local `zest` Props**: The props passed directly to a specific `<ZestButton>` instance. This gives you the ultimate granular control.
+
+#### Focus Streak Defaults
+
+`focusSheen` is an ordinary `zest` field, so it merges like every other option: `defaultProps` can set it for the whole application, and a button can still opt out with `focusSheen: false`. It is off by default, and no button gets a streak unless it is turned on.
+
+```tsx
+import { ZestButtonConfigProvider } from 'jattac.libs.web.zest-button';
+
+const appZestConfig = {
+  defaultProps: {
+    focusSheen: true, // every button in scope gets the keyboard-focus streak
+  },
+};
+
+const App = () => (
+  <ZestButtonConfigProvider config={appZestConfig}>
+    {/* Inherits the provider default */}
+    <ZestButton>Save draft</ZestButton>
+
+    {/* Turns it back off for one button */}
+    <ZestButton zest={{ focusSheen: false }}>Skip</ZestButton>
+  </ZestButtonConfigProvider>
+);
+```
+
+If only some buttons need the cue, leave `defaultProps` alone and set `focusSheen: true` on those buttons instead (or on a `semanticTypeDefaults` entry). Setting it globally does not turn plain buttons into toggles or change any other option. People who set `prefers-reduced-motion: reduce` get no streak, even when it is on. See the [focus streak guide](https://github.com/nyingimaina/jattac.libs.web.zest-button/blob/master/docs/features/zest-button-focus-sheen/guide.md) for the full behaviour.
+
+#### Programmatic Streak Trigger
+
+`sheenTrigger` is another ordinary `zest` field, so it merges through `defaultProps`, `semanticTypeDefaults` and a button's own props like every other option. Its value is a `string` or a `number`; every change plays one sweep on a button that does not need focus, while the value present on mount plays nothing.
+
+```tsx
+const [syncToken, setSyncToken] = useState(0);
+
+<ZestButton zest={{ sheenTrigger: syncToken }}>Sync now</ZestButton>
+<ZestButton zest={{ sheenTrigger: syncToken, focusSheen: true }}>Sync and focus</ZestButton>
+```
+
+It works with or without `focusSheen` (omitted, `false` or `true`) and plays on a split control, a disabled button and a busy button. People who set `prefers-reduced-motion: reduce` get no streak from either the focus or the programmatic trigger, and no prop overrides it. See the [focus streak guide](https://github.com/nyingimaina/jattac.libs.web.zest-button/blob/master/docs/features/zest-button-focus-sheen/guide.md#triggering-the-streak-from-code) for the full behaviour.
 
 ---
 

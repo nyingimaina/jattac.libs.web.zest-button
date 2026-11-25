@@ -15,6 +15,7 @@ This guide provides an overview of the project's internal structure and instruct
 - [Extending Semantic Types](#extending-semantic-types)
 - [Toggle Mode Internals](#toggle-mode-internals)
 - [Toggle Styling Internals](#toggle-styling-internals)
+- [Focus Streak Internals](#focus-streak-internals)
 
 ---
 
@@ -103,6 +104,19 @@ Toggle mode lives in `UI/hooks/useToggleState.ts` (controlled when `pressed` is 
 ### Toggle Styling Internals
 
 `UI/toggleStyle/types.ts` holds the public types. `compileToggleStyle.ts` sanitises values (one property per declaration), merges layers by precedence and generates CSS keyed by a content hash, memoised so equal settings are processed once. `toggleStyleSheet.ts` keeps one shared `<style data-zest-toggle-styles>` element with ref-counted rules. `UI/hooks/useToggleStyle.ts` connects them to the button, which carries a `data-zest-toggle-style` attribute. No timers or listeners are added. Tests: `__tests__/toggleStyle/`, `__tests__/hooks/useToggleStyle.test.tsx`, `__tests__/ZestButtonToggleStyle.test.tsx`.
+
+---
+
+### Focus Streak Internals
+
+The opt-in streak is driven entirely by CSS and a tiny piece of state; it adds no listener, timer, storage, network call or child element that grows with the number of buttons.
+
+- **Focus trigger.** `zest.focusSheen` adds the `focusSheen` marker class (and `focusSheenSplit` on a split wrapper). The sweep is the button's `::after` layer, started by `:focus-visible` (or `:has(:focus-visible)` on a split control) inside `Styles/ZestButton.module.css`.
+- **Programmatic trigger.** `zest.sheenTrigger` (`string | number`) is read by `UI/hooks/useSheenTrigger.ts`, which remembers the value from the first render as the baseline and flips a parity flag on every later change (a number-to-string change counts). The button then carries `sheenProgrammatic` plus `sheenTriggerOdd`/`sheenTriggerEven`, which draw the sweep on the still-unused `::before` layer. Alternating between two identical keyframes (`zestFocusSheenSweep` and `zestFocusSheenSweepAlt`) restarts a finished animation in one render, so no timeout, animation frame, DOM re-key or forced reflow is used.
+- **Shared rules.** `focusSheen === true || sheenTrigger !== undefined` counts as "sheen in use": it applies the existing marker classes, suppresses the chevron mount streak on a split control, and reuses the same gradient, colour variables and keyframes as the focus sweep. A `sheenFocusOff` marker cancels only the focus pseudo-element when `focusSheen` is false, so a trigger-only button shows nothing on focus.
+- **Reduced motion.** The existing `@media (prefers-reduced-motion: reduce)` block sets `animation: none; content: none` on both layers, so it follows a live OS change with no JavaScript and there is no override. Disabled focus and busy state are irrelevant to the programmatic layer, so it plays there without changing `disabled`, `aria-busy`, `tabindex` or firing the click handler.
+
+Tests: `__tests__/ZestButtonFocusSheen.test.tsx` and `__tests__/hooks/useSheenTrigger.test.ts`; the guide is at `docs/features/zest-button-focus-sheen/guide.md`.
 
 ---
 

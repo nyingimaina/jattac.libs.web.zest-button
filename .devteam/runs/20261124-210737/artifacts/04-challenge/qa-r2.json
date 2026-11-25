@@ -1,0 +1,27 @@
+{
+  "findings": [
+    {
+      "cites": "R4",
+      "severity": "advisory",
+      "file": "Styles/ZestButton.module.css",
+      "line": 668,
+      "evidence": "Regular non-solid buttons take the base band colour currentColor at --zest-focus-sheen-peak: 0.7 (gradient line 660, peak line 668); split non-solid uses the variant border token at the same 0.7 peak (lines 709-722, 741). Alpha-blending over a light page: text.success light (--zest-color-success-bg #059669) at 0.7 over white gives rgb(80,182,150) = 2.49:1, and split sheenText.sheenSuccess light uses the same #059669 = 2.49:1, both below R4's stated 3:1. R4's only contrast test (__tests__/ZestButtonFocusSheen.test.tsx:329) computes solid fills only; no test asserts a text-style band against the page, so the R4 edge case 'A text-style button with no fill behind it must still show a band against the page' has no test that would fail if the band were invisible there.",
+      "description": "R4's 'every style distinguishable at >=3:1' acceptance is proven only for solid; outline/text/dashed bands over the page are unproven and text.success light computes below 3:1."
+    },
+    {
+      "cites": "R5",
+      "severity": "advisory",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "line": 431,
+      "evidence": "The R5 edge case 'Moving focus from the main segment to the chevron within one visit ...; leaving the control and returning does' is only half tested: __tests__/ZestButtonFocusSheen.test.tsx:431 fires focus on the main button then the trigger and asserts one wrapper overlay, but no test blurs the whole split control and re-focuses to prove a new sweep starts on return. The only re-focus/replay test (R2, same file) covers a regular button, not a split control.",
+      "description": "Split-control leave-and-return replay is not proven."
+    }
+  ],
+  "verifications": [
+    {
+      "id": "QA-1",
+      "status": "fixed",
+      "evidence": "Solid bands now use #ffffff at --zest-focus-sheen-peak: 0.9 (Styles/ZestButton.module.css:675-678), with a #064e3b dark band for dark-theme success (lines 680-682); split equivalents at lines 700-707 and 744-745. The new test (__tests__/ZestButtonFocusSheen.test.tsx:329) parses band colour, peak and the force-light/force-dark background tokens from the stylesheet, WCAG alpha-blends and asserts >=3:1 for all six solid combos on both regular and split. Independently recomputed at 0.9: light standard 7.38, light success 3.34, light danger 4.14, dark standard 3.28, dark success 4.19, dark danger 3.30; at 0.80 light success falls to 2.95 and dark standard to 2.92, so the test would fail if the band were made fainter. Full suite ran: 26 suites / 333 tests pass with --coverage=false. (The packed-library consumer smoke check still does not exist in this project, so it did not run.)"
+    }
+  ]
+}

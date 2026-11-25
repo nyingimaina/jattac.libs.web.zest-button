@@ -517,7 +517,7 @@ describe("ZestButton toggle mode", () => {
       );
     expect(read("README.md")).toContain("toggleOptions");
     expect(read("documentation/breaking-changes.md")).toContain("Version 1.7.0");
-    expect(JSON.parse(read("package.json")).version).toBe("1.8.0"); // R9: minor, additive bump
+    expect(JSON.parse(read("package.json")).version).toBe("1.9.0"); // R12/A1: additive focus-streak bump
     });
 
     it("R8: the documented examples type-check against the exported types and render", () => {

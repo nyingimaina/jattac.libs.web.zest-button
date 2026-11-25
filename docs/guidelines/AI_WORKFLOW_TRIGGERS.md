@@ -1,7 +1,7 @@
 ---
 title: AI Workflow Triggers
-covers: AGENTS.md, docs/guidelines/AI_WORKFLOW_TRIGGERS.md
-covers-hash: 825ea03811f5d1f87a16
+covers: agents.md
+covers-hash: fe01860d678e208df487
 ---
 
 # AI Workflow Triggers

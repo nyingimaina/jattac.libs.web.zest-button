@@ -15,6 +15,7 @@ Welcome to the ZestButton Cookbook! This is the core learning path for mastering
 - [Recipe 7: Reusing the Standard Icons](#recipe-7-reusing-the-standard-icons)
 - [Recipe 8: Swapping a Built-in Icon](#recipe-8-swapping-a-built-in-icon)
 - [Recipe 9: Styling All Toggles in One Place](#recipe-9-styling-all-toggles-in-one-place)
+- [Recipe 10: An Opt-In Keyboard-Focus Streak](#recipe-10-an-opt-in-keyboard-focus-streak)
 
 ---
 
@@ -432,6 +433,70 @@ export const App = () => (
   </ZestButtonConfigProvider>
 );
 ```
+
+---
+
+### Recipe 10: An Opt-In Keyboard-Focus Streak
+
+**Goal:** Give keyboard users an extra cue for the button that currently has focus, without changing how any other button looks or behaves.
+
+**Problem:** On a screen full of controls, the focus ring can be easy to miss. You want a short, one-time streak on keyboard focus only, and you do not want every button in the app to get it by accident.
+
+**Solution:** Set `focusSheen: true` on the buttons that need it. The band sweeps once when the button receives keyboard focus; a mouse click does not play it, and the focus ring is still there as the primary signal.
+
+```tsx
+import ZestButton from 'jattac.libs.web.zest-button';
+
+// A regular button: one sweep across the button.
+export const SaveButton = () => (
+  <ZestButton zest={{ focusSheen: true }} onClick={() => alert('Saved!')}>
+    Save draft
+  </ZestButton>
+);
+
+// A split button: one sweep across the main action and chevron together.
+export const ExportButton = () => (
+  <ZestButton
+    zest={{
+      focusSheen: true,
+      dropdownOptions: [
+        { label: 'Export as PDF', onClick: () => alert('Exported as PDF!') },
+        { label: 'Export as JSON', onClick: () => alert('Exported as JSON!') },
+      ],
+    }}
+  >
+    Export as CSV
+  </ZestButton>
+);
+```
+
+**What you should see:** Tab to the button and a diagonal light band crosses it once from the top-right to the bottom-left in about 0.6 seconds, clipped to the rounded shape, then disappears. The focus ring stays visible before, during and after the sweep. Clicking with the mouse shows no band. On the split button, focusing either segment plays a single sweep across the whole control, the menu opens normally outside it, and the chevron's mount streak does not play on that control.
+
+**Playing the streak from code:** give the button a `sheenTrigger` value (a string or a number). Every change of that value plays one sweep on a button that does not need focus, while the value present on mount plays nothing.
+
+```tsx
+import { useState } from 'react';
+import ZestButton from 'jattac.libs.web.zest-button';
+
+export const SyncButton = () => {
+  const [syncToken, setSyncToken] = useState(0);
+
+  return (
+    <>
+      <ZestButton zest={{ sheenTrigger: syncToken }} onClick={() => alert('Synced!')}>
+        Sync now
+      </ZestButton>
+      <button onClick={() => setSyncToken((token) => token + 1)}>Play the streak</button>
+    </>
+  );
+};
+```
+
+**What you should see:** clicking "Play the streak" makes one band sweep the "Sync now" button even though it is not focused. Clicking it again replays the sweep; changing the value while a sweep is playing restarts it. It works with or without `focusSheen` (omitted, `false` or `true`), on a split control, and on disabled or busy buttons without making them usable or firing their click handler.
+
+**Notes:** The band adapts to every `buttonStyle`, `variant` and theme, and never hides the label. Users with `prefers-reduced-motion: reduce` get no streak from either the focus or the programmatic trigger, and no prop overrides it. The option merges like the other `zest` props, so an app can opt in app-wide through `ZestButtonConfigProvider`'s `defaultProps`; leave it out to keep buttons exactly as they are today.
+
+*For the full behaviour, see the [focus streak guide](https://github.com/nyingimaina/jattac.libs.web.zest-button/blob/master/docs/features/zest-button-focus-sheen/guide.md).*
 
 ---
 

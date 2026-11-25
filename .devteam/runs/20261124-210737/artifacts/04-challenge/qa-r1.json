@@ -1,0 +1,45 @@
+{
+  "findings": [
+    {
+      "cites": "R4",
+      "severity": "blocking",
+      "file": "Styles/ZestButton.module.css",
+      "line": 672,
+      "evidence": "The solid band is currentColor (#ffffff on solid) at --zest-focus-sheen-peak: 0.65 (line 668 base 0.7, line 672 solid 0.65, keyframes lines 749-764). Blending that peak over the solid backgrounds defined at lines 84-92 (light) and 109-117 (dark) gives rgb(168,218,203) on #059669 = 2.43:1, rgb(243,179,179) on #dc2626 = 2.74:1, rgb(186,211,252) on #3b82f6 = 2.42:1, rgb(184,240,219) on #34d399 = 1.51:1 and rgb(249,190,190) on #ef4444 = 2.35:1. The only R4 colour test (__tests__/ZestButtonFocusSheen.test.tsx:271-288) asserts token names, that every peak is < 1, and pins the 0.65 solid peak; it never computes contrast, so it passes with these ratios. The style-only matrix at lines 187-218 checks classes, not visibility.",
+      "description": "R4 requires each style/variant/theme band to be distinguishable from its own background at >= 3:1 at its brightest point; solid success and danger in both themes (and dark standard) fall below 3:1 and no test would fail if the band were made even fainter."
+    },
+    {
+      "cites": "R5",
+      "severity": "advisory",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "line": 301,
+      "evidence": "The split assertion stops at the animation name (line 301); unlike the regular assertion at lines 120-122 it never checks '1 both', so the split rule could loop forever and still pass. The 'leaving the control and returning does [start a new sweep]' half of the R5 edge case is never exercised (lines 333-344 only focus main then chevron and count one .focusSheenSplit). The long-label edge case (lines 318-331) renders 'A very long main action label' but only asserts the menu is outside the wrapper/visible, never that one sweep spans the full width.",
+      "description": "R5's single-sweep iteration, leave-and-return restart, and long-label full-width edge cases are proven only by selector/class presence, not by an assertion that would fail if the split sweep repeated or failed to restart."
+    },
+    {
+      "cites": "R2",
+      "severity": "advisory",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "line": 97,
+      "evidence": "The R2 test fires focus first and click second (lines 101-102), so it does not exercise the R2 edge case 'a mouse click followed by keyboard focus' in that order; the only proof that a mouse click plays nothing is the source regex for :focus-visible at lines 106-108.",
+      "description": "The click-then-keyboard-focus sequence named in R2's edge cases has no test that drives that order; the guarantee rests on a CSS selector string assertion."
+    },
+    {
+      "cites": "R3",
+      "severity": "advisory",
+      "file": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "line": 173,
+      "evidence": "The 'very small and very large' test only asserts two .focusSheen classes exist and one ::after rule exists (lines 173-183); it renders size sm/lg, never a wide-short or tall-narrow button, so R3's 'crosses the full button in one continuous sweep' on extreme aspect ratios is not asserted. The 'focusing again during a sweep' case (lines 111-124) blurs before re-focusing, so it does not re-trigger mid-sweep.",
+      "description": "R3's aspect-ratio continuity and mid-sweep re-focus edge cases are only covered structurally (percentage sizing / one rule), not by a test of those states."
+    },
+    {
+      "cites": "R1",
+      "severity": "advisory",
+      "file": "package.json",
+      "line": 1,
+      "evidence": "No packed-library check exists (no scripts/consumer-smoke.mjs; attw/publint are not installed), and no test imports ZestButton or focusSheen through the package entry (UI/index.ts or dist); the new tests import ../UI/ZestButton directly.",
+      "description": "The new public prop is not proven from the published entry point and the packed CJS/ESM import was not run. Informational under the project's missing packaging checks."
+    }
+  ],
+  "verifications": []
+}

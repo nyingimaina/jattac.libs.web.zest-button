@@ -1,7 +1,7 @@
 ---
 title: Using ZestButton semantic types
 covers: UI/ZestButton.tsx, UI/semanticTypeButtonConfigDefaults.tsx, UI/hooks/useZestConfig.ts, UI/index.ts
-covers-hash: 4fa17665c454842f5039
+covers-hash: fad910543357496f1240
 ---
 
 # Using ZestButton semantic types
@@ -344,6 +344,8 @@ split-button behaviour.
   with a semantic type.
 - [Styling toggle buttons from one place](../zest-button-toggle-style/guide.md) — set the
   look of toggles, including per variant, from the provider.
+- [The opt-in keyboard-focus streak](../zest-button-focus-sheen/guide.md) — an optional
+  focus cue that works on any button, including one built from a semantic type.
 - [Dropdown options feature record](../zest-button-dropdown-options/BRS.md) — split
   buttons and menu items.
 - [Shipped feature guide](../../../documentation/features.md#semantic-types) and

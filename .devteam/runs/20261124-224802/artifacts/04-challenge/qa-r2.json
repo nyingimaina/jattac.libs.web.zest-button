@@ -1,0 +1,15 @@
+{
+  "findings": [],
+  "verifications": [
+    {
+      "id": "QA-1",
+      "status": "fixed",
+      "evidence": "__tests__/ZestButtonFocusSheen.test.tsx:795-845 adds 'R8: the band is visible on the disabled colours of outline, text and dashed buttons'. It asserts (a) the programmatic ::before paints var(--zest-focus-sheen-color, currentColor) (line 804), (b) both --zest-color-disabled-text tokens are opaque hex (807-808), (c) each of .outline:disabled/.outline.disabled, .text:disabled/.text.disabled and .dashed:disabled/.dashed.disabled sets background-color: transparent and color: var(--zest-color-disabled-text) (810-815), (d) no rule zeroes or hides the programmatic band on those styles (817-825), and (e) a rendered disabled button of each style receives sheenProgrammatic while staying disabled (827-843). Solid disabled colours remain covered at 767-793. A band that vanished or was hidden on any non-solid disabled style now fails. Ran npx jest __tests__/ZestButtonFocusSheen.test.tsx --coverage=false: 60/60 tests pass. (The project still has no packed-library consumer smoke check, so that check did not run.)"
+    },
+    {
+      "id": "QA-2",
+      "status": "open",
+      "evidence": "__tests__/ZestButtonFocusSheen.test.tsx:675-689 still only asserts that the wrapper has classes focusSheenSplit and sheenProgrammatic (and that the two segments do not). It never asserts the wrapper's sheenTriggerOdd/Even parity class, and no test asserts the split animation rules .focusSheenSplit.sheenProgrammatic.sheenTriggerOdd/Even::before (Styles/ZestButton.module.css:884-890); the A2 parity assertions at test lines 875-886 target only the regular .button selectors. Since .focusSheenSplit.sheenProgrammatic::before (Styles/ZestButton.module.css:830-849) is opacity:0 with no animation of its own, deleting the two split animation rules at 884-890 would leave every test green, so R8's 'one sweep across the whole control' is still unproven."
+    }
+  ]
+}

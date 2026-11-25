@@ -1,7 +1,7 @@
 ---
 title: BRS — ZestButton on/off toggle mode
 covers: UI/ZestButton.tsx, UI/hooks/useToggleState.ts, UI/hooks/useToggleStyle.ts, Styles/ZestButton.module.css, __tests__/ZestButtonToggle.test.tsx
-covers-hash: a2ac1f906c9b4fd5b3f2
+covers-hash: f6348e5f18277e663e3b
 ---
 
 # BRS — ZestButton on/off toggle mode
@@ -52,6 +52,15 @@ before. Nothing about `aria-pressed`, `pressed` / `defaultPressed`, `onPressedCh
 `checkPosition` or the keyboard handling changed. The new behaviour has its own record:
 [Styling toggle buttons from one place](../zest-button-toggle-style/guide.md).
 
+## Current state: the opt-in focus streak
+
+The focus-streak feature adds one optional `zest.focusSheen` boolean to the same
+`ZestButton.tsx` and new CSS in the shared stylesheet. It does not change toggle mode: a
+toggle that does not opt in renders and behaves exactly as before. A toggle that does opt
+in keeps its pressed look (`toggleOn`) and its focus ring while the streak plays, and its
+`aria-pressed`, click and keyboard handling are unchanged. The focus streak has its own
+record: [The opt-in keyboard-focus streak](../zest-button-focus-sheen/guide.md).
+
 ## Out of scope
 
 Sliding switch control, exclusive toggle groups, custom on/off icons, persisting the value.
@@ -59,6 +68,8 @@ Sliding switch control, exclusive toggle groups, custom on/off icons, persisting
 ## See also
 
 - [Using the ZestButton on/off toggle](./guide.md) — the developer guide for this record.
+- [The opt-in keyboard-focus streak](../zest-button-focus-sheen/guide.md) — the extra
+  keyboard-focus cue a toggle can opt into.
 - [Styling toggle buttons from one place](../zest-button-toggle-style/guide.md) — set the
   exact look of every toggle from `ZestButtonConfigProvider`.
 - [Using ZestButton semantic types](../zest-button-semantic-types/guide.md) — combine a

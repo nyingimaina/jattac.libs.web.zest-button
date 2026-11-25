@@ -1,0 +1,21 @@
+{
+  "findings": [
+    {
+      "cites": "R4",
+      "severity": "blocking",
+      "file": "Styles/ZestButton.module.css",
+      "line": 660,
+      "evidence": "The regular band is `currentColor` (white for every `.solid` button) at peak opacity 0.65 (line 672); the split overlay hardcodes `--zest-focus-sheen-color: #ffffff` (line 692) at the same 0.65 (line 730). Under `.force-dark` / prefers-color-scheme dark, `.solid.success` uses `--zest-color-success-bg: #34d399` (line 110 and line 52), so even fully opaque white is only ~1.92:1 and the 0.65 composite is ~1.51:1; dark solid standard (#3b82f6) and danger (#ef4444) composites are only ~2.42:1 and ~2.35:1, and light success (#059669) ~2.43:1. R4 requires every style/variant/theme to show a band distinguishable from its own background at >=3:1 at the brightest point. On a dark-theme solid success button the white sheen is effectively invisible.",
+      "description": "The single white/65% band does not meet R4's 3:1 contrast acceptance for solid buttons in dark theme (worst: dark solid success ~1.5:1), so the feature silently does nothing on those buttons. The new tests only regex-match the CSS source text, so they do not catch this."
+    },
+    {
+      "cites": "A4",
+      "severity": "blocking",
+      "file": "package.json",
+      "line": 28,
+      "evidence": "`files` ships only `dist`, `README.md`, `LICENSE` and `documentation` (lines 28-33) - `docs/` is not published. The change adds links to `docs/features/zest-button-focus-sheen/guide.md` from README.md:145, documentation/api.md:220, documentation/configuration.md:136, documentation/examples.md:477 and documentation/features.md:264. In the published npm package those targets do not exist, so all five guide links are dead for consumers. (Existing `documentation/*.md` links only point inside `documentation/` or to the shipped `../README.md`, so this break is introduced by this change.)",
+      "description": "A4 exists so the new prop can be found and read; the new guide links resolve in the git repo but 404 in the shipped package because `docs/` is not in `files`. Ship the guide inside `documentation/` (or `files`) or link to an always-available URL."
+    }
+  ],
+  "verifications": []
+}

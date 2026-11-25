@@ -1,0 +1,397 @@
+{
+  "summary": "ZestButton gains two opt-in options on its existing `zest` configuration object. `focusSheen` (default off) plays the split button's diagonal light streak across the whole button when the button receives keyboard focus, and `sheenTrigger` (a changing string or number) lets the host play the same streak from code, with or without focus. The effect is decorative: clipped to the button, shown on every button style and theme, one sweep per focus arrival or per trigger change, and switched off under prefers-reduced-motion. It exists so keyboard users can spot which button has focus on screens full of controls.",
+  "roles": [
+    "Library consumer (developer): turns the focus streak on per button and changes `zest.sheenTrigger` to play the streak from code.",
+    "Keyboard user of a host app: sees one streak when an opted-in button receives keyboard focus.",
+    "Screen-reader user: hears nothing new; the button's role, name and state are unchanged."
+  ],
+  "requirements": [
+    {
+      "id": "R1",
+      "text": "A host turns the focus streak on per button with an optional boolean `focusSheen` field on the existing `zest` configuration object; it is off by default and works on a regular button and on a split button.",
+      "rationale": "The effect must not appear on existing buttons by surprise; the developer wants to opt in only where keyboard focus needs to stand out.",
+      "acceptance": [
+        "A regular button with `zest={{ focusSheen: true }}` renders a streak layer that can play; the same button without the field, or with `false`, renders no streak layer and plays no streak.",
+        "A split button with `zest={{ focusSheen: true, dropdownOptions: [...] }}` also renders the whole-control streak layer.",
+        "A button that does not pass the field renders and behaves exactly as it does today."
+      ],
+      "edgeCases": [
+        "A screen mixes opted-in and plain buttons; only the opted-in buttons play a streak.",
+        "Turning the option off at runtime while a streak is playing removes the streak and leaves no visible band."
+      ],
+      "pitfalls": [
+        "The option must not leak from one button to another.",
+        "Opting in must not change the button's accessible name, role or state."
+      ],
+      "rules": ["LIB-001", "UI-001"],
+      "facts": [
+        { "subject": "focus sheen", "attribute": "default", "op": "equals", "value": "off" },
+        { "subject": "focus sheen", "attribute": "applies to", "op": "one-of", "value": "regular button, split button" }
+      ]
+    },
+    {
+      "id": "R2",
+      "text": "The focus streak plays when an opted-in button receives keyboard focus, not when it is clicked with a mouse, once per focus arrival; the existing focus ring stays the visible primary focus signal.",
+      "rationale": "The streak is an extra cue for keyboard users; firing on every mouse click would be noise, and a decorative band must never weaken the real focus indicator.",
+      "acceptance": [
+        "Tab-focusing an opted-in button plays exactly one sweep; clicking the same button with the mouse plays none.",
+        "Focusing away and back plays the sweep again, and the focus ring is visible before, during and after the sweep.",
+        "If focus leaves before the sweep finishes, the unfocused button shows no streak."
+      ],
+      "edgeCases": [
+        "A mouse click followed by keyboard focus plays exactly one sweep on the keyboard focus.",
+        "Focus can arrive on a split button's chevron as well as on its main segment; both are keyboard focus (see R5).",
+        "A toggle button in its on state keeps both its pressed look and its focus ring while the streak plays."
+      ],
+      "pitfalls": [
+        "Triggering on plain focus would play the streak on every mouse click.",
+        "The streak must not replace, cover or delay the focus ring.",
+        "A streak must not be left visible on a button that has lost focus."
+      ],
+      "rules": ["UI-001"],
+      "facts": [
+        { "subject": "focus sheen", "attribute": "focus trigger", "op": "equals", "value": "keyboard focus only" },
+        { "subject": "focus streak", "attribute": "sweeps per focus arrival", "op": "equals", "value": "1" }
+      ]
+    },
+    {
+      "id": "R3",
+      "text": "The streak is a diagonal light band at about 45 degrees that travels from the button's top-right area to its bottom-left across the whole button in about 0.6 seconds, is clipped to the button's rounded shape, and disappears when it finishes.",
+      "rationale": "This is the visual the developer asked for and it reuses the streak already known from the split button's chevron.",
+      "acceptance": [
+        "At standard zoom the band is visibly diagonal at about 45 degrees and moves from the top-right towards the bottom-left.",
+        "On a wide, short button and on a tall, narrow button the band crosses the full button in one continuous sweep rather than a squashed or partial one.",
+        "No part of the band paints outside the button's rounded edge.",
+        "The band is no longer visible once it has finished (by about 0.7 seconds) and the button's size, text position and layout never change."
+      ],
+      "edgeCases": [
+        "Very small and very large buttons still show one continuous diagonal sweep.",
+        "Focusing again during a sweep starts a fresh sweep rather than stacking two bands.",
+        "The band must not remain stuck or leave a permanent tint after it ends."
+      ],
+      "pitfalls": [
+        "A band that fades too early is invisible on a busy screen; one that never ends looks like a bug.",
+        "Clipping the band to the shape must not cut the focus ring that sits outside the button edge.",
+        "The sweep must not cause a layout shift or resize the button."
+      ],
+      "rules": ["UI-001", "PERF-001"],
+      "facts": [
+        { "subject": "focus streak", "attribute": "angle", "op": "between", "value": "40-50", "unit": "degrees" },
+        { "subject": "focus streak", "attribute": "direction", "op": "equals", "value": "top-right to bottom-left" },
+        { "subject": "focus streak", "attribute": "duration", "op": "between", "value": "0.5-0.7", "unit": "seconds" }
+      ]
+    },
+    {
+      "id": "R4",
+      "text": "The streak is visible on all four button styles (solid, outline, text, dashed) and all three variants (standard, success, danger) in both light and dark themes, without making the label unreadable.",
+      "rationale": "The feature exists to help users find the focused button; a white-only band would silently do nothing on the library's light styles, which would be a surprising half-feature.",
+      "acceptance": [
+        "In a matrix of 4 styles by 3 variants in light and in dark theme, every button shows a band that is distinguishable from its own background (at least 3:1 contrast at the band's brightest point).",
+        "On outline, text and dashed buttons over a light page the band is not white-on-white; over a dark page it is not invisible.",
+        "The label stays readable throughout the sweep, and the button's normal colours return when it ends."
+      ],
+      "edgeCases": [
+        "A text-style button with no fill behind it must still show a band against the page.",
+        "A disabled button played through the programmatic trigger (R8) still shows a visible band on its disabled colours.",
+        "Switching between light and dark (including the system preference) changes the band so it stays visible."
+      ],
+      "pitfalls": [
+        "A single white band at about 65% suits solid buttons only; the other styles need a band that reads on their own colours.",
+        "A band strong enough for a text-style button must not obscure its label.",
+        "The band must follow the button's forced light/dark theme classes, not only the operating-system preference."
+      ],
+      "rules": ["UI-001"],
+      "facts": [
+        { "subject": "focus streak", "attribute": "button styles", "op": "one-of", "value": "solid, outline, text, dashed" },
+        { "subject": "focus streak", "attribute": "button variants", "op": "one-of", "value": "standard, success, danger" },
+        { "subject": "focus streak", "attribute": "themes", "op": "one-of", "value": "light, dark" },
+        { "subject": "focus streak", "attribute": "band contrast", "op": "at-least", "value": "3:1", "scope": "against the button's own background" }
+      ]
+    },
+    {
+      "id": "R5",
+      "text": "On a split button with the focus streak enabled, focusing either segment plays one sweep across the whole split control (main action and chevron together), clipped to the control's rounded outer corners; the open menu is not clipped, covered or hidden.",
+      "rationale": "The split button is one control to the user, so one sweep across it reads as that control receiving focus; per-segment bands would look like two different controls.",
+      "acceptance": [
+        "Focusing the main action segment plays one band spanning the full control, including the chevron area.",
+        "Focusing the chevron segment plays one band spanning the full control, including the main action area.",
+        "Only one band is visible at a time on a split control; there are never two separate per-segment bands.",
+        "The clip follows the rounded outer corners of the split control, both 3px focus rings stay fully visible, and opening the menu shows it unclipped outside the control."
+      ],
+      "edgeCases": [
+        "Moving focus from the main segment to the chevron within one visit to the control does not start a second sweep; leaving the control and returning does.",
+        "A split control with a long main label still shows one sweep across the full width.",
+        "Opening the menu while a sweep is playing does not clip or cover the menu."
+      ],
+      "pitfalls": [
+        "A clipping wrapper can cut the focus ring drawn outside the segments.",
+        "The wrapper must not become focusable, change the tab order, or add a role.",
+        "The menu is rendered outside the wrapper; making the wrapper clip must not break that."
+      ],
+      "rules": ["UI-001", "USR-004"],
+      "facts": [
+        { "subject": "split streak", "attribute": "sweeps per focus arrival", "op": "equals", "value": "1" },
+        { "subject": "split streak", "attribute": "scope", "op": "equals", "value": "whole split control" }
+      ]
+    },
+    {
+      "id": "R6",
+      "text": "On a split button where the sheen is in use (`focusSheen` on or `sheenTrigger` supplied), the chevron's existing one-time mount streak does not play, so two streaks never overlap; on split buttons without the sheen the mount streak is unchanged.",
+      "rationale": "Two different streaks at once would look like a glitch, and the existing cue must keep working for everyone who does not opt in.",
+      "acceptance": [
+        "A split button with `focusSheen: true` shows no chevron mount streak on first paint; focusing it shows only the whole-control sweep.",
+        "A split button given a `sheenTrigger` value shows no chevron mount streak on first paint.",
+        "A split button with neither option still shows the existing chevron mount streak once when it mounts."
+      ],
+      "edgeCases": [
+        "A split button mounted and then immediately focused shows only the new whole-control sweep.",
+        "A trigger change within the old mount-streak window does not produce a second streak on the chevron.",
+        "Regular buttons have no mount streak, so nothing changes for them."
+      ],
+      "pitfalls": [
+        "The mount streak must not be removed for split buttons that do not use the sheen.",
+        "Suppressing it must not leave an empty layer that changes layout."
+      ],
+      "rules": ["USR-004", "LIB-001"],
+      "facts": [
+        { "subject": "chevron mount streak", "attribute": "state", "op": "equals", "value": "off on split buttons with focusSheen on or sheenTrigger supplied" }
+      ]
+    },
+    {
+      "id": "R7",
+      "text": "A host plays the streak from code with an optional `sheenTrigger` value (a string or a number): every change of the value plays one sweep on a button that need not be focused, while the first value on mount plays nothing; it works whether or not `focusSheen` is on.",
+      "rationale": "Hosts need to draw attention to a button after their own event (for example when a background task finishes); a changing value is the agreed mechanism because the component exposes no ref.",
+      "acceptance": [
+        "Mounting with `sheenTrigger={0}` plays no sweep; changing the value to `1` plays one sweep on the unfocused button.",
+        "Changing the value while a sweep is still playing restarts a full sweep from the beginning instead of ignoring it.",
+        "Setting the same value again plays nothing, and a change between a number and a string (for example `1` to `\"1\"`) counts as a change.",
+        "The trigger works with `focusSheen` omitted, `false` or `true`."
+      ],
+      "edgeCases": [
+        "Several changes in quick succession each play (restart) the sweep; no queue builds up and the last change wins.",
+        "A change while the button is focused plays the sweep in addition to any focus sweep already played.",
+        "Repeated triggers after the animation has ended still replay; the second and later sweeps are not lost."
+      ],
+      "pitfalls": [
+        "The first value on mount must not play, including after server-side rendering and hydration.",
+        "Replaying must genuinely restart the animation rather than leave it finished.",
+        "A host must not need a ref, an imperative handle or a boolean reset to play it again."
+      ],
+      "rules": ["LIB-001"],
+      "facts": [
+        { "subject": "programmatic streak trigger", "attribute": "value type", "op": "one-of", "value": "string, number" },
+        { "subject": "programmatic streak trigger", "attribute": "first value on mount", "op": "must-not", "value": "play a sweep" },
+        { "subject": "programmatic streak trigger", "attribute": "each value change", "op": "must", "value": "play one sweep" },
+        { "subject": "programmatic streak trigger", "attribute": "focus sheen required", "op": "must-not", "value": "be required" }
+      ]
+    },
+    {
+      "id": "R8",
+      "text": "The programmatic trigger also works on a split control (one sweep across the whole control) and on disabled and busy buttons, while the focus trigger never applies to disabled buttons.",
+      "rationale": "A host may want the streak to mark a result that arrives while the button is disabled or busy; disabled buttons cannot take keyboard focus, so that case is programmatic only.",
+      "acceptance": [
+        "Changing `sheenTrigger` on a split button plays one sweep across the whole split control.",
+        "Changing `sheenTrigger` on a disabled button plays one sweep without making the button usable and without running its click handler.",
+        "Changing `sheenTrigger` while the button is busy (via `aria-busy` or the button's own busy state) plays one sweep; the busy spinner and state are unchanged.",
+        "A disabled button never shows a focus streak."
+      ],
+      "edgeCases": [
+        "A button that is both disabled and busy still plays exactly one sweep per trigger change.",
+        "The sweep finishes normally when the busy state ends part-way through.",
+        "The band is visible on the disabled colours of every button style (see R4)."
+      ],
+      "pitfalls": [
+        "The trigger must not toggle `disabled` or `aria-busy`, add `tabindex`, or make a disabled button focusable.",
+        "The trigger must not fire the button's click, confirmation or toggle behaviour.",
+        "Suppressing the focus streak on disabled buttons must not suppress the programmatic one."
+      ],
+      "rules": ["UI-001"],
+      "facts": [
+        { "subject": "programmatic streak trigger", "attribute": "disabled button", "op": "must", "value": "play a sweep" },
+        { "subject": "programmatic streak trigger", "attribute": "busy button", "op": "must", "value": "play a sweep" }
+      ]
+    },
+    {
+      "id": "R9",
+      "text": "When the user's system asks for reduced motion (`prefers-reduced-motion: reduce`), neither the focus streak nor the programmatic trigger shows a sweep, and there is no override.",
+      "rationale": "People who ask their device for less motion must not get an animation because a developer opted in; the focus ring still tells them where focus is.",
+      "acceptance": [
+        "With reduced motion on, focusing an opted-in button shows no band and the focus ring still appears.",
+        "With reduced motion on, changing `sheenTrigger` shows no band and causes no error or warning.",
+        "Switching the system setting while the app is open stops the effect without a reload, and no prop can force it back on."
+      ],
+      "edgeCases": [
+        "Reduced motion is already on when the button mounts.",
+        "The setting changes while a sweep is playing; the band disappears.",
+        "The rule applies equally to regular buttons, split controls and every trigger."
+      ],
+      "pitfalls": [
+        "Shortening the sweep is not enough; there must be no visible band at all.",
+        "Disabling it must not disable the focus ring or any other button feedback."
+      ],
+      "rules": ["UI-001"],
+      "facts": [
+        { "subject": "sheen", "attribute": "reduced motion", "op": "must-not", "value": "show a sweep" }
+      ]
+    },
+    {
+      "id": "R10",
+      "text": "The streak is decoration only: it never intercepts pointer input, never changes the button's accessible name, role or state, never adds a focusable element, and never shifts layout.",
+      "rationale": "The effect must not make any button harder or different to use for anyone, including people using a screen reader, a touch screen or high zoom.",
+      "acceptance": [
+        "Clicking or tapping anywhere on the button while a sweep is playing still runs the button's action exactly once.",
+        "The accessibility tree of an opted-in button (role, name, `aria-pressed`, `aria-busy`, disabled) is identical to the same button without the option.",
+        "The streak layer is hidden from assistive technology and is never announced.",
+        "No scrollbar, overflow or size change appears while the sweep plays, including on a small screen."
+      ],
+      "edgeCases": [
+        "A toggle button (`aria-pressed`) and a busy button keep their state values while the streak plays.",
+        "Keyboard activation (Enter or Space) during a sweep still works once.",
+        "At high browser zoom the band stays inside the button and does not add scrollbars."
+      ],
+      "pitfalls": [
+        "The streak layer must not catch clicks or block text selection.",
+        "It must not add `aria-live`, a role or `tabindex` to the button or the wrapper.",
+        "The split wrapper must not become part of the tab order."
+      ],
+      "rules": ["UI-001"],
+      "facts": [
+        { "subject": "sheen layer", "attribute": "assistive technology", "op": "must-not", "value": "be announced" }
+      ]
+    },
+    {
+      "id": "R11",
+      "text": "Every new option is documented for library consumers: a first example in README.md, entries in the API reference, a recipe in the examples, a description in the features page, and an additive note in breaking-changes, with the existing previous/next links kept.",
+      "rationale": "A published library's users only find a prop if it is documented where they look, and the project treats undocumented behaviour as incomplete.",
+      "acceptance": [
+        "README.md shows a runnable example using `zest={{ focusSheen: true }}` and one using a changing `sheenTrigger`.",
+        "The API reference lists both fields with type, default and meaning; the features and examples pages explain when to use each one; breaking-changes records the change as additive with no action needed.",
+        "Every page that is touched links to the previous and next page."
+      ],
+      "edgeCases": [
+        "The documented default is off, matching the code.",
+        "The docs do not claim an app-wide `styles` setting, a ref handle or a reduced-motion override that does not exist."
+      ],
+      "pitfalls": [
+        "Documentation that promises a different prop name or default is worse than none.",
+        "The additive note must not be filed as a breaking change."
+      ],
+      "rules": ["DOC-001"]
+    },
+    {
+      "id": "R12",
+      "text": "Existing buttons and the existing chevron mount streak are protected: characterization tests record today's split-button layout, mount streak and focus ring before the production change, and buttons that do not opt in keep their current markup, classes and behaviour.",
+      "rationale": "The repository requires proof that behaviour already shipped to consumers is unchanged before it is extended.",
+      "acceptance": [
+        "Characterization tests for the current split wrapper, chevron mount streak and focus-ring styling exist and pass before the production change is made.",
+        "The full test suite passes after the change, including unchanged tests for plain and split buttons that do not use the sheen.",
+        "No existing export, prop or type is removed or renamed; the only public addition is optional fields on the existing `ZestCustomProps` interface, and the package version is bumped for the additive release."
+      ],
+      "edgeCases": [
+        "Consumer CSS written against the existing split wrapper and segment class names still matches.",
+        "Toggle-mode buttons, busy buttons and dropdown items behave exactly as before.",
+        "The split wrapper only gains clipping and a corner radius when the sheen is in use."
+      ],
+      "pitfalls": [
+        "Do not restructure the split markup or move the menu.",
+        "Do not make the wrapper clip unconditionally in a way that changes existing rendering."
+      ],
+      "rules": ["USR-004", "LIB-001"]
+    },
+    {
+      "id": "R13",
+      "text": "The effect stays cheap at scale: enabling it on many buttons adds no per-button timers, observers, event listeners or retained subscriptions, adds no runtime dependency, and stops all work when the sweep ends.",
+      "rationale": "A screen may contain many buttons, and a decoration must not turn into hundreds of timers or a heavier bundle on a low-spec device.",
+      "acceptance": [
+        "A screen with 100 opted-in buttons mounts and updates without new timers, intervals, observers or document-level listeners attributable to the streak; after about 0.7 seconds no streak work remains scheduled.",
+        "`package.json` dependencies and peerDependencies are unchanged, and the built package gains only the option handling and the style rules.",
+        "Tabbing quickly through 100 buttons does not accumulate work or leave streaks on unfocused buttons."
+      ],
+      "edgeCases": [
+        "Buttons unmounted during a sweep leave nothing behind.",
+        "Rapid programmatic triggers on many buttons do not build a backlog.",
+        "The existing split-button width measurement behaves exactly as before."
+      ],
+      "pitfalls": [
+        "No polling or JavaScript animation loop per button.",
+        "No listener or timer may outlive the button or the sweep."
+      ],
+      "rules": ["PERF-001", "USR-003"]
+    }
+  ],
+  "outOfScope": [
+    "A dedicated app-wide focus-streak setting in ZestButtonConfigProvider.styles (the provider's generic defaultProps path is unchanged and is not documented for this feature).",
+    "A ref handle such as ref.current.sheen(), or adding forwardRef/useImperativeHandle to ZestButton.",
+    "Changing the chevron's mount streak for split buttons that do not use the sheen.",
+    "Playing the focus streak on mouse click or on plain :focus.",
+    "A reduced-motion override that forces the streak back on.",
+    "A consumer-facing colour, angle or duration setting for the streak.",
+    "Any change to the dropdown menu, its items or its positioning."
+  ],
+  "nonFunctional": [
+    {
+      "area": "accessibility",
+      "statement": "The streak is decorative and keyboard-friendly: the existing focus ring remains visible on every focus state, reduced-motion users get no sweep, and the button's accessible name, role and state are unchanged.",
+      "acceptance": "With `prefers-reduced-motion: reduce`, neither trigger shows a band while the focus ring still appears; the accessibility tree of an opted-in button is identical to the same button without the option; the streak layer is hidden from assistive technology."
+    },
+    {
+      "area": "performance",
+      "statement": "A screen with 100 opted-in buttons stays responsive: the effect is animation-driven with no per-button timer, observer or listener, no new runtime dependency, and no work remaining after the sweep ends.",
+      "acceptance": "Mounting 100 opted-in buttons creates no timers, intervals, observers or document-level listeners for the streak; `package.json` dependencies and peerDependencies are unchanged; after 0.7 seconds no streak work remains scheduled."
+    },
+    {
+      "area": "reliability",
+      "statement": "The feature renders the same on the server and on the client and does not break older engines: no streak plays on first render, hydration produces no warning, and a browser without `:has()` still renders and behaves normally (only the split focus sweep may not play).",
+      "acceptance": "Server-rendering an opted-in button and hydrating it on the client produces no hydration warning and no sweep on mount; the component works under React 18 and React 19; in a browser without `:has()` the split button renders and operates with no error, and its programmatic trigger still plays."
+    }
+  ],
+  "risks": [
+    "Restarting a CSS animation on each `sheenTrigger` change is not yet proven in this code; the planned re-key approach may not replay reliably in every browser and needs an explicit repeated-trigger test.",
+    "`:has()` support is required for the split focus sweep; older browsers would silently get no split focus streak.",
+    "Clipping the split wrapper to get rounded streak edges can cut the focus ring, which is drawn outside the segments.",
+    "A per-style adaptive band is more work and more visual surface than a solid-only white band; if it is rushed, outline/text/dashed buttons may show a weak or garish band.",
+    "Tabbing quickly through many buttons may show several overlapping sweeps if the sweep is kept long enough to be noticeable."
+  ],
+  "tensions": [
+    {
+      "requirements": ["R3", "R2"],
+      "scenario": "R3 asks for a sweep of about 0.6 seconds so it is noticeable; R2 promises exactly one sweep each time focus arrives. A keyboard user tabbing quickly through twenty buttons on a dense screen starts a new 0.6-second sweep every few hundred milliseconds, so several buttons can show half-finished bands at once, which is distracting, while shortening the sweep makes it too subtle to help."
+    },
+    {
+      "requirements": ["R5", "R2"],
+      "scenario": "R5 wants the split sweep clipped to the control's rounded outer corners, which needs a clipping wrapper; R2 requires the 3px focus ring, drawn as a shadow outside the segments, to stay fully visible. A wrapper tight enough to clip the band at the outer edge also cuts the ring's outer glow, so one of the two must give (extra room around the segments or a visibly clipped ring)."
+    }
+  ],
+  "glossary": [
+    "Focus sheen: the opt-in diagonal light streak played when a button receives keyboard focus.",
+    "Split control: the main action button and its chevron menu trigger, taken together as one control.",
+    "Chevron mount streak: the existing one-time streak the chevron plays when a split button first appears on the page.",
+    "Programmatic streak trigger: the `sheenTrigger` value a host changes to play one sweep without the button being focused.",
+    "Keyboard focus: focus given by the keyboard (for example with Tab), as opposed to focus that follows a mouse click.",
+    "Focus ring: the existing 3px ring shown around a button that has keyboard focus."
+  ],
+  "questions": [],
+  "coverage": [
+    { "topic": "users", "status": "not-applicable", "note": "The effect is purely visual. Library consumers turn it on per button and keyboard users see it; there are no roles or permissions." },
+    { "topic": "data", "status": "not-applicable", "note": "Nothing is stored or sent; the feature is two optional values on an existing prop object." },
+    { "topic": "permissions", "status": "not-applicable", "note": "There are no records, ownership or sharing in this library." },
+    { "topic": "validation", "status": "not-applicable", "note": "There is no user input to validate; `focusSheen` is a boolean and `sheenTrigger` accepts any string or number, with invalid types rejected by TypeScript at build time." },
+    { "topic": "states", "status": "assumed", "note": "The on/off default, once-per-focus-arrival behaviour, first-trigger-value-on-mount behaviour, disabled/busy behaviour and split-control behaviour are settled by the stated defaults in the request; they are recorded in 'assumptions'." },
+    { "topic": "duplicates", "status": "not-applicable", "note": "Nothing is submitted or created. Replaying the streak on each focus arrival or trigger change is the intended behaviour, not a duplicate." },
+    { "topic": "volume", "status": "not-applicable", "note": "There is no data to list, search, sort or page. The many-buttons-on-one-screen case is covered by R13 and the performance requirement." },
+    { "topic": "deletion", "status": "not-applicable", "note": "There is nothing to delete or restore." },
+    { "topic": "privacy", "status": "not-applicable", "note": "No personal or sensitive data is read, stored or displayed." },
+    { "topic": "quality", "status": "assumed", "note": "Accessibility (focus ring stays primary, reduced motion disables the effect), all-style/all-theme visibility and the no-timers performance limit are defaults chosen here because the request left them unconfirmed; they are recorded in 'assumptions'." }
+  ],
+  "assumptions": [
+    "Both options are fields on the existing `zest` configuration object, matching every other custom option: `zest={{ focusSheen: true }}` and `zest={{ sheenTrigger: value }}`. No top-level prop or new export is added, so the change is additive, not breaking.",
+    "Prop names `focusSheen` and `sheenTrigger` are kept; `focusSheen` is a boolean defaulting to false and `sheenTrigger` is `string | number`.",
+    "The first version covers all four button styles and all three variants in light and dark themes with a band that adapts to the button's own colours (minimum 3:1 contrast), rather than a white-only band limited to solid styles.",
+    "The streak runs for about 0.6 seconds, at about 45 degrees from the top-right to the bottom-left, reusing the existing streak look.",
+    "Only keyboard focus triggers the focus streak (mouse clicks do not), and focus moving between a split control's two segments does not replay a sweep; leaving the control and returning does.",
+    "The first `sheenTrigger` value on mount plays nothing; every later change plays exactly one sweep, and a change during a sweep restarts it. The trigger works on disabled and busy buttons but never enables them.",
+    "The chevron's mount streak is suppressed on a split button whenever the sheen is in use (`focusSheen` on or `sheenTrigger` supplied).",
+    "Reduced motion switches the streak off for both triggers with no override; the focus ring stays.",
+    "No app-wide `styles` setting, ref handle or per-style colour configuration is added in this version, and no runtime dependency is added."
+  ]
+}

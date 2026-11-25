@@ -1,0 +1,176 @@
+{
+  "summary": "Revision 3 is the hardening and release pass for the focus streak already built in revisions 1 and 2; it adds no component logic, no style rule, no export and no dependency. The existing implementation already satisfies the behavioural core of R10 and R13: every streak layer is a pseudo-element with pointer-events:none, an absolute inset:0 box that cannot shift layout, no ARIA/DOM/focusable node and no tabindex on the split wrapper; the focus ring remains the only real focus signal; the sweep is a one-shot CSS animation (1 iteration, fill both, ending at opacity 0) plus the existing useSheenTrigger state helper, which uses no timer, interval, requestAnimationFrame, listener, observer or retained subscription, and package dependencies are unchanged. This revision therefore turns those guarantees into a durable contract: new R10 decoration tests (click-through, identical accessible tree, hidden layer, no layout shift), new R13 scale tests (100 opted-in buttons with zero scheduled timers, no document listeners or observers attributable to the streak, animation bounded to one pass, dependencies unchanged), extra R12 characterization cases alongside the existing baseline for the split wrapper, chevron mount streak and focus ring, and a new R12 release-surface guard. R11 is completed by adding the one missing consumer document, an additive 'no breaking changes' note for version 1.9.0 in documentation/breaking-changes.md while keeping its previous/next links; README, API, features, examples, configuration and the focus-streak guide already document both options and are verified rather than rewritten. The only production-file edits are that breaking-changes note and the additive version bump from 1.8.0 to 1.9.0 in package.json and the two root version entries in package-lock.json. One pre-existing release assertion that hard-codes 1.8.0 in __tests__/ZestButtonToggle.test.tsx is updated because R12 requires the additive bump, not to hide a failure.",
+  "impact": {
+    "touches": [
+      "documentation/breaking-changes.md (new additive Version 1.9.0 note; existing previous/next links kept)",
+      "package.json (version 1.8.0 -> 1.9.0; dependencies and peerDependencies unchanged)",
+      "package-lock.json (the two root package version entries 1.8.0 -> 1.9.0; dependency entries unchanged)",
+      "__tests__/ZestButtonFocusSheenCharacterization.test.tsx (extra R12 baseline cases)",
+      "__tests__/ZestButtonFocusSheenDecoration.test.tsx (new, R10)",
+      "__tests__/ZestButtonFocusSheenPerformance.test.tsx (new, R13)",
+      "__tests__/ZestButtonFocusSheenDocs.test.ts (new, R11)",
+      "__tests__/ZestButtonFocusSheenRelease.test.ts (new, R12)",
+      "__tests__/ZestButtonToggle.test.tsx (stale 1.8.0 release assertion updated to match the R12 bump)"
+    ],
+    "reuses": [
+      "Styles/ZestButton.module.css: the existing .button.focusSheen / .focusSheenSplit ::after and .sheenProgrammatic ::before layers already use pointer-events:none, absolute inset:0, and one-shot 0.6s animations ending at opacity 0",
+      "Styles/ZestButton.module.css: the existing :focus-visible / :has(:focus-visible) triggers, the existing .focusSheenSplit .dropdownTrigger::before mount-streak suppression and the existing prefers-reduced-motion block (animation:none; content:none)",
+      "UI/ZestButton.tsx: the existing optional focusSheen and sheenTrigger fields on ZestCustomProps, the sheenInUse marker logic and the unchanged split wrapper / ZestDropdownMenu markup",
+      "UI/hooks/useSheenTrigger.ts: the existing timer-free, listener-free mount-baseline plus parity replay helper",
+      "UI/hooks/useZestConfig.ts: the existing provider -> semantic -> local merge that carries the optional fields with no new context or export",
+      "the existing ZestButtonFocusSheenCharacterization.test.tsx baseline for the plain button, split wrapper, focus ring and chevron mount streak",
+      "the existing Jest + React Testing Library + CSS-source-parsing test patterns used by ZestButtonFocusSheen.test.tsx and zestIconPerformance.test.tsx",
+      "the existing documentation set (README.md, documentation/api.md, documentation/features.md, documentation/examples.md, documentation/configuration.md, documentation/development.md, docs/features/zest-button-focus-sheen/guide.md) and its existing previous/next navigation",
+      "the existing packagePeerDependencies.test.ts and buildExternalization.test.ts guards, which the version-only package.json change does not disturb"
+    ],
+    "adds": [
+      "A new R10 decoration test file proving pointer-events:none, an identical accessible name/role/state and disabled/busy values, no added DOM or focusable node, and no layout-affecting sheen declarations",
+      "A new R13 performance test file rendering 100 opted-in regular and split buttons, asserting zero scheduled timers/listeners/observers attributable to the streak and unchanged package dependencies",
+      "A new R11 documentation test file asserting the additive note and the README/API/features/examples/configuration/guide coverage, with previous/next links intact",
+      "A new R12 release-surface test file asserting no export, prop or type was removed or renamed and that the only public addition is optional ZestCustomProps fields",
+      "An additive Version 1.9.0 note in documentation/breaking-changes.md and the package version bump in package.json and package-lock.json",
+      "Extra characterization cases in the existing ZestButtonFocusSheenCharacterization.test.tsx and an updated version assertion in ZestButtonToggle.test.tsx"
+    ]
+  },
+  "scope": [
+    "documentation/breaking-changes.md",
+    "package.json",
+    "package-lock.json",
+    "__tests__/ZestButtonFocusSheenCharacterization.test.tsx",
+    "__tests__/ZestButtonFocusSheenDecoration.test.tsx",
+    "__tests__/ZestButtonFocusSheenPerformance.test.tsx",
+    "__tests__/ZestButtonFocusSheenDocs.test.ts",
+    "__tests__/ZestButtonFocusSheenRelease.test.ts",
+    "__tests__/ZestButtonToggle.test.tsx",
+    "README.md",
+    "documentation/api.md",
+    "documentation/features.md",
+    "documentation/examples.md",
+    "documentation/configuration.md",
+    "documentation/development.md",
+    "docs/features/zest-button-focus-sheen/guide.md"
+  ],
+  "components": [
+    {
+      "name": "FocusSheenDecorationTests",
+      "path": "__tests__/ZestButtonFocusSheenDecoration.test.tsx",
+      "requirements": ["R10", "A2"]
+    },
+    {
+      "name": "FocusSheenPerformanceTests",
+      "path": "__tests__/ZestButtonFocusSheenPerformance.test.tsx",
+      "requirements": ["R13", "A3"]
+    },
+    {
+      "name": "FocusSheenDocsTests",
+      "path": "__tests__/ZestButtonFocusSheenDocs.test.ts",
+      "requirements": ["R11"]
+    },
+    {
+      "name": "FocusSheenReleaseGuardTests",
+      "path": "__tests__/ZestButtonFocusSheenRelease.test.ts",
+      "requirements": ["R12", "A1"]
+    },
+    {
+      "name": "FocusSheenCharacterizationTests",
+      "path": "__tests__/ZestButtonFocusSheenCharacterization.test.tsx",
+      "requirements": ["R12"]
+    },
+    {
+      "name": "BreakingChangesAdditiveNote",
+      "path": "documentation/breaking-changes.md",
+      "requirements": ["R11", "R12"]
+    },
+    {
+      "name": "PackageReleaseVersion",
+      "path": "package.json",
+      "requirements": ["R12", "A1"]
+    },
+    {
+      "name": "PackageLockReleaseVersion",
+      "path": "package-lock.json",
+      "requirements": ["R12", "A1"]
+    },
+    {
+      "name": "ToggleReleaseVersionTest",
+      "path": "__tests__/ZestButtonToggle.test.tsx",
+      "requirements": ["R12", "A1"]
+    },
+    {
+      "name": "FocusSheenReadme",
+      "path": "README.md",
+      "requirements": ["R11"]
+    },
+    {
+      "name": "FocusSheenApiReference",
+      "path": "documentation/api.md",
+      "requirements": ["R11"]
+    },
+    {
+      "name": "FocusSheenFeaturesPage",
+      "path": "documentation/features.md",
+      "requirements": ["R11"]
+    },
+    {
+      "name": "FocusSheenExamplesRecipe",
+      "path": "documentation/examples.md",
+      "requirements": ["R11"]
+    },
+    {
+      "name": "FocusSheenConfigurationPage",
+      "path": "documentation/configuration.md",
+      "requirements": ["R11"]
+    },
+    {
+      "name": "FocusSheenDevelopmentPage",
+      "path": "documentation/development.md",
+      "requirements": ["R11"]
+    },
+    {
+      "name": "FocusSheenGuide",
+      "path": "docs/features/zest-button-focus-sheen/guide.md",
+      "requirements": ["R11"]
+    }
+  ],
+  "additions": [
+    {
+      "id": "A1",
+      "title": "Keep the release version metadata and its tests in step",
+      "why": "The additive release needs one version everywhere, so the package files and the tests that read them must agree.",
+      "parent": "R12",
+      "kind": "enabling",
+      "touches": ["tests", "none"],
+      "acceptance": [
+        "package.json and both root version entries in package-lock.json read 1.9.0.",
+        "documentation/breaking-changes.md has a Version 1.9.0 section that says the change is additive and no breaking changes, and the suite's documentation test finds the current package version there.",
+        "The existing toggle release test no longer asserts the old 1.8.0 literal, and the full test suite passes."
+      ]
+    },
+    {
+      "id": "A2",
+      "title": "Automated guard for the decoration-only contract",
+      "why": "The streak must never make a button harder to click, read or lay out, so the guarantee needs a test rather than a review note.",
+      "parent": "R10",
+      "kind": "enabling",
+      "touches": ["tests"],
+      "acceptance": [
+        "Tests prove every focus and programmatic sheen layer is pointer-events:none and absolutely positioned with inset:0, so a click during a sweep still calls the action once.",
+        "Tests prove an opted-in button's accessible name, role, aria-pressed, aria-busy and disabled values match the same button without the option, and no extra DOM, aria-hidden announcement or focusable element is added.",
+        "Tests prove the sheen rules contain no width, height, margin, padding or font-size declarations, so nothing shifts layout."
+      ]
+    },
+    {
+      "id": "A3",
+      "title": "Automated guard for the many-button cost",
+      "why": "A decoration must not turn into hundreds of timers, listeners or observers on a screen full of buttons.",
+      "parent": "R13",
+      "kind": "enabling",
+      "touches": ["tests"],
+      "acceptance": [
+        "Rendering 100 opted-in regular and split buttons leaves zero scheduled timers and adds no document-level listener.",
+        "Opting in adds no ResizeObserver to regular buttons and no extra observer to split buttons beyond the existing dropdown width measurement.",
+        "The sheen animations run one iteration with fill both and package.json dependencies and peerDependencies are unchanged."
+      ]
+    }
+  ]
+}

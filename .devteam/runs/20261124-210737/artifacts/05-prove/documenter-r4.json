@@ -1,0 +1,29 @@
+{
+  "summary": "Refreshed every page the task marked stale: the four semantic-types pages and the toggle-styling guide were re-checked against the current ZestButton code, their front matter corrected so the engine can re-hash them, and their See also sections linked to the focus-streak guide. The twelve docs/guidelines policy pages were re-read against agents.md (their only real source) and their front matter fixed so a policy page no longer tries to cover and hash itself, which kept them permanently stale.",
+  "pages": [
+    "docs/features/zest-button-semantic-types/guide.md",
+    "docs/features/zest-button-semantic-types/customising.md",
+    "docs/features/zest-button-semantic-types/icons.md",
+    "docs/features/zest-button-semantic-types/type-reference.md",
+    "docs/features/zest-button-toggle-style/guide.md",
+    "docs/guidelines/AI_ARCHITECTURE.md",
+    "docs/guidelines/AI_BRS.md",
+    "docs/guidelines/AI_CODE_REVIEW.md",
+    "docs/guidelines/AI_E2E_TESTING.md",
+    "docs/guidelines/AI_GIT_WORKFLOW.md",
+    "docs/guidelines/AI_KNOWLEDGE.md",
+    "docs/guidelines/AI_PITFALLS.md",
+    "docs/guidelines/AI_STYLE_GUIDE.md",
+    "docs/guidelines/AI_TESTING.md",
+    "docs/guidelines/AI_TEST_CONFIGURATION.md",
+    "docs/guidelines/AI_WORKFLOW.md",
+    "docs/guidelines/AI_WORKFLOW_TRIGGERS.md"
+  ],
+  "notes": [
+    "The twelve docs/guidelines/AI_*.md pages are the repository's canonical policy files themselves (agents.md tells every agent to read them), so the feature does not change a single sentence of what they say. I verified their content against agents.md and left the prose untouched; the staleness was front matter only, because each page listed itself in covers, so its stored hash could never match again after any edit. They now cover agents.md, the entry point that mandates them.",
+    "The five feature pages were re-verified against the current code: 47 semantic-type keys in UI/semanticTypeButtonConfigDefaults.tsx mapped to 35 distinct drawings in UI/zestIcons.tsx, and the toggle-style precedence/validation rules in UI/toggleStyle/compileToggleStyle.ts. Their existing prose was accurate; the only content changes are See also links to the focus-streak guide.",
+    "The focus-streak guide, critical paths, toggle and dropdown BRS pages and the other current pages were left alone; the developer's shipped documentation/ pages and README already document focusSheen and were not mine to change.",
+    "Non-solid focus-sheen bands (outline, text, dashed) use currentColor or the variant border token at peak 0.7. QA measured light-theme text.success at 2.49:1 over white, below R4's 3:1, and no test computes non-solid contrast; the guide correctly says solid bands reach 3:1 and only says the non-solid band uses the button's own colour, not that it clears 3:1.",
+    "I did not run the test suite or the library; only files under docs/ changed, and no statement was added that I did not confirm in the source."
+  ]
+}

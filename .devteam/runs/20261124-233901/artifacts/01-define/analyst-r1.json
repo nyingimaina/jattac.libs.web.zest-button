@@ -1,0 +1,122 @@
+{
+  "summary": "This is revision 3 of 3 of a larger feature (R10 to R13). ZestButton gains two opt-in options on its existing \u0060zest\u0060 configuration object. \u0060focusSheen\u0060 (default off) plays the split button\u0027s diagonal light streak across the whole button when the button receives keyboard focus, and \u0060sheenTrigger\u0060 (a changing string or number) lets the host play the same streak from code, with or without focus. The effect is decorative: clipped to the button, shown on every button style and theme, one sweep per focus arrival or per trigger change, and switched off under prefers-reduced-motion. It exists so keyboard users can spot which button has focus on screens full of controls.",
+  "requirements": [
+    {
+      "id": "R10",
+      "text": "The streak is decoration only: it never intercepts pointer input, never changes the button\u0027s accessible name, role or state, never adds a focusable element, and never shifts layout.",
+      "acceptance": [
+        "Clicking or tapping anywhere on the button while a sweep is playing still runs the button\u0027s action exactly once.",
+        "The accessibility tree of an opted-in button (role, name, \u0060aria-pressed\u0060, \u0060aria-busy\u0060, disabled) is identical to the same button without the option.",
+        "The streak layer is hidden from assistive technology and is never announced.",
+        "No scrollbar, overflow or size change appears while the sweep plays, including on a small screen."
+      ],
+      "rationale": "The effect must not make any button harder or different to use for anyone, including people using a screen reader, a touch screen or high zoom.",
+      "derivedFrom": "",
+      "edgeCases": [
+        "A toggle button (\u0060aria-pressed\u0060) and a busy button keep their state values while the streak plays.",
+        "Keyboard activation (Enter or Space) during a sweep still works once.",
+        "At high browser zoom the band stays inside the button and does not add scrollbars."
+      ],
+      "pitfalls": [
+        "The streak layer must not catch clicks or block text selection.",
+        "It must not add \u0060aria-live\u0060, a role or \u0060tabindex\u0060 to the button or the wrapper.",
+        "The split wrapper must not become part of the tab order."
+      ],
+      "rules": [
+        "UI-001"
+      ],
+      "facts": [
+        {
+          "subject": "sheen layer",
+          "attribute": "assistive technology",
+          "op": "must-not",
+          "value": "be announced",
+          "unit": "",
+          "scope": ""
+        }
+      ]
+    },
+    {
+      "id": "R11",
+      "text": "Every new option is documented for library consumers: a first example in README.md, entries in the API reference, a recipe in the examples, a description in the features page, and an additive note in breaking-changes, with the existing previous/next links kept.",
+      "acceptance": [
+        "README.md shows a runnable example using \u0060zest={{ focusSheen: true }}\u0060 and one using a changing \u0060sheenTrigger\u0060.",
+        "The API reference lists both fields with type, default and meaning; the features and examples pages explain when to use each one; breaking-changes records the change as additive with no action needed.",
+        "Every page that is touched links to the previous and next page."
+      ],
+      "rationale": "A published library\u0027s users only find a prop if it is documented where they look, and the project treats undocumented behaviour as incomplete.",
+      "derivedFrom": "",
+      "edgeCases": [
+        "The documented default is off, matching the code.",
+        "The docs do not claim an app-wide \u0060styles\u0060 setting, a ref handle or a reduced-motion override that does not exist."
+      ],
+      "pitfalls": [
+        "Documentation that promises a different prop name or default is worse than none.",
+        "The additive note must not be filed as a breaking change."
+      ],
+      "rules": [
+        "DOC-001"
+      ],
+      "facts": []
+    },
+    {
+      "id": "R12",
+      "text": "Existing buttons and the existing chevron mount streak are protected: characterization tests record today\u0027s split-button layout, mount streak and focus ring before the production change, and buttons that do not opt in keep their current markup, classes and behaviour.",
+      "acceptance": [
+        "Characterization tests for the current split wrapper, chevron mount streak and focus-ring styling exist and pass before the production change is made.",
+        "The full test suite passes after the change, including unchanged tests for plain and split buttons that do not use the sheen.",
+        "No existing export, prop or type is removed or renamed; the only public addition is optional fields on the existing \u0060ZestCustomProps\u0060 interface, and the package version is bumped for the additive release."
+      ],
+      "rationale": "The repository requires proof that behaviour already shipped to consumers is unchanged before it is extended.",
+      "derivedFrom": "",
+      "edgeCases": [
+        "Consumer CSS written against the existing split wrapper and segment class names still matches.",
+        "Toggle-mode buttons, busy buttons and dropdown items behave exactly as before.",
+        "The split wrapper only gains clipping and a corner radius when the sheen is in use."
+      ],
+      "pitfalls": [
+        "Do not restructure the split markup or move the menu.",
+        "Do not make the wrapper clip unconditionally in a way that changes existing rendering."
+      ],
+      "rules": [
+        "USR-004",
+        "LIB-001"
+      ],
+      "facts": []
+    },
+    {
+      "id": "R13",
+      "text": "The effect stays cheap at scale: enabling it on many buttons adds no per-button timers, observers, event listeners or retained subscriptions, adds no runtime dependency, and stops all work when the sweep ends.",
+      "acceptance": [
+        "A screen with 100 opted-in buttons mounts and updates without new timers, intervals, observers or document-level listeners attributable to the streak; after about 0.7 seconds no streak work remains scheduled.",
+        "\u0060package.json\u0060 dependencies and peerDependencies are unchanged, and the built package gains only the option handling and the style rules.",
+        "Tabbing quickly through 100 buttons does not accumulate work or leave streaks on unfocused buttons."
+      ],
+      "rationale": "A screen may contain many buttons, and a decoration must not turn into hundreds of timers or a heavier bundle on a low-spec device.",
+      "derivedFrom": "",
+      "edgeCases": [
+        "Buttons unmounted during a sweep leave nothing behind.",
+        "Rapid programmatic triggers on many buttons do not build a backlog.",
+        "The existing split-button width measurement behaves exactly as before."
+      ],
+      "pitfalls": [
+        "No polling or JavaScript animation loop per button.",
+        "No listener or timer may outlive the button or the sweep."
+      ],
+      "rules": [
+        "PERF-001",
+        "USR-003"
+      ],
+      "facts": []
+    }
+  ],
+  "questions": [],
+  "coverage": [],
+  "assumptions": [],
+  "roles": [],
+  "outOfScope": [],
+  "nonFunctional": [],
+  "risks": [],
+  "tensions": [],
+  "glossary": []
+}

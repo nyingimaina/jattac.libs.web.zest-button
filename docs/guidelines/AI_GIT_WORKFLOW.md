@@ -1,7 +1,7 @@
 ---
 title: AI_GIT_WORKFLOW.md
-covers: AGENTS.md, docs/guidelines/AI_GIT_WORKFLOW.md
-covers-hash: 923d89b29632890c4458
+covers: agents.md
+covers-hash: fe01860d678e208df487
 ---
 
 # AI_GIT_WORKFLOW.md

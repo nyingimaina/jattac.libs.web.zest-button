@@ -1,0 +1,144 @@
+{
+  "summary": "Revision 1 of 3: add one additive option to the existing per-button configuration. `focusSheen?: boolean` (default false) goes on the already-exported `ZestCustomProps` that is passed as the `zest` prop; because `useZestConfig` merges provider defaultProps, semantic defaults and local zest, the field flows through with no new plumbing and no change to `UI/index.ts`. The streak is pure CSS, no React state, listeners or timers: a regular button gets `.sheenFocus` and a `::after` layer clipped by the button's existing position:relative/overflow:hidden/border-radius; a split button gets `.sheenFocus` on `.splitButtonContainer`, which gains position:relative, and a matching `::after` layer over the whole control. Keyboard-only is done with `.button.sheenFocus:focus-visible::after` for regular and `.splitButtonContainer.sheenFocus:has(:focus-visible)::after` for split, so a mouse click (plain :focus) does not fire and moving between the two segments of one split control does not restart the sweep. The band is a 45-degree background gradient that travels top-right to bottom-left in about 0.6s, one sweep, ending transparent. Deliberate deviation from the request's wording: the split wrapper is NOT given overflow:hidden, because the focus ring is an outer box-shadow on each segment and a clipping wrapper would cut it (R5 requires both rings fully visible); instead the overlay's own border-radius (var(--zest-radius-md)) clips the band, which also stays inside the wrapper so it can never cover the outward ring. Colour follows R4: solid keeps white at about 65% (matching the chevron streak); outline/text/dashed set `--zest-sheen-color` from color-mix(currentColor, ~70%) so the band follows each style, variant and the forced light/dark classes instead of being white-on-white; for the split overlay, which cannot inherit currentColor from a sibling segment, the wrapper gets the flat/success/danger marker classes and the existing force-light/force-dark classes so the same `--zest-color-*-bg` tokens pick the right accent. When `.sheenFocus` is on a split wrapper, `.sheenFocus .dropdownTrigger::before` is disabled so the chevron mount streak and the whole-control streak never play together (A2). Everything is removed under prefers-reduced-motion (A1). Scale/resource: O(1) work per focus arrival, one pseudo-element, no render-path work that grows with data, no state/listeners/timers/network/storage, no layout or size change (the layer is absolutely positioned), no new dependency; only a small CSS addition to the already-injected module, so startup and memory are unchanged. `.size-limit.json` does not exist, so no budget is changed. Public surface: one optional field is added to an existing exported type; no export is added, removed or changed, so this is non-breaking and needs no breaking-changes entry or version bump.",
+  "impact": {
+    "touches": [
+      "UI/ZestButton.tsx (new optional focusSheen field, class wiring for regular and split)",
+      "Styles/ZestButton.module.css (sheen layer, keyframes, colour rules, split wrapper position, mount-streak suppression, reduced motion)",
+      "__tests__ (new focus-sheen tests and characterisation tests)",
+      "README.md and documentation/* (prop and feature documentation)",
+      "docs/features/zest-button-focus-sheen/guide.md (new feature guide page)"
+    ],
+    "reuses": [
+      "existing `.button` position:relative, overflow:hidden and border-radius:var(--zest-radius-md) for the regular-button clip",
+      "existing `.splitButtonContainer` wrapper and its ZestDropdownMenu chevron trigger",
+      "existing `--zest-radius-md` and `--zest-ease-standard` tokens",
+      "existing `force-light`/`force-dark` theme classes and `--zest-color-*-bg` variables for theme-aware band colour",
+      "existing chevron mount-streak sweep technique (background gradient + background-position keyframes) and the existing `@media (prefers-reduced-motion: reduce)` block",
+      "existing `useZestConfig` provider/semantic/local merge so focusSheen needs no new context or hook",
+      "existing CSS Modules injection and the Jest pattern of parsing the CSS module source for selector assertions"
+    ],
+    "adds": [
+      "`focusSheen?: boolean` field on the exported `ZestCustomProps` (no new export)",
+      "`.sheenFocus`, `.sheenFlat`, `.sheenSuccess`, `.sheenDanger` CSS classes and `zestFocusSheen` keyframes in the existing stylesheet",
+      "new `__tests__/ZestButtonFocusSheen.test.tsx` and `__tests__/ZestButtonFocusSheenCharacterization.test.tsx`",
+      "new `docs/features/zest-button-focus-sheen/guide.md` plus edits to the existing documentation pages and README"
+    ]
+  },
+  "scope": [
+    "UI/ZestButton.tsx",
+    "Styles/ZestButton.module.css",
+    "__tests__/ZestButtonFocusSheen.test.tsx",
+    "__tests__/ZestButtonFocusSheenCharacterization.test.tsx",
+    "documentation/api.md",
+    "documentation/features.md",
+    "documentation/examples.md",
+    "documentation/configuration.md",
+    "README.md",
+    "docs/features/zest-button-focus-sheen/guide.md"
+  ],
+  "components": [
+    {
+      "name": "ZestButtonFocusSheenProp",
+      "path": "UI/ZestButton.tsx",
+      "requirements": ["R1", "R2", "R3", "R4", "R5", "A2"]
+    },
+    {
+      "name": "ZestButtonFocusSheenStyles",
+      "path": "Styles/ZestButton.module.css",
+      "requirements": ["R1", "R2", "R3", "R4", "R5", "A1", "A2"]
+    },
+    {
+      "name": "ZestButtonFocusSheenTests",
+      "path": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": ["R1", "R2", "R3", "R4", "R5", "A1", "A2"]
+    },
+    {
+      "name": "ZestButtonFocusSheenCharacterizationTests",
+      "path": "__tests__/ZestButtonFocusSheenCharacterization.test.tsx",
+      "requirements": ["R1", "R5", "A3"]
+    },
+    {
+      "name": "FocusSheenFeatureGuide",
+      "path": "docs/features/zest-button-focus-sheen/guide.md",
+      "requirements": ["R1", "R2", "R3", "R4", "R5", "A4"]
+    },
+    {
+      "name": "FocusSheenApiDocs",
+      "path": "documentation/api.md",
+      "requirements": ["R1", "A4"]
+    },
+    {
+      "name": "FocusSheenFeaturesDocs",
+      "path": "documentation/features.md",
+      "requirements": ["R1", "R2", "R3", "R4", "R5", "A4"]
+    },
+    {
+      "name": "FocusSheenExamplesDocs",
+      "path": "documentation/examples.md",
+      "requirements": ["R1", "A4"]
+    },
+    {
+      "name": "FocusSheenConfigurationDocs",
+      "path": "documentation/configuration.md",
+      "requirements": ["R1", "A4"]
+    },
+    {
+      "name": "FocusSheenReadme",
+      "path": "README.md",
+      "requirements": ["R1", "A4"]
+    }
+  ],
+  "additions": [
+    {
+      "id": "A1",
+      "title": "Turn the focus streak off for reduced motion",
+      "why": "People who ask their device to reduce motion should not get a sweeping band.",
+      "parent": "R2",
+      "kind": "behaviour",
+      "touches": ["ui", "tests"],
+      "acceptance": [
+        "With prefers-reduced-motion: reduce, keyboard-focusing an opted-in regular or split button plays no streak and leaves no visible band.",
+        "Without that preference the streak still plays, for both regular and split buttons."
+      ]
+    },
+    {
+      "id": "A2",
+      "title": "Suppress the chevron mount streak when the focus streak is enabled",
+      "why": "Two streaks on one split control would collide and look like a glitch.",
+      "parent": "R5",
+      "kind": "behaviour",
+      "touches": ["ui", "tests"],
+      "acceptance": [
+        "An opted-in split button shows no chevron mount streak on first paint, on any button style, variant or theme.",
+        "A split button that is not opted in keeps its chevron mount streak exactly as today."
+      ]
+    },
+    {
+      "id": "A3",
+      "title": "Characterisation tests for the existing button appearance and chevron streak",
+      "why": "The shared stylesheet is being edited, so the behaviour already shipped is pinned before the change.",
+      "parent": "R1",
+      "kind": "enabling",
+      "touches": ["tests"],
+      "acceptance": [
+        "Tests record the current class list of a plain regular button and of a split wrapper/button and pass before the change.",
+        "Tests record the existing chevron mount-streak rule and focus-ring rule and still pass after the change.",
+        "A button that does not pass focusSheen renders no sheen class and keeps the same DOM and behaviour."
+      ]
+    },
+    {
+      "id": "A4",
+      "title": "Document the focus streak on every page readers use",
+      "why": "A new prop that cannot be found is a feature nobody can use.",
+      "parent": "R1",
+      "kind": "enabling",
+      "touches": ["none"],
+      "acceptance": [
+        "documentation/api.md lists focusSheen on ZestCustomProps with its default and both regular and split usage.",
+        "documentation/features.md and documentation/examples.md show the option on a regular button and a split button.",
+        "documentation/configuration.md notes that the provider's defaultProps can set it app-wide, and README links to the new guide.",
+        "The new docs/features/zest-button-focus-sheen/guide.md explains keyboard-only focus, clipping, colours per style/theme and reduced motion."
+      ]
+    }
+  ]
+}

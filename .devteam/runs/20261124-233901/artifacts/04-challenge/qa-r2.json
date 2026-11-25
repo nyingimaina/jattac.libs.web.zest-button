@@ -1,0 +1,35 @@
+{
+  "findings": [
+    {
+      "cites": "R10",
+      "severity": "advisory",
+      "file": "__tests__/ZestButtonFocusSheenDecoration.test.tsx",
+      "line": 57,
+      "evidence": "The R10 edge case says 'Keyboard activation (Enter or Space) during a sweep still works once'. The test only fires keyDown/keyUp with Enter and then calls fireEvent.click(button) manually (line 69), so it never exercises Space and would pass even if native keyboard activation were intercepted, because the click is fired directly. The real click-through proof is the pointer-events:none assertions at line 74 and the click test at line 42.",
+      "description": "Space activation is untested and the keyboard test's manual click means it cannot detect broken keyboard activation; add a Space case or assert keydown does not double-fire."
+    },
+    {
+      "cites": "A2",
+      "severity": "advisory",
+      "file": "__tests__/ZestButtonFocusSheenDecoration.test.tsx",
+      "line": 90,
+      "evidence": "The A2 acceptance asks that the accessible name be shown identical between an opted-in and a plain button. stateOf() (lines 27-35) captures role, tagName, aria-pressed, aria-busy, aria-live, tabindex and disabled, but not the accessible name, so the toEqual at line 111 does not compare names. Names are asserted only via getByRole({ name }) on opted-in buttons (e.g. __tests__/ZestButtonFocusSheen.test.tsx:150), which would still catch an added aria-label but is not the explicit opted-vs-plain name comparison.",
+      "description": "The opted-vs-plain accessibility comparison omits the accessible name; add the name to the compared state for a direct proof."
+    },
+    {
+      "cites": "R12",
+      "severity": "advisory",
+      "file": "package.json",
+      "line": 1,
+      "evidence": "No packed-library consumer check ran: the project has no scripts/consumer-smoke.mjs and no attw/publint, so nothing installs the built tarball into a scratch project and imports it under both CommonJS and ES modules. `npm pack --dry-run --json` reports version 1.9.0 and 33 files (dist, README, LICENSE, documentation; no tests, docs/, .devteam or tgz), so the package list is clean, but the entry point itself is unverified. This is a pre-existing project gap, not introduced by this revision.",
+      "description": "The packed package was not installed and imported by a consumer under CJS and ESM, so the published entry point is unverified."
+    }
+  ],
+  "verifications": [
+    {
+      "id": "QA-1",
+      "status": "fixed",
+      "evidence": "__tests__/ZestButtonFocusSheenPerformance.test.tsx:200 adds 'R13: tabbing quickly through a hundred buttons accumulates no work and leaves no streak on unfocused buttons'. It renders 100 opted-in buttons, focuses each in turn, asserts only the last element matches :focus (no unfocused button retains focus), that no .sheenProgrammatic/.sheenTriggerOdd/.sheenTriggerEven classes linger, that jest.getTimerCount() stays 0 across the 700ms sweep window, that no document/window listeners are added by tabbing, and that unmount leaves zero timers. I ran the file (8/8 passed) and the full suite (31 suites, 405 tests, all passed), so the missing tabbing-scale scenario is now proven."
+    }
+  ]
+}

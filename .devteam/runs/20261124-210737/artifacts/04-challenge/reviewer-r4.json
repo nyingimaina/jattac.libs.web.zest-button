@@ -1,0 +1,10 @@
+{
+  "findings": [],
+  "verifications": [
+    {
+      "id": "REV-2",
+      "status": "fixed",
+      "evidence": "All five shipped pages now link the guide with the absolute public URL https://github.com/nyingimaina/jattac.libs.web.zest-button/blob/master/docs/features/zest-button-focus-sheen/guide.md (README.md:145, documentation/api.md:220, documentation/configuration.md:136, documentation/examples.md:477, documentation/features.md:264) and no relative `docs/features/...` link remains. The URL is valid for this repo: package.json:6-9 repository is git+https://github.com/nyingimaina/jattac.libs.web.zest-button.git, the origin remote is identical, and origin/master exists, so blob/master resolves in the public repo after merge even though `files` still publishes only dist/README/LICENSE/documentation. `npm pack --dry-run` confirms docs/ is still not in the tarball (32 files, no docs/), which is exactly why the absolute URL, not the relative path, is the correct target. The new A4 test (__tests__/ZestButtonFocusSheen.test.tsx:505-521) asserts every shipped page contains that URL and none contains the unpublished relative docs/ link. Verification run: `npx jest --coverage=false` = 26 suites / 334 tests passed, and `npx tsc --noEmit -p tsconfig.json` exits 0."
+    }
+  ]
+}

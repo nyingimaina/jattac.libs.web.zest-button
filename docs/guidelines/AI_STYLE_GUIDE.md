@@ -1,7 +1,7 @@
 ---
 title: AI Style Guide
-covers: AGENTS.md, docs/guidelines/AI_STYLE_GUIDE.md
-covers-hash: c51eef84fae9e1d3457d
+covers: agents.md
+covers-hash: fe01860d678e208df487
 ---
 
 # AI Style Guide

@@ -7,6 +7,7 @@ import { useConfirmation } from './hooks/useConfirmation';
 import { useThemeDetection } from './hooks/useThemeDetection';
 import { useToggleState } from './hooks/useToggleState';
 import { useToggleStyle } from './hooks/useToggleStyle';
+import { useSheenTrigger } from './hooks/useSheenTrigger';
 import type { ZestToggleStyle } from './toggleStyle/types';
 import ZestDropdownMenu from './ZestDropdownMenu';
 
@@ -101,6 +102,10 @@ export interface ZestCustomProps {
   isDefault?: boolean;
   theme?: ZestTheme;
   buttonStyle?: ZestButtonStyle;
+  /** Opt-in keyboard-focus streak, off by default; sweeps once across the whole button (or split control) when it receives keyboard focus. */
+  focusSheen?: boolean;
+  /** Plays one whole-button sweep from code on every change of this value; the value present on mount plays nothing. Works with or without `focusSheen`. */
+  sheenTrigger?: string | number;
   semanticType?: SemanticType;
   dropdownOptions?: ZestDropdownOption[];
   dropdownAriaLabel?: string;
@@ -185,6 +190,8 @@ const ZestButton: React.FC<ZestButtonProps> = ({
     isDefault = false,
     theme = 'system',
     buttonStyle = 'solid',
+    focusSheen = false,
+    sheenTrigger,
     dropdownOptions,
     dropdownAriaLabel = "More options",
     dropdownTheme,
@@ -243,6 +250,14 @@ const ZestButton: React.FC<ZestButtonProps> = ({
     variant,
     size,
   });
+  // The sheen is in use when either trigger is supplied; focus only decides
+  // whether the keyboard-focus layer is allowed to animate.
+  const sheenInUse = focusSheen === true || sheenTrigger !== undefined;
+  const sheenState = useSheenTrigger(sheenTrigger);
+  const sheenFocusOffClassName = focusSheen ? "" : styles.sheenFocusOff;
+  const sheenProgrammaticClassName = sheenState.active
+    ? `${styles.sheenProgrammatic} ${sheenState.parity === 'odd' ? styles.sheenTriggerOdd : styles.sheenTriggerEven}`
+    : "";
   // Dropdown menus follow the OS/browser theme by default, independently of
   // the button's own `theme` — mirrors effectiveTheme's own 'system' handling
   // above. dropdownTheme has no destructure-time default because unset must
@@ -252,6 +267,26 @@ const ZestButton: React.FC<ZestButtonProps> = ({
     resolvedDropdownTheme === 'system' ? systemTheme : resolvedDropdownTheme;
 
   const hasDropdown = Boolean(dropdownOptions && dropdownOptions.length > 0);
+  const splitFocusSheenClassName = sheenInUse
+    ? [
+        styles.focusSheenSplit,
+        buttonStyle === 'outline'
+          ? styles.sheenOutline
+          : buttonStyle === 'text'
+          ? styles.sheenText
+          : buttonStyle === 'dashed'
+          ? styles.sheenDashed
+          : styles.sheenSolid,
+        variant === 'success'
+          ? styles.sheenSuccess
+          : variant === 'danger'
+          ? styles.sheenDanger
+          : styles.sheenStandard,
+        effectiveTheme === 'light' ? styles['force-light'] : styles['force-dark'],
+        sheenFocusOffClassName,
+        sheenProgrammaticClassName,
+      ].join(" ")
+    : "";
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [anyDropdownItemBusy, setAnyDropdownItemBusy] = useState(false);
 
@@ -424,6 +459,9 @@ const ZestButton: React.FC<ZestButtonProps> = ({
         wasFailed ? styles.shake : "",
         effectiveTheme === 'light' ? styles['force-light'] : styles['force-dark'],
         hasDropdown ? styles.splitButtonMain : "",
+        sheenInUse && !hasDropdown ? styles.focusSheen : "",
+        sheenInUse && !hasDropdown ? sheenFocusOffClassName : "",
+        sheenInUse && !hasDropdown ? sheenProgrammaticClassName : "",
         ...(toggleEnabled && togglePressed ? [styles.toggleOn] : []),
         className,
       ].join(" ")}
@@ -450,7 +488,12 @@ const ZestButton: React.FC<ZestButtonProps> = ({
   }
 
   return (
-    <div className={styles.splitButtonContainer} ref={splitContainerRef}>
+    <div
+      className={
+        sheenInUse ? `${styles.splitButtonContainer} ${splitFocusSheenClassName}` : styles.splitButtonContainer
+      }
+      ref={splitContainerRef}
+    >
       {buttonElement}
       <ZestDropdownMenu
         options={dropdownOptions as NonNullable<typeof dropdownOptions>}

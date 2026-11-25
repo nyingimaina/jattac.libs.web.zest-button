@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 0,
+  "runId": "20261124-233901",
+  "at": "2026-11-25T03:54:44.6466193+00:00",
+  "status": "Completed",
+  "feature": "The streak is decoration only: it never intercepts pointer input, never changes\u2026 (and 3 more)",
+  "testsReported": 41,
+  "checksPassed": 18,
+  "checksTotal": 22,
+  "checksNotRun": 4,
+  "bootPassed": 0,
+  "bootTotal": 0,
+  "findingsOpen": 0,
+  "findingsAdvisory": 7,
+  "findingsFixed": 1,
+  "requirementsTotal": 7,
+  "requirementsWithTests": 7,
+  "costUsd": 0.26390772599999995,
+  "seconds": 15343.2688973,
+  "coverage": [
+    {
+      "name": "Library",
+      "linePercent": 99.6,
+      "branchPercent": 96.5,
+      "changedLinePercent": null,
+      "filesCovered": 19,
+      "functionPercent": 98.9
+    }
+  ],
+  "testsExecuted": 0,
+  "testsFailed": 0,
+  "testsSkipped": 0,
+  "verification": false
+}

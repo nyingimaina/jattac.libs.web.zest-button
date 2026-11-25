@@ -1,0 +1,151 @@
+{
+  "summary": "Revision 2 extends the revision-1 focus streak on the existing ZestButton without adding a new component or dependency. An optional `sheenTrigger: string | number` joins `focusSheen` on the existing `zest` object (ZestCustomProps), so it flows through the current useZestConfig merge and provider defaultProps. A small private hook (UI/hooks/useSheenTrigger.ts) stores the mount value as a baseline and, on every later change (including a number/string type change), flips a parity flag; the button/wrapper then gains the same three existing marker classes plus a `sheenProgrammatic` marker and an odd/even class. The programmatic sweep reuses the revision-1 gradient, colour variables and `zestFocusSheenSweep` keyframes, but is drawn on each element's still-unused `::before` pseudo-element (regular: the button itself; split: the wrapper, lifted above the two segments) instead of `::after`; because it is a plain class-driven animation and not tied to `:focus-visible` or `:disabled`, it plays on an unfocused, disabled or busy button with no click/state change. Replay needs no timer, forced reflow or extra DOM: each change swaps between two identical keyframe names (`zestFocusSheenSweep` and `zestFocusSheenSweepAlt`), which restarts a finished animation in one render. Whether the sheen is in use now means `focusSheen === true || sheenTrigger !== undefined`; the existing `focusSheen`/`focusSheenSplit` marker classes (and therefore the existing colours and the existing `.focusSheenSplit .dropdownTrigger::before` mount-streak suppression) are applied for that whole set, while a new `sheenFocusOff` marker cancels only the `:focus-visible`/`:has(:focus-visible)` pseudo-element animation when `focusSheen` is false, so a trigger-only button still shows nothing on focus (R1 is preserved) and the programmatic layer is unaffected. Reduced motion is handled entirely in the existing media query, so it follows a live OS change with no JS and no override; the programmatic pseudo-element gets `content: none` there. Cost: one ref and one boolean of state per opted-in button, no listeners, timers, polling, storage or network, no work that grows with the number of buttons or with data, no new dependency and no bundle-size risk beyond a few hundred bytes of CSS/JS; the public exports and existing props are unchanged (additive optional prop only).",
+  "impact": {
+    "touches": [
+      "UI/ZestButton.tsx (sheenTrigger prop, sheen-in-use marker classes, programmatic/parity classes, no click or disabled/busy gating)",
+      "Styles/ZestButton.module.css (programmatic ::before layer, solid/non-solid colours, parity keyframe alias, focus suppression for trigger-only, reduced-motion rule)",
+      "__tests__/ZestButtonFocusSheen.test.tsx (R6 to R9 cases)",
+      "__tests__/ZestButtonFocusSheenCharacterization.test.tsx (pin unchanged mount streak and disabled/busy baseline)",
+      "documentation and README pages for the new prop"
+    ],
+    "reuses": [
+      "Revision-1 focus-sheen gradient, --zest-focus-sheen-color/--zest-focus-sheen-peak variables and zestFocusSheenSweep keyframes",
+      "Existing .focusSheen, .focusSheenSplit, sheen<Style>, sheen<Variant> and force-light/force-dark marker classes",
+      "Existing .focusSheenSplit .dropdownTrigger::before rule that already suppresses the chevron mount streak",
+      "Existing :focus-visible injection and :has(:focus-visible) split focus rule",
+      "Existing useZestConfig merge, ZestCustomProps.zest object and split wrapper DOM",
+      "Existing prefers-reduced-motion block and jest + CSS-text test helpers"
+    ],
+    "adds": [
+      "Optional sheenTrigger?: string | number field on ZestCustomProps (exported through the existing ZestButton type)",
+      "Private UI/hooks/useSheenTrigger.ts hook (mount baseline plus change parity)",
+      "sheenFocusOff, sheenProgrammatic and sheenTriggerOdd/sheenTriggerEven CSS markers",
+      "zestFocusSheenSweepAlt keyframe alias (identical body) used only to restart the animation",
+      "Hook test file and extra focus-sheen behaviour cases"
+    ]
+  },
+  "scope": [
+    "UI/ZestButton.tsx",
+    "UI/hooks/useSheenTrigger.ts",
+    "Styles/ZestButton.module.css",
+    "__tests__/ZestButtonFocusSheen.test.tsx",
+    "__tests__/ZestButtonFocusSheenCharacterization.test.tsx",
+    "__tests__/hooks/useSheenTrigger.test.ts",
+    "documentation/api.md",
+    "documentation/features.md",
+    "documentation/examples.md",
+    "documentation/configuration.md",
+    "documentation/development.md",
+    "README.md",
+    "docs/features/zest-button-focus-sheen/guide.md"
+  ],
+  "components": [
+    {
+      "name": "ZestButtonSheenTrigger",
+      "path": "UI/ZestButton.tsx",
+      "requirements": ["R6", "R7", "R8", "R9"]
+    },
+    {
+      "name": "UseSheenTrigger",
+      "path": "UI/hooks/useSheenTrigger.ts",
+      "requirements": ["R7", "R8", "A1"]
+    },
+    {
+      "name": "FocusSheenStyles",
+      "path": "Styles/ZestButton.module.css",
+      "requirements": ["R6", "R7", "R8", "R9", "A2"]
+    },
+    {
+      "name": "FocusSheenTests",
+      "path": "__tests__/ZestButtonFocusSheen.test.tsx",
+      "requirements": ["R6", "R7", "R8", "R9"]
+    },
+    {
+      "name": "FocusSheenCharacterizationTests",
+      "path": "__tests__/ZestButtonFocusSheenCharacterization.test.tsx",
+      "requirements": ["R6"]
+    },
+    {
+      "name": "UseSheenTriggerTests",
+      "path": "__tests__/hooks/useSheenTrigger.test.ts",
+      "requirements": ["R7", "R8"]
+    },
+    {
+      "name": "FocusSheenGuide",
+      "path": "docs/features/zest-button-focus-sheen/guide.md",
+      "requirements": ["R6", "R7", "R8", "R9", "A3"]
+    },
+    {
+      "name": "ApiReference",
+      "path": "documentation/api.md",
+      "requirements": ["R7", "R8", "R9", "A3"]
+    },
+    {
+      "name": "FeatureList",
+      "path": "documentation/features.md",
+      "requirements": ["R7", "R8", "A3"]
+    },
+    {
+      "name": "Examples",
+      "path": "documentation/examples.md",
+      "requirements": ["R7", "R8", "A3"]
+    },
+    {
+      "name": "ConfigurationGuide",
+      "path": "documentation/configuration.md",
+      "requirements": ["R7", "R9", "A3"]
+    },
+    {
+      "name": "Readme",
+      "path": "README.md",
+      "requirements": ["R7", "A3"]
+    },
+    {
+      "name": "DevelopmentGuide",
+      "path": "documentation/development.md",
+      "requirements": ["R7"]
+    }
+  ],
+  "additions": [
+    {
+      "id": "A1",
+      "title": "Private hook that turns a changing trigger value into one replayable sweep",
+      "why": "The button needs a tiny piece of state to remember the value it mounted with and to notice each later change without a ref handle or a timer.",
+      "parent": "R7",
+      "kind": "enabling",
+      "touches": ["ui"],
+      "acceptance": [
+        "The hook returns an inactive result for the value present on the first render.",
+        "It returns an alternating active result after each later value change, including between 1 and \"1\".",
+        "It returns the same result when the value is set again unchanged, and in React Strict Mode double effects.",
+        "It uses no listener, timer or storage and renders once per value change."
+      ]
+    },
+    {
+      "id": "A2",
+      "title": "Restart a finished pseudo-element animation by alternating keyframe names",
+      "why": "A sweep must genuinely replay on every trigger change, including after the previous sweep ended, without remounting the button or forcing a reflow.",
+      "parent": "R7",
+      "kind": "enabling",
+      "touches": ["ui"],
+      "acceptance": [
+        "Two identical keyframe names exist and the odd/even marker classes reference a different one each time.",
+        "Each trigger change swaps the parity class in a single render and a completed sweep visibly restarts.",
+        "No timeout, requestAnimationFrame, DOM re-key or extra element is used for replay."
+      ]
+    },
+    {
+      "id": "A3",
+      "title": "Document the programmatic streak everywhere the feature is documented",
+      "why": "The new option is only usable if people reading the library pages can find what it does, how it differs from focusSheen and how reduced motion affects it.",
+      "parent": "R7",
+      "kind": "enabling",
+      "touches": ["none"],
+      "acceptance": [
+        "api.md lists sheenTrigger with its string|number type, default (absent) and first-value-on-mount rule.",
+        "features.md, examples.md, configuration.md, README.md and the focus-sheen guide show a working sheenTrigger example and state that it works with or without focusSheen.",
+        "The pages state that reduced motion disables both triggers and that no prop overrides it."
+      ]
+    }
+  ]
+}

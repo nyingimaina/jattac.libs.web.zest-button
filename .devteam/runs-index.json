@@ -1,0 +1,58 @@
+[
+  {
+    "id": "20261025-080947",
+    "startedAt": "2026-10-25T08:09:47.4079526+00:00",
+    "status": "Completed",
+    "snippet": "add a toggle on/off state that beautifully render and clearly communicate state",
+    "costUsd": 4.1261181,
+    "final": true
+  },
+  {
+    "id": "20261025-083546",
+    "startedAt": "2026-10-25T08:35:46.4297442+00:00",
+    "status": "Completed",
+    "snippet": "Verification: the app as it is, nothing changed",
+    "costUsd": 0,
+    "final": true
+  },
+  {
+    "id": "20261025-083824",
+    "startedAt": "2026-10-25T08:38:24.126062+00:00",
+    "status": "Completed",
+    "snippet": "Verification: the app as it is, nothing changed",
+    "costUsd": 0,
+    "final": true
+  },
+  {
+    "id": "20261025-084314",
+    "startedAt": "2026-10-25T08:43:14.2646633+00:00",
+    "status": "Stopped",
+    "snippet": "exhaustive semantic types and standardized icons (svg?)",
+    "costUsd": 0.9270403,
+    "final": true
+  },
+  {
+    "id": "20261025-122245",
+    "startedAt": "2026-10-25T12:22:45.8314132+00:00",
+    "status": "Stopped",
+    "snippet": "the toggle buttons on hover do not correctly hand background vs foreground colours meaning\u2026",
+    "costUsd": 0,
+    "final": true
+  },
+  {
+    "id": "20261025-202653",
+    "startedAt": "2026-10-25T20:26:53.2845859+00:00",
+    "status": "Completed",
+    "snippet": "Continue an earlier feature that was stopped before it was finished. Do not start over.",
+    "costUsd": 4.2506184,
+    "final": true
+  },
+  {
+    "id": "20261025-205614",
+    "startedAt": "2026-10-25T20:56:14.8085414+00:00",
+    "status": "Completed",
+    "snippet": "just like D:\\work\\nyingi\\code\\systems\\Jattac.Libs.Web.ZestTextbox has a provider that\u2026",
+    "costUsd": 5.809059099999999,
+    "final": true
+  }
+]
